@@ -91,6 +91,7 @@ public class Robot extends IterativeRobot  {
 
 	public CenterLeft autoPath;
 	public PIDTurn turnToAngle;
+	public PIDStraightMovement moveToDistance;
 	
 	public PIDStraightMovement pi;
 	public static AHRS ahrs;
@@ -227,8 +228,12 @@ public class Robot extends IterativeRobot  {
 //		pid = new PIDPath();
 //		pid.start();
 		
-		autoPath = new CenterLeft();
-		autoPath.start();
+//		autoPath = new CenterLeft();
+//		autoPath.start();
+		
+		moveToDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 82, 
+				0.06, 0.0, 0.05);
+		moveToDistance.start();
 		
 //		turnToAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
 //		turnToAngle.start();
