@@ -9,6 +9,7 @@ package org.usfirst.frc.team5427.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.NextLine;
 
 /**
@@ -30,13 +31,15 @@ public class IntakeActivate extends Command
 	@Override
 	protected void initialize()
 	{
+		Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle()/2);
+		Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle()/2);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute()
 	{
-		Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -50,7 +53,7 @@ public class IntakeActivate extends Command
 	@Override
 	protected void end()
 	{
-		Robot.intakeSubsystem.setSpeed(0);
+		
 	}
 
 	// Called when another command which requires one or more of the same
@@ -58,5 +61,7 @@ public class IntakeActivate extends Command
 	@Override
 	protected void interrupted()
 	{
+		Log.info("END TO INTAKE INTERRUPTED");
+		Robot.intakeSubsystem.setSpeed(0);
 	}
 }

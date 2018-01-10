@@ -57,7 +57,7 @@ public class Robot extends TimedRobot
 	public void robotInit()
 	{
 		driveTrain = new DriveTrain();
-		oi = new OI();
+		
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 
@@ -67,6 +67,8 @@ public class Robot extends TimedRobot
 		
 		Log.init("Initializing Subsystems: ");
 		intakeSubsystem = new Intake(motorPWM_Intake_Left,motorPWM_Intake_Right);
+		
+		oi = new OI();
 	}
 
 	/**
