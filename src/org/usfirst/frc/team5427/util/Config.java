@@ -8,9 +8,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * our robot will use during the year. All variables are to be static, and
  * nothing in this file should ever have to be initiated.
  * 
- * @author Andrew Kennedy, Bo Corman
- *
+ * @author Andrew Kennedy, Bo Corman, Ethan Bennikutty
  */
+
+@SameLine
 public class Config {
 
 	/**
@@ -66,6 +67,11 @@ public class Config {
 	/*-------------Motor Speeds-----------------*/
 
 	/* ----------Controller Ports(Joystick)---------- */
+	public static final int JOYSTICK_PORT = 0;
+	public static final int ALT_JOYSTICK_PORT = 0;
+	public static final int ONE_JOYSTICK = 0; // static var for above
+	public static final int TWO_JOYSTICKS = 1; // static var for above
+	public static final int JOYSTICK_MODE = ONE_JOYSTICK;
 
 	/*------------speed for auto-------*/
 
