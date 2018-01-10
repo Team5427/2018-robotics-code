@@ -22,10 +22,10 @@ package org.usfirst.frc.team5427.robot;
 public class RobotMap {
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
-	public static int frontleftValue = 1;
-	public static int frontrightValue = 2;
-	public static int rearleftValue = 1;
-	public static int rearrightValue = 2;
+	public static int frontleftValue = 2;
+	public static int frontrightValue = 0;
+	public static int rearleftValue = 3;
+	public static int rearrightValue = 1;
 
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
