@@ -7,6 +7,10 @@
 
 package org.usfirst.frc.team5427.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -18,10 +22,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class PIDSubsystemDriveTrainRightSide extends PIDSubsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
+	
+	public static AHRS ahrs;
+	public static DriveTrain driveTrain;
 
 	public PIDSubsystemDriveTrainRightSide(double p, double i, double d,double setpoint) {
-		//TODO Requires Robot Drive Train
-		//TODO Requires Robot AHRS
 		super(p, i, d);
 		// TODO Auto-generated constructor stub
 		this.setSetpoint(setpoint);
@@ -30,6 +35,30 @@ public class PIDSubsystemDriveTrainRightSide extends PIDSubsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
+		driveTrain = new DriveTrain();
+		
+        try {
+
+			/* Communicate w/navX-MXP via the MXP SPI Bus. */
+			/*
+			 * Alternatively: I2C.Port.kMXP, SerialPort.Port.kMXP or
+			 * SerialPort.Port.kUSB
+			 */
+			/*
+			 * See
+			 * http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/
+			 * for details.
+			 */
+			ahrs = new AHRS(SPI.Port.kMXP) {
+				@Override
+				public double pidGet() {
+					return ahrs.getYaw();
+				}
+			};
+
+		} catch (RuntimeException ex) {
+			DriverStation.reportError("Error instantiating navX-MXP: " + ex.getMessage(), true);
+		}
 	}
 	
 	/**Source: WPILib
@@ -47,7 +76,7 @@ public class PIDSubsystemDriveTrainRightSide extends PIDSubsystem {
 	@Override
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
-		return 0;
+		return ahrs.pidGet();
 	}
 
 	/**Source: WPILib

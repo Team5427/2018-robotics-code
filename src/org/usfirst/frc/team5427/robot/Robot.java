@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
 
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
@@ -23,6 +25,8 @@ import org.usfirst.frc.team5427.util.Config;
 
 import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.NextLine;
+
+import com.kauailabs.navx.frc.AHRS;
 
 
 /**
