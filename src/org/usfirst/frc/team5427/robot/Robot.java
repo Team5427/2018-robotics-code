@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.ExampleCommand;
 import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.Log;
 
 /**
