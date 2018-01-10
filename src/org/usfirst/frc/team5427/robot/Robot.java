@@ -19,6 +19,7 @@ import org.usfirst.frc.team5427.robot.commands.ExampleCommand;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 
 import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainRightSide;
 import org.usfirst.frc.team5427.util.Config;
 
 import org.usfirst.frc.team5427.util.Log;
@@ -44,13 +45,27 @@ public class Robot extends TimedRobot {
 
 	public static SpeedController motorPWM_Intake_Left;
 	public static SpeedController motorPWM_Intake_Right;
+	
+	public PIDDriveTrainRightSide pidRight;
 
+	/**
+	 * values used for PID loops
+	 */
+	public double pidRightP;
+	public double pidRightI;
+	public double pidRightD;
+	
+	public double pidLeftP;
+	public double pidLeftI;
+	public double pidLeftD;
+	
+	
+	
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
 	 */
 	@Override
-
 	public void robotInit()
 	{
 		driveTrain = new DriveTrain();
@@ -140,6 +155,12 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 	}
 
+	@Override
+	public void testInit()
+	{
+		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1);
+	}
+	
 	/**
 	 * This function is called periodically during test mode.
 	 */

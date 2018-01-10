@@ -15,16 +15,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**@author Varsha
  * Subsystem to control speed of right side of DriveTrain using a PID Controller
  */
-public class PIDSubsystemDriveTrainRightSide extends PIDSubsystem {
+public class PIDDriveTrainRightSide extends PIDSubsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
-	public PIDSubsystemDriveTrainRightSide(double p, double i, double d,double setpoint) {
+	public PIDDriveTrainRightSide(double p, double i, double d,double setpoint) {
 		//TODO Requires Robot Drive Train
 		//TODO Requires Robot AHRS
 		super(p, i, d);
 		// TODO Auto-generated constructor stub
 		this.setSetpoint(setpoint);
+		
 	}
 
 	public void initDefaultCommand() {
