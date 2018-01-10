@@ -29,10 +29,10 @@ public class Intake extends Subsystem {
 	public static final double RIGHT_FLYWHEEL_BIAS_FORWARD=1;
 	public static final double RIGHT_FLYWHEEL_BIAS_BACKWARD=1;
 	//motor offsets
-	public static final double LEFT_FLYWHEEL_OFFSET_FORWARD=1;
-	public static final double LEFT_FLYWHEEL_OFFSET_BACKWARD=1;
-	public static final double RIGHT_FLYWHEEL_OFFSET_FORWARD=1;
-	public static final double RIGHT_FLYWHEEL_OFFSET_BACKWARD=1;
+	public static final double LEFT_FLYWHEEL_OFFSET_FORWARD=0;
+	public static final double LEFT_FLYWHEEL_OFFSET_BACKWARD=0;
+	public static final double RIGHT_FLYWHEEL_OFFSET_FORWARD=0;
+	public static final double RIGHT_FLYWHEEL_OFFSET_BACKWARD=0;
 
 	/**
 	 * Constructor for the Intake subsystem

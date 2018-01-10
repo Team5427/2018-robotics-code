@@ -14,9 +14,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SpeedController;
 
+
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.ExampleCommand;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5427.robot.subsystems.Intake;
 
 import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team5427.util.Config;
@@ -43,6 +45,8 @@ public class Robot extends TimedRobot
 
 	public static SpeedController motorPWM_Intake_Left;
 	public static SpeedController motorPWM_Intake_Right;
+	
+	public static Intake intakeSubsystem;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -60,6 +64,9 @@ public class Robot extends TimedRobot
 		Log.init("Initializing intake motors: ");
 		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
 		motorPWM_Intake_Right = new SteelTalon(Config.INTAKE_MOTOR_RIGHT);
+		
+		Log.init("Initializing Subsystems: ");
+		intakeSubsystem = new Intake(motorPWM_Intake_Left,motorPWM_Intake_Right);
 	}
 
 	/**
