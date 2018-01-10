@@ -27,6 +27,7 @@ import org.usfirst.frc.team5427.util.Log;
  * creating this project, you must also update the build.properties file in the
  * project.
  */
+@NextLine
 public class Robot extends TimedRobot {
 	public static final ExampleSubsystem kExampleSubsystem
 			= new ExampleSubsystem();
@@ -34,6 +35,7 @@ public class Robot extends TimedRobot {
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
+	
 	
 	public static SpeedController motorPWM_Intake_Left;
 	public static SpeedController motorPWM_Intake_Right;
