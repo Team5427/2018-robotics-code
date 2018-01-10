@@ -22,7 +22,7 @@ import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team5427.util.Config;
 
 import org.usfirst.frc.team5427.util.Log;
-
+import org.usfirst.frc.team5427.util.NextLine;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,10 +32,10 @@ import org.usfirst.frc.team5427.util.Log;
  * project.
  */
 @NextLine
-public class Robot extends TimedRobot {
-	public static final ExampleSubsystem kExampleSubsystem
-			= new ExampleSubsystem();
-	public static OI m_oi;
+public class Robot extends TimedRobot
+{
+	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
+	public static OI oi;
 	public static DriveTrain driveTrain;
 
 	Command m_autonomousCommand;
@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
 	public void robotInit()
 	{
 		driveTrain = new DriveTrain();
-		m_oi = new OI();
+		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 
