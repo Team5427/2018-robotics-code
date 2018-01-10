@@ -33,6 +33,8 @@ public class PIDDriveTrainRightSide extends PIDSubsystem {
 		// TODO Auto-generated constructor stub
 		this.setSetpoint(setpoint);
 		
+		this.setInputRange(-1.0,  1.0);
+		
 	}
 
 	public void initDefaultCommand() {
