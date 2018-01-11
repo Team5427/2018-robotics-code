@@ -46,7 +46,18 @@ public class DriveTrain extends Subsystem {
 		// rearRightMotor.set(speed);
 
 	}
-
+	public SpeedControllerGroup getM_left() {
+		return m_left;
+	}
+	public void setM_left(SpeedControllerGroup m_left) {
+		this.m_left = m_left;
+	}
+	public SpeedControllerGroup getM_right() {
+		return m_right;
+	}
+	public void setM_right(SpeedControllerGroup m_right) {
+		this.m_right = m_right;
+	}
 	public void stop() {
 		m_drive.stopMotor();
 	}

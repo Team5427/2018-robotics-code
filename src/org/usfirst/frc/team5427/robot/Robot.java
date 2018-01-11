@@ -173,9 +173,8 @@ public class Robot extends TimedRobot
 			e.printStackTrace();
 		}
 		startTime = System.nanoTime() / 1000000000.;
-		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1); // temporary
-																					// setpoint
-		
+		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.getM_right()); 
+		// TODO temporary setpoint
 	}
 	
 	/**
