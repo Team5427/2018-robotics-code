@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
 
@@ -49,6 +50,9 @@ public class Robot extends TimedRobot
 	public static SpeedController motorPWM_Intake_Left;
 	public static SpeedController motorPWM_Intake_Right;
 	
+	//makes an encoder to go straight
+	public static Encoder encoderStraight;
+
 	public PIDDriveTrainRightSide pidRight;
 	
 	/**
@@ -80,6 +84,8 @@ public class Robot extends TimedRobot
 		Log.init("Initializing intake motors: ");
 		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
 		motorPWM_Intake_Right = new SteelTalon(Config.INTAKE_MOTOR_RIGHT);
+		//need info of ports
+		encoderStraight = new Encoder(0,0);
 	}
 	
 	/**
@@ -164,18 +170,18 @@ public class Robot extends TimedRobot
 	@Override
 	public void testInit()
 	{
-		try
-		{
-			Thread.sleep(500);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		startTime = System.nanoTime() / 1000000000.;
-		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1); // temporary
-																					// setpoint
-		
+//		try
+//		{
+//			Thread.sleep(500);
+//		}
+//		catch (Exception e)
+//		{
+//			e.printStackTrace();
+//		}
+//		startTime = System.nanoTime() / 1000000000.;
+//		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1); // temporary
+//																					// setpoint
+//		
 	}
 	
 	/**
