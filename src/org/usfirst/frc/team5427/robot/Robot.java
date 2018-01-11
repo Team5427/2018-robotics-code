@@ -56,7 +56,7 @@ public class Robot extends TimedRobot
 
 	public void robotInit()
 	{
-		driveTrain = new DriveTrain();
+		//driveTrain = new DriveTrain();
 		
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());

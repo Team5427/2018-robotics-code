@@ -31,8 +31,8 @@ public class IntakeActivate extends Command
 	@Override
 	protected void initialize()
 	{
-		Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle()/2);
-		Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle()/2);
+		Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle()/4);
+		Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle()/4);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
