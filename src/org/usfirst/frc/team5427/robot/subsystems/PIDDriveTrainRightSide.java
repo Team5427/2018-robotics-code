@@ -11,6 +11,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -26,15 +27,17 @@ public class PIDDriveTrainRightSide extends PIDSubsystem {
 	public static AHRS ahrs;
 	public static DriveTrain driveTrain;
 
-	public PIDDriveTrainRightSide(double p, double i, double d,double setpoint) {
+	public PIDDriveTrainRightSide(double p, double i, double d,double setpoint, SpeedControllerGroup motorGroup) {
 		//TODO Requires Robot Drive Train
 		//TODO Requires Robot AHRS
 		super(p, i, d);
 		// TODO Auto-generated constructor stub
 		this.setSetpoint(setpoint);
 		
-		this.setInputRange(-1.0,  1.0);
-		
+		this.setInputRange(-180.0f,  180.0);
+		this.setOutputRange(-1.0, 1.0);
+		this.setAbsoluteTolerance(1.0f);
+		getPIDController().setContinuous(true);	
 	}
 
 	public void initDefaultCommand() {
