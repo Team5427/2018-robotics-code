@@ -62,6 +62,8 @@ public class Config {
 
 	/*-------------Motor Bias-------------------*/
 
+	public static final double INTAKE_BACKWARD = 1;
+	public static final double INTAKE_FORWARD = .35;
 	/*-------------Motor Offset------------------*/
 
 	/*-------------Motor Speeds-----------------*/
