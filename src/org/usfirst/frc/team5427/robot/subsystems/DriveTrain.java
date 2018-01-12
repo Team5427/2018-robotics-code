@@ -4,9 +4,11 @@ package org.usfirst.frc.team5427.robot.subsystems;
 
 import org.usfirst.frc.team5427.robot.RobotMap;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
+import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -18,6 +20,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * This file will use the same line method
  * 
  * @author Akshat
+ * 
+ * @author Abinav
+ * The file currently controls the PID values being sent to the front left and right motors.
  */
 
 public class DriveTrain extends Subsystem {
@@ -32,8 +37,11 @@ public class DriveTrain extends Subsystem {
 
 	    DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
 	    
-	    //Change config channel A and B values when we figure out what it means
-	    Encoder frontRightStraight = new Encoder(Config.CHANNEL_A_RIGHT, Config.CHANNEL_B_RIGHT);
+	   
+	public DriveTrain() {
+		
+	}
+	    
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
