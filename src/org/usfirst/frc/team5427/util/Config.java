@@ -49,6 +49,7 @@ public class Config {
 	// later
 
 	/*----------PWM PORTS-----------*/
+
 	public static final int FRONT_RIGHT_MOTOR = 5;
 	public static final int REAR_RIGHT_MOTOR = 4;
 	public static final int FRONT_LEFT_MOTOR = 2;
@@ -56,12 +57,20 @@ public class Config {
 	public static final int INTAKE_MOTOR_LEFT = 4;
 	public static final int INTAKE_MOTOR_RIGHT = 1;
 
+	
+	/*----------Pneumatic Control Module PORTS-----------*/
+	public static final int PCM_SOLENOID_FORWARD = 0;
+	public static final int PCM_SOLENOID_REVERSE = 1;
+
+
 	/*-------------Ultrasonic Sensor Ports---------*/
 
 	/*----------MULTIPLIERS AND DEADSETS----------*/
 
 	/*-------------Motor Bias-------------------*/
 
+	public static final double INTAKE_BACKWARD = 1;
+	public static final double INTAKE_FORWARD = .35;
 	/*-------------Motor Offset------------------*/
 
 	/*-------------Motor Speeds-----------------*/

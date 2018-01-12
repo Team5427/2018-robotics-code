@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
@@ -57,9 +58,12 @@ public class Robot extends TimedRobot
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
+	
+	public static DoubleSolenoid intakeSolenoid;
 
 	public static SpeedController motorPWM_Intake_Left;
 	public static SpeedController motorPWM_Intake_Right;
+	
 	
 	public static Intake intakeSubsystem;
 	
@@ -78,9 +82,12 @@ public class Robot extends TimedRobot
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 
+		Log.init("Initializing solenoid");
+		intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD, Config.PCM_SOLENOID_REVERSE);
+		
 		Log.init("Initializing intake motors: ");
-		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
-		motorPWM_Intake_Right = new SteelTalon(Config.INTAKE_MOTOR_RIGHT);
+		motorPWM_Intake_Left = new SteelTalon(RobotMap.INTAKE_MOTOR_LEFT);
+		motorPWM_Intake_Right = new SteelTalon(RobotMap.INTAKE_MOTOR_RIGHT);
 		
 		Log.init("Initializing Subsystems: ");
 		intakeSubsystem = new Intake(motorPWM_Intake_Left,motorPWM_Intake_Right);
