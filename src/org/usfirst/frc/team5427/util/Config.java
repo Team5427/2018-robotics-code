@@ -63,6 +63,10 @@ public class Config {
 	/*-------------Motor Bias-------------------*/
 
 	/*-------------Motor Offset------------------*/
+	public static final int CHANNEL_A_RIGHT = 0;
+	public static final int CHANNEL_B_RIGHT = 0;
+	public static final int CHANNEL_A_LEFT = 0;
+	public static final int CHANNEL_B_LEFT = 0;
 
 	/*-------------Motor Speeds-----------------*/
 

@@ -5,6 +5,7 @@ package org.usfirst.frc.team5427.robot.subsystems;
 import org.usfirst.frc.team5427.robot.RobotMap;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -30,6 +31,9 @@ public class DriveTrain extends Subsystem {
 	    SpeedControllerGroup m_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
 
 	    DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
+	    
+	    //Change config channel A and B values when we figure out what it means
+	    Encoder frontRightStraight = new Encoder(Config.CHANNEL_A_RIGHT, Config.CHANNEL_B_RIGHT);
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
