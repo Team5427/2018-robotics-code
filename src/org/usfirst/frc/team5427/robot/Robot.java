@@ -10,12 +10,15 @@ package org.usfirst.frc.team5427.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SpeedController;
-
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Talon;
 
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
+import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.ExampleCommand;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
@@ -39,7 +42,19 @@ public class Robot extends TimedRobot
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 	public static DriveTrain driveTrain;
+//TODO fix below code
+	SpeedController motor_pwm_frontLeft;
+    SpeedController motor_pwm_rearLeft ;
+    SpeedControllerGroup m_left;
 
+    SpeedController motor_pwm_frontRight;
+    SpeedController motor_pwm_rearRight;
+    SpeedControllerGroup m_right;
+    DifferentialDrive drive;
+    
+    DriveWithJoystick dwj;
+
+	
 	Command m_autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -47,6 +62,8 @@ public class Robot extends TimedRobot
 	public static SpeedController motorPWM_Intake_Right;
 	
 	public static Intake intakeSubsystem;
+	
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -56,7 +73,7 @@ public class Robot extends TimedRobot
 
 	public void robotInit()
 	{
-		//driveTrain = new DriveTrain();
+		
 		
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -137,6 +154,20 @@ public class Robot extends TimedRobot
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		 
+		 motor_pwm_frontLeft = new SteelTalon(RobotMap.frontleftValue);
+	     motor_pwm_rearLeft = new SteelTalon(RobotMap.rearleftValue);
+	     m_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
+
+	     motor_pwm_frontRight = new SteelTalon(RobotMap.frontrightValue);
+	     motor_pwm_rearRight = new SteelTalon(RobotMap.rearrightValue);
+	     m_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
+	     
+	     drive = new DifferentialDrive(m_left,m_right);
+	     
+	     driveTrain = new DriveTrain(m_left,m_right,drive);
+	     
+	     dwj= new DriveWithJoystick();
 	}
 
 	/**

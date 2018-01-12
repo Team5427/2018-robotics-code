@@ -4,6 +4,7 @@ package org.usfirst.frc.team5427.robot.subsystems;
 
 import org.usfirst.frc.team5427.robot.RobotMap;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
+import org.usfirst.frc.team5427.util.Log;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -20,17 +21,18 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 
 public class DriveTrain extends Subsystem {
+	
+	private DifferentialDrive drive;
+	private SpeedController drive_Left;
+	private SpeedController drive_Right;
+	public DriveTrain(SpeedController drive_Left, SpeedController drive_Right ,DifferentialDrive drive){
+		Log.info("DriveTrain made");
+		this.drive = drive;
+		this.drive_Left = drive_Left;
+		this.drive_Right = drive_Right;
+	}
 		
-	    Talon motor_pwm_frontLeft = new Talon(RobotMap.frontleftValue);
-	    Talon motor_pwm_rearLeft = new Talon(RobotMap.rearleftValue);
-	    SpeedControllerGroup m_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
-
-	    Talon motor_pwm_frontRight = new Talon(RobotMap.frontrightValue);
-	    Talon motor_pwm_rearRight = new Talon(RobotMap.rearrightValue);
-	    SpeedControllerGroup m_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
-
-	    DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
-	@Override
+	   	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 		setDefaultCommand(new DriveWithJoystick());
@@ -38,8 +40,8 @@ public class DriveTrain extends Subsystem {
 	public void takeJoystickInputs(Joystick joy) {
 
 		// double speed = Math.abs(joy.getY()) > 0.05 ? joy.getY() : 0f;
-
-		m_drive.arcadeDrive(joy.getX(),joy.getZ());
+		Log.info("drive instruction recieved");
+		drive.arcadeDrive(-joy.getY(),joy.getZ());
 		// frontLeftMotor.set(speed);
 		// frontRightMotor.set(speed);
 		// //rearLeftMotor.set(speed);
@@ -48,6 +50,6 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void stop() {
-		m_drive.stopMotor();
+		drive.stopMotor();
 	}
 }
