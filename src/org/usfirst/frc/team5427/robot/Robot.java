@@ -22,7 +22,7 @@ import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.ExampleCommand;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
-
+import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainLeftSide;
 import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainRightSide;
 import org.usfirst.frc.team5427.util.Config;
@@ -64,6 +64,7 @@ public class Robot extends TimedRobot
 
 
 	public PIDDriveTrainRightSide pidRight;
+	public PIDDriveTrainLeftSide pidLeft;
 	
 	/**
 	 * values used for PID loops
@@ -197,6 +198,7 @@ public class Robot extends TimedRobot
 		}
 		startTime = System.nanoTime() / 1000000000.;
 		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.getM_right()); 
+		pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI,pidLeftD,1,driveTrain.getM_left());
 	}
 	
 	/**
