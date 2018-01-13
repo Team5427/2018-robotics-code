@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 @SameLine
 public class DriveTrain extends Subsystem {
 
-	private DifferentialDrive drive;
+	public DifferentialDrive drive;
 	public SpeedControllerGroup drive_Left;
 	public SpeedControllerGroup drive_Right;
 

@@ -89,6 +89,9 @@ public class Robot extends TimedRobot {
 	public double pidLeftD;
 
 	double startTime;
+	double rotateToAngleRate=0;
+	double rightMotorSpeed = 0;
+	double leftMotorSpeed = 0;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -176,6 +179,19 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		 motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
+	     motor_pwm_rearLeft = new SteelTalon(Config.REAR_LEFT_MOTOR);
+	     speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
+
+	     motor_pwm_frontRight = new SteelTalon(Config.FRONT_RIGHT_MOTOR);
+	     motor_pwm_rearRight = new SteelTalon(Config.REAR_RIGHT_MOTOR);
+	     speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
+	     
+	     drive = new DifferentialDrive(speedcontrollergroup_left,speedcontrollergroup_right);
+	     
+	     driveTrain = new DriveTrain(speedcontrollergroup_left,speedcontrollergroup_right,drive);
+	     
+	     dwj= new DriveWithJoystick();
 	}
 
 	/**
@@ -190,32 +206,23 @@ public class Robot extends TimedRobot {
 
 	public void testInit()
 	{
-		 motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
-	     motor_pwm_rearLeft = new SteelTalon(Config.REAR_LEFT_MOTOR);
-	     speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
-
-	     motor_pwm_frontRight = new SteelTalon(Config.FRONT_RIGHT_MOTOR);
-	     motor_pwm_rearRight = new SteelTalon(Config.REAR_RIGHT_MOTOR);
-	     speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
-	     
-	     drive = new DifferentialDrive(speedcontrollergroup_left,speedcontrollergroup_right);
-	     
-	     driveTrain = new DriveTrain(speedcontrollergroup_left,speedcontrollergroup_right,drive);
-	     
-	     dwj= new DriveWithJoystick();
-//		try
-//		{
-//
-//			Thread.sleep(500);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		startTime = System.nanoTime() / 1000000000.;
-//
-//		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right); 
-//		pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI,pidLeftD,1,driveTrain.drive_Left);
 		
+		try
+		{
 
+			Thread.sleep(500);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		startTime = System.nanoTime() / 1000000000.;
+
+		//for straight(setpoint is 1. going straight)
+		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right); 
+		pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI,pidLeftD,1,driveTrain.drive_Left);
+		
+		pidRight.getPIDController().enable();
+		pidLeft.getPIDController().enable();
+	
 	}
 
 	/**
@@ -234,6 +241,22 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void testPeriodic() {
-		
+		//straight
+		double currentRotationRate = rotateToAngleRate;
+		rightMotorSpeed = pidRight.returnPIDInput();
+		leftMotorSpeed = pidLeft.returnPIDInput();
+ 		driveTrain.drive.tankDrive(rightMotorSpeed,leftMotorSpeed);
+ 		
 	}
+public void pidWrite(double output) {
+		
+		// TODO Auto-generated method stub
+		if (output != 0) {
+			//System.out.println("Output: " + output);
+		}
+		rotateToAngleRate = output;
+
+
+	}
+   
 }
