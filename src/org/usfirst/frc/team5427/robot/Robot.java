@@ -109,7 +109,7 @@ public class Robot extends TimedRobot {
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
 		// need info of ports
 		Log.init("Initializing Encoders: ");
-		encoderStraight = new Encoder(0, 0);
+		//encoderStraight = new Encoder(0, 0);
 
 		oi = new OI();
 
@@ -203,17 +203,17 @@ public class Robot extends TimedRobot {
 	     driveTrain = new DriveTrain(speedcontrollergroup_left,speedcontrollergroup_right,drive);
 	     
 	     dwj= new DriveWithJoystick();
-		try
-		{
-
-			Thread.sleep(500);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		startTime = System.nanoTime() / 1000000000.;
-
-		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right); 
-		pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI,pidLeftD,1,driveTrain.drive_Left);
+//		try
+//		{
+//
+//			Thread.sleep(500);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		startTime = System.nanoTime() / 1000000000.;
+//
+//		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right); 
+//		pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI,pidLeftD,1,driveTrain.drive_Left);
 		
 
 	}
