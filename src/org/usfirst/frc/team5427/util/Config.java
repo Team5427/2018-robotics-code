@@ -63,7 +63,7 @@ public class Config {
 
 	/*-------------Motor Bias-------------------*/
 	public static final double INTAKE_BACKWARD = 1;
-	public static final double INTAKE_FORWARD = .35;
+	public static final double INTAKE_FORWARD = .5;
 
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;
