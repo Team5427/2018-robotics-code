@@ -28,7 +28,7 @@ public class PIDDriveTrainRightSide extends PIDSubsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
-	public static AHRS ahrs;
+	public AHRS ahrs;
 	public static DriveTrain driveTrain;
 
 	public PIDDriveTrainRightSide(double p, double i, double d,double setpoint, SpeedControllerGroup motorGroup) {
@@ -50,6 +50,9 @@ public class PIDDriveTrainRightSide extends PIDSubsystem {
 		// setDefaultCommand(new MySpecialCommand());
 		driveTrain = Robot.driveTrain;
 		
+	}
+	public void makeAHRS() {
+
         try {
 
 			/* Communicate w/navX-MXP via the MXP SPI Bus. */

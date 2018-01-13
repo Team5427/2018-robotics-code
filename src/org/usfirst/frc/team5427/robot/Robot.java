@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
 
 	double startTime;
 	double rotateToAngleRate=0;
-	double rightMotorSpeed = 0;
+	double rightMotorSpeed = -0.5;
 	double leftMotorSpeed = 0;
 
 	/**
@@ -205,6 +205,19 @@ public class Robot extends TimedRobot {
 
 	public void testInit()
 	{
+		motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
+	     motor_pwm_rearLeft = new SteelTalon(Config.REAR_LEFT_MOTOR);
+	     speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
+
+	     motor_pwm_frontRight = new SteelTalon(Config.FRONT_RIGHT_MOTOR);
+	     motor_pwm_rearRight = new SteelTalon(Config.REAR_RIGHT_MOTOR);
+	     speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
+	     
+	     drive = new DifferentialDrive(speedcontrollergroup_left,speedcontrollergroup_right);
+	     
+	     driveTrain = new DriveTrain(speedcontrollergroup_left,speedcontrollergroup_right,drive);
+	     
+	     dwj= new DriveWithJoystick();
 		
 		try
 		{
@@ -218,39 +231,50 @@ public class Robot extends TimedRobot {
 		//for straight(setpoint is 1. going straight)
 		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right); 
 		pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI,pidLeftD,1,driveTrain.drive_Left);
+		pidRight.makeAHRS();
 		
 		pidRight.getPIDController().enable();
-		pidLeft.getPIDController().enable();
+		
+		//pidLeft.getPIDController().enable();
 	
 	}
 
 	/**
 	 * This function is called periodically during test mode.
 	 */
-	
-	enum Mode{Straight, Left, Right}
-	Mode mode = Mode.Left;
-	PIDAction currentPIDAction;
-	
-	public void turnAngleClockwise(double degrees) {
-		if(currentPIDAction.isFinished()) {
-			//currentPIDAction = new PIDAction(startAngle, endAngle, currentAngle);
-		}
-	}
+//	
+//	enum Mode{Straight, Left, Right}
+//	Mode mode = Mode.Straight;
+//	PIDAction currentPIDAction;
+//	
+//	public void turnAngleClockwise(double degrees) {
+//		if(currentPIDAction.isFinished()) {
+//			//currentPIDAction = new PIDAction(startAngle, endAngle, currentAngle);
+//		}
+//	}
 	
 	@Override
 	public void testPeriodic() {
 		
-		// add values to smartdashboard for PID testing (graph)
+//		// add values to smartdashboard for PID testing (graph)
 		 SmartDashboard.putNumber("PID Output: ", rotateToAngleRate);
-		 SmartDashboard.putNumber("Yaw: ", PIDDriveTrainLeftSide.ahrs.getYaw());
-		
+		 SmartDashboard.putNumber("Yaw: ", pidRight.ahrs.getYaw());
+		 Log.info("ISENABLED: "+pidRight.getPIDController().isEnabled());
 		//straight
-		double currentRotationRate = rotateToAngleRate;
+		double currentRotationRate = rotateToAngleRate-.5;
 		Log.info(""+currentRotationRate);
-		rightMotorSpeed = pidRight.returnPIDInput();
+		
+		
+		Log.info("rightMotorSpeed: " + rightMotorSpeed);
 		//leftMotorSpeed = pidLeft.returnPIDInput();
- 		driveTrain.drive.tankDrive(rightMotorSpeed,-(currentRotationRate));
+ 		driveTrain.drive.tankDrive(-currentRotationRate, -rightMotorSpeed);
+ 	
+ 		
+ 		if(rightMotorSpeed>-.5)
+			rightMotorSpeed-=0.006;
+		
+		if(rightMotorSpeed<-.5)
+			rightMotorSpeed = -.5;
  		
 	}
 public void pidWrite(double output) {
