@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * @author Varsha Subsystem for the two flywheels that turn in opposite
- *         directions 
+ * @author Varsha 
+ * Subsystem for the two flywheels that turn in opposite directions 
  */
 
 @NextLine

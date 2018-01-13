@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * our robot will use during the year. All variables are to be static, and
  * nothing in this file should ever have to be initiated.
  * 
- * @author Andrew Kennedy, Bo Corman, Ethan Bennikutty
+ * @author Andrew Kennedy, Bo Corman
  */
 
 @SameLine
@@ -56,21 +56,15 @@ public class Config {
 	public static final int INTAKE_MOTOR_LEFT = 1;
 	public static final int INTAKE_MOTOR_RIGHT = 0;
 
-	/*-------------Ultrasonic Sensor Ports---------*/
-
-	/*----------MULTIPLIERS AND DEADSETS----------*/
-
 	/*-------------Motor Bias-------------------*/
-
 	public static final double INTAKE_BACKWARD = 1;
 	public static final double INTAKE_FORWARD = .35;
+	
 	/*-------------Motor Offset------------------*/
 	public static final int CHANNEL_A_RIGHT = 0;
 	public static final int CHANNEL_B_RIGHT = 0;
 	public static final int CHANNEL_A_LEFT = 0;
 	public static final int CHANNEL_B_LEFT = 0;
-
-	/*-------------Motor Speeds-----------------*/
 
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;
@@ -78,19 +72,5 @@ public class Config {
 	public static final int ONE_JOYSTICK = 0; // static var for above
 	public static final int TWO_JOYSTICKS = 1; // static var for above
 	public static final int JOYSTICK_MODE = ONE_JOYSTICK;
-
-	/*------------speed for auto-------*/
-
-	/*------------timings for auto-------*/
-
-	/*-----------spot-----------*/
-
-	/*----------autonomous aiming------*/
-
-	/*---------------Buttons------------------- */
-
-	/*------------Mulipurpose Flap Vars------*/
-
-	/* Servo Motors */
 
 }
