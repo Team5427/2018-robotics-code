@@ -15,7 +15,7 @@ import org.usfirst.frc.team5427.util.NextLine;
 
 /**
  * @author Blake
- * An example command. You can replace me with your own command.
+ * This command 
  */
 
 @NextLine
