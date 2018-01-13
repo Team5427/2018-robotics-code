@@ -62,6 +62,7 @@ public class DriveWithJoystick extends Command {
 
  // Called once after isFinished returns true
  protected void end() {
+	 Log.info("robot stopped");
  	Robot.driveTrain.stop();
  }
 

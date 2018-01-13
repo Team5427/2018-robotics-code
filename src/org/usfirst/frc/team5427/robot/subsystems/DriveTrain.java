@@ -50,6 +50,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void stop() {
+		Log.info("stopped motor");
 		drive.stopMotor();
 	}
 }

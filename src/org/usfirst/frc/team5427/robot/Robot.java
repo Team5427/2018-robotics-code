@@ -153,7 +153,6 @@ public class Robot extends TimedRobot {
 
 		dwj = new DriveWithJoystick();
 	}
-
 	/**
 	 * This function is called periodically during operator control.
 	 */
