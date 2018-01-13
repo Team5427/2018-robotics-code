@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-
+import org.usfirst.frc.team5427.robot.OurClasses.PIDAction;
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.ExampleCommand;
@@ -223,6 +223,14 @@ public class Robot extends TimedRobot {
 	 */
 	
 	enum Mode{Straight, Left, Right}
+	Mode mode = Mode.Left;
+	PIDAction currentPIDAction;
+	
+	public void turnAngleClockwise(double degrees) {
+		if(currentPIDAction.isFinished()) {
+			//currentPIDAction = new PIDAction(startAngle, endAngle, currentAngle);
+		}
+	}
 	
 	@Override
 	public void testPeriodic() {
