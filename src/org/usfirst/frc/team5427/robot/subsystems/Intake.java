@@ -49,7 +49,7 @@ public class Intake extends Subsystem {
 	{
 		if(speed<0)//if the speed is negative
 		{
-			//left goes backward, right goes forward
+			//left goes backward, right goes forward 
 			leftFlywheel.set(speed*LEFT_FLYWHEEL_BIAS_BACKWARD+LEFT_FLYWHEEL_OFFSET_BACKWARD);
 			rightFlywheel.set(-speed*RIGHT_FLYWHEEL_BIAS_FORWARD+RIGHT_FLYWHEEL_OFFSET_FORWARD);
 

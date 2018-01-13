@@ -51,6 +51,9 @@ public class Robot extends TimedRobot
     SpeedController motor_pwm_frontRight;
     SpeedController motor_pwm_rearRight;
     SpeedControllerGroup m_right;
+    
+    
+    
     DifferentialDrive drive;
     
     DriveWithJoystick dwj;
@@ -63,6 +66,8 @@ public class Robot extends TimedRobot
 
 	public static SpeedController motorPWM_Intake_Left;
 	public static SpeedController motorPWM_Intake_Right;
+	
+	public static SpeedController motorPWM_Elevator;
 	
 	
 	public static Intake intakeSubsystem;
@@ -82,8 +87,12 @@ public class Robot extends TimedRobot
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 
-		Log.init("Initializing solenoid");
-		intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD, Config.PCM_SOLENOID_REVERSE);
+		/*
+		 * COMMENTED DUE TO ERRORS
+		 * TODO ADD PORTS FOR SOLENOID
+		 */
+//		Log.init("Initializing solenoid");
+//		intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD, Config.PCM_SOLENOID_REVERSE);
 		
 		Log.init("Initializing intake motors: ");
 		motorPWM_Intake_Left = new SteelTalon(RobotMap.INTAKE_MOTOR_LEFT);
@@ -91,6 +100,9 @@ public class Robot extends TimedRobot
 		
 		Log.init("Initializing Subsystems: ");
 		intakeSubsystem = new Intake(motorPWM_Intake_Left,motorPWM_Intake_Right);
+		
+		Log.init("Intializing Elevator Motor: ");
+		motorPWM_Elevator = new SteelTalon(RobotMap.ELEVATOR_MOTOR);
 		
 		oi = new OI();
 	}
@@ -162,12 +174,12 @@ public class Robot extends TimedRobot
 			m_autonomousCommand.cancel();
 		}
 		 
-		 motor_pwm_frontLeft = new SteelTalon(RobotMap.frontleftValue);
-	     motor_pwm_rearLeft = new SteelTalon(RobotMap.rearleftValue);
+		 motor_pwm_frontLeft = new SteelTalon(RobotMap.FRONT_LEFT_MOTOR);
+	     motor_pwm_rearLeft = new SteelTalon(RobotMap.REAR_LEFT_MOTOR);
 	     m_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
 
-	     motor_pwm_frontRight = new SteelTalon(RobotMap.frontrightValue);
-	     motor_pwm_rearRight = new SteelTalon(RobotMap.rearrightValue);
+	     motor_pwm_frontRight = new SteelTalon(RobotMap.FRONT_RIGHT_MOTOR);
+	     motor_pwm_rearRight = new SteelTalon(RobotMap.REAR_RIGHT_MOTOR);
 	     m_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
 	     
 	     drive = new DifferentialDrive(m_left,m_right);
