@@ -9,6 +9,8 @@ package org.usfirst.frc.team5427.util;
  *
  */
 @SuppressWarnings(value = { "all" })
+
+@SameLine
 public class Log {
 
 	private static String s = "";
@@ -61,8 +63,8 @@ public class Log {
 	}
 
 	/**
-	 * Logging temporary, or unimportant debug information -- will only show up
-	 * if DEBUG_MODE is enabled
+	 * Logging temporary, or unimportant debug information -- will only show up if
+	 * DEBUG_MODE is enabled
 	 * 
 	 * @param text
 	 */
@@ -70,11 +72,10 @@ public class Log {
 		if (Config.DEBUG_MODE)
 			log("[DEBUG]", text);
 	}
-	
 
 	/**
-	 * Logging more important warnings -- will still show up even if
-	 * LOGGING_ENABLED is false
+	 * Logging more important warnings -- will still show up even if LOGGING_ENABLED
+	 * is false
 	 * 
 	 * @param text
 	 */
@@ -92,8 +93,8 @@ public class Log {
 	}
 
 	/**
-	 * Logging fatal, or otherwise important warnings or errors -- will still
-	 * show up even if LOGGING_ENABLED is false.
+	 * Logging fatal, or otherwise important warnings or errors -- will still show
+	 * up even if LOGGING_ENABLED is false.
 	 * 
 	 * @param text
 	 */

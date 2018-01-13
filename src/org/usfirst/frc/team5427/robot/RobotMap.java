@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team5427.robot;
 
+import org.usfirst.frc.team5427.util.SameLine;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -19,6 +21,8 @@ package org.usfirst.frc.team5427.robot;
  * 
  * @author Akshat
  */
+
+@SameLine
 public class RobotMap {
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
