@@ -244,8 +244,8 @@ public class Robot extends TimedRobot {
 		//straight
 		double currentRotationRate = rotateToAngleRate;
 		rightMotorSpeed = pidRight.returnPIDInput();
-		leftMotorSpeed = pidLeft.returnPIDInput();
- 		driveTrain.drive.tankDrive(rightMotorSpeed,leftMotorSpeed);
+		//leftMotorSpeed = pidLeft.returnPIDInput();
+ 		driveTrain.drive.tankDrive(rightMotorSpeed,.75);
  		
 	}
 public void pidWrite(double output) {
