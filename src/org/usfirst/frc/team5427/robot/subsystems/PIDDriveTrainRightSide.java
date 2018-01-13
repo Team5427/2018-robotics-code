@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team5427.robot.subsystems;
 
+import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.SameLine;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -41,12 +42,13 @@ public class PIDDriveTrainRightSide extends PIDSubsystem {
 		this.setOutputRange(-1.0, 1.0);
 		this.setAbsoluteTolerance(1.0f);
 		getPIDController().setContinuous(true);	
+		
 	}
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		driveTrain = new DriveTrain();
+		driveTrain = Robot.driveTrain;
 		
         try {
 
