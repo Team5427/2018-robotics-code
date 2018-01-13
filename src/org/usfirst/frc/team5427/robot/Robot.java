@@ -49,7 +49,6 @@ public class Robot extends TimedRobot {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 
 	public static OI oi;
-	
 	public static DriveTrain driveTrain;
 
 		SpeedController motor_pwm_frontLeft;
@@ -80,9 +79,9 @@ public class Robot extends TimedRobot {
 	/**
 	 * values used for PID loops
 	 */
-	public double pidRightP;
-	public double pidRightI;
-	public double pidRightD;
+	public double pidRightP = .085000;
+	public double pidRightI = .008333;
+	public double pidRightD = .001042;
 
 	public double pidLeftP;
 	public double pidLeftI;
@@ -241,11 +240,17 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void testPeriodic() {
+		
+		// add values to smartdashboard for PID testing (graph)
+		 SmartDashboard.putNumber("PID Output: ", rotateToAngleRate);
+		 SmartDashboard.putNumber("Yaw: ", PIDDriveTrainLeftSide.ahrs.getYaw());
+		
 		//straight
 		double currentRotationRate = rotateToAngleRate;
+		Log.info(""+currentRotationRate);
 		rightMotorSpeed = pidRight.returnPIDInput();
 		//leftMotorSpeed = pidLeft.returnPIDInput();
- 		driveTrain.drive.tankDrive(rightMotorSpeed,.75);
+ 		driveTrain.drive.tankDrive(rightMotorSpeed,-(currentRotationRate));
  		
 	}
 public void pidWrite(double output) {
@@ -255,8 +260,6 @@ public void pidWrite(double output) {
 			//System.out.println("Output: " + output);
 		}
 		rotateToAngleRate = output;
-
-
 	}
    
 }
