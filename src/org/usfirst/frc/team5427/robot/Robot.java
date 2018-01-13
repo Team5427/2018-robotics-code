@@ -29,6 +29,7 @@ import org.usfirst.frc.team5427.util.Config;
 
 import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.NextLine;
+import org.usfirst.frc.team5427.util.SameLine;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,73 +38,62 @@ import org.usfirst.frc.team5427.util.NextLine;
  * creating this project, you must also update the build.properties file in the
  * project.
  */
-@NextLine
-public class Robot extends TimedRobot
-{
+@SameLine
+public class Robot extends TimedRobot {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 	public static DriveTrain driveTrain;
-//TODO fix below code
-	SpeedController motor_pwm_frontLeft;
-    SpeedController motor_pwm_rearLeft ;
-    SpeedControllerGroup m_left;
-
-    SpeedController motor_pwm_frontRight;
-    SpeedController motor_pwm_rearRight;
-    SpeedControllerGroup m_right;
-    
-    
-    
-    DifferentialDrive drive;
-    
-    DriveWithJoystick dwj;
-
 	
-	Command m_autonomousCommand;
+	SpeedController motorPWM_Front_Left;
+	SpeedController motorPWM_Rear_Left;
+	SpeedControllerGroup driveTrainLeft;
+
+	SpeedController motorPWM_Front_Right;
+	SpeedController motorPWM_Rear_Right;
+	SpeedControllerGroup driveTrainRight;
+
+	DifferentialDrive drive;
+
+	DriveWithJoystick dwj;
+
 	SendableChooser<Command> chooser = new SendableChooser<>();
-	
+
 	public static DoubleSolenoid intakeSolenoid;
 
 	public static SpeedController motorPWM_Intake_Left;
 	public static SpeedController motorPWM_Intake_Right;
-	
+
 	public static SpeedController motorPWM_Elevator;
-	
-	
+
 	public static Intake intakeSubsystem;
-	
-	
 
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
 	 */
 	@Override
+	public void robotInit() {
 
-	public void robotInit()
-	{
-		
-		
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 
 		/*
-		 * COMMENTED DUE TO ERRORS
-		 * TODO ADD PORTS FOR SOLENOID
+		 * COMMENTED DUE TO ERRORS TODO ADD PORTS FOR SOLENOID
 		 */
-//		Log.init("Initializing solenoid");
-//		intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD, Config.PCM_SOLENOID_REVERSE);
-		
+		// Log.init("Initializing solenoid");
+		// intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD,
+		// Config.PCM_SOLENOID_REVERSE);
+
 		Log.init("Initializing intake motors: ");
-		motorPWM_Intake_Left = new SteelTalon(RobotMap.INTAKE_MOTOR_LEFT);
-		motorPWM_Intake_Right = new SteelTalon(RobotMap.INTAKE_MOTOR_RIGHT);
-		
+		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
+		motorPWM_Intake_Right = new SteelTalon(Config.INTAKE_MOTOR_RIGHT);
+
 		Log.init("Initializing Subsystems: ");
-		intakeSubsystem = new Intake(motorPWM_Intake_Left,motorPWM_Intake_Right);
-		
+		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
+
 		Log.init("Intializing Elevator Motor: ");
-		motorPWM_Elevator = new SteelTalon(RobotMap.ELEVATOR_MOTOR);
-		
+		motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
+
 		oi = new OI();
 	}
 
@@ -113,14 +103,12 @@ public class Robot extends TimedRobot
 	 * robot is disabled.
 	 */
 	@Override
-	public void disabledInit()
-	{
+	public void disabledInit() {
 
 	}
 
 	@Override
-	public void disabledPeriodic()
-	{
+	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
 
@@ -137,64 +125,40 @@ public class Robot extends TimedRobot
 	 * the switch structure below with additional strings & commands.
 	 */
 	@Override
-	public void autonomousInit()
-	{
-		m_autonomousCommand = chooser.getSelected();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		 * switch(autoSelected) { case "My Auto": autonomousCommand = new
-		 * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
-		 * ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
-		}
+	public void autonomousInit() {
+		
 	}
 
 	/**
 	 * This function is called periodically during autonomous.
 	 */
 	@Override
-	public void autonomousPeriodic()
-	{
+	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 	}
 
 	@Override
-	public void teleopInit()
-	{
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
-		}
-		 
-		 motor_pwm_frontLeft = new SteelTalon(RobotMap.FRONT_LEFT_MOTOR);
-	     motor_pwm_rearLeft = new SteelTalon(RobotMap.REAR_LEFT_MOTOR);
-	     m_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
+	public void teleopInit() {
+		motorPWM_Front_Left = new SteelTalon(Config.FRONT_LEFT_MOTOR);
+		motorPWM_Rear_Left = new SteelTalon(Config.REAR_LEFT_MOTOR);
+		driveTrainLeft = new SpeedControllerGroup(motorPWM_Front_Left, motorPWM_Rear_Left);
 
-	     motor_pwm_frontRight = new SteelTalon(RobotMap.FRONT_RIGHT_MOTOR);
-	     motor_pwm_rearRight = new SteelTalon(RobotMap.REAR_RIGHT_MOTOR);
-	     m_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
-	     
-	     drive = new DifferentialDrive(m_left,m_right);
-	     
-	     driveTrain = new DriveTrain(m_left,m_right,drive);
-	     
-	     dwj= new DriveWithJoystick();
+		motorPWM_Rear_Right = new SteelTalon(Config.FRONT_RIGHT_MOTOR);
+		motorPWM_Front_Right = new SteelTalon(Config.REAR_RIGHT_MOTOR);
+		driveTrainRight = new SpeedControllerGroup(motorPWM_Rear_Right, motorPWM_Front_Right);
+
+		drive = new DifferentialDrive(driveTrainLeft, driveTrainRight);
+
+		driveTrain = new DriveTrain(driveTrainLeft, driveTrainRight, drive);
+
+		dwj = new DriveWithJoystick();
 	}
 
 	/**
 	 * This function is called periodically during operator control.
 	 */
 	@Override
-	public void teleopPeriodic()
-	{
+	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 	}
 
@@ -202,7 +166,6 @@ public class Robot extends TimedRobot
 	 * This function is called periodically during test mode.
 	 */
 	@Override
-	public void testPeriodic()
-	{
+	public void testPeriodic() {
 	}
 }
