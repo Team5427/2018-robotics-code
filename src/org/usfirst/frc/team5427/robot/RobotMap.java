@@ -13,7 +13,8 @@ import org.usfirst.frc.team5427.util.SameLine;
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
  * the wiring easier and significantly reduces the number of magic numbers
- * floating around.
+ * floating around. 
+ *  *We use Config instead of RobotMap to store ports and other data in one place.*
  */
 /**
  * This file maps out the robot
