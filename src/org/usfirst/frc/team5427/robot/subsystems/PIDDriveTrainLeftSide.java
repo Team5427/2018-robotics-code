@@ -86,7 +86,7 @@ public class PIDDriveTrainLeftSide extends PIDSubsystem {
 	   * @return the value the pid loop should use as input
 	   */
 	@Override
-	protected double returnPIDInput() {
+	public double returnPIDInput() {
 		// TODO Auto-generated method stub
 		return ahrs.pidGet();
 	}
