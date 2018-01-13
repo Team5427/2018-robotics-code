@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team5427.robot.subsystems;
 
+import org.usfirst.frc.team5427.util.SameLine;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -17,9 +19,10 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**@author Varsha
+/**@author Akshat
  * Subsystem to control speed of right side of DriveTrain using a PID Controller
  */
+@SameLine
 public class PIDDriveTrainLeftSide extends PIDSubsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
