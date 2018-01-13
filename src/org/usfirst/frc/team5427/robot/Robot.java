@@ -229,6 +229,7 @@ public class Robot extends TimedRobot {
 	 * This function is called periodically during test mode.
 	 */
 	
+
 	@Override
 	public void testPeriodic() {
 		//straight
@@ -245,6 +246,7 @@ public void pidWrite(double output) {
 			//System.out.println("Output: " + output);
 		}
 		rotateToAngleRate = output;
+
 
 	}
    
