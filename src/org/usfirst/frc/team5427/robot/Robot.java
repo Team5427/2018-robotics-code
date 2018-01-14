@@ -91,7 +91,7 @@ public class Robot extends TimedRobot {
 
 	double startTime;
 	double rotateToAngleRate=0;
-	double rightMotorSpeed = -0.5;
+	double rightMotorSpeed = 0;
 	double leftMotorSpeed = 0;
 
 	/**
@@ -150,13 +150,6 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		m_autonomousCommand = chooser.getSelected();
 
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		 * switch(autoSelected) { case "My Auto": autonomousCommand = new
-		 * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
-		 * ExampleCommand(); break; }
-		 */
-
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
@@ -206,7 +199,7 @@ public class Robot extends TimedRobot {
 
 	public void testInit()
 	{
-		motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
+		 motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
 	     motor_pwm_rearLeft = new SteelTalon(Config.REAR_LEFT_MOTOR);
 	     speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
 
@@ -214,60 +207,46 @@ public class Robot extends TimedRobot {
 	     motor_pwm_rearRight = new SteelTalon(Config.REAR_RIGHT_MOTOR);
 	     speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
 	     
+	  // each part(left and right) of the drive train act separately
 	     drive = new DifferentialDrive(speedcontrollergroup_left,speedcontrollergroup_right);
-	     
 	     driveTrain = new DriveTrain(speedcontrollergroup_left,speedcontrollergroup_right,drive);
-	     
 	     dwj= new DriveWithJoystick();
 		
-		try
-		{
-
+		try{
 			Thread.sleep(500);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		//initializes the start time used for the pid
 		startTime = System.nanoTime() / 1000000000.;
 
 		//for straight(setpoint is 1. going straight)
 		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right); 
 		pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI,pidLeftD,1,driveTrain.drive_Left);
+		
+		//creates an instance of the ahrs(navx) on the rightPid
 		pidRight.makeAHRS();
 		
+		//enables the right side pid controller
 		pidRight.getPIDController().enable();
-		
-		//pidLeft.getPIDController().enable();
-	
 	}
 
 	/**
 	 * This function is called periodically during test mode.
 	 */
-//	
-//	enum Mode{Straight, Left, Right}
-//	Mode mode = Mode.Straight;
-//	PIDAction currentPIDAction;
-//	
-//	public void turnAngleClockwise(double degrees) {
-//		if(currentPIDAction.isFinished()) {
-//			//currentPIDAction = new PIDAction(startAngle, endAngle, currentAngle);
-//		}
-//	}
-	
 	@Override
 	public void testPeriodic() {
-		
-//		// add values to smartdashboard for PID testing (graph)
+//		add values to smartdashboard for PID testing (graph)
 		 SmartDashboard.putNumber("PID Output: ", rotateToAngleRate);
 		 SmartDashboard.putNumber("Yaw: ", pidRight.ahrs.getYaw());
-		 Log.info("ISENABLED: "+pidRight.getPIDController().isEnabled());
-		//straight
+		 Log.info("IS ENABLED: "+pidRight.getPIDController().isEnabled());
+		
+		 //rotateToAngleRate is the pidOutput
 		double currentRotationRate = rotateToAngleRate-.5;
 		Log.info(""+currentRotationRate);
 		
-		
+		//shows us the rigth motor speed and sets it to the drive train
 		Log.info("rightMotorSpeed: " + rightMotorSpeed);
-		//leftMotorSpeed = pidLeft.returnPIDInput();
  		driveTrain.drive.tankDrive(-currentRotationRate, -rightMotorSpeed);
  	
  		
@@ -276,14 +255,8 @@ public class Robot extends TimedRobot {
 		
 		if(rightMotorSpeed<-.5)
 			rightMotorSpeed = -.5;
- 		
 	}
 public void pidWrite(double output) {
-		
-		// TODO Auto-generated method stub
-		if (output != 0) {
-			//System.out.println("Output: " + output);
-		}
 		rotateToAngleRate = output;
 	}
    
