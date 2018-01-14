@@ -51,12 +51,10 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 	public static DriveTrain driveTrain;
 
-	//Speed Controllers created for the left speed control groups
 		SpeedController motor_pwm_frontLeft;
 	    SpeedController motor_pwm_rearLeft ;
 	    SpeedControllerGroup speedcontrollergroup_left;
 
-	 //Speed Controllers created for the left speed control groups
 	    SpeedController motor_pwm_frontRight;
 	    SpeedController motor_pwm_rearRight;
 	    SpeedControllerGroup speedcontrollergroup_right;
@@ -100,23 +98,23 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		chooser.addDefault("Default Auto", new ExampleCommand());
+		// driveTrain = new DriveTrain();
 
-		//initializes intake motors
+		chooser.addDefault("Default Auto", new ExampleCommand());
+		// chooser.addObject("My Auto", new MyAutoCommand());
+
 		Log.init("Initializing intake motors: ");
 		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
 		motorPWM_Intake_Right = new SteelTalon(Config.INTAKE_MOTOR_RIGHT);
 
-		// creates the intake subsystem
 		Log.init("Initializing Subsystems: ");
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
-		
-		//encoder created for counting rpm of the motor (used for pid forward movement)
-		Log.init("Initializing Encoders: "); // need info of ports
+		// need info of ports
+		Log.init("Initializing Encoders: ");
 		//encoderStraight = new Encoder(0, 0);
 
-		
 		oi = new OI();
+
 	}
 
 	/**
@@ -150,6 +148,13 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		m_autonomousCommand = chooser.getSelected();
 
+		/*
+		 * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
+		 * switch(autoSelected) { case "My Auto": autonomousCommand = new
+		 * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
+		 * ExampleCommand(); break; }
+		 */
+
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
@@ -181,9 +186,10 @@ public class Robot extends TimedRobot {
 	     motor_pwm_rearRight = new SteelTalon(Config.REAR_RIGHT_MOTOR);
 	     speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
 	     
-	     // each part(left and right) of the drive train act separately
 	     drive = new DifferentialDrive(speedcontrollergroup_left,speedcontrollergroup_right);
+	     
 	     driveTrain = new DriveTrain(speedcontrollergroup_left,speedcontrollergroup_right,drive);
+	     
 	     dwj= new DriveWithJoystick();
 	}
 
@@ -199,69 +205,88 @@ public class Robot extends TimedRobot {
 
 	public void testInit()
 	{
-		 motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
-	     motor_pwm_rearLeft = new SteelTalon(Config.REAR_LEFT_MOTOR);
-	     speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
-
-	     motor_pwm_frontRight = new SteelTalon(Config.FRONT_RIGHT_MOTOR);
-	     motor_pwm_rearRight = new SteelTalon(Config.REAR_RIGHT_MOTOR);
-	     speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
-	     
-	  // each part(left and right) of the drive train act separately
-	     drive = new DifferentialDrive(speedcontrollergroup_left,speedcontrollergroup_right);
-	     driveTrain = new DriveTrain(speedcontrollergroup_left,speedcontrollergroup_right,drive);
-	     dwj= new DriveWithJoystick();
+		motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
+		motor_pwm_rearLeft = new SteelTalon(Config.REAR_LEFT_MOTOR);
+		speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
 		
-		try{
+		motor_pwm_frontRight = new SteelTalon(Config.FRONT_RIGHT_MOTOR);
+		motor_pwm_rearRight = new SteelTalon(Config.REAR_RIGHT_MOTOR);
+		speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
+		
+		drive = new DifferentialDrive(speedcontrollergroup_left, speedcontrollergroup_right);
+		
+		driveTrain = new DriveTrain(speedcontrollergroup_left, speedcontrollergroup_right, drive);
+		
+		dwj = new DriveWithJoystick();
+		
+		try
+		{
 			Thread.sleep(500);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
-		//initializes the start time used for the pid
 		startTime = System.nanoTime() / 1000000000.;
-
-		//for straight(setpoint is 1. going straight)
-		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right); 
-		pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI,pidLeftD,1,driveTrain.drive_Left);
 		
-		//creates an instance of the ahrs(navx) on the rightPid
+		// for straight(setpoint is 1. going straight)
+		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right);
+		pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI, pidLeftD, 1, driveTrain.drive_Left);
 		pidRight.makeAHRS();
 		
-		//enables the right side pid controller
 		pidRight.getPIDController().enable();
+		
+		// pidLeft.getPIDController().enable();
+		
 	}
 
 	/**
 	 * This function is called periodically during test mode.
 	 */
+//	
+//	enum Mode{Straight, Left, Right}
+//	Mode mode = Mode.Straight;
+//	PIDAction currentPIDAction;
+//	
+//	public void turnAngleClockwise(double degrees) {
+//		if(currentPIDAction.isFinished()) {
+//			//currentPIDAction = new PIDAction(startAngle, endAngle, currentAngle);
+//		}
+//	}
+	
 	@Override
 	public void testPeriodic() {
-//		add values to smartdashboard for PID testing (graph)
+		
+//		// add values to smartdashboard for PID testing (graph)
 		 SmartDashboard.putNumber("PID Output: ", rotateToAngleRate);
 		 SmartDashboard.putNumber("Yaw: ", pidRight.ahrs.getYaw());
-		 Log.info("IS ENABLED: "+pidRight.getPIDController().isEnabled());
+		 Log.info("ISENABLED: "+pidRight.getPIDController().isEnabled());
+		 
+		//straight
+		double currentRotationRate = rotateToAngleRate-.5;
+		Log.info(""+currentRotationRate);
 		
-		 //rotateToAngleRate is the pidOutput
-//		double currentRotationRate = rotateToAngleRate;
-//		Log.info(""+currentRotationRate);
-		
-		//shows us the rigth motor speed and sets it to the drive train
-		Log.info("leftMotorSpeed: " + leftMotorSpeed);
-		Log.info("Right Speed from Speed Controller Group: " + speedcontrollergroup_right.get());
-		
- 		driveTrain.drive.tankDrive(-leftMotorSpeed, -speedcontrollergroup_right.get());
+		Log.info("rightMotorSpeed: " + rightMotorSpeed);
+		//leftMotorSpeed = pidLeft.returnPIDInput();
+ 		driveTrain.drive.tankDrive(-currentRotationRate, -rightMotorSpeed);
  		
  		
- 		if(leftMotorSpeed>-.5)
-			leftMotorSpeed-=0.006;
+ 		if(rightMotorSpeed>-.5)
+			rightMotorSpeed-=0.006;
 		
-		if(leftMotorSpeed<-.5)
-			leftMotorSpeed = -.5;
-		Log.info("leftMotorSpeed: " + leftMotorSpeed);
+		if(rightMotorSpeed<-.5)
+			rightMotorSpeed = -.5;
+		
+		Log.info("rightMotorSpeed: " + rightMotorSpeed);
+ 		
 	}
-	
-//	public void pidWrite(double output) {
-//		rotateToAngleRate = output;
-//	}
+public void pidWrite(double output) {
+		
+		// TODO Auto-generated method stub
+		if (output != 0) {
+			//System.out.println("Output: " + output);
+		}
+		rotateToAngleRate = output;
+	}
    
 }
