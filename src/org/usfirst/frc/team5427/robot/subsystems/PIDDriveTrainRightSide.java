@@ -30,19 +30,16 @@ public class PIDDriveTrainRightSide extends PIDSubsystem {
 	
 	public AHRS ahrs;
 	public static DriveTrain driveTrain;
+	public SpeedControllerGroup spgRight;
 
 	public PIDDriveTrainRightSide(double p, double i, double d,double setpoint, SpeedControllerGroup motorGroup) {
-		//TODO Requires Robot Drive Train
-		//TODO Requires Robot AHRS
 		super(p, i, d);
-		// TODO Auto-generated constructor stub
 		this.setSetpoint(setpoint);
-		
 		this.setInputRange(-180.0f,  180.0);
 		this.setOutputRange(-1.0, 1.0);
 		this.setAbsoluteTolerance(1.0f);
+		spgRight = motorGroup;
 		getPIDController().setContinuous(true);	
-		
 	}
 
 	public void initDefaultCommand() {
@@ -51,27 +48,19 @@ public class PIDDriveTrainRightSide extends PIDSubsystem {
 		driveTrain = Robot.driveTrain;
 		
 	}
+	
+	//ahrs is created to reset everytime code is deployed to run
 	public void makeAHRS() {
-
         try {
-
 			/* Communicate w/navX-MXP via the MXP SPI Bus. */
-			/*
-			 * Alternatively: I2C.Port.kMXP, SerialPort.Port.kMXP or
-			 * SerialPort.Port.kUSB
-			 */
-			/*
-			 * See
-			 * http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/
-			 * for details.
-			 */
+			/* Alternatively: I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB */
+			/* See: http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details.*/
 			ahrs = new AHRS(SPI.Port.kMXP) {
 				@Override
 				public double pidGet() {
 					return ahrs.getYaw();
 				}
 			};
-
 		} catch (RuntimeException ex) {
 			DriverStation.reportError("Error instantiating navX-MXP: " + ex.getMessage(), true);
 		}
@@ -79,19 +68,15 @@ public class PIDDriveTrainRightSide extends PIDSubsystem {
 	
 	/**Source: WPILib
 	   * Returns the input for the pid loop.
-	   *
 	   * <p>It returns the input for the pid loop, so if this command was based off of a gyro, then it
 	   * should return the angle of the gyro.
-	   *
 	   * <p>All subclasses of {@link PIDCommand} must override this method.
-	   *
 	   * <p>This method will be called in a different thread then the {@link Scheduler} thread.
 	   *
 	   * @return the value the pid loop should use as input
 	   */
 	@Override
 	public double returnPIDInput() {
-		// TODO Auto-generated method stub
 		return ahrs.pidGet();
 	}
 
@@ -99,16 +84,12 @@ public class PIDDriveTrainRightSide extends PIDSubsystem {
 	   * Uses the value that the pid loop calculated. The calculated value is the "output" parameter.
 	   * This method is a good time to set motor values, maybe something along the lines of
 	   * <code>driveline.tankDrive(output, -output)</code>
-	   *
 	   * <p>All subclasses of {@link PIDCommand} must override this method.
-	   *
 	   * <p>This method will be called in a different thread then the {@link Scheduler} thread.
-	   *
 	   * @param output the value the pid loop calculated
 	   */
 	@Override
 	protected void usePIDOutput(double output) {
-		// TODO Auto-generated method stub
-		
+		spgRight.pidWrite(output);
 	}
 }
