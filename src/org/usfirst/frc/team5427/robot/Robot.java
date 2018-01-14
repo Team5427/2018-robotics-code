@@ -49,6 +49,7 @@ public class Robot extends TimedRobot {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 
 	public static OI oi;
+	public static AHRS ahrs;
 	public static DriveTrain driveTrain;
 
 	//Speed Controllers created for the left speed control groups
@@ -220,15 +221,16 @@ public class Robot extends TimedRobot {
 		//initializes the start time used for the pid
 		startTime = System.nanoTime() / 1000000000.;
 
-		//for straight(setpoint is 1. going straight)
-		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right); 
-		pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI,pidLeftD,1,driveTrain.drive_Left);
+		//creates an instance of the ahrs(navx) each time intialized
+		makeAHRS();
 		
-		//creates an instance of the ahrs(navx) on the rightPid
-		pidRight.makeAHRS();
+		//for straight(setpoint is 1. going straight)
+		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right, ahrs); 
+		pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI,pidLeftD,1,driveTrain.drive_Left, ahrs);
 		
 		//enables the right side pid controller
 		pidRight.getPIDController().enable();
+		pidLeft.getPIDController().enable();
 	}
 
 	/**
@@ -239,25 +241,39 @@ public class Robot extends TimedRobot {
 //		add values to smartdashboard for PID testing (graph)
 		 SmartDashboard.putNumber("PID Output: ", rotateToAngleRate);
 		 SmartDashboard.putNumber("Yaw: ", pidRight.ahrs.getYaw());
-		 Log.info("IS ENABLED: "+pidRight.getPIDController().isEnabled());
-		
-		 //rotateToAngleRate is the pidOutput
+		 Log.info("[R] IS ENABLED: "+pidRight.getPIDController().isEnabled());
+		 Log.info("[L] IS ENABLED: "+pidRight.getPIDController().isEnabled());
+		 Log.info("YAW: "+ pidRight.ahrs.getYaw());
+		 driveTrain.drive.tankDrive(pidLeft.spgLeft.get(), pidRight.spgRight.get());
+		/*//rotateToAngleRate is the pidOutput
 		double currentRotationRate = rotateToAngleRate-.5;
 		Log.info(""+currentRotationRate);
 		
-		//shows us the rigth motor speed and sets it to the drive train
+		//shows us the right motor speed and sets it to the drive train
 		Log.info("rightMotorSpeed: " + rightMotorSpeed);
  		driveTrain.drive.tankDrive(-currentRotationRate, -rightMotorSpeed);
- 	
- 		
+	
  		if(rightMotorSpeed>-.5)
 			rightMotorSpeed-=0.006;
 		
 		if(rightMotorSpeed<-.5)
-			rightMotorSpeed = -.5;
+			rightMotorSpeed = -.5;*/
 	}
-public void pidWrite(double output) {
-		rotateToAngleRate = output;
-	}
-   
+	
+	//ahrs is created to reset everytime code is deployed to run
+	public void makeAHRS() {
+	        try {
+				/* Communicate w/navX-MXP via the MXP SPI Bus. */
+				/* Alternatively: I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB */
+				/* See: http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details.*/
+				ahrs = new AHRS(SPI.Port.kMXP) {
+					@Override
+					public double pidGet() {
+						return ahrs.getYaw();
+					}
+				};
+			} catch (RuntimeException ex) {
+				DriverStation.reportError("Error instantiating navX-MXP: " + ex.getMessage(), true);
+			}
+		}
 }

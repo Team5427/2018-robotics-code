@@ -13,6 +13,7 @@ import org.usfirst.frc.team5427.util.SameLine;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.PIDCommand;
@@ -32,7 +33,7 @@ public class PIDDriveTrainRightSide extends PIDSubsystem {
 	public static DriveTrain driveTrain;
 	public SpeedControllerGroup spgRight;
 
-	public PIDDriveTrainRightSide(double p, double i, double d,double setpoint, SpeedControllerGroup motorGroup) {
+	public PIDDriveTrainRightSide(double p, double i, double d,double setpoint, SpeedControllerGroup motorGroup, AHRS ahrs) {
 		super(p, i, d);
 		this.setSetpoint(setpoint);
 		this.setInputRange(-180.0f,  180.0);
@@ -40,6 +41,7 @@ public class PIDDriveTrainRightSide extends PIDSubsystem {
 		this.setAbsoluteTolerance(1.0f);
 		spgRight = motorGroup;
 		getPIDController().setContinuous(true);	
+		this.ahrs = ahrs;
 	}
 
 	public void initDefaultCommand() {
@@ -47,23 +49,6 @@ public class PIDDriveTrainRightSide extends PIDSubsystem {
 		// setDefaultCommand(new MySpecialCommand());
 		driveTrain = Robot.driveTrain;
 		
-	}
-	
-	//ahrs is created to reset everytime code is deployed to run
-	public void makeAHRS() {
-        try {
-			/* Communicate w/navX-MXP via the MXP SPI Bus. */
-			/* Alternatively: I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB */
-			/* See: http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details.*/
-			ahrs = new AHRS(SPI.Port.kMXP) {
-				@Override
-				public double pidGet() {
-					return ahrs.getYaw();
-				}
-			};
-		} catch (RuntimeException ex) {
-			DriverStation.reportError("Error instantiating navX-MXP: " + ex.getMessage(), true);
-		}
 	}
 	
 	/**Source: WPILib
