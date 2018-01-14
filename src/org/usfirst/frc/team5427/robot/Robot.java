@@ -51,10 +51,12 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 	public static DriveTrain driveTrain;
 
+	//Speed Controllers created for the left speed control groups
 		SpeedController motor_pwm_frontLeft;
 	    SpeedController motor_pwm_rearLeft ;
 	    SpeedControllerGroup speedcontrollergroup_left;
 
+	 //Speed Controllers created for the left speed control groups
 	    SpeedController motor_pwm_frontRight;
 	    SpeedController motor_pwm_rearRight;
 	    SpeedControllerGroup speedcontrollergroup_right;
@@ -98,23 +100,23 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		// driveTrain = new DriveTrain();
-
 		chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
 
+		//initializes intake motors
 		Log.init("Initializing intake motors: ");
 		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
 		motorPWM_Intake_Right = new SteelTalon(Config.INTAKE_MOTOR_RIGHT);
 
+		// creates the intake subsystem
 		Log.init("Initializing Subsystems: ");
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
-		// need info of ports
-		Log.init("Initializing Encoders: ");
+		
+		//encoder created for counting rpm of the motor (used for pid forward movement)
+		Log.init("Initializing Encoders: "); // need info of ports
 		//encoderStraight = new Encoder(0, 0);
 
+		
 		oi = new OI();
-
 	}
 
 	/**
@@ -186,10 +188,9 @@ public class Robot extends TimedRobot {
 	     motor_pwm_rearRight = new SteelTalon(Config.REAR_RIGHT_MOTOR);
 	     speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
 	     
+	     // each part(left and right) of the drive train act separately
 	     drive = new DifferentialDrive(speedcontrollergroup_left,speedcontrollergroup_right);
-	     
 	     driveTrain = new DriveTrain(speedcontrollergroup_left,speedcontrollergroup_right,drive);
-	     
 	     dwj= new DriveWithJoystick();
 	}
 
