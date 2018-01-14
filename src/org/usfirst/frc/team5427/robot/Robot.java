@@ -242,22 +242,26 @@ public class Robot extends TimedRobot {
 		 Log.info("IS ENABLED: "+pidRight.getPIDController().isEnabled());
 		
 		 //rotateToAngleRate is the pidOutput
-		double currentRotationRate = rotateToAngleRate-.5;
-		Log.info(""+currentRotationRate);
+//		double currentRotationRate = rotateToAngleRate;
+//		Log.info(""+currentRotationRate);
 		
 		//shows us the rigth motor speed and sets it to the drive train
-		Log.info("rightMotorSpeed: " + rightMotorSpeed);
- 		driveTrain.drive.tankDrive(-currentRotationRate, -rightMotorSpeed);
- 	
- 		
- 		if(rightMotorSpeed>-.5)
-			rightMotorSpeed-=0.006;
+		Log.info("leftMotorSpeed: " + leftMotorSpeed);
+		Log.info("Right Speed from Speed Controller Group: " + speedcontrollergroup_right.get());
 		
-		if(rightMotorSpeed<-.5)
-			rightMotorSpeed = -.5;
+ 		driveTrain.drive.tankDrive(-leftMotorSpeed, -speedcontrollergroup_right.get());
+ 		
+ 		
+ 		if(leftMotorSpeed>-.5)
+			leftMotorSpeed-=0.006;
+		
+		if(leftMotorSpeed<-.5)
+			leftMotorSpeed = -.5;
+		Log.info("leftMotorSpeed: " + leftMotorSpeed);
 	}
-public void pidWrite(double output) {
-		rotateToAngleRate = output;
-	}
+	
+//	public void pidWrite(double output) {
+//		rotateToAngleRate = output;
+//	}
    
 }

@@ -90,6 +90,6 @@ public class PIDDriveTrainRightSide extends PIDSubsystem {
 	   */
 	@Override
 	protected void usePIDOutput(double output) {
-		spgRight.pidWrite(output);
+		spgRight.set(output);
 	}
 }
