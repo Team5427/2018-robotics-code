@@ -35,7 +35,7 @@ public class PIDDriveTrainRightSide extends PIDSubsystem {
 	public PIDDriveTrainRightSide(double p, double i, double d,double setpoint, SpeedControllerGroup motorGroup) {
 		super(p, i, d);
 		this.setSetpoint(setpoint);
-		this.setInputRange(-180.0f,  180.0);
+		this.setInputRange(-180.0f,  180.0f);
 		this.setOutputRange(-1.0, 1.0);
 		this.setAbsoluteTolerance(1.0f);
 		spgRight = motorGroup;
