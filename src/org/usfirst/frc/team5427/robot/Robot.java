@@ -216,6 +216,8 @@ public class Robot extends TimedRobot implements PIDOutput {
 		
 		// for straight(setpoint is 1. going straight)
 		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right);
+		pidRight.getPIDController().free();
+		//pidRight.reset();
 		//pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI, pidLeftD, 1, driveTrain.drive_Left);
 		pidRight.makeAHRS();
 		
@@ -254,7 +256,6 @@ public class Robot extends TimedRobot implements PIDOutput {
 		
 		Log.info("rightMotorSpeed: " + rightMotorSpeed);
 		//leftMotorSpeed = pidLeft.returnPIDInput();
-		//
  		driveTrain.drive.tankDrive(-currentRotationRate, -rightMotorSpeed);
  		
  		if(rightMotorSpeed>-.5)
