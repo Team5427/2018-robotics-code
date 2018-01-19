@@ -3,10 +3,8 @@ package org.usfirst.frc.team5427.robot.subsystems;
 import org.usfirst.frc.team5427.robot.RobotMap;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.util.Log;
-<<<<<<< HEAD
 import org.usfirst.frc.team5427.util.SameLine;
-=======
->>>>>>> 94e8af4f05a4c8b429ccd908753676d73dff71e0
+
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;

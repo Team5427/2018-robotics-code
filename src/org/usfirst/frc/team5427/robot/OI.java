@@ -10,6 +10,7 @@ package org.usfirst.frc.team5427.robot;
 import org.usfirst.frc.team5427.robot.commands.IntakeActivate;
 import org.usfirst.frc.team5427.robot.commands.IntakeSolenoidSwitch;
 import org.usfirst.frc.team5427.robot.commands.MoveElevator;
+import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -75,12 +76,12 @@ public class OI {
 	        joy1 = new Joystick(0);
 	        
 	        //TODO fix this
-	        motorIntake = new JoystickButton(joy1,1);
-	        solenoidIntake = new JoystickButton(joy1,2);
+	        motorIntake = new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE);
+	        solenoidIntake = new JoystickButton(joy1,Config.BUTTON_SOLENOD_INTAKE);
 	        
-	        elevatorForward = new JoystickButton(joy1,3);
-	        elevatorReverse = new JoystickButton(joy1,5);
-	        
+	        elevatorForward = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_FORWARD);
+	        elevatorReverse = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_REVERSE);
+	        	        
 	        motorIntake.whileHeld(new IntakeActivate());
 	        solenoidIntake.whenPressed(new IntakeSolenoidSwitch());
 	        

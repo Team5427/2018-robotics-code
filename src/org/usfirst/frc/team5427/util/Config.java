@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5427.util;
 
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //TODO FIXED CODE fEB 20 2017
@@ -44,6 +45,33 @@ public class Config {
 	 */
 	public static final boolean LOGGING = true; // only logs errors and fatals
 												// with this false
+	
+	/*----------PWM PORTS-----------*/
+	public static final int FRONT_RIGHT_MOTOR = 0;
+	public static final int REAR_RIGHT_MOTOR = 1;
+	public static final int FRONT_LEFT_MOTOR = 2;
+	public static final int REAR_LEFT_MOTOR = 3;
+	public static final int INTAKE_MOTOR_LEFT = 4;
+	public static final int INTAKE_MOTOR_RIGHT = 5;
+	
+	/*----------Pneumatic Control Module PORTS-----------*/
+	public static final int PCM_SOLENOID_FORWARD = 0;
+	public static final int PCM_SOLENOID_REVERSE = 1;
+
+	/* ----------Joystick Buttons---------- */
+	public static final int BUTTON_MOTOR_INTAKE = 1;
+	public static final int BUTTON_SOLENOD_INTAKE = 2;
+	public static final int BUTTON_ELEVATOR_FORWARD = 3;
+	public static final int BUTTON_ELEVATOR_REVERSE= 5;
+	
+	/* ----------Controller Ports(Joystick)---------- */
+	public static final int JOYSTICK_PORT = 0;
+	public static final int ALT_JOYSTICK_PORT = 0;
+	public static final int ONE_JOYSTICK = 0; // static var for above
+	public static final int TWO_JOYSTICKS = 1; // static var for above
+	public static final int JOYSTICK_MODE = ONE_JOYSTICK;
+	
+	
 	// Speeds for the different things that the robot needs to do
 	// Controlled by grip
 	// later
@@ -54,13 +82,6 @@ public class Config {
 	public static final int frontrightValue = 0;
 	public static final int rearleftValue = 3;
 	public static final int rearrightValue = 1;
-	/*----------PWM PORTS-----------*/
-	public static final int FRONT_RIGHT_MOTOR = 0;
-	public static final int REAR_RIGHT_MOTOR = 1;
-	public static final int FRONT_LEFT_MOTOR = 2;
-	public static final int REAR_LEFT_MOTOR = 3;
-	public static final int INTAKE_MOTOR_LEFT = 4;
-	public static final int INTAKE_MOTOR_RIGHT = 5;
 
 	/*-------------Motor Bias-------------------*/
 	public static final double INTAKE_BACKWARD = 1;
@@ -73,15 +94,6 @@ public class Config {
 	public static final int CHANNEL_B_LEFT = 0;
 	public static final int ELEVATOR_MOTOR = 7;
 	
-	/*----------Pneumatic Control Module PORTS-----------*/
-	public static final int PCM_SOLENOID_FORWARD = 0;
-	public static final int PCM_SOLENOID_REVERSE = 1;
-
-	/* ----------Controller Ports(Joystick)---------- */
-	public static final int JOYSTICK_PORT = 0;
-	public static final int ALT_JOYSTICK_PORT = 0;
-	public static final int ONE_JOYSTICK = 0; // static var for above
-	public static final int TWO_JOYSTICKS = 1; // static var for above
-	public static final int JOYSTICK_MODE = ONE_JOYSTICK;
+	
 
 }
