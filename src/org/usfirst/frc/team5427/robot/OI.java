@@ -8,6 +8,9 @@
 package org.usfirst.frc.team5427.robot;
 
 import org.usfirst.frc.team5427.robot.commands.IntakeActivate;
+import org.usfirst.frc.team5427.robot.commands.IntakeSolenoidSwitch;
+import org.usfirst.frc.team5427.robot.commands.MoveElevator;
+import org.usfirst.frc.team5427.util.SameLine;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -24,6 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Akshat
  */
 
+@SameLine
 public class OI {
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
@@ -52,6 +56,7 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
+<<<<<<< HEAD
 	public Joystick joy1;
 	Button motor_Intake;
 
@@ -72,4 +77,35 @@ public class OI {
 	public Joystick getJoy() {
 		return joy1;
 	}
+=======
+	
+	 public Joystick joy1;
+	 
+	 Button motorIntake;
+	 
+	 Button solenoidIntake;
+
+	 Button elevatorForward;
+	 Button elevatorReverse;
+
+	    public OI() {
+	        joy1 = new Joystick(0);
+	        
+	        motorIntake = new JoystickButton(joy1,1);
+	        solenoidIntake = new JoystickButton(joy1,2);
+	        
+	        elevatorForward = new JoystickButton(joy1,3);
+	        elevatorReverse = new JoystickButton(joy1,5);
+	        
+	        motorIntake.whileHeld(new IntakeActivate());
+	        solenoidIntake.whenPressed(new IntakeSolenoidSwitch());
+	        
+	        elevatorForward.whileHeld(new MoveElevator(1));
+	        elevatorReverse.whileHeld(new MoveElevator(2));
+	    }
+
+	    public Joystick getJoy() {
+	        return joy1;
+	    }
+>>>>>>> 94e8af4f05a4c8b429ccd908753676d73dff71e0
 }

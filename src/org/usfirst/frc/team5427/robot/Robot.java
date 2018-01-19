@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -52,24 +53,27 @@ public class Robot extends TimedRobot implements PIDOutput {
 	public static OI oi;
 	public static DriveTrain driveTrain;
 
-		SpeedController motor_pwm_frontLeft;
-	    SpeedController motor_pwm_rearLeft ;
-	    SpeedControllerGroup speedcontrollergroup_left;
+	SpeedController motor_pwm_frontLeft;
+    SpeedController motor_pwm_rearLeft ;
+	SpeedControllerGroup speedcontrollergroup_left;
 
-	    SpeedController motor_pwm_frontRight;
-	    SpeedController motor_pwm_rearRight;
-	    SpeedControllerGroup speedcontrollergroup_right;
-	    DifferentialDrive drive;
+	SpeedController motor_pwm_frontRight;
+	SpeedController motor_pwm_rearRight;
+	SpeedControllerGroup speedcontrollergroup_right;
+	DifferentialDrive drive;
 	    
-	    DriveWithJoystick dwj;
+	DriveWithJoystick dwj;
 	
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
+	public static DoubleSolenoid intakeSolenoid;
+
 	public static SpeedController motorPWM_Intake_Left;
 	public static SpeedController motorPWM_Intake_Right;
 
+	public static SpeedController motorPWM_Elevator;
 	public static Intake intakeSubsystem;
 	// makes an encoder to go straight
 	public static Encoder encoderStraight;
@@ -103,6 +107,13 @@ public class Robot extends TimedRobot implements PIDOutput {
 
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
+
+		/*
+		 * COMMENTED DUE TO ERRORS TODO ADD PORTS FOR SOLENOID
+		 */
+		// Log.init("Initializing solenoid");
+		// intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD,
+		// Config.PCM_SOLENOID_REVERSE);
 		
 		Log.init("Initializing driveTrain: ");
 		motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
@@ -123,9 +134,13 @@ public class Robot extends TimedRobot implements PIDOutput {
 
 		Log.init("Initializing Subsystems: ");
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
+
 		// need info of ports
 		Log.init("Initializing Encoders: ");
 		//encoderStraight = new Encoder(0, 0);
+
+		Log.init("Intializing Elevator Motor: ");
+		motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
 
 		oi = new OI();
 	}
@@ -192,7 +207,7 @@ public class Robot extends TimedRobot implements PIDOutput {
 			m_autonomousCommand.cancel();
 		}
 	}
-
+	
 	/**
 	 * This function is called periodically during operator control.
 	 */
