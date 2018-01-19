@@ -47,37 +47,24 @@ public class DriveWithJoystick extends Command {
 	protected void initialize() {
 	}
 
-<<<<<<< HEAD
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-		Log.info("sending drive instruction");
-		Robot.driveTrain.takeJoystickInputs(Robot.oi.getJoy());
-	}
-=======
  // Called repeatedly when this Command is scheduled to run
  protected void execute() {
 	 Log.info("sending drive instruction");
- 	Robot.driveTrain.takeJoystickInputs(Robot.oi.getJoy());
+ 	Robot.driveTrain.takeJoystickInputs(Robot.oi.getJoy()); //TODO check this
  }
->>>>>>> 94e8af4f05a4c8b429ccd908753676d73dff71e0
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		return false;
 	}
 
-<<<<<<< HEAD
-	// Called once after isFinished returns true
-	protected void end() {
-		Robot.driveTrain.stop();
-	}
-=======
+
  // Called once after isFinished returns true
  protected void end() {
-	 Log.info("robot stopped");
  	Robot.driveTrain.stop();
+	 Log.info("robot stopped");
+
  }
->>>>>>> 94e8af4f05a4c8b429ccd908753676d73dff71e0
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run

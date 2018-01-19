@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team5427.robot;
 
-<<<<<<< HEAD
 import org.usfirst.frc.team5427.util.SameLine;
 
 /**
@@ -32,12 +31,10 @@ import org.usfirst.frc.team5427.util.SameLine;
 
 @SameLine
 public class RobotMap {
-<<<<<<< HEAD
-=======
+
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 
->>>>>>> 94e8af4f05a4c8b429ccd908753676d73dff71e0
 
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
