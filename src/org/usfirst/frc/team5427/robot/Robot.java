@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -47,7 +48,7 @@ import com.kauailabs.navx.frc.AHRS;
  * project.
  */
 @SameLine
-public class Robot extends TimedRobot implements PIDOutput {
+public class Robot extends IterativeRobot implements PIDOutput {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 
 	public static OI oi;
@@ -83,6 +84,7 @@ public class Robot extends TimedRobot implements PIDOutput {
 
 	/**
 	 * values used for PID loops
+	 *TODO move these to Config
 	 */
 	public double pidRightP = .085000;
 	public double pidRightI = .008333;
@@ -92,7 +94,7 @@ public class Robot extends TimedRobot implements PIDOutput {
 	public double pidLeftI;
 	public double pidLeftD;
 
-	double startTime;
+	//double startTime;
 	double rotateToAngleRate=0;
 	double rightMotorSpeed = 0;
 	double leftMotorSpeed = 0;
@@ -105,7 +107,7 @@ public class Robot extends TimedRobot implements PIDOutput {
 	public void robotInit() {
 		// driveTrain = new DriveTrain();
 
-		chooser.addDefault("Default Auto", new ExampleCommand());
+//		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 
 		/*
@@ -219,15 +221,15 @@ public class Robot extends TimedRobot implements PIDOutput {
 	@Override
 	public void testInit()
 	{	
-		try
-		{
-			Thread.sleep(500);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		startTime = System.nanoTime() / 1000000000.;
+//		try
+//		{
+//			Thread.sleep(500);
+//		}
+//		catch (Exception e)
+//		{
+//			e.printStackTrace();
+//		}
+//		startTime = System.nanoTime() / 1000000000.;
 		
 		// for straight(setpoint is 1. going straight)
 		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right);
