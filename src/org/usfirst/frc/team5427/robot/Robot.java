@@ -98,8 +98,7 @@ public class Robot extends IterativeRobot{
 	}
 
 	@Override
-	public void testInit()
-	{	
+	public void testInit() {	
 	}
 
 //	
@@ -117,8 +116,8 @@ public class Robot extends IterativeRobot{
 	 * This function is called periodically during test mode.
 	 */
 	@Override
-	public void testPeriodic() 
-	{
+	public void testPeriodic() {
+		Scheduler.getInstance().run();
 	}
    
 }
