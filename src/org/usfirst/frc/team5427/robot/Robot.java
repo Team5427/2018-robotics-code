@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
+import org.usfirst.frc.team5427.robot.commands.IntakeActivate;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.util.Config;
 
@@ -101,17 +102,6 @@ public class Robot extends IterativeRobot{
 	public void testInit()
 	{	
 	}
-
-//	
-//	enum Mode{Straight, Left, Right}
-//	Mode mode = Mode.Straight;
-//	PIDAction currentPIDAction;
-//	
-//	public void turnAngleClockwise(double degrees) {
-//		if(currentPIDAction.isFinished()) {
-//			//currentPIDAction = new PIDAction(startAngle, endAngle, currentAngle);
-//		}
-//	}
 	
 	/**
 	 * This function is called periodically during test mode.
@@ -119,6 +109,7 @@ public class Robot extends IterativeRobot{
 	@Override
 	public void testPeriodic() 
 	{
+		Scheduler.getInstance().run();
 	}
    
 }

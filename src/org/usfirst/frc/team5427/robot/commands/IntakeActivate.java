@@ -34,19 +34,21 @@ public class IntakeActivate extends Command {
 	@Override
 	protected void execute() {
 
-		if(Robot.oi.joy1.getThrottle()<0) {
-			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
-		}
-		else {
-			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
-		}
+//		if(Robot.oi.joy1.getThrottle()<0) {
+//			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
+//		}
+//		else {
+//			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
+//		}
+		Robot.intakeSubsystem.setSpeed(.1);
+		System.out.println("RUNNING");
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		if(Robot.oi.getJoy().getRawButtonReleased(1))//TODO change to Config
-			return true;
+//		if(Robot.oi.getJoy().getRawButtonReleased(1))//TODO change to Config
+//			return true;
 		return false;
 	}
 
@@ -60,6 +62,6 @@ public class IntakeActivate extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.intakeSubsystem.setSpeed(0);
+		//Robot.intakeSubsystem.setSpeed(0);
 	}
 }
