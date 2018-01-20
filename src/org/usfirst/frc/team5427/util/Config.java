@@ -37,10 +37,10 @@ public class Config {
 	public static final int INTAKE_MOTOR_LEFT = 1;
 	public static final int INTAKE_MOTOR_RIGHT = 0;
 	/* ----------Joystick Buttons---------- */
-	public static final int BUTTON_MOTOR_INTAKE = 1;
+	public static final int BUTTON_MOTOR_INTAKE = 11;
 	
 	/*-------------Motor Bias-------------------*/
 	public static final double INTAKE_BACKWARD = 1;
-	public static final double INTAKE_FORWARD = .3;
+	public static final double INTAKE_FORWARD = .2;
 	
 }
