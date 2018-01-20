@@ -23,13 +23,13 @@ import org.usfirst.frc.team5427.util.NextLine;
 public class IntakeSolenoidSwitch extends Command
 {
 	//Stores whether or not the solenoid is forward for use in determining the direction to switch in.
-	public static boolean isForward;
+	public static boolean isForward = false;
 
 	public IntakeSolenoidSwitch()
 	{
 		// No Subsystem Needed
 		
-		isForward = false;
+//		isForward = false;
 	}
 
 	/* Called when the command initially runs.
