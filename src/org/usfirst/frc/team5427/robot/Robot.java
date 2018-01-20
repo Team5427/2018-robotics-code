@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.Talon;
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.ExampleCommand;
+import org.usfirst.frc.team5427.robot.commands.IntakeSolenoidSwitch;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
 
@@ -80,9 +81,9 @@ public class Robot extends TimedRobot {
 		/*
 		 * COMMENTED DUE TO ERRORS TODO ADD PORTS FOR SOLENOID
 		 */
-		// Log.init("Initializing solenoid");
-		// intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD,
-		// Config.PCM_SOLENOID_REVERSE);
+		//Log.init("Initializing solenoid");
+		//intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD,
+		//Config.PCM_SOLENOID_REVERSE); 
 
 		Log.init("Initializing intake motors: ");
 		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
