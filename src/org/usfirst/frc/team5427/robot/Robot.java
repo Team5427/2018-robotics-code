@@ -92,7 +92,19 @@ public class Robot extends TimedRobot {
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
 
 		Log.init("Intializing Elevator Motor: ");
-		motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
+		//motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
+		
+//		motorPWM_Front_Left = new SteelTalon(Config.FRONT_LEFT_MOTOR);
+//		motorPWM_Rear_Left = new SteelTalon(Config.REAR_LEFT_MOTOR);
+//		driveTrainLeft = new SpeedControllerGroup(motorPWM_Front_Left, motorPWM_Rear_Left);
+//
+//		motorPWM_Rear_Right = new SteelTalon(Config.FRONT_RIGHT_MOTOR);
+//		motorPWM_Front_Right = new SteelTalon(Config.REAR_RIGHT_MOTOR);
+//		driveTrainRight = new SpeedControllerGroup(motorPWM_Rear_Right, motorPWM_Front_Right);
+//
+//		drive = new DifferentialDrive(driveTrainLeft, driveTrainRight);
+
+	//	driveTrain = new DriveTrain(driveTrainLeft, driveTrainRight, drive);
 
 		oi = new OI();
 	}
@@ -139,19 +151,10 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		motorPWM_Front_Left = new SteelTalon(Config.FRONT_LEFT_MOTOR);
-		motorPWM_Rear_Left = new SteelTalon(Config.REAR_LEFT_MOTOR);
-		driveTrainLeft = new SpeedControllerGroup(motorPWM_Front_Left, motorPWM_Rear_Left);
 
-		motorPWM_Rear_Right = new SteelTalon(Config.FRONT_RIGHT_MOTOR);
-		motorPWM_Front_Right = new SteelTalon(Config.REAR_RIGHT_MOTOR);
-		driveTrainRight = new SpeedControllerGroup(motorPWM_Rear_Right, motorPWM_Front_Right);
+	
 
-		drive = new DifferentialDrive(driveTrainLeft, driveTrainRight);
-
-		driveTrain = new DriveTrain(driveTrainLeft, driveTrainRight, drive);
-
-		dwj = new DriveWithJoystick();
+	//	dwj = new DriveWithJoystick();
 	}
 	/**
 	 * This function is called periodically during operator control.

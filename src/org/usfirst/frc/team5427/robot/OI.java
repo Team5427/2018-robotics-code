@@ -12,6 +12,7 @@ package org.usfirst.frc.team5427.robot;
 import org.usfirst.frc.team5427.robot.commands.IntakeActivate;
 import org.usfirst.frc.team5427.robot.commands.IntakeSolenoidSwitch;
 import org.usfirst.frc.team5427.robot.commands.MoveElevator;
+import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -60,7 +61,7 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	
-	 public Joystick joy1;
+	 public Joystick joy1=new Joystick(0);
 	 
 	 Button motorIntake;
 	 
@@ -70,19 +71,19 @@ public class OI {
 	 Button elevatorReverse;
 
 	    public OI() {
-	        joy1 = new Joystick(0);
+	        //joy1 = new Joystick(0);
 	        
 	        motorIntake = new JoystickButton(joy1,1);
-	        solenoidIntake = new JoystickButton(joy1,2);
+//	        solenoidIntake = new JoystickButton(joy1,2);
 	        
-	        elevatorForward = new JoystickButton(joy1,3);
-	        elevatorReverse = new JoystickButton(joy1,5);
-	        
+//	        elevatorForward = new JoystickButton(joy1,3);
+//	        elevatorReverse = new JoystickButton(joy1,5);
+	        Log.debug("IntakeStartedIshnotreally");
 	        motorIntake.whileHeld(new IntakeActivate());
-	        solenoidIntake.whenPressed(new IntakeSolenoidSwitch());
+	       // solenoidIntake.whenPressed(new IntakeSolenoidSwitch());
 	        
-	        elevatorForward.whileHeld(new MoveElevator(1));
-	        elevatorReverse.whileHeld(new MoveElevator(2));
+//	        elevatorForward.whileHeld(new MoveElevator(1));
+//	        elevatorReverse.whileHeld(new MoveElevator(2));
 	    }
 
 	    public Joystick getJoy() {

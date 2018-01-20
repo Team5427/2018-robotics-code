@@ -62,7 +62,7 @@ public class Config {
 	public static final int PCM_SOLENOID_REVERSE = 1;
 
 	/*-------------Motor Bias-------------------*/
-	public static final double INTAKE_BACKWARD = .2;
+	public static final double INTAKE_BACKWARD = 1;
 	public static final double INTAKE_FORWARD = 1;
 
 	/* ----------Controller Ports(Joystick)---------- */

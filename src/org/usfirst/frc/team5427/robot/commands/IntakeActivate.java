@@ -24,6 +24,7 @@ public class IntakeActivate extends Command
 {
 	public IntakeActivate()
 	{
+		Log.info("Intake being activated");
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.intakeSubsystem);
 	}
@@ -32,27 +33,30 @@ public class IntakeActivate extends Command
 	@Override
 	protected void initialize()
 	{
-		if(Robot.oi.joy1.getThrottle()<0) {
-			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle()*Config.INTAKE_FORWARD);
-			Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle()*Config.INTAKE_FORWARD);
-		}
-		else {
-			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle()*Config.INTAKE_BACKWARD);
-			Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle()*Config.INTAKE_BACKWARD);
-		}
+		Log.info("Intake being initialized");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute()
 	{
-		
+		Log.info("Intake being executed");
+		if(Robot.oi.joy1.getThrottle()<0) {
+			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
+			Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle());
+		}
+		else {
+			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
+			Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle());
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished()
 	{
+		if(Robot.oi.getJoy().getRawButtonReleased(1))//TODO change to Config
+			return true;
 		return false;
 	}
 
