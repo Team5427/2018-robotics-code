@@ -69,7 +69,6 @@ public class Robot extends TimedRobot {
 
 	public static Intake intakeSubsystem;
 
-	public  Encoder rightEncoder;
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
@@ -97,7 +96,6 @@ public class Robot extends TimedRobot {
 		Log.init("Intializing Elevator Motor: ");
 		//motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
 		
-		rightEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 		
 		motorPWM_Front_Left = new SteelTalon(Config.FRONT_LEFT_MOTOR);
 		motorPWM_Rear_Left = new SteelTalon(Config.REAR_LEFT_MOTOR);
@@ -156,15 +154,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		
-//		int count = sampleEncoder.get();
-//		double raw = sampleEncoder.getRaw();
-//		double distance = sampleEncoder.getDistance();
-//		double rate = sampleEncoder.getRate();
-//		boolean direction = sampleEncoder.getDirection();
-//		boolean stopped = sampleEncoder.getStopped();
-//		sampleEncoder
-	
+
 
 		dwj = new DriveWithJoystick();
 	}
