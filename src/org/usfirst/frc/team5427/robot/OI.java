@@ -65,7 +65,7 @@ public class OI {
 	        joy1 = new Joystick(0);
 	        
 	        //TODO fix this
-	        motorIntake = new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE);
+	        motorIntake = new JoystickButton(joy1,1);
 	        motorIntake.whileHeld(new IntakeActivate());
 	    }
 
