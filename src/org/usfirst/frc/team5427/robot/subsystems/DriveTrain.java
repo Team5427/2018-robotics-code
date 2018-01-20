@@ -40,7 +40,7 @@ public class DriveTrain extends Subsystem {
 	public void takeJoystickInputs(Joystick joy) {
 
 		// double speed = Math.abs(joy.getY()) > 0.05 ? joy.getY() : 0f;
-		Log.info("drive instruction recieved");
+		;
 		drive.arcadeDrive(-joy.getY(),joy.getZ());
 		// frontLeftMotor.set(speed);
 		// frontRightMotor.set(speed);

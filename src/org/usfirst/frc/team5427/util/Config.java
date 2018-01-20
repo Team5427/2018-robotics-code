@@ -49,12 +49,12 @@ public class Config {
 	// later
 
 	/*----------PWM PORTS-----------*/
-	public static final int FRONT_RIGHT_MOTOR = 0;
-	public static final int REAR_RIGHT_MOTOR = 1;
+	public static final int FRONT_RIGHT_MOTOR = 4;
+	public static final int REAR_RIGHT_MOTOR = 5;
 	public static final int FRONT_LEFT_MOTOR = 2;
 	public static final int REAR_LEFT_MOTOR = 3;
-	public static final int INTAKE_MOTOR_LEFT = 4;
-	public static final int INTAKE_MOTOR_RIGHT = 5;
+	public static final int INTAKE_MOTOR_LEFT = 1;
+	public static final int INTAKE_MOTOR_RIGHT = 0;
 	public static final int ELEVATOR_MOTOR = 7;
 	
 	/*----------Pneumatic Control Module PORTS-----------*/
@@ -62,8 +62,8 @@ public class Config {
 	public static final int PCM_SOLENOID_REVERSE = 1;
 
 	/*-------------Motor Bias-------------------*/
-	public static final double INTAKE_BACKWARD = 1;
-	public static final double INTAKE_FORWARD = .5;
+	public static final double INTAKE_BACKWARD = .2;
+	public static final double INTAKE_FORWARD = 1;
 
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;
