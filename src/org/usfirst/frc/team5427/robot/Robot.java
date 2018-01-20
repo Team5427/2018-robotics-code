@@ -7,38 +7,15 @@
 
 package org.usfirst.frc.team5427.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
 
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-import org.usfirst.frc.team5427.robot.OurClasses.PIDAction;
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
-import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team5427.robot.commands.ExampleCommand;
-import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
-import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainLeftSide;
-import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
-import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainRightSide;
 import org.usfirst.frc.team5427.util.Config;
 
-import org.usfirst.frc.team5427.util.Log;
-import org.usfirst.frc.team5427.util.NextLine;
-import org.usfirst.frc.team5427.util.SameLine;
-
-import com.kauailabs.navx.frc.AHRS;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -47,7 +24,6 @@ import com.kauailabs.navx.frc.AHRS;
  * creating this project, you must also update the build.properties file in the
  * project.
  */
-@SameLine
 public class Robot extends IterativeRobot{
 
 	public static OI oi;
@@ -63,11 +39,9 @@ public class Robot extends IterativeRobot{
 	 */
 	@Override
 	public void robotInit() {
-		Log.init("Initializing intake motors: ");
 		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
 		motorPWM_Intake_Right = new SteelTalon(Config.INTAKE_MOTOR_RIGHT);
 
-		Log.init("Initializing Subsystems: ");
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
 		
 		oi = new OI();

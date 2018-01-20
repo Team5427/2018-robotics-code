@@ -126,7 +126,6 @@ public class SteelTalon extends Talon {
 		if (speed < -1)
 			speed = -1;
 		super.set(speed);
-		Feed();
 	}
 
 }

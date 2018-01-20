@@ -7,22 +7,16 @@
 
 package org.usfirst.frc.team5427.robot.subsystems;
 
-import org.usfirst.frc.team5427.util.NextLine;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
-<<<<<<< HEAD
+
  * @author Varsha 
  * Subsystem for the two flywheels that turn in opposite directions 
-=======
- * @author Varsha Subsystem for the two flywheels that turn in opposite
- *         directions
->>>>>>> 94e8af4f05a4c8b429ccd908753676d73dff71e0
- */
+*/
 
-@NextLine
 public class Intake extends Subsystem
 {
 	// Put methods for controlling this subsystem
