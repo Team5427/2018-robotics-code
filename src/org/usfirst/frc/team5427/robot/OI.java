@@ -8,14 +8,11 @@
 package org.usfirst.frc.team5427.robot;
 
 import org.usfirst.frc.team5427.robot.commands.IntakeActivate;
-import org.usfirst.frc.team5427.robot.commands.IntakeSolenoidSwitch;
-import org.usfirst.frc.team5427.robot.commands.MoveElevator;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -68,7 +65,7 @@ public class OI {
 	        joy1 = new Joystick(0);
 	        
 	        //TODO fix this
-	        motorIntake = new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE);
+	        motorIntake = new JoystickButton(joy1,1);
 	        motorIntake.whileHeld(new IntakeActivate());
 	    }
 
