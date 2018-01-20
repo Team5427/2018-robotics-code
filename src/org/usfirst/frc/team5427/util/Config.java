@@ -34,8 +34,8 @@ public class Config {
 	public static final boolean DEBUG_MODE = true;
 	
 	/*----------PWM PORTS-----------*/
-	public static final int INTAKE_MOTOR_LEFT = 4;
-	public static final int INTAKE_MOTOR_RIGHT = 5;
+	public static final int INTAKE_MOTOR_LEFT = 1;
+	public static final int INTAKE_MOTOR_RIGHT = 0;
 	/* ----------Joystick Buttons---------- */
 	public static final int BUTTON_MOTOR_INTAKE = 1;
 	
