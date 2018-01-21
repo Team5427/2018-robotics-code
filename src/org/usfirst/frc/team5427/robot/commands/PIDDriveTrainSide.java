@@ -126,8 +126,11 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  public void setPower(double power) {
 		  this.power = power;
 	  }
+	  public double getPower() {
+		return power;
+	  }
 
-	  /**
+	/**
 	   * This is where you put the AHRS Angle 
 	   * Returns the input for the pid loop.
 	   *

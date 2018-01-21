@@ -143,7 +143,7 @@ public class PIDDriveTrainPower extends PIDCommand{
 	  protected double returnPIDInput()
 	  {
 		  //TODO implement this
-		  return Robot.ahrs.getYaw();//TODO make this 
+		  return pidDriveTrainSide.getPower();
 	  }
 
 	  /**
@@ -159,9 +159,9 @@ public class PIDDriveTrainPower extends PIDCommand{
 	   */
 	  @Override
 	  protected void usePIDOutput(double output) {
-		  SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
+		  //SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
 		
-		  scgPIDControlled.set(output);
+		  scgPIDControlled.set(pidDriveTrainSide.getPower());
 		  scgConstant.set(power);
 	
 	  }
