@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * Subsystem to control speed of right side of DriveTrain using a PID Controller
  */
 @SameLine
-public class PIDDriveTrainRightSide extends PIDSubsystem {
+public class PIDDriveTrainSide extends PIDSubsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
@@ -32,7 +32,7 @@ public class PIDDriveTrainRightSide extends PIDSubsystem {
 	public static DriveTrain driveTrain;
 	public SpeedControllerGroup spgRight;
 
-	public PIDDriveTrainRightSide(double p, double i, double d,double setpoint, SpeedControllerGroup motorGroup) {
+	public PIDDriveTrainSide(double p, double i, double d,double setpoint, SpeedControllerGroup motorGroup) {
 		super(p, i, d);
 		this.setSetpoint(setpoint);
 		this.setInputRange(-180.0f,  180.0f);

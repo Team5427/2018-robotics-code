@@ -31,7 +31,7 @@ import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainLeftSide;
 import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
-import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainRightSide;
+import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainSide;
 import org.usfirst.frc.team5427.util.Config;
 
 import org.usfirst.frc.team5427.util.Log;
@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot implements PIDOutput {
 	// makes an encoder to go straight
 	public static Encoder encoderStraight;
 
-	public PIDDriveTrainRightSide pidRight;
+	public PIDDriveTrainSide pidRight;
 	public PIDDriveTrainLeftSide pidLeft;
 
 	/**
@@ -232,7 +232,7 @@ public class Robot extends IterativeRobot implements PIDOutput {
 //		startTime = System.nanoTime() / 1000000000.;
 		
 		// for straight(setpoint is 1. going straight)
-		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right);
+		pidRight = new PIDDriveTrainSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right);
 		pidRight.getPIDController().free();
 		//pidRight.reset();
 		//pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI, pidLeftD, 1, driveTrain.drive_Left);
