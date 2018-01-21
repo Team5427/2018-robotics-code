@@ -104,6 +104,8 @@ public class Robot extends TimedRobot {
 		encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
 		encLeft = new Encoder(2,3,false,Encoder.EncodingType.k4X);
 		
+		
+		Log.init("Intializing Drive Train Motors: ");
 		motorPWM_Front_Left = new SteelTalon(Config.FRONT_LEFT_MOTOR);
 		motorPWM_Rear_Left = new SteelTalon(Config.REAR_LEFT_MOTOR);
 		driveTrainLeft = new SpeedControllerGroup(motorPWM_Front_Left, motorPWM_Rear_Left);
@@ -165,8 +167,14 @@ public class Robot extends TimedRobot {
 		encRight.reset();
 		encLeft.reset();
 		
-		encRight.setDistancePerPulse((6*Math.PI)/4);
-		encRight.setDistancePerPulse((6*Math.PI)/4);
+		encRight.setDistancePerPulse((6*Math.PI)/360);
+		encLeft.setDistancePerPulse((6*Math.PI)/360);
+		//360 cycles per WPILIB REvolution
+		//Even though AndyMark SAYS:
+		//1440 pulses per revolution
+		//360 cycles per revolution
+		//4 pulses per cycle
+		//Log.info();
 		
 		dwj = new DriveWithJoystick();
 	}
