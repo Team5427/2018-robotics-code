@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
+import org.usfirst.frc.team5427.robot.commands.PIDDriveTrainPower;
 import org.usfirst.frc.team5427.robot.commands.PIDDriveTrainSide;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
@@ -194,7 +195,7 @@ public class Robot extends IterativeRobot  {
 			m_autonomousCommand.start();
 		}
 		ahrs.reset();
-		new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, 0, .4);
+		new PIDDriveTrainPower(new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, 0, 0), 0,.4, Config.PID_POWER_P, Config.PID_POWER_I, Config.PID_POWER_D);
 	}
 
 	/**

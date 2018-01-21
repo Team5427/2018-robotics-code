@@ -100,4 +100,8 @@ public class Config {
 	public static final double PID_STRAIGHT_I = 0;
 	public static final double PID_STRAIGHT_D = 0;
 
+	public static final double PID_POWER_P = 0.085;
+	public static final double PID_POWER_I = 0.008333;
+	public static final double PID_POWER_D = 0.001042;
+	
 }

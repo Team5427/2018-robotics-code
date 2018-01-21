@@ -72,7 +72,7 @@ public class PIDDriveTrainPower extends PIDCommand{
 	   * @param period the time (in seconds) between calculations
 	   */
 	  @SuppressWarnings("ParameterName")
-	  public PIDDriveTrainPower(PIDDriveTrainSide PIDdriveTrainSide, double initialPower, double p, double i, double d, double finalPower) {
+	  public PIDDriveTrainPower(PIDDriveTrainSide PIDdriveTrainSide, double initialPower, double finalPower, double p, double i, double d) {
 	    super(p,i,d);
 //	    Log.init("PIDDriveTrainRight created");
 	    m_controller = new PIDController(p, i, d, m_source, m_output);
