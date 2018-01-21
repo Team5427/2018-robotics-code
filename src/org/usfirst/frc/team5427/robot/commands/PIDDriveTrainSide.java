@@ -123,9 +123,11 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  protected void setInputRange(double minimumInput, double maximumInput) {
 	    m_controller.setInputRange(minimumInput, maximumInput);
 	  }
+	  
 	  public void setPower(double power) {
 		  this.power = power;
 	  }
+	  
 
 	  /**
 	   * This is where you put the AHRS Angle 

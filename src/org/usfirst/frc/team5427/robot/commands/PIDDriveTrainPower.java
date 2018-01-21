@@ -54,9 +54,12 @@ public class PIDDriveTrainPower extends PIDCommand{
 	    }
 	  };
 
-	  private SpeedControllerGroup scgPIDControlled;
-	  private SpeedControllerGroup scgConstant;
-	  private double power;
+//	  private SpeedControllerGroup scgPIDControlled;
+//	  private SpeedControllerGroup scgConstant;
+	  private double initialPower;
+	  private double finalPower;
+	  private PIDDriveTrainSide PIDdriveTrainSide;
+
 	 
 	  /**
 	   * Instantiates a {@link PIDCommand} that will use the given p, i and d values. It will also space
@@ -69,17 +72,16 @@ public class PIDDriveTrainPower extends PIDCommand{
 	   * @param period the time (in seconds) between calculations
 	   */
 	  @SuppressWarnings("ParameterName")
-	  public PIDDriveTrainPower(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double p, double i, double d, double setpoint, double power) {
+	  public PIDDriveTrainPower(PIDDriveTrainSide PIDdriveTrainSide, double initialPower, double p, double i, double d, double finalPower) {
 	    super(p,i,d);
-	    Log.init("PIDDriveTrainRight created");
+//	    Log.init("PIDDriveTrainRight created");
 	    m_controller = new PIDController(p, i, d, m_source, m_output);
-	    this.scgPIDControlled=scgPIDControlled;
-	    this.scgConstant = scgConstant;
-	    this.scgPIDControlled.set(power);
-	    this.scgConstant.set(power);
-	    this.power = power;
-	   
-	    super.setSetpoint(setpoint);
+
+	    this.initialPower = initialPower;
+	    this.finalPower = finalPower;
+	    this.PIDdriveTrainSide=PIDdriveTrainSide;
+	    PIDdriveTrainSide.setPower(initialPower);
+	    super.setSetpoint(finalPower);
 	    initialize();
 	    
 	  }
@@ -98,13 +100,13 @@ public class PIDDriveTrainPower extends PIDCommand{
 	  public void initialize() {
 		  Log.init("Initializing");
 	    m_controller.enable();
+
 	  }
 	  
 	  public void end() {
 		  Log.init("Ending PID");
 	    m_controller.disable();
-	    scgPIDControlled.set(0);	
-	    scgConstant.set(0);
+	    PIDdriveTrainSide.end();
 	  }
 
 	  public void interrupted() {
@@ -123,9 +125,7 @@ public class PIDDriveTrainPower extends PIDCommand{
 	  protected void setInputRange(double minimumInput, double maximumInput) {
 	    m_controller.setInputRange(minimumInput, maximumInput);
 	  }
-	  public void setPower(double power) {
-		  this.power = power;
-	  }
+	 
 
 	  /**
 	   * This is where you put the AHRS Angle 
@@ -161,9 +161,7 @@ public class PIDDriveTrainPower extends PIDCommand{
 	  protected void usePIDOutput(double output) {
 		  SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
 		
-		  scgPIDControlled.set(output);
-		  scgConstant.set(power);
-	
+		
 	  }
 
 
