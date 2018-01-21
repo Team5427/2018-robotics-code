@@ -114,7 +114,7 @@ public class Robot extends IterativeRobot  {
 		
 		drive = new DifferentialDrive(speedcontrollergroup_left, speedcontrollergroup_right);
 		driveTrain = new DriveTrain(speedcontrollergroup_left, speedcontrollergroup_right, drive);
-		dwj = new DriveWithJoystick();
+	
 		
 		Log.init("Initializing intake motors: ");
 		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
@@ -140,12 +140,7 @@ public class Robot extends IterativeRobot  {
 			 * http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/
 			 * for details.
 			 */
-			ahrs = new AHRS(SPI.Port.kMXP) {
-				@Override
-				public double pidGet() {
-					return ahrs.getYaw();
-				}
-			};
+			ahrs = new AHRS(SPI.Port.kMXP);
 
 		} catch (RuntimeException ex) {
 			DriverStation.reportError("Error instantiating navX-MXP: " + ex.getMessage(), true);
@@ -154,6 +149,7 @@ public class Robot extends IterativeRobot  {
 		
 
 		oi = new OI();
+		Log.init("Robot init done");
 		
 	}
 
@@ -199,6 +195,8 @@ public class Robot extends IterativeRobot  {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
+		ahrs.reset();
+		new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, pidRightP, pidRightI, pidRightD, 0, .5);
 	}
 
 	/**
@@ -211,6 +209,7 @@ public class Robot extends IterativeRobot  {
 
 	@Override
 	public void teleopInit() {
+		Log.init("Teleop init");
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -218,6 +217,9 @@ public class Robot extends IterativeRobot  {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		dwj = new DriveWithJoystick();
+//		Log.init("Initializing test");
+		
 	}
 	
 	/**
@@ -232,8 +234,7 @@ public class Robot extends IterativeRobot  {
 	public void testInit()
 	{	
 		// for straight(setpoint is 1. going straight)
-		ahrs.reset();
-		new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, pidRightP, pidRightI, pidRightD, 0);
+	
 		
 	}
 

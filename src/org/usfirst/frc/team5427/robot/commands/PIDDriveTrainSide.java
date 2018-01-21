@@ -3,6 +3,7 @@ package org.usfirst.frc.team5427.robot.commands;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.util.Log;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -11,6 +12,7 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2008-2018 FIRST. All Rights Reserved.                        */
@@ -54,6 +56,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 
 	  private SpeedControllerGroup scgPIDControlled;
 	  private SpeedControllerGroup scgConstant;
+	  private double power;
 	 
 	  /**
 	   * Instantiates a {@link PIDCommand} that will use the given p, i and d values. It will also space
@@ -66,13 +69,19 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   * @param period the time (in seconds) between calculations
 	   */
 	  @SuppressWarnings("ParameterName")
-	  public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double p, double i, double d, double period) {
-	    super(p,i,d,period);
-	    m_controller = new PIDController(p, i, d, m_source, m_output, period);
+	  public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double p, double i, double d, double setpoint, double power) {
+	    super(p,i,d);
+	    Log.init("PIDDriveTrainRight created");
+	    m_controller = new PIDController(p, i, d, m_source, m_output);
 	    this.scgPIDControlled=scgPIDControlled;
 	    this.scgConstant = scgConstant;
-	    scgPIDControlled.set(.5);
-	    this.scgConstant.set(.5);
+	    this.scgPIDControlled.set(power);
+	    this.scgConstant.set(power);
+	    this.power = power;
+	   
+	    super.setSetpoint(setpoint);
+	    initialize();
+	    
 	  }
 
 	 
@@ -87,12 +96,15 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  }
 
 	  public void initialize() {
+		  Log.init("Initializing");
 	    m_controller.enable();
 	  }
 	  
 	  public void end() {
+		  Log.init("Ending PID");
 	    m_controller.disable();
-	    scgPIDControlled.set(0);	    
+	    scgPIDControlled.set(0);	
+	    scgConstant.set(0);
 	  }
 
 	  public void interrupted() {
@@ -110,6 +122,9 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   */
 	  protected void setInputRange(double minimumInput, double maximumInput) {
 	    m_controller.setInputRange(minimumInput, maximumInput);
+	  }
+	  public void setPower(double power) {
+		  this.power = power;
 	  }
 
 	  /**
@@ -144,8 +159,11 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   */
 	  @Override
 	  protected void usePIDOutput(double output) {
+		  SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
+		
 		  scgPIDControlled.set(output);
-		  scgConstant.set(.5);
+		  scgConstant.set(power);
+	
 	  }
 
 
