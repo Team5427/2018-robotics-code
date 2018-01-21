@@ -75,9 +75,10 @@ public class PIDDriveTrainSide extends PIDCommand{
 	    m_controller = new PIDController(p, i, d, m_source, m_output);
 	    this.scgPIDControlled=scgPIDControlled;
 	    this.scgConstant = scgConstant;
-	    this.scgPIDControlled.set(power);
-	    this.scgConstant.set(power);
 	    this.power = power;
+	    this.scgPIDControlled.set(-this.power);
+	    this.scgConstant.set(this.power);
+	
 	   
 	    super.setSetpoint(setpoint);
 	    initialize();
@@ -167,6 +168,8 @@ public class PIDDriveTrainSide extends PIDCommand{
 		
 		  scgPIDControlled.set(output);
 		  scgConstant.set(power);
+		  
+		  SmartDashboard.putNumber("RightSpeed", output);
 	
 	  }
 
