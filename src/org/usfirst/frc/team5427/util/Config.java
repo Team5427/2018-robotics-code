@@ -1,8 +1,5 @@
 package org.usfirst.frc.team5427.util;
 
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 //TODO FIXED CODE fEB 20 2017
 /**
  * This file will store ALL of the variables, offsets, measurements, etc. that

@@ -9,10 +9,8 @@ package org.usfirst.frc.team5427.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
-import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.NextLine;
-import org.usfirst.frc.team5427.util.SameLine;
 
 /**
  * This command simply sets the speed of the intake motors to the current

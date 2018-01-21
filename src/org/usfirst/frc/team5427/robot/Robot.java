@@ -7,39 +7,26 @@
 
 package org.usfirst.frc.team5427.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-import org.usfirst.frc.team5427.robot.OurClasses.PIDAction;
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team5427.robot.commands.ExampleCommand;
-import org.usfirst.frc.team5427.robot.commands.IntakeSolenoidSwitch;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
-import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainLeftSide;
 import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
-import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainRightSide;
 import org.usfirst.frc.team5427.util.Config;
 
 import org.usfirst.frc.team5427.util.Log;
-import org.usfirst.frc.team5427.util.NextLine;
 import org.usfirst.frc.team5427.util.SameLine;
-
-import com.kauailabs.navx.frc.AHRS;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -49,7 +36,7 @@ import com.kauailabs.navx.frc.AHRS;
  * project.
  */
 @SameLine
-public class Robot extends IterativeRobot implements PIDOutput {
+public class Robot extends IterativeRobot{
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 
 	public static OI oi;
@@ -79,10 +66,6 @@ public class Robot extends IterativeRobot implements PIDOutput {
 	public static Intake intakeSubsystem;
 	// makes an encoder to go straight
 	public static Encoder encoderStraight;
-
-	public PIDDriveTrainRightSide pidRight;
-	public PIDDriveTrainLeftSide pidLeft;
-
 	/**
 	 * values used for PID loops
 	 *TODO move these to Config
@@ -239,67 +222,18 @@ public class Robot extends IterativeRobot implements PIDOutput {
 //		}
 //		startTime = System.nanoTime() / 1000000000.;
 		
-		// for straight(setpoint is 1. going straight)
-		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right);
-		pidRight.getPIDController().free();
-		//pidRight.reset();
-		//pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI, pidLeftD, 1, driveTrain.drive_Left);
-		pidRight.makeAHRS();
-		
-		pidRight.getPIDController().enable();
-		//pidRight.enable();
-		//pidLeft.getPIDController().enable();
-		Log.info("ISENABLED (init): "+pidRight.getPIDController().isEnabled());
 		
 	}
 
-//	
-//	enum Mode{Straight, Left, Right}
-//	Mode mode = Mode.Straight;
-//	PIDAction currentPIDAction;
-//	
-//	public void turnAngleClockwise(double degrees) {
-//		if(currentPIDAction.isFinished()) {
-//			//currentPIDAction = new PIDAction(startAngle, endAngle, currentAngle);
-//		}
-//	}
-	
+
 	/**
 	 * This function is called periodically during test mode.
 	 */
 	@Override
 	public void testPeriodic() {
-//		// add values to smartdashboard for PID testing (graph)
-		 SmartDashboard.putNumber("PID Output: ", rotateToAngleRate);
-		 SmartDashboard.putNumber("Yaw: ", pidRight.ahrs.getYaw());
-
-		 Log.info("ISENABLED: "+pidRight.getPIDController().isEnabled());
-		 
-		//straight
-		double currentRotationRate = rotateToAngleRate-.5;
-		Log.info(""+currentRotationRate);
-		
-		Log.info("rightMotorSpeed: " + rightMotorSpeed);
-		//leftMotorSpeed = pidLeft.returnPIDInput();
- 		driveTrain.drive.tankDrive(-currentRotationRate, -rightMotorSpeed);
- 		
- 		if(rightMotorSpeed>-.5)
-			rightMotorSpeed-=0.006;
-		
-		if(rightMotorSpeed<-.5)
-			rightMotorSpeed = -.5;
-		
-		Log.info("rightMotorSpeed: " + rightMotorSpeed);
-		Log.info("leftMotorSpeed: " + -currentRotationRate);
+//		
  		
 	}
-	public void pidWrite(double output) {
-		// TODO Auto-generated method stub
-		if (output != 0) {
-			//System.out.println("Output: " + output);
-		}
-		rotateToAngleRate = output;
-		
-	}
+	
    
 }
