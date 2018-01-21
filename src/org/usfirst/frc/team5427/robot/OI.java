@@ -7,10 +7,31 @@
 
 package org.usfirst.frc.team5427.robot;
 
+
+
+import org.usfirst.frc.team5427.robot.commands.IntakeActivate;
+import org.usfirst.frc.team5427.robot.commands.IntakeSolenoidSwitch;
+import org.usfirst.frc.team5427.robot.commands.MoveElevator;
+import org.usfirst.frc.team5427.util.Log;
+import org.usfirst.frc.team5427.util.SameLine;
+
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
+/**
+ * This file makes the joystick
+ * This file will use the same line method
+ * 
+ * @author Akshat
+ */
+
+@SameLine
 public class OI {
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
@@ -23,11 +44,11 @@ public class OI {
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
-
+	
 	//// TRIGGERING COMMANDS WITH BUTTONS
 	// Once you have a button, it's trivial to bind it to a button in one of
 	// three ways:
-
+	
 	// Start the command when the button is pressed and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenPressed(new ExampleCommand());
@@ -39,4 +60,33 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
+	
+	 public Joystick joy1=new Joystick(0);
+	 
+	 Button motorIntake;
+	 
+	 Button solenoidIntake;
+
+	 Button elevatorForward;
+	 Button elevatorReverse;
+
+	    public OI() {
+	        //joy1 = new Joystick(0);
+	        
+	        motorIntake = new JoystickButton(joy1,1);
+//	        solenoidIntake = new JoystickButton(joy1,2);
+	        
+//	        elevatorForward = new JoystickButton(joy1,3);
+//	        elevatorReverse = new JoystickButton(joy1,5);
+	        Log.debug("IntakeStartedIshnotreally");
+	        motorIntake.whileHeld(new IntakeActivate());
+	       // solenoidIntake.whenPressed(new IntakeSolenoidSwitch());
+	        
+//	        elevatorForward.whileHeld(new MoveElevator(1));
+//	        elevatorReverse.whileHeld(new MoveElevator(2));
+	    }
+
+	    public Joystick getJoy() {
+	        return joy1;
+	    }
 }

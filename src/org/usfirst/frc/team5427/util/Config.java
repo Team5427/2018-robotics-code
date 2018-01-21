@@ -55,16 +55,15 @@ public class Config {
 	public static final int REAR_LEFT_MOTOR = 3;
 	public static final int INTAKE_MOTOR_LEFT = 4;
 	public static final int INTAKE_MOTOR_RIGHT = 5;
-
-	/*-------------Ultrasonic Sensor Ports---------*/
-
-	/*----------MULTIPLIERS AND DEADSETS----------*/
+	public static final int ELEVATOR_MOTOR = 7;
+	
+	/*----------Pneumatic Control Module PORTS-----------*/
+	public static final int PCM_SOLENOID_FORWARD = 0;
+	public static final int PCM_SOLENOID_REVERSE = 1;
 
 	/*-------------Motor Bias-------------------*/
-
-	/*-------------Motor Offset------------------*/
-
-	/*-------------Motor Speeds-----------------*/
+	public static final double INTAKE_BACKWARD = 1;
+	public static final double INTAKE_FORWARD = 1;
 
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;
@@ -72,19 +71,4 @@ public class Config {
 	public static final int ONE_JOYSTICK = 0; // static var for above
 	public static final int TWO_JOYSTICKS = 1; // static var for above
 	public static final int JOYSTICK_MODE = ONE_JOYSTICK;
-
-	/*------------speed for auto-------*/
-
-	/*------------timings for auto-------*/
-
-	/*-----------spot-----------*/
-
-	/*----------autonomous aiming------*/
-
-	/*---------------Buttons------------------- */
-
-	/*------------Mulipurpose Flap Vars------*/
-
-	/* Servo Motors */
-
 }
