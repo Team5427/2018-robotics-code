@@ -48,7 +48,7 @@ import com.kauailabs.navx.frc.AHRS;
  * project.
  */
 @SameLine
-public class Robot extends IterativeRobot implements PIDOutput {
+public class Robot extends IterativeRobot  {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 
 	public static OI oi;
@@ -76,11 +76,10 @@ public class Robot extends IterativeRobot implements PIDOutput {
 
 	public static SpeedController motorPWM_Elevator;
 	public static Intake intakeSubsystem;
-	// makes an encoder to go straight
-	public static Encoder encoderStraight;
+	
 
 	public PIDDriveTrainSide pidRight;
-	public PIDDriveTrainLeftSide pidLeft;
+
 
 	/**
 	 * values used for PID loops
@@ -90,14 +89,7 @@ public class Robot extends IterativeRobot implements PIDOutput {
 	public double pidRightI = .008333;
 	public double pidRightD = .001042;
 
-	public double pidLeftP;
-	public double pidLeftI;
-	public double pidLeftD;
 
-	//double startTime;
-	double rotateToAngleRate=0;
-	double rightMotorSpeed = 0;
-	double leftMotorSpeed = 0;
 	
 	public AHRS ahrs;
 
@@ -139,9 +131,7 @@ public class Robot extends IterativeRobot implements PIDOutput {
 		Log.init("Initializing Subsystems: ");
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
 
-		// need info of ports
-		Log.init("Initializing Encoders: ");
-		//encoderStraight = new Encoder(0, 0);
+	
 
 		Log.init("Intializing Elevator Motor: ");
 		motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
@@ -253,7 +243,7 @@ public class Robot extends IterativeRobot implements PIDOutput {
 		pidRight = new PIDDriveTrainSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right);
 		
 	
-		Log.info("ISENABLED (init): "+pidRight.getPIDController().isEnabled());
+		
 		
 	}
 
@@ -273,37 +263,9 @@ public class Robot extends IterativeRobot implements PIDOutput {
 	 */
 	@Override
 	public void testPeriodic() {
-//		// add values to smartdashboard for PID testing (graph)
-		 SmartDashboard.putNumber("PID Output: ", rotateToAngleRate);
-		 SmartDashboard.putNumber("Yaw: ", pidRight.ahrs.getYaw());
 
-		 Log.info("ISENABLED: "+pidRight.getPIDController().isEnabled());
-		 
-		//straight
-		double currentRotationRate = rotateToAngleRate-.5;
-		Log.info(""+currentRotationRate);
-		
-		Log.info("rightMotorSpeed: " + rightMotorSpeed);
-		//leftMotorSpeed = pidLeft.returnPIDInput();
- 		driveTrain.drive.tankDrive(-currentRotationRate, -rightMotorSpeed);
- 		
- 		if(rightMotorSpeed>-.5)
-			rightMotorSpeed-=0.006;
-		
-		if(rightMotorSpeed<-.5)
-			rightMotorSpeed = -.5;
-		
-		Log.info("rightMotorSpeed: " + rightMotorSpeed);
-		Log.info("leftMotorSpeed: " + -currentRotationRate);
- 		
+			
 	}
-	public void pidWrite(double output) {
-		// TODO Auto-generated method stub
-		if (output != 0) {
-			//System.out.println("Output: " + output);
-		}
-		rotateToAngleRate = output;
-		
-	}
+
    
 }
