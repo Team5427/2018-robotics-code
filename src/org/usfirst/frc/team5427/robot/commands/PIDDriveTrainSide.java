@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 
 /*----------------------------------------------------------------------------*/
@@ -48,20 +49,8 @@ public class PIDDriveTrainSide extends PIDCommand{
 	    }
 	  };
 
-	  /**
-	   * Instantiates a {@link PIDCommand} that will use the given p, i and d values.
-	   *
-	   * @param name the name of the command
-	   * @param p    the proportional value
-	   * @param i    the integral value
-	   * @param d    the derivative value
-	   */
-	  @SuppressWarnings("ParameterName")
-	  public PIDDriveTrainSide(String name, double p, double i, double d) {
-	    super(name,p,i,d);
-	    m_controller = new PIDController(p, i, d, m_source, m_output);
-	  }
-
+	  private SpeedControllerGroup scg;
+	 
 	  /**
 	   * Instantiates a {@link PIDCommand} that will use the given p, i and d values. It will also space
 	   * the time between PID loop calculations to be equal to the given period.
@@ -73,9 +62,10 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   * @param period the time (in seconds) between calculations
 	   */
 	  @SuppressWarnings("ParameterName")
-	  public PIDDriveTrainSide(String name, double p, double i, double d, double period) {
-	    super(name,p,i,d,period);
+	  public PIDDriveTrainSide(SpeedControllerGroup scg, double p, double i, double d, double period) {
+	    super(p,i,d,period);
 	    m_controller = new PIDController(p, i, d, m_source, m_output, period);
+	    this.scg=scg;
 	  }
 
 	 
@@ -89,54 +79,21 @@ public class PIDDriveTrainSide extends PIDCommand{
 	    return m_controller;
 	  }
 
-	  @Override
-	  @SuppressWarnings("MethodName")
-	  void _initialize() {
+	  public void initialize() {
 	    m_controller.enable();
 	  }
-
-	  @Override
-	  @SuppressWarnings("MethodName")
-	  void _end() {
+	  
+	  public void end() {
 	    m_controller.disable();
+	    scg.set(0);	    
 	  }
 
-	  @Override
-	  @SuppressWarnings("MethodName")
-	  void _interrupted() {
-	    _end();
-	  }
-
-	  /**
-	   * Adds the given value to the setpoint. If {@link PIDCommand#setInputRange(double, double)
-	   * setInputRange(...)} was used, then the bounds will still be honored by this method.
-	   *
-	   * @param deltaSetpoint the change in the setpoint
-	   */
-	  public void setSetpointRelative(double deltaSetpoint) {
-	    setSetpoint(getSetpoint() + deltaSetpoint);
-	  }
-
-	  /**
-	   * Sets the setpoint to the given value. If {@link PIDCommand#setInputRange(double, double)
-	   * setInputRange(...)} was called, then the given setpoint will be trimmed to fit within the
-	   * range.
-	   *
-	   * @param setpoint the new setpoint
-	   */
-	  protected void setSetpoint(double setpoint) {
-	    m_controller.setSetpoint(setpoint);
+	  public void interrupted() {
+	    end();
 	  }
 
 	  
-	  /**
-	   * Returns the current position.
-	   *
-	   * @return the current position
-	   */
-	  protected double getPosition() {
-	    return returnPIDInput();
-	  }
+	  
 
 	  /**
 	   * Sets the maximum and minimum values expected from the input and setpoint.
@@ -149,6 +106,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  }
 
 	  /**
+	   * This is where you put the AHRS Angle 
 	   * Returns the input for the pid loop.
 	   *
 	   * <p>It returns the input for the pid loop, so if this command was based off of a gyro, then it
@@ -160,7 +118,11 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   *
 	   * @return the value the pid loop should use as input
 	   */
-	  protected abstract double returnPIDInput();//TODO implement this
+	  protected double returnPIDInput()
+	  {
+		  //TODO implement this
+		  return 0;//TODO make this 
+	  }
 
 	  /**
 	   * Uses the value that the pid loop calculated. The calculated value is the "output" parameter.
@@ -173,7 +135,10 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   *
 	   * @param output the value the pid loop calculated
 	   */
-	  protected abstract void usePIDOutput(double output); //TODO Implement this
+	  @Override
+	  protected void usePIDOutput(double output) {
+		  scg.set(output);
+	  }
 
 
 	@Override
