@@ -240,10 +240,7 @@ public class Robot extends IterativeRobot  {
 	public void testInit()
 	{	
 		// for straight(setpoint is 1. going straight)
-		pidRight = new PIDDriveTrainSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right);
-		
-	
-		
+		pidRight = new PIDDriveTrainSide(pidRightP, pidRightI, pidRightD, 0, driveTrain.drive_Right);
 		
 	}
 
