@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team5427.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -23,10 +22,8 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-import org.usfirst.frc.team5427.robot.OurClasses.PIDAction;
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team5427.robot.commands.ExampleCommand;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainLeftSide;
@@ -35,7 +32,6 @@ import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainSide;
 import org.usfirst.frc.team5427.util.Config;
 
 import org.usfirst.frc.team5427.util.Log;
-import org.usfirst.frc.team5427.util.NextLine;
 import org.usfirst.frc.team5427.util.SameLine;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -99,7 +95,7 @@ public class Robot extends IterativeRobot implements PIDOutput {
 	double rightMotorSpeed = 0;
 	double leftMotorSpeed = 0;
 	
-	public AHRS ahrs;
+	public static AHRS ahrs;
 
 	/**
 	 * This function is run when the robot is first started up and should be used

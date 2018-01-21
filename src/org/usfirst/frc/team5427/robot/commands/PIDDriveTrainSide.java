@@ -1,6 +1,9 @@
 package org.usfirst.frc.team5427.robot.commands;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
+
+import org.usfirst.frc.team5427.robot.Robot;
+
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -121,7 +124,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  protected double returnPIDInput()
 	  {
 		  //TODO implement this
-		  return 0;//TODO make this 
+		  return Robot.ahrs.getYaw();//TODO make this 
 	  }
 
 	  /**
