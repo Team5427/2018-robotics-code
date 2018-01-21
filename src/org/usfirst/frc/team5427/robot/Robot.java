@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -64,8 +65,7 @@ public class Robot extends IterativeRobot{
 
 	public static SpeedController motorPWM_Elevator;
 	public static Intake intakeSubsystem;
-	// makes an encoder to go straight
-	public static Encoder encoderStraight;
+	
 	/**
 	 * values used for PID loops
 	 *TODO move these to Config
@@ -82,6 +82,9 @@ public class Robot extends IterativeRobot{
 	double rotateToAngleRate=0;
 	double rightMotorSpeed = 0;
 	double leftMotorSpeed = 0;
+	
+	public Encoder encRight;
+	public Encoder encLeft;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -130,6 +133,9 @@ public class Robot extends IterativeRobot{
 		Log.init("Intializing Elevator Motor: ");
 		//motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
 		
+		encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
+		encLeft = new Encoder(2,3,false,Encoder.EncodingType.k4X);
+
 		oi = new OI();
 	}
 
@@ -187,7 +193,6 @@ public class Robot extends IterativeRobot{
 
 	@Override
 	public void teleopInit() {
-
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -195,7 +200,19 @@ public class Robot extends IterativeRobot{
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-
+		
+		encRight.reset();
+		encLeft.reset();
+		
+		encRight.setDistancePerPulse((6*Math.PI)/360);
+		encLeft.setDistancePerPulse((6*Math.PI)/360);
+		//360 cycles per WPILIB REvolution
+		//Even though AndyMark SAYS:
+		//1440 pulses per revolution
+		//360 cycles per revolution
+		//4 pulses per cycle
+		//Log.info();
+		
 		dwj = new DriveWithJoystick();
 
 
@@ -207,6 +224,12 @@ public class Robot extends IterativeRobot{
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		//4 counts for every rev
+		SmartDashboard.putNumber("RightCount", encRight.get());
+		SmartDashboard.putNumber("LeftCount", encLeft.get());
+		
+		SmartDashboard.putNumber("RightDist",encRight.getDistance());
+		SmartDashboard.putNumber("LeftDist",encLeft.getDistance());
 	}
 
 	@Override
