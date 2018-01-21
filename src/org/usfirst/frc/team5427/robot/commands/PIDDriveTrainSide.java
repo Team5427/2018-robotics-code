@@ -53,7 +53,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  };
 
 	  private SpeedControllerGroup scgPIDControlled;
-	  private SpeedControllerGroup scgContant;
+	  private SpeedControllerGroup scgConstant;
 	 
 	  /**
 	   * Instantiates a {@link PIDCommand} that will use the given p, i and d values. It will also space
@@ -66,13 +66,13 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   * @param period the time (in seconds) between calculations
 	   */
 	  @SuppressWarnings("ParameterName")
-	  public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgContant, double p, double i, double d, double period) {
+	  public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double p, double i, double d, double period) {
 	    super(p,i,d,period);
 	    m_controller = new PIDController(p, i, d, m_source, m_output, period);
 	    this.scgPIDControlled=scgPIDControlled;
-	    this.scgContant = scgContant;
+	    this.scgConstant = scgConstant;
 	    scgPIDControlled.set(.5);
-	    scgContant.set(.5);
+	    this.scgConstant.set(.5);
 	  }
 
 	 
@@ -145,7 +145,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  @Override
 	  protected void usePIDOutput(double output) {
 		  scgPIDControlled.set(output);
-		  scgContant.set(.5);
+		  scgConstant.set(.5);
 	  }
 
 
