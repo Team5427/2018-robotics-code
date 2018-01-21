@@ -1,6 +1,5 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
-import org.usfirst.frc.team5427.robot.RobotMap;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;

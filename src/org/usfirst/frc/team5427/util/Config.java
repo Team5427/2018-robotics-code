@@ -77,24 +77,11 @@ public class Config {
 	// Speeds for the different things that the robot needs to do
 	// Controlled by grip
 	// later
-	/* -------------PWM ID----------*/
-	// For example to map the left and right motors, you could define the
-	// following variables to use with your drivetrain subsystem.
-	public static final int frontleftValue = 2;
-	public static final int frontrightValue = 0;
-	public static final int rearleftValue = 3;
-	public static final int rearrightValue = 1;
-
+	
+	
 	/*-------------Motor Bias-------------------*/
-	public static final double INTAKE_BACKWARD = 1;
-	public static final double INTAKE_FORWARD = .5;
 	
 	/*-------------Motor Offset------------------*/
-	public static final int CHANNEL_A_RIGHT = 0;
-	public static final int CHANNEL_B_RIGHT = 0;
-	public static final int CHANNEL_A_LEFT = 0;
-	public static final int CHANNEL_B_LEFT = 0;
-	public static final int ELEVATOR_MOTOR = 7;
 	
 	
 
