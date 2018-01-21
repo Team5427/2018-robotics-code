@@ -196,7 +196,6 @@ public class Robot extends IterativeRobot  {
 			m_autonomousCommand.start();
 		}
 		ahrs.reset();
-		new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, pidRightP, pidRightI, pidRightD, 0, .5);
 	}
 
 	/**

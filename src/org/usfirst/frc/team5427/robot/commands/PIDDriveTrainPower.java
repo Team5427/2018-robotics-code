@@ -100,7 +100,6 @@ public class PIDDriveTrainPower extends PIDCommand{
 	  public void initialize() {
 		  Log.init("Initializing");
 	    m_controller.enable();
-
 	  }
 	  
 	  public void end() {
