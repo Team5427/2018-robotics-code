@@ -232,6 +232,7 @@ public class Robot extends IterativeRobot  {
 	public void testInit()
 	{	
 		// for straight(setpoint is 1. going straight)
+		ahrs.reset();
 		new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, pidRightP, pidRightI, pidRightD, 0);
 		
 	}
