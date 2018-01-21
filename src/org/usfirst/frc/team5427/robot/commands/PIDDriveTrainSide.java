@@ -58,7 +58,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   */
 	  @SuppressWarnings("ParameterName")
 	  public PIDDriveTrainSide(String name, double p, double i, double d) {
-	    super(name);
+	    super(name,p,i,d);
 	    m_controller = new PIDController(p, i, d, m_source, m_output);
 	  }
 
@@ -74,38 +74,11 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   */
 	  @SuppressWarnings("ParameterName")
 	  public PIDDriveTrainSide(String name, double p, double i, double d, double period) {
-	    super(name);
+	    super(name,p,i,d,period);
 	    m_controller = new PIDController(p, i, d, m_source, m_output, period);
 	  }
 
-	  /**
-	   * Instantiates a {@link PIDCommand} that will use the given p, i and d values. It will use the
-	   * class name as its name.
-	   *
-	   * @param p the proportional value
-	   * @param i the integral value
-	   * @param d the derivative value
-	   */
-	  @SuppressWarnings("ParameterName")
-	  public PIDDriveTrainSide(double p, double i, double d) {
-	    m_controller = new PIDController(p, i, d, m_source, m_output);
-	  }
-
-	  /**
-	   * Instantiates a {@link PIDCommand} that will use the given p, i and d values. It will use the
-	   * class name as its name.. It will also space the time between PID loop calculations to be equal
-	   * to the given period.
-	   *
-	   * @param p      the proportional value
-	   * @param i      the integral value
-	   * @param d      the derivative value
-	   * @param period the time (in seconds) between calculations
-	   */
-	  @SuppressWarnings("ParameterName")
-	  public PIDDriveTrainSide(double p, double i, double d, double period) {
-	    m_controller = new PIDController(p, i, d, m_source, m_output, period);
-	  }
-
+	 
 	  /**
 	   * Returns the {@link PIDController} used by this {@link PIDCommand}. Use this if you would like
 	   * to fine tune the pid loop.
@@ -155,15 +128,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 	    m_controller.setSetpoint(setpoint);
 	  }
 
-	  /**
-	   * Returns the setpoint.
-	   *
-	   * @return the setpoint
-	   */
-	  protected double getSetpoint() {
-	    return m_controller.getSetpoint();
-	  }
-
+	  
 	  /**
 	   * Returns the current position.
 	   *
@@ -195,7 +160,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   *
 	   * @return the value the pid loop should use as input
 	   */
-	  protected abstract double returnPIDInput();
+	  protected abstract double returnPIDInput();//TODO implement this
 
 	  /**
 	   * Uses the value that the pid loop calculated. The calculated value is the "output" parameter.
@@ -208,14 +173,8 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   *
 	   * @param output the value the pid loop calculated
 	   */
-	  protected abstract void usePIDOutput(double output);
+	  protected abstract void usePIDOutput(double output); //TODO Implement this
 
-	  @Override
-	  public void initSendable(SendableBuilder builder) {
-	    m_controller.initSendable(builder);
-	    super.initSendable(builder);
-	    builder.setSmartDashboardType("PIDCommand");
-	  }
 
 	@Override
 	protected boolean isFinished() {
