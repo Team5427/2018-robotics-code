@@ -98,6 +98,8 @@ public class Robot extends IterativeRobot implements PIDOutput {
 	double rotateToAngleRate=0;
 	double rightMotorSpeed = 0;
 	double leftMotorSpeed = 0;
+	
+	public AHRS ahrs;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -143,8 +145,34 @@ public class Robot extends IterativeRobot implements PIDOutput {
 
 		Log.init("Intializing Elevator Motor: ");
 		motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
+		
+		try {
+
+			/* Communicate w/navX-MXP via the MXP SPI Bus. */
+			/*
+			 * Alternatively: I2C.Port.kMXP, SerialPort.Port.kMXP or
+			 * SerialPort.Port.kUSB
+			 */
+			/*
+			 * See
+			 * http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/
+			 * for details.
+			 */
+			ahrs = new AHRS(SPI.Port.kMXP) {
+				@Override
+				public double pidGet() {
+					return ahrs.getYaw();
+				}
+			};
+
+		} catch (RuntimeException ex) {
+			DriverStation.reportError("Error instantiating navX-MXP: " + ex.getMessage(), true);
+		}
+
+		
 
 		oi = new OI();
+		
 	}
 
 	/**
@@ -221,26 +249,10 @@ public class Robot extends IterativeRobot implements PIDOutput {
 	@Override
 	public void testInit()
 	{	
-//		try
-//		{
-//			Thread.sleep(500);
-//		}
-//		catch (Exception e)
-//		{
-//			e.printStackTrace();
-//		}
-//		startTime = System.nanoTime() / 1000000000.;
-		
 		// for straight(setpoint is 1. going straight)
 		pidRight = new PIDDriveTrainSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right);
-		pidRight.getPIDController().free();
-		//pidRight.reset();
-		//pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI, pidLeftD, 1, driveTrain.drive_Left);
-		pidRight.makeAHRS();
 		
-		pidRight.getPIDController().enable();
-		//pidRight.enable();
-		//pidLeft.getPIDController().enable();
+	
 		Log.info("ISENABLED (init): "+pidRight.getPIDController().isEnabled());
 		
 	}
