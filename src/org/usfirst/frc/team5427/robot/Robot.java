@@ -24,11 +24,10 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
+import org.usfirst.frc.team5427.robot.commands.PIDDriveTrainSide;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
-import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainLeftSide;
 import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
-import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainSide;
 import org.usfirst.frc.team5427.util.Config;
 
 import org.usfirst.frc.team5427.util.Log;
@@ -73,9 +72,6 @@ public class Robot extends IterativeRobot  {
 	public static SpeedController motorPWM_Elevator;
 	public static Intake intakeSubsystem;
 	
-
-	public PIDDriveTrainSide pidRight;
-
 
 	/**
 	 * values used for PID loops
@@ -236,7 +232,7 @@ public class Robot extends IterativeRobot  {
 	public void testInit()
 	{	
 		// for straight(setpoint is 1. going straight)
-		pidRight = new PIDDriveTrainSide(pidRightP, pidRightI, pidRightD, 0, driveTrain.drive_Right);
+		new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, pidRightP, pidRightI, pidRightD, 0);
 		
 	}
 

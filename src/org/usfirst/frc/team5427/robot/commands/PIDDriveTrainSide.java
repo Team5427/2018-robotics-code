@@ -52,7 +52,8 @@ public class PIDDriveTrainSide extends PIDCommand{
 	    }
 	  };
 
-	  private SpeedControllerGroup scg;
+	  private SpeedControllerGroup scgPIDControlled;
+	  private SpeedControllerGroup scgContant;
 	 
 	  /**
 	   * Instantiates a {@link PIDCommand} that will use the given p, i and d values. It will also space
@@ -65,10 +66,11 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   * @param period the time (in seconds) between calculations
 	   */
 	  @SuppressWarnings("ParameterName")
-	  public PIDDriveTrainSide(SpeedControllerGroup scg, double p, double i, double d, double period) {
+	  public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgContant, double p, double i, double d, double period) {
 	    super(p,i,d,period);
 	    m_controller = new PIDController(p, i, d, m_source, m_output, period);
-	    this.scg=scg;
+	    this.scgPIDControlled=scgPIDControlled;
+	    this.scgContant = scgContant;
 	  }
 
 	 
@@ -88,7 +90,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  
 	  public void end() {
 	    m_controller.disable();
-	    scg.set(0);	    
+	    scgPIDControlled.set(0);	    
 	  }
 
 	  public void interrupted() {
@@ -140,7 +142,8 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   */
 	  @Override
 	  protected void usePIDOutput(double output) {
-		  scg.set(output);
+		  scgPIDControlled.set(output);
+		  scgContant.set(.5);
 	  }
 
 
