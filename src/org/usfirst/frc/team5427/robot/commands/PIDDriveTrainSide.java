@@ -71,6 +71,8 @@ public class PIDDriveTrainSide extends PIDCommand{
 	    m_controller = new PIDController(p, i, d, m_source, m_output, period);
 	    this.scgPIDControlled=scgPIDControlled;
 	    this.scgContant = scgContant;
+	    scgPIDControlled.set(.5);
+	    scgContant.set(.5);
 	  }
 
 	 
