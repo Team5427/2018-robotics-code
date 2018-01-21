@@ -94,6 +94,10 @@ public class Config {
 	public static final int CHANNEL_B_LEFT = 0;
 	public static final int ELEVATOR_MOTOR = 7;
 	
-	
+	/*-------------PID VALUES------------------*/
+	//former p = .085, i = .008333, d = .001042
+	public static final double PID_STRAIGHT_P = 0.32;
+	public static final double PID_STRAIGHT_I = 0;
+	public static final double PID_STRAIGHT_D = 0;
 
 }

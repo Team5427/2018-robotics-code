@@ -77,9 +77,7 @@ public class Robot extends IterativeRobot  {
 	 * values used for PID loops
 	 *TODO move these to Config
 	 */
-	public double pidRightP = .085000;
-	public double pidRightI = .008333;
-	public double pidRightD = .001042;
+	
 
 
 	
@@ -196,7 +194,7 @@ public class Robot extends IterativeRobot  {
 			m_autonomousCommand.start();
 		}
 		ahrs.reset();
-		new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, pidRightP, pidRightI, pidRightD, 0, .5);
+		new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, 0, .4);
 	}
 
 	/**
