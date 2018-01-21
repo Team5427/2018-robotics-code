@@ -7,6 +7,20 @@
 
 package org.usfirst.frc.team5427.robot;
 
+import org.usfirst.frc.team5427.util.SameLine;
+
+/**
+ * The RobotMap is a mapping from the ports sensors and actuators are wired into
+ * to a variable name. This provides flexibility changing wiring, makes checking
+ * the wiring easier and significantly reduces the number of magic numbers
+ * floating around. 
+ *  *We use Config instead of RobotMap to store ports and other data in one place.*
+ */
+/**
+ * This file maps out the robot
+ * This file will use the same line method
+ * 
+ * @author Akshat
 
 //TODO: move values to config
 
@@ -14,7 +28,10 @@ package org.usfirst.frc.team5427.robot;
  * THIS FILE IS NOT MEANT TO BE USED
  * ONLY FOR REFERENCE
  */
+
+@SameLine
 public class RobotMap {
+
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 

@@ -13,8 +13,13 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
+<<<<<<< HEAD
+ * @author Varsha 
+ * Subsystem for the two flywheels that turn in opposite directions 
+=======
  * @author Varsha Subsystem for the two flywheels that turn in opposite
  *         directions
+>>>>>>> 94e8af4f05a4c8b429ccd908753676d73dff71e0
  */
 
 @NextLine
@@ -58,10 +63,16 @@ public class Intake extends Subsystem
 			rightFlywheel.set(-speed * RIGHT_FLYWHEEL_BIAS_FORWARD + RIGHT_FLYWHEEL_OFFSET_FORWARD);
 
 		}
-		// otherwise
-		// left goes forward, right goes backward
-		leftFlywheel.set(speed * LEFT_FLYWHEEL_BIAS_FORWARD + LEFT_FLYWHEEL_OFFSET_FORWARD);
-		rightFlywheel.set(-speed * RIGHT_FLYWHEEL_BIAS_BACKWARD + RIGHT_FLYWHEEL_OFFSET_BACKWARD);
+		else if(speed>0)
+		{
+			leftFlywheel.set(speed * LEFT_FLYWHEEL_BIAS_FORWARD + LEFT_FLYWHEEL_OFFSET_FORWARD);
+			rightFlywheel.set(-speed * RIGHT_FLYWHEEL_BIAS_BACKWARD + RIGHT_FLYWHEEL_OFFSET_BACKWARD);
+		}
+		else
+		{
+			leftFlywheel.set(0);
+			rightFlywheel.set(0);
+		}
 
 	}
 
@@ -70,4 +81,11 @@ public class Intake extends Subsystem
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 	}
+	
+	
+	public void stop()
+	{
+		setSpeed(0);
+	}
+	
 }

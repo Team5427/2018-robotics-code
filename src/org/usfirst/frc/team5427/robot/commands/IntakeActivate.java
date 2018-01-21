@@ -12,9 +12,11 @@ import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.NextLine;
+import org.usfirst.frc.team5427.util.SameLine;
 
 /**
- * This command simply sets the speed of the intake motors to the current throttle on the joystick.
+ * This command simply sets the speed of the intake motors to the current
+ * throttle on the joystick.
  * 
  * @author Blake
  */
@@ -22,10 +24,12 @@ import org.usfirst.frc.team5427.util.NextLine;
 @NextLine
 public class IntakeActivate extends Command
 {
+	
 	public IntakeActivate()
 	{
-		Log.info("Intake being activated");
+
 		// Use requires() here to declare subsystem dependencies
+		Log.info("Intake being activated");
 		requires(Robot.intakeSubsystem);
 	}
 
@@ -36,8 +40,10 @@ public class IntakeActivate extends Command
 		Log.info("Intake being initialized");
 	}
 
+	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
+
 	protected void execute()
 	{
 		Log.info("Intake being executed");
@@ -62,16 +68,14 @@ public class IntakeActivate extends Command
 
 	// Called once after isFinished returns true
 	@Override
-	protected void end()
-	{
-		
+	protected void end() {
+		Robot.intakeSubsystem.stop();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
-	protected void interrupted()
-	{
+	protected void interrupted() {
 		Log.info("END TO INTAKE INTERRUPTED");
 		Robot.intakeSubsystem.setSpeed(0);
 	}

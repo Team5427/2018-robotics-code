@@ -14,24 +14,32 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
 
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+
+import org.usfirst.frc.team5427.robot.OurClasses.PIDAction;
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.ExampleCommand;
 import org.usfirst.frc.team5427.robot.commands.IntakeSolenoidSwitch;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
-
+import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainLeftSide;
 import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team5427.robot.subsystems.PIDDriveTrainRightSide;
 import org.usfirst.frc.team5427.util.Config;
 
 import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.NextLine;
 import org.usfirst.frc.team5427.util.SameLine;
+
+import com.kauailabs.navx.frc.AHRS;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -41,23 +49,25 @@ import org.usfirst.frc.team5427.util.SameLine;
  * project.
  */
 @SameLine
-public class Robot extends TimedRobot {
+public class Robot extends IterativeRobot implements PIDOutput {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
+
 	public static OI oi;
 	public static DriveTrain driveTrain;
-	
-	SpeedController motorPWM_Front_Left;
-	SpeedController motorPWM_Rear_Left;
-	SpeedControllerGroup driveTrainLeft;
 
-	SpeedController motorPWM_Front_Right;
-	SpeedController motorPWM_Rear_Right;
-	SpeedControllerGroup driveTrainRight;
+	SpeedController motor_pwm_frontLeft;
+    SpeedController motor_pwm_rearLeft ;
+	SpeedControllerGroup speedcontrollergroup_left;
 
+	SpeedController motor_pwm_frontRight;
+	SpeedController motor_pwm_rearRight;
+	SpeedControllerGroup speedcontrollergroup_right;
 	DifferentialDrive drive;
-
+	    
 	DriveWithJoystick dwj;
+	
 
+	Command m_autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	public static DoubleSolenoid intakeSolenoid;
@@ -66,8 +76,29 @@ public class Robot extends TimedRobot {
 	public static SpeedController motorPWM_Intake_Right;
 
 	public static SpeedController motorPWM_Elevator;
-
 	public static Intake intakeSubsystem;
+	// makes an encoder to go straight
+	public static Encoder encoderStraight;
+
+	public PIDDriveTrainRightSide pidRight;
+	public PIDDriveTrainLeftSide pidLeft;
+
+	/**
+	 * values used for PID loops
+	 *TODO move these to Config
+	 */
+	public double pidRightP = .085000;
+	public double pidRightI = .008333;
+	public double pidRightD = .001042;
+
+	public double pidLeftP;
+	public double pidLeftI;
+	public double pidLeftD;
+
+	//double startTime;
+	double rotateToAngleRate=0;
+	double rightMotorSpeed = 0;
+	double leftMotorSpeed = 0;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -75,16 +106,32 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		// driveTrain = new DriveTrain();
 
-		chooser.addDefault("Default Auto", new ExampleCommand());
+//		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 
 		/*
 		 * COMMENTED DUE TO ERRORS TODO ADD PORTS FOR SOLENOID
 		 */
-		//Log.init("Initializing solenoid");
-		//intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD,
-		//Config.PCM_SOLENOID_REVERSE); 
+
+		// Log.init("Initializing solenoid");
+		// intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD,
+		// Config.PCM_SOLENOID_REVERSE);
+		
+		Log.init("Initializing driveTrain: ");
+		motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
+		motor_pwm_rearLeft = new SteelTalon(Config.REAR_LEFT_MOTOR);
+		speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
+		
+		motor_pwm_frontRight = new SteelTalon(Config.FRONT_RIGHT_MOTOR);
+		motor_pwm_rearRight = new SteelTalon(Config.REAR_RIGHT_MOTOR);
+		speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
+		
+		drive = new DifferentialDrive(speedcontrollergroup_left, speedcontrollergroup_right);
+		driveTrain = new DriveTrain(speedcontrollergroup_left, speedcontrollergroup_right, drive);
+		dwj = new DriveWithJoystick();
+		
 
 		Log.init("Initializing intake motors: ");
 		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
@@ -93,22 +140,13 @@ public class Robot extends TimedRobot {
 		Log.init("Initializing Subsystems: ");
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
 
+		// need info of ports
+		Log.init("Initializing Encoders: ");
+		//encoderStraight = new Encoder(0, 0);
+
 		Log.init("Intializing Elevator Motor: ");
 		//motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
 		
-		
-		motorPWM_Front_Left = new SteelTalon(Config.FRONT_LEFT_MOTOR);
-		motorPWM_Rear_Left = new SteelTalon(Config.REAR_LEFT_MOTOR);
-		driveTrainLeft = new SpeedControllerGroup(motorPWM_Front_Left, motorPWM_Rear_Left);
-
-		motorPWM_Rear_Right = new SteelTalon(Config.FRONT_RIGHT_MOTOR);
-		motorPWM_Front_Right = new SteelTalon(Config.REAR_RIGHT_MOTOR);
-		driveTrainRight = new SpeedControllerGroup(motorPWM_Rear_Right, motorPWM_Front_Right);
-
-		drive = new DifferentialDrive(driveTrainLeft, driveTrainRight);
-
-		driveTrain = new DriveTrain(driveTrainLeft, driveTrainRight, drive);
-
 		oi = new OI();
 	}
 
@@ -141,7 +179,19 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		
+		m_autonomousCommand = chooser.getSelected();
+
+		/*
+		 * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
+		 * switch(autoSelected) { case "My Auto": autonomousCommand = new
+		 * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
+		 * ExampleCommand(); break; }
+		 */
+
+		// schedule the autonomous command (example)
+		if (m_autonomousCommand != null) {
+			m_autonomousCommand.start();
+		}
 	}
 
 	/**
@@ -155,9 +205,19 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 
+		// This makes sure that the autonomous stops running when
+		// teleop starts running. If you want the autonomous to
+		// continue until interrupted by another command, remove
+		// this line or comment it out.
+		if (m_autonomousCommand != null) {
+			m_autonomousCommand.cancel();
+		}
 
 		dwj = new DriveWithJoystick();
+
+
 	}
+	
 	/**
 	 * This function is called periodically during operator control.
 	 */
@@ -166,10 +226,80 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 	}
 
+	@Override
+	public void testInit()
+	{	
+//		try
+//		{
+//			Thread.sleep(500);
+//		}
+//		catch (Exception e)
+//		{
+//			e.printStackTrace();
+//		}
+//		startTime = System.nanoTime() / 1000000000.;
+		
+		// for straight(setpoint is 1. going straight)
+		pidRight = new PIDDriveTrainRightSide(pidRightP, pidRightI, pidRightD, 1, driveTrain.drive_Right);
+		pidRight.getPIDController().free();
+		//pidRight.reset();
+		//pidLeft = new PIDDriveTrainLeftSide(pidLeftP, pidLeftI, pidLeftD, 1, driveTrain.drive_Left);
+		pidRight.makeAHRS();
+		
+		pidRight.getPIDController().enable();
+		//pidRight.enable();
+		//pidLeft.getPIDController().enable();
+		Log.info("ISENABLED (init): "+pidRight.getPIDController().isEnabled());
+		
+	}
+
+//	
+//	enum Mode{Straight, Left, Right}
+//	Mode mode = Mode.Straight;
+//	PIDAction currentPIDAction;
+//	
+//	public void turnAngleClockwise(double degrees) {
+//		if(currentPIDAction.isFinished()) {
+//			//currentPIDAction = new PIDAction(startAngle, endAngle, currentAngle);
+//		}
+//	}
+	
 	/**
 	 * This function is called periodically during test mode.
 	 */
 	@Override
 	public void testPeriodic() {
+//		// add values to smartdashboard for PID testing (graph)
+		 SmartDashboard.putNumber("PID Output: ", rotateToAngleRate);
+		 SmartDashboard.putNumber("Yaw: ", pidRight.ahrs.getYaw());
+
+		 Log.info("ISENABLED: "+pidRight.getPIDController().isEnabled());
+		 
+		//straight
+		double currentRotationRate = rotateToAngleRate-.5;
+		Log.info(""+currentRotationRate);
+		
+		Log.info("rightMotorSpeed: " + rightMotorSpeed);
+		//leftMotorSpeed = pidLeft.returnPIDInput();
+ 		driveTrain.drive.tankDrive(-currentRotationRate, -rightMotorSpeed);
+ 		
+ 		if(rightMotorSpeed>-.5)
+			rightMotorSpeed-=0.006;
+		
+		if(rightMotorSpeed<-.5)
+			rightMotorSpeed = -.5;
+		
+		Log.info("rightMotorSpeed: " + rightMotorSpeed);
+		Log.info("leftMotorSpeed: " + -currentRotationRate);
+ 		
 	}
+	public void pidWrite(double output) {
+		// TODO Auto-generated method stub
+		if (output != 0) {
+			//System.out.println("Output: " + output);
+		}
+		rotateToAngleRate = output;
+		
+	}
+   
 }
