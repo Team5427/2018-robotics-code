@@ -99,8 +99,8 @@ public class Config {
 	
 	//.32 is where it started osciliating
 	public static final double PID_STRAIGHT_P = 0.16;
-	public static final double PID_STRAIGHT_I = 0.01;
-	public static final double PID_STRAIGHT_D = 0;
+	public static final double PID_STRAIGHT_I = 0.0025;
+	public static final double PID_STRAIGHT_D = 0.018;
 
 	public static final double PID_POWER_P = 0.085;
 	public static final double PID_POWER_I = 0.008333;

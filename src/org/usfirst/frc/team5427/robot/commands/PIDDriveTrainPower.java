@@ -143,7 +143,7 @@ public class PIDDriveTrainPower extends PIDCommand{
 	  protected double returnPIDInput()
 	  {
 		  //TODO implement this
-		  return initialPower;
+		  return PIDdriveTrainSide.getPower();
 	  }
 
 	  /**
