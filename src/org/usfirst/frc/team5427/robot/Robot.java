@@ -71,6 +71,7 @@ public class Robot extends IterativeRobot  {
 
 	public static SpeedController motorPWM_Elevator;
 	public static Intake intakeSubsystem;
+	public PIDDriveTrainSide pidSide;
 	
 
 	/**
@@ -194,7 +195,8 @@ public class Robot extends IterativeRobot  {
 			m_autonomousCommand.start();
 		}
 		ahrs.reset();
-		new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, 0, Config.PID_STRAIGHT_POWER);
+		pidSide = new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, 0);
+		
 	}
 
 	/**
@@ -203,6 +205,7 @@ public class Robot extends IterativeRobot  {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		pidSide.incrementPower();
 	}
 
 	@Override

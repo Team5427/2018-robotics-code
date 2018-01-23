@@ -3,6 +3,7 @@ package org.usfirst.frc.team5427.robot.commands;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.Log;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -69,13 +70,13 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   * @param period the time (in seconds) between calculations
 	   */
 	  @SuppressWarnings("ParameterName")
-	  public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double p, double i, double d, double setpoint, double power) {
+	  public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double p, double i, double d, double setpoint) {
 	    super(p,i,d);
 	    Log.init("PIDDriveTrainRight created");
 	    m_controller = new PIDController(p, i, d, m_source, m_output);
 	    this.scgPIDControlled=scgPIDControlled;
 	    this.scgConstant = scgConstant;
-	    this.power = power;
+	    this.power = 0;
 	    this.scgPIDControlled.set(-this.power);
 	    this.scgConstant.set(this.power);
 	
@@ -126,6 +127,10 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  }
 	  public void setPower(double power) {
 		  this.power = power;
+	  }
+	  public void incrementPower() {
+		  if(power<Config.PID_STRAIGHT_POWER)
+			  this.power+=Config.PID_STRAIGHT_INCREMENT;
 	  }
 
 	  /**

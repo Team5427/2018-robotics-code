@@ -97,11 +97,12 @@ public class Config {
 	/*-------------PID VALUES------------------*/
 	//former p = .085, i = .008333, d = .001042
 	
-	//.32 is where it started osciliating
-	public static final double PID_STRAIGHT_P = 0.16;
+	//for straight no d, for turn no i
+	public static final double PID_STRAIGHT_P = 0.05;
 	//.005 started oscilating
 	public static final double PID_STRAIGHT_I = 0.0025;
-	public static final double PID_STRAIGHT_D = 0.018;
+	public static final double PID_STRAIGHT_D = 0.00;
 	public static final double PID_STRAIGHT_POWER = .3;
+	public static final double PID_STRAIGHT_INCREMENT = PID_STRAIGHT_POWER/(50*2);
 
 }
