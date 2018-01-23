@@ -101,6 +101,7 @@ public class Config {
 	public static final double PID_STRAIGHT_P = 0.16;
 	//.005 started oscilating
 	public static final double PID_STRAIGHT_I = 0.0025;
-	public static final double PID_STRAIGHT_D = 0;
+	public static final double PID_STRAIGHT_D = 0.018;
+	public static final double PID_STRAIGHT_POWER = .3;
 
 }
