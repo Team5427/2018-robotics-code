@@ -22,26 +22,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-/**
- * This class defines a {@link Command} which interacts heavily with a PID loop.
- *
- * <p> It provides some convenience methods to run an internal {@link PIDController} . It will also
- * start and stop said {@link PIDController} when the {@link PIDCommand} is first initialized and
- * ended/interrupted. </p>
- */
+
 public class PIDDriveTrainSide extends PIDCommand{
 	
-		  /**
-	   * The internal {@link PIDController}.
-	   */
+
 	  private final PIDController m_controller;
-	  /**
-	   * An output which calls {@link PIDCommand#usePIDOutput(double)}.
-	   */
 	  private final PIDOutput m_output = this::usePIDOutput;
-	  /**
-	   * A source which calls {@link PIDCommand#returnPIDInput()}.
-	   */
 	  private final PIDSource m_source = new PIDSource() {
 	    public void setPIDSourceType(PIDSourceType pidSource) {
 	    }
@@ -59,16 +45,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  private SpeedControllerGroup scgConstant;
 	  private double power;
 	 
-	  /**
-	   * Instantiates a {@link PIDCommand} that will use the given p, i and d values. It will also space
-	   * the time between PID loop calculations to be equal to the given period.
-	   *
-	   * @param name   the name
-	   * @param p      the proportional value
-	   * @param i      the integral value
-	   * @param d      the derivative value
-	   * @param period the time (in seconds) between calculations
-	   */
+	 
 	  @SuppressWarnings("ParameterName")
 	  public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double p, double i, double d, double setpoint) {
 	    super(p,i,d);
@@ -86,13 +63,6 @@ public class PIDDriveTrainSide extends PIDCommand{
 	    
 	  }
 
-	 
-	  /**
-	   * Returns the {@link PIDController} used by this {@link PIDCommand}. Use this if you would like
-	   * to fine tune the pid loop.
-	   *
-	   * @return the {@link PIDController} used by this {@link PIDCommand}
-	   */
 	  protected PIDController getPIDController() {
 	    return m_controller;
 	  }
@@ -113,15 +83,6 @@ public class PIDDriveTrainSide extends PIDCommand{
 	    end();
 	  }
 
-	  
-	  
-
-	  /**
-	   * Sets the maximum and minimum values expected from the input and setpoint.
-	   *
-	   * @param minimumInput the minimum value expected from the input and setpoint
-	   * @param maximumInput the maximum value expected from the input and setpoint
-	   */
 	  protected void setInputRange(double minimumInput, double maximumInput) {
 	    m_controller.setInputRange(minimumInput, maximumInput);
 	  }
@@ -133,36 +94,12 @@ public class PIDDriveTrainSide extends PIDCommand{
 			  this.power+=Config.PID_STRAIGHT_INCREMENT;
 	  }
 
-	  /**
-	   * This is where you put the AHRS Angle 
-	   * Returns the input for the pid loop.
-	   *
-	   * <p>It returns the input for the pid loop, so if this command was based off of a gyro, then it
-	   * should return the angle of the gyro.
-	   *
-	   * <p>All subclasses of {@link PIDCommand} must override this method.
-	   *
-	   * <p>This method will be called in a different thread then the {@link Scheduler} thread.
-	   *
-	   * @return the value the pid loop should use as input
-	   */
 	  protected double returnPIDInput()
 	  {
 		  //TODO implement this
 		  return Robot.ahrs.getYaw();//TODO make this 
 	  }
 
-	  /**
-	   * Uses the value that the pid loop calculated. The calculated value is the "output" parameter.
-	   * This method is a good time to set motor values, maybe something along the lines of
-	   * <code>driveline.tankDrive(output, -output)</code>
-	   *
-	   * <p>All subclasses of {@link PIDCommand} must override this method.
-	   *
-	   * <p>This method will be called in a different thread then the {@link Scheduler} thread.
-	   *
-	   * @param output the value the pid loop calculated
-	   */
 	  @Override
 	  protected void usePIDOutput(double output) {
 		  SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
@@ -171,13 +108,11 @@ public class PIDDriveTrainSide extends PIDCommand{
 		  scgConstant.set(power);
 		  
 		  SmartDashboard.putNumber("RightSpeed", output);
-	
 	  }
 
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
