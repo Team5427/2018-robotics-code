@@ -182,13 +182,13 @@ public class Robot extends IterativeRobot  {
 	@Override
 	public void autonomousInit() {
 		m_autonomousCommand = chooser.getSelected();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		 * switch(autoSelected) { case "My Auto": autonomousCommand = new
-		 * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
-		 * ExampleCommand(); break; }
-		 */
+		String gameData = DriverStation.getInstance().getGameSpecificMessage();
+		char[] sideColorArray = gameData.toCharArray();
+		char firstSwitch = sideColorArray[0];
+		char scale = sideColorArray[1];
+		char lastSwitch = sideColorArray[2];
+		Log.init(""+"First: "+ firstSwitch +"\nScale: "+ scale +"\nLast: "+ lastSwitch);
+		//the characters have L for left or R for right
 
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
