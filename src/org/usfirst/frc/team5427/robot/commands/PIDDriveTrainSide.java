@@ -58,6 +58,9 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  private SpeedControllerGroup scgPIDControlled;
 	  private SpeedControllerGroup scgConstant;
 	  private double power;
+	  private double increment;
+	  
+	  private double p;
 	 
 	  /**
 	   * Instantiates a {@link PIDCommand} that will use the given p, i and d values. It will also space
@@ -71,14 +74,17 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   */
 	  @SuppressWarnings("ParameterName")
 	  public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double p, double i, double d, double setpoint) {
-	    super(p,i,d);
+		  super(p,i,d);
+		  this.p=p;
 	    Log.init("PIDDriveTrainRight created");
 	    m_controller = new PIDController(p, i, d, m_source, m_output);
+	    m_controller.setSetpoint(setpoint);
 	    this.scgPIDControlled=scgPIDControlled;
 	    this.scgConstant = scgConstant;
 	    this.power = 0;
 	    this.scgPIDControlled.set(-this.power);
 	    this.scgConstant.set(this.power);
+	    this.increment=.075;
 	
 	   
 	    super.setSetpoint(setpoint);
@@ -129,8 +135,8 @@ public class PIDDriveTrainSide extends PIDCommand{
 		  this.power = power;
 	  }
 	  public void incrementPower() {
-		  if(power<Config.PID_STRAIGHT_POWER)
-			  this.power+=Config.PID_STRAIGHT_INCREMENT;
+//		  if(power<Config.PID_STRAIGHT_POWER)
+//			  this.power+=Config.PID_STRAIGHT_INCREMENT;
 	  }
 
 	  /**
@@ -168,8 +174,18 @@ public class PIDDriveTrainSide extends PIDCommand{
 		  SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
 		
 		  scgPIDControlled.set(output);
-		  scgConstant.set(power);
+		  //.05(initial) greater than .01
+//		  if(increment>.01) {
+//			  increment-=Config.PID_STRAIGHT_INCREMENT_DECREMENT;
+//		  }
+		  if(Config.PID_STRAIGHT_P==p&&this.power<Config.PID_STRAIGHT_POWER) {
+			  Log.info("INCREMENTING");
+			  this.power+=increment;
+		  }
+		  if(Config.PID_TURN_P==p)
+			  scgConstant.set(power);
 		  
+		
 		  SmartDashboard.putNumber("RightSpeed", output);
 	
 	  }
