@@ -94,6 +94,12 @@ public class Config {
 	public static final int CHANNEL_B_LEFT = 0;
 	public static final int ELEVATOR_MOTOR = 7;
 	
+	
+	/*------------Other Motor/Program Values------------*/
+	public static final double DRIVE_SPEED_INCREMENT_VALUE=.01;
+	public static final double DRIVE_INCREMENT_WAIT_VALUE=.01;
+	
+	
 	/*-------------PID VALUES------------------*/
 	//former p = .085, i = .008333, d = .001042
 	
