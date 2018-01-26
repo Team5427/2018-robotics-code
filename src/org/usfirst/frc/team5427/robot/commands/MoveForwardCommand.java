@@ -37,6 +37,7 @@ public class MoveForwardCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		//TODO reset encoder value
 		new Increment(desiredPower);
 		pidDTS = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, 0);
 	}
@@ -50,6 +51,8 @@ public class MoveForwardCommand extends Command {
 	@Override
 	protected boolean isFinished() {
 //		if(/*robot encoder value is larger than desiredDistance - Config.getCoastDistance()*/)
+		if(0>=Config.getCoastingDistance(desiredPower))//TODO Create Encoders in Robot and use their value here
+			return true;
 		return false;
 	}
 
