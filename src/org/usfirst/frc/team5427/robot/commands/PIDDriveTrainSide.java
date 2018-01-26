@@ -22,11 +22,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+/**
+ * This class is adapted from the WPILib PIDCommand Class. 
+ * This Class is made to make the robot drive straight after ramping up power to 
+ * a desired power. It works by setting one side of the drive train to the desired power 
+ * and varying the speed of the other side of the drive train to maintain the robot
+ * driving exactly straight forward (a YAW of 0)
+ * 
+ * 
+ * In theory, this class can be used in any case where two SpeedControllerGroup objects
+ * work together to accomplish the same task.
+ */
 
 public class PIDDriveTrainSide extends PIDCommand{
 	
 
+	  //PIDController to make PID calculations
 	  private final PIDController m_controller;
+	  
 	  private final PIDOutput m_output = this::usePIDOutput;
 	  private final PIDSource m_source = new PIDSource() {
 	    public void setPIDSourceType(PIDSourceType pidSource) {
@@ -49,19 +62,30 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  private double p;
 	 
 	 
-	  @SuppressWarnings("ParameterName")
+//	  @SuppressWarnings("ParameterName")
+	  /**
+	   * Constructor for this class
+	   * @param scgPIDControlled - the SpeedControllerGroup for the side whose power 
+	   * 							will be controlled via the PID Loop
+	   * @param scgConstant - the SpeedControllerGroup for teh side whose power will be
+	   * 					set to a constant value
+	   * @param p - the P value for the PID Loop
+	   * @param i - the I value for the PID Loop
+	   * @param d - the D value for the PID Loop
+	   * @param setpoint - the Set Point for the PID Loop
+	   */
 	  public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double p, double i, double d, double setpoint) {
 		  super(p,i,d);
 		  this.p=p;
 	    Log.init("PIDDriveTrainRight created");
 	    m_controller = new PIDController(p, i, d, m_source, m_output);
-	    m_controller.setSetpoint(setpoint);
+	    super.setSetpoint(setpoint);
 	    this.scgPIDControlled=scgPIDControlled;
 	    this.scgConstant = scgConstant;
 	    this.power = 0;
 	    this.scgPIDControlled.set(-this.power);
 	    this.scgConstant.set(this.power);
-	    this.increment=.075;
+	    this.increment=.075;//TODO move to Config
 	
 	   
 	    super.setSetpoint(setpoint);
@@ -73,11 +97,13 @@ public class PIDDriveTrainSide extends PIDCommand{
 	    return m_controller;
 	  }
 
+	  //begins the PID loop (enables)
 	  public void initialize() {
 		  Log.init("Initializing");
 	    m_controller.enable();
 	  }
 	  
+	  //Ends (disables) the PID loop and stops the motors of the SpeedControllerGroups
 	  public void end() {
 		  Log.init("Ending PID");
 	    m_controller.disable();
@@ -85,6 +111,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 	    scgConstant.set(0);
 	  }
 
+	  //Code to run when this command is interrupted
 	  public void interrupted() {
 	    end();
 	  }
@@ -95,6 +122,8 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  public void setPower(double power) {
 		  this.power = power;
 	  }
+	  
+	  //TODO uncomment and utilize this method
 	  public void incrementPower() {
 //		  if(power<Config.PID_STRAIGHT_POWER)
 //			  this.power+=Config.PID_STRAIGHT_INCREMENT;
@@ -106,6 +135,10 @@ public class PIDDriveTrainSide extends PIDCommand{
 		  return Robot.ahrs.getYaw();//TODO make this 
 	  }
 
+	  /**
+	   * method to set motor values using the parameter "output"
+	   * This method is automatically called by PIDCommand
+	   */
 	  @Override
 	  protected void usePIDOutput(double output) {
 		  SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
