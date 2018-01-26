@@ -181,7 +181,7 @@ public class Robot extends IterativeRobot  {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = chooser.getSelected();
+//		m_autonomousCommand = chooser.getSelected(); TODO remove this line of code
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		char[] sideColorArray = gameData.toCharArray();
 		char firstSwitch = sideColorArray[0];
@@ -190,10 +190,11 @@ public class Robot extends IterativeRobot  {
 		Log.init(""+"First: "+ firstSwitch +"\nScale: "+ scale +"\nLast: "+ lastSwitch);
 		//the characters have L for left or R for right
 
-		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
-		}
+		// schedule the autonomous command (example) TODO delete these lines of code after
+		//we implement our own autonomous commands
+//		if (m_autonomousCommand != null) {
+//			m_autonomousCommand.start();
+//		}
 		ahrs.reset();
 //		pidSide = new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, 0);
 		new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, 90);
