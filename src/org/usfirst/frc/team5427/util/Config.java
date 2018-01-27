@@ -54,6 +54,10 @@ public class Config {
 	public static final int INTAKE_MOTOR_LEFT = 4;
 	public static final int INTAKE_MOTOR_RIGHT = 5;
 	
+	/*----------Speeds----------*/
+	public static final double INTAKE_SPEED_FORWARD = .3;
+	public static final double INTAKE_SPEED_REVERSE = -.3;
+	
 	/*----------Pneumatic Control Module PORTS-----------*/
 	public static final int PCM_SOLENOID_FORWARD = 0;
 	public static final int PCM_SOLENOID_REVERSE = 1;
