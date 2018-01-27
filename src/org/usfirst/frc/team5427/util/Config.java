@@ -55,8 +55,10 @@ public class Config {
 	public static final int PCM_SOLENOID_FORWARD = 0;
 	public static final int PCM_SOLENOID_REVERSE = 1;
 
-	/*-------------Motor Bias-------------------*/
-
+	/*-------------Motor Speeds-------------------*/
+	public static final double INTAKE_MOTOR_SPEED = .278;
+	
+	
 	/* ----------Joystick Buttons---------- */
 	public static final int BUTTON_MOTOR_INTAKE = 1;
 	public static final int BUTTON_SOLENOD_INTAKE = 2;
