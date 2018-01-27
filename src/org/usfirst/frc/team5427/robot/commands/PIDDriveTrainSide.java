@@ -38,28 +38,31 @@ public class PIDDriveTrainSide extends PIDCommand{
 	
 
 	  //PIDController to make PID calculations
-	  private final PIDController m_controller;
+//	  private final PIDController m_controller;
 	  
-	  private final PIDOutput m_output = this::usePIDOutput;
-	  private final PIDSource m_source = new PIDSource() {
-	    public void setPIDSourceType(PIDSourceType pidSource) {
-	    }
-
-	    public PIDSourceType getPIDSourceType() {
-	      return PIDSourceType.kDisplacement;
-	    }
-
-	    public double pidGet() {
-	      return returnPIDInput();
-	    }
-	  };
+//	  private final PIDOutput m_output = this::usePIDOutput;
+//	  private final PIDSource m_source = new PIDSource() {
+//	    public void setPIDSourceType(PIDSourceType pidSource) {
+//	    }
+//
+//	    public PIDSourceType getPIDSourceType() {
+//	      return PIDSourceType.kDisplacement;
+//	    }
+//
+//	    public double pidGet() {
+//	      return returnPIDInput();
+//	    }
+//	  };
 
 	  private SpeedControllerGroup scgPIDControlled;
 	  private SpeedControllerGroup scgConstant;
 	  private double power;
 	  private double increment;
 	  
-	  private double p;
+	  private double toGoalTime;
+	  private double startTime;
+	  //increment every other iteration, tried it but did not make significant diff, may come back
+	 // private boolean flipFlop;
 	 
 	 
 //	  @SuppressWarnings("ParameterName")
@@ -76,37 +79,34 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   */
 	  public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double p, double i, double d, double setpoint) {
 		  super(p,i,d);
-		  this.p=p;
 	    Log.init("PIDDriveTrainRight created");
-	    m_controller = new PIDController(p, i, d, m_source, m_output);
+//	    m_controller = new PIDController(p, i, d, m_source, m_output);
 	    super.setSetpoint(setpoint);
 	    this.scgPIDControlled=scgPIDControlled;
 	    this.scgConstant = scgConstant;
-	    this.power = 0;
-	    this.scgPIDControlled.set(-this.power);
-	    this.scgConstant.set(this.power);
-	    this.increment=.075;//TODO move to Config
-	
-	   
+	    
+	    resetOurValues();
 	    super.setSetpoint(setpoint);
 	    initialize();
 	    
+	    
+	    
+	    
 	  }
 
-	  protected PIDController getPIDController() {
-	    return m_controller;
-	  }
+	
 
 	  //begins the PID loop (enables)
 	  public void initialize() {
 		  Log.init("Initializing");
-	    m_controller.enable();
+//	    m_controller.enable();
+		  super.getPIDController().enable();
 	  }
 	  
 	  //Ends (disables) the PID loop and stops the motors of the SpeedControllerGroups
 	  public void end() {
 		  Log.init("Ending PID");
-	    m_controller.disable();
+		super.getPIDController().disable();
 	    scgPIDControlled.set(0);	
 	    scgConstant.set(0);
 	  }
@@ -117,7 +117,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  }
 
 	  protected void setInputRange(double minimumInput, double maximumInput) {
-	    m_controller.setInputRange(minimumInput, maximumInput);
+		  super.getPIDController().setInputRange(minimumInput, maximumInput);
 	  }
 	  public void setPower(double power) {
 		  this.power = power;
@@ -143,20 +143,40 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  protected void usePIDOutput(double output) {
 		  SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
 		
-		  scgPIDControlled.set(output);
-		  //.05(initial) greater than .01
-//		  if(increment>.01) {
-//			  increment-=Config.PID_STRAIGHT_INCREMENT_DECREMENT;
-//		  }
-		  if(Config.PID_STRAIGHT_P==p&&this.power<Config.PID_STRAIGHT_POWER) {
-			  Log.info("INCREMENTING");
+		  //setting right side to pidOutput
+		  
+		  scgPIDControlled.set(output); 
+		 
+		  //if current power is less than the goal, increment the power
+		  if(this.power<Config.PID_STRAIGHT_POWER) {
 			  this.power+=increment;
 		  }
-		  if(Config.PID_TURN_P==p)
+		  //if it is equal to goal, print the time it took, and iterations
+		  else {
+			  if(toGoalTime==0) {
+				  toGoalTime=System.nanoTime()/1000000000.0 - this.startTime;
+				  Log.info("TIME TO REACH PIDPOWER: " + toGoalTime);
+				  Log.info("Iterations: " + this.power/this.increment);
+			  }
+				  
+		  }
+		 
 			  scgConstant.set(power);
-		  
-		
 		  SmartDashboard.putNumber("RightSpeed", output);
+	  }
+	  
+	  @Override
+	  public void free() {
+		  super.free();
+		  resetOurValues();
+	  }
+	  public void resetOurValues() {
+		   this.power = 0;
+		    this.scgPIDControlled.set(-this.power);
+		    this.scgConstant.set(this.power);
+		    this.increment=.01;//TODO move to Config
+		    this.startTime = System.nanoTime()/1000000000;
+		    this.toGoalTime = 0;
 	  }
 
 

@@ -6,12 +6,12 @@ package org.usfirst.frc.team5427.robot.commands;
  * 
  */
 
-public class WithinfFiveDegrees {
-	double startAngle;
-	double endAngle;
-	double currentAngle;
+public class WithinFiveDegrees {
+	private double startAngle;
+	private double endAngle;
+	private double currentAngle;
 	
-	public WithinfFiveDegrees(double startAngle, double endAngle, double currentAngle) {
+	public WithinFiveDegrees(double startAngle, double endAngle, double currentAngle) {
 		this.startAngle = startAngle;
 		this.endAngle = endAngle;
 		this.currentAngle = currentAngle;

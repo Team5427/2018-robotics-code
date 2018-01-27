@@ -128,17 +128,6 @@ public class Robot extends IterativeRobot  {
 		motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
 		
 		try {
-
-			/* Communicate w/navX-MXP via the MXP SPI Bus. */
-			/*
-			 * Alternatively: I2C.Port.kMXP, SerialPort.Port.kMXP or
-			 * SerialPort.Port.kUSB
-			 */
-			/*
-			 * See
-			 * http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/
-			 * for details.
-			 */
 			ahrs = new AHRS(SPI.Port.kMXP);
 
 		} catch (RuntimeException ex) {
@@ -159,7 +148,9 @@ public class Robot extends IterativeRobot  {
 	 */
 	@Override
 	public void disabledInit() {
-
+		if(pidSide!=null)
+			pidSide.free();
+		ahrs.reset();
 	}
 
 	@Override
@@ -182,12 +173,13 @@ public class Robot extends IterativeRobot  {
 	@Override
 	public void autonomousInit() {
 //		m_autonomousCommand = chooser.getSelected(); TODO remove this line of code
-		String gameData = DriverStation.getInstance().getGameSpecificMessage();
-		char[] sideColorArray = gameData.toCharArray();
-		char firstSwitch = sideColorArray[0];
-		char scale = sideColorArray[1];
-		char lastSwitch = sideColorArray[2];
-		Log.init(""+"First: "+ firstSwitch +"\nScale: "+ scale +"\nLast: "+ lastSwitch);
+		
+//		String gameData = DriverStation.getInstance().getGameSpecificMessage();
+//		char[] sideColorArray = gameData.toCharArray();
+//		char firstSwitch = sideColorArray[0];
+//		char scale = sideColorArray[1];
+//		char lastSwitch = sideColorArray[2];
+//		Log.init(""+"First: "+ firstSwitch +"\nScale: "+ scale +"\nLast: "+ lastSwitch);
 		//the characters have L for left or R for right
 
 		// schedule the autonomous command (example) TODO delete these lines of code after
@@ -195,9 +187,17 @@ public class Robot extends IterativeRobot  {
 //		if (m_autonomousCommand != null) {
 //			m_autonomousCommand.start();
 //		}
+		Log.init("autnomous CREATED");
+		
 		ahrs.reset();
-//		pidSide = new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, 0);
-		new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, 90);
+		if(pidSide!=null)
+			pidSide.free();
+		
+		
+		pidSide = new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, 0);
+//		pidSide.free();
+		
+			//	new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, 90);
 		
 	}
 
