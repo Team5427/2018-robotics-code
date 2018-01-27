@@ -163,6 +163,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  @Override
 	  public void free() {
 		  super.free();
+		  super.getPIDController().disable();
 		  resetOurValues();
 		  scgPIDControlled.set(0);	
 		  scgConstant.set(0);
