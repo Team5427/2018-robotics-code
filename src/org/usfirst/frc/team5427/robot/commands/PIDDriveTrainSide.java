@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
@@ -37,23 +38,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class PIDDriveTrainSide extends PIDCommand{
 	
 
-	  //PIDController to make PID calculations
-//	  private final PIDController m_controller;
 	  
-//	  private final PIDOutput m_output = this::usePIDOutput;
-//	  private final PIDSource m_source = new PIDSource() {
-//	    public void setPIDSourceType(PIDSourceType pidSource) {
-//	    }
-//
-//	    public PIDSourceType getPIDSourceType() {
-//	      return PIDSourceType.kDisplacement;
-//	    }
-//
-//	    public double pidGet() {
-//	      return returnPIDInput();
-//	    }
-//	  };
-
 	  private SpeedControllerGroup scgPIDControlled;
 	  private SpeedControllerGroup scgConstant;
 	  private double power;
@@ -65,7 +50,6 @@ public class PIDDriveTrainSide extends PIDCommand{
 	 // private boolean flipFlop;
 	 
 	 
-//	  @SuppressWarnings("ParameterName")
 	  /**
 	   * Constructor for this class
 	   * @param scgPIDControlled - the SpeedControllerGroup for the side whose power 
@@ -89,50 +73,62 @@ public class PIDDriveTrainSide extends PIDCommand{
 	    super.setSetpoint(setpoint);
 	    initialize();
 	    
-	    
-	    
-	    
 	  }
 
 	
 
+	  @Override
 	  //begins the PID loop (enables)
-	  public void initialize() {
+	  protected void initialize() {
 		  Log.init("Initializing");
-//	    m_controller.enable();
 		  super.getPIDController().enable();
 	  }
 	  
 	  //Ends (disables) the PID loop and stops the motors of the SpeedControllerGroups
-	  public void end() {
-		  Log.init("Ending PID");
+	  @Override
+	  protected void end() {
+		  Log.info("Ending PID");
 		super.getPIDController().disable();
 	    scgPIDControlled.set(0);	
 	    scgConstant.set(0);
+	    resetOurValues();
+	    super.getPIDController().reset();
 	  }
 
 	  //Code to run when this command is interrupted
-	  public void interrupted() {
+	  @Override
+	  protected void interrupted() {
 	    end();
+	    Log.info("Interrupted");
 	  }
+	  
 
-	  protected void setInputRange(double minimumInput, double maximumInput) {
-		  super.getPIDController().setInputRange(minimumInput, maximumInput);
+	  @Override
+	  protected boolean isFinished()
+	  {
+//			if(/*robot encoder value is larger than desiredDistance - Config.getCoastDistance()*/)
+//			if(0>=Config.getCoastingDistance(desiredPower))//TODO Create Encoders in Robot and use their value here and use 		  	
+		  //parameter desiredDistance
+
+		  	//If the robot is disabled
+		  	if(RobotState.isDisabled())
+		  	{
+		  		 end();
+				return true;
+		  	}
+			return false;
 	  }
+	 
 	  public void setPower(double power) {
 		  this.power = power;
 	  }
 	  
-	  //TODO uncomment and utilize this method
-	  public void incrementPower() {
-//		  if(power<Config.PID_STRAIGHT_POWER)
-//			  this.power+=Config.PID_STRAIGHT_INCREMENT;
-	  }
-
+	  /**
+	   * reutrns the input of the PID LOOP (AKA AHRS Yaw)
+	   */
 	  protected double returnPIDInput()
 	  {
-		  //TODO implement this
-		  return Robot.ahrs.getYaw();//TODO make this 
+		  return Robot.ahrs.getYaw(); 
 	  }
 
 	  /**
@@ -144,7 +140,6 @@ public class PIDDriveTrainSide extends PIDCommand{
 		  SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
 		
 		  //setting right side to pidOutput
-		  
 		  scgPIDControlled.set(output); 
 		 
 		  //if current power is less than the goal, increment the power
@@ -161,28 +156,31 @@ public class PIDDriveTrainSide extends PIDCommand{
 				  
 		  }
 		 
-			  scgConstant.set(power);
-		  SmartDashboard.putNumber("RightSpeed", output);
+		  scgConstant.set(power);
+		  SmartDashboard.putNumber("PID output", output);
 	  }
 	  
 	  @Override
 	  public void free() {
 		  super.free();
 		  resetOurValues();
+		  scgPIDControlled.set(0);	
+		  scgConstant.set(0);
+		  super.getPIDController().reset();
 	  }
+	  /**
+	   * resets the values of certain 
+	   */
 	  public void resetOurValues() {
-		   this.power = 0;
-		    this.scgPIDControlled.set(-this.power);
-		    this.scgConstant.set(this.power);
+		  	this.power = 0;
+		    this.scgPIDControlled.set(0);
+		    this.scgConstant.set(0);
 		    this.increment=.01;//TODO move to Config
 		    this.startTime = System.nanoTime()/1000000000;
 		    this.toGoalTime = 0;
+			super.getPIDController().reset();
+
+
 	  }
-
-
-	@Override
-	protected boolean isFinished() {
-		return false;
-	}
 
 }

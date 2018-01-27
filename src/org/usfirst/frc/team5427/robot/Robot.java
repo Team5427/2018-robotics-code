@@ -35,6 +35,8 @@ import org.usfirst.frc.team5427.util.SameLine;
 
 import com.kauailabs.navx.frc.AHRS;
 
+//import com.kauailabs.navx.frc.AHRS;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -190,11 +192,13 @@ public class Robot extends IterativeRobot  {
 		Log.init("autnomous CREATED");
 		
 		ahrs.reset();
+		//removes history of the PID loop (destroys the older loop) if pidSide stores a PIDDRiveTRainSIde object
 		if(pidSide!=null)
 			pidSide.free();
 		
 		
 		pidSide = new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, 0);
+		//removes history of the PID loop (destroys the older loop)
 //		pidSide.free();
 		
 			//	new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, 90);
