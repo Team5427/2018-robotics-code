@@ -138,9 +138,13 @@ public class Robot extends IterativeRobot  {
 		}
 
 		
-
+		//create encoders
+		//TODO put port values in Config
 		encLeft = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 		encRight = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
+		//Set the Encoder to diameter*pi/360 inches per pulse (each pulse is a degree)
+		encRight.setDistancePerPulse((6 * Math.PI / 360));
+		encLeft.setDistancePerPulse((6 * Math.PI / 360));
 		
 		oi = new OI();
 		Log.init("Robot init done");
@@ -154,14 +158,23 @@ public class Robot extends IterativeRobot  {
 	 */
 	@Override
 	public void disabledInit() {
+		SmartDashboard.putNumber("encRight", encRight.getDistance());
+		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
+		encRight.reset();
+		encLeft.reset();
 		if(pidSide!=null)
 			pidSide.free();
 		ahrs.reset();
+		SmartDashboard.putNumber("encRight", encRight.getDistance());
+		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("encRight", encRight.getDistance());
+		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
+		
 	}
 
 	/**
@@ -231,8 +244,7 @@ public class Robot extends IterativeRobot  {
 		encRight.reset();
 		encLeft.reset();
 		
-		encRight.setDistancePerPulse((6 * Math.PI / 360));
-		encLeft.setDistancePerPulse((6 * Math.PI / 360));
+		
 		
 		dwj = new DriveWithJoystick();
 //		Log.init("Initializing test");
