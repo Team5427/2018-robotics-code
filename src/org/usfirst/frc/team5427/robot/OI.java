@@ -7,7 +7,8 @@
 
 package org.usfirst.frc.team5427.robot;
 
-import org.usfirst.frc.team5427.robot.commands.IntakeActivate;
+import org.usfirst.frc.team5427.robot.commands.IntakeActivateIn;
+import org.usfirst.frc.team5427.robot.commands.IntakeActivateOut;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 
@@ -62,7 +63,8 @@ public class OI {
 	
 	 public Joystick joy1;
 	 
-	 Button motorIntake;
+	 Button motorIntakeIn;
+	 Button motorIntakeOut;
 	 
 	 Button solenoidIntake;
 
@@ -73,13 +75,15 @@ public class OI {
 	        joy1 = new Joystick(Config.JOYSTICK_PORT);
 	        
 	        //Create buttons
-	        motorIntake = new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE);
-	        solenoidIntake = new JoystickButton(joy1,Config.BUTTON_SOLENOD_INTAKE);
-	        elevatorForward = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_FORWARD);
-	        elevatorReverse = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_REVERSE);
+	        motorIntakeIn = new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_IN);
+	        motorIntakeOut = new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_OUT);
+//	        solenoidIntake = new JoystickButton(joy1,Config.BUTTON_SOLENOD_INTAKE);
+//	        elevatorForward = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_FORWARD);
+//	        elevatorReverse = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_REVERSE);
 
 	        //set what they do
-	        motorIntake.whenPressed(new IntakeActivate());
+	        motorIntakeIn.whenPressed(new IntakeActivateIn());
+	        motorIntakeOut.whenPressed(new IntakeActivateOut());
 	       // solenoidIntake.whenPressed(new IntakeSolenoidSwitch());
 	        
 //	        elevatorForward.whileHeld(new MoveElevator(1));

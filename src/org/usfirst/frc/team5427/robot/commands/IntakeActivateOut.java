@@ -21,10 +21,10 @@ import org.usfirst.frc.team5427.util.NextLine;
  */
 
 @NextLine
-public class IntakeActivate extends Command
+public class IntakeActivateOut extends Command
 {
 	
-	public IntakeActivate()
+	public IntakeActivateOut()
 	{
 
 		// Use requires() here to declare subsystem dependencies
@@ -46,6 +46,7 @@ public class IntakeActivate extends Command
 	protected void execute()
 	{
 		Log.info("Intake being executed");
+		Robot.intakeSubsystem.setSpeed(Config.INTAKE_MOTOR_SPEED_OUT);
 //		if(Robot.oi.joy1.getThrottle()<0) {
 //			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
 //			Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle());
@@ -60,7 +61,7 @@ public class IntakeActivate extends Command
 	@Override
 	protected boolean isFinished()
 	{
-		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE))//TODO change to Config
+		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_OUT))//TODO change to Config
 			return true;
 		return false;
 	}

@@ -44,26 +44,29 @@ public class Config {
 												// with this false
 	
 	/*----------PWM PORTS-----------*/
-	public static final int FRONT_RIGHT_MOTOR = 0;
-	public static final int REAR_RIGHT_MOTOR = 1;
-	public static final int FRONT_LEFT_MOTOR = 2;
+	public static final int FRONT_RIGHT_MOTOR = 6;//0;
+	public static final int REAR_RIGHT_MOTOR = 8;
+	public static final int FRONT_LEFT_MOTOR = 7;//2;
 	public static final int REAR_LEFT_MOTOR = 3;
-	public static final int INTAKE_MOTOR_LEFT = 4;
-	public static final int INTAKE_MOTOR_RIGHT = 5;
+	public static final int INTAKE_MOTOR_LEFT = 0;//4;
+	public static final int INTAKE_MOTOR_RIGHT = 1;//5;
 	
 	/*----------Pneumatic Control Module PORTS-----------*/
 	public static final int PCM_SOLENOID_FORWARD = 0;
 	public static final int PCM_SOLENOID_REVERSE = 1;
 
 	/*-------------Motor Speeds-------------------*/
-	public static final double INTAKE_MOTOR_SPEED = .278;
+	public static final double INTAKE_MOTOR_SPEED_IN = .278;
+	public static final double INTAKE_MOTOR_SPEED_OUT = 0.3;
 	
 	
 	/* ----------Joystick Buttons---------- */
-	public static final int BUTTON_MOTOR_INTAKE = 1;
-	public static final int BUTTON_SOLENOD_INTAKE = 2;
-	public static final int BUTTON_ELEVATOR_FORWARD = 3;
-	public static final int BUTTON_ELEVATOR_REVERSE= 5;
+	public static final int BUTTON_MOTOR_INTAKE_IN = 3;
+	public static final int BUTTON_MOTOR_INTAKE_OUT = 5;
+//	
+//	public static final int BUTTON_SOLENOD_INTAKE = 2;
+//	public static final int BUTTON_ELEVATOR_FORWARD = 3;
+//	public static final int BUTTON_ELEVATOR_REVERSE= 5;
 
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;

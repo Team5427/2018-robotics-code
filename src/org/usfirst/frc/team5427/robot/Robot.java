@@ -116,7 +116,6 @@ public class Robot extends IterativeRobot{
 		
 		drive = new DifferentialDrive(speedcontrollergroup_left, speedcontrollergroup_right);
 		driveTrain = new DriveTrain(speedcontrollergroup_left, speedcontrollergroup_right, drive);
-		dwj = new DriveWithJoystick();
 		
 
 		Log.init("Initializing intake motors: ");
@@ -133,8 +132,8 @@ public class Robot extends IterativeRobot{
 		Log.init("Intializing Elevator Motor: ");
 		//motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
 		
-		encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
-		encLeft = new Encoder(2,3,false,Encoder.EncodingType.k4X);
+		//encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
+		//encLeft = new Encoder(2,3,false,Encoder.EncodingType.k4X);
 
 		oi = new OI();
 	}
@@ -201,11 +200,12 @@ public class Robot extends IterativeRobot{
 			m_autonomousCommand.cancel();
 		}
 		
-		encRight.reset();
+		/*encRight.reset();
 		encLeft.reset();
 		
 		encRight.setDistancePerPulse((6*Math.PI)/360);
 		encLeft.setDistancePerPulse((6*Math.PI)/360);
+		*/
 		//360 cycles per WPILIB REvolution
 		//Even though AndyMark SAYS:
 		//1440 pulses per revolution
@@ -213,7 +213,7 @@ public class Robot extends IterativeRobot{
 		//4 pulses per cycle
 		//Log.info();
 		
-		dwj = new DriveWithJoystick();
+		//dwj = new DriveWithJoystick();
 
 
 	}
@@ -225,11 +225,11 @@ public class Robot extends IterativeRobot{
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		//4 counts for every rev
-		SmartDashboard.putNumber("RightCount", encRight.get());
+		/*SmartDashboard.putNumber("RightCount", encRight.get());
 		SmartDashboard.putNumber("LeftCount", encLeft.get());
 		
 		SmartDashboard.putNumber("RightDist",encRight.getDistance());
-		SmartDashboard.putNumber("LeftDist",encLeft.getDistance());
+		SmartDashboard.putNumber("LeftDist",encLeft.getDistance());*/
 	}
 
 	@Override
