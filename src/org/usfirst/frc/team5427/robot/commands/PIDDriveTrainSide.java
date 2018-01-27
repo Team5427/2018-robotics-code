@@ -146,7 +146,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 		  if(this.power<Config.PID_STRAIGHT_POWER) {
 			  this.power+=increment;
 		  }
-		  //if it is equal to goal, print the time it took, and iterations
+		  //else if it is equal to goal, print the time it took, and iterations
 		  else {
 			  if(toGoalTime==0) {
 				  toGoalTime=System.nanoTime()/1000000000.0 - this.startTime;
