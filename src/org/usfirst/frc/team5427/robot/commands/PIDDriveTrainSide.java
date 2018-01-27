@@ -162,6 +162,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  
 	  @Override
 	  public void free() {
+		  Log.info("running free()");
 		  super.free();
 		  super.getPIDController().disable();
 		  resetOurValues();
