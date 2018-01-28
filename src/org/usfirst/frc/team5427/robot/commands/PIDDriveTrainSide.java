@@ -46,6 +46,11 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  
 	  private double toGoalTime;
 	  private double startTime;
+	  
+	  private double desiredDistance;
+	  
+	  private boolean isCoasting;
+	  
 	  //increment every other iteration, tried it but did not make significant diff, may come back
 	 // private boolean flipFlop;
 	 
@@ -60,15 +65,16 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   * @param i - the I value for the PID Loop
 	   * @param d - the D value for the PID Loop
 	   * @param setpoint - the Set Point for the PID Loop
+	   * @param desiredDistance: The distance you would like the PID Command to travel
 	   */
-	  public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double p, double i, double d, double setpoint) {
+	  public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double p, double i, double d, double setpoint, double desiredDistance) {
 		  super(p,i,d);
 	    Log.init("PIDDriveTrainRight created");
 //	    m_controller = new PIDController(p, i, d, m_source, m_output);
 	    super.setSetpoint(setpoint);
 	    this.scgPIDControlled=scgPIDControlled;
 	    this.scgConstant = scgConstant;
-	    
+	    this.desiredDistance= desiredDistance;
 	    resetOurValues();
 	    super.setSetpoint(setpoint);
 	    initialize();
@@ -174,6 +180,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 	   * resets the values of certain 
 	   */
 	  public void resetOurValues() {
+		  	this.isCoasting=false;
 		  	this.power = 0;
 		    this.scgPIDControlled.set(0);
 		    this.scgConstant.set(0);
@@ -181,8 +188,13 @@ public class PIDDriveTrainSide extends PIDCommand{
 		    this.startTime = System.nanoTime()/1000000000;
 		    this.toGoalTime = 0;
 			super.getPIDController().reset();
-
-
+	  }
+	  
+	  public boolean getIsCoasting()
+	  {
+		  if(!isCoasting)
+		   isCoasting= desiredDistance-(Math.abs(Robot.encLeft.getDistance())+Math.abs(Robot.encRight.getDistance()))/2<Config.getCoastingDistance(power);
+		  return isCoasting;
 	  }
 
 }
