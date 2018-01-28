@@ -16,10 +16,15 @@ public class PIDCoasting extends PIDCommand{
 		this.desiredDistance = desiredDistance;
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgConstant = scgConstant;
-		this.getPIDController().setOutputRange(-0.02, 0.02);
-		this.getPIDController().setSetpoint(desiredDistance);
+		super.getPIDController().setOutputRange(-0.02, 0.02);
+		super.getPIDController().setSetpoint(desiredDistance);
 	}
 
+	protected void initialize() {
+		this.scgConstant.set(Config.PID_STRAIGHT_COAST_POWER);
+		super.getPIDController().enable();
+	}
+	
 	@Override
 	protected double returnPIDInput() {
 		return (Robot.encLeft.getDistance()+Robot.encRight.getDistance())/2.0;
@@ -27,8 +32,6 @@ public class PIDCoasting extends PIDCommand{
 
 	@Override
 	protected void usePIDOutput(double output) {
-		scgPIDControlled.set(output);
-		scgConstant.set(Config.PID_STRAIGHT_COAST_POWER);
 	}
 
 	@Override

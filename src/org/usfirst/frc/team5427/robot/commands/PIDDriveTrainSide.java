@@ -51,6 +51,7 @@ public class PIDDriveTrainSide extends PIDCommand{
 	  
 	  private boolean isCoasting;
 	  
+	  private PIDCoasting pidCoasting = null;
 	  //increment every other iteration, tried it but did not make significant diff, may come back
 	 // private boolean flipFlop;
 	 
@@ -80,8 +81,6 @@ public class PIDDriveTrainSide extends PIDCommand{
 	    initialize();
 	    
 	  }
-
-	
 
 	  @Override
 	  //begins the PID loop (enables)
@@ -146,10 +145,10 @@ public class PIDDriveTrainSide extends PIDCommand{
 		  SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
 		
 		  //setting right side to pidOutput
-		  scgPIDControlled.set(output); 
+		  scgPIDControlled.pidWrite(output); 
 		 
 		  //if current power is less than the goal, increment the power
-		  if(this.power<Config.PID_STRAIGHT_POWER) {
+		  if(this.power<Config.PID_STRAIGHT_POWER && !isCoasting) {
 			  this.power+=increment;
 		  }
 		  //else if it is equal to goal, print the time it took, and iterations
@@ -164,6 +163,11 @@ public class PIDDriveTrainSide extends PIDCommand{
 		 
 		  scgConstant.set(power);
 		  SmartDashboard.putNumber("PID output", output);
+		  
+		  if(isCoasting && this.pidCoasting == null)
+		  {
+			  pidCoasting = new PIDCoasting(this.scgPIDControlled,this.scgConstant,this.desiredDistance,Config.PID_STRAIGHT_P,Config.PID_STRAIGHT_I,Config.PID_STRAIGHT_D);
+		  }
 	  }
 	  
 	  @Override
