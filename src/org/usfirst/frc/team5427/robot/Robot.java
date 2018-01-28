@@ -81,8 +81,8 @@ public class Robot extends IterativeRobot  {
 	 *TODO move these to Config
 	 */
 	
-	public Encoder encLeft;
-	public Encoder encRight;
+	public static Encoder encLeft;
+	public static Encoder encRight;
 	
 
 

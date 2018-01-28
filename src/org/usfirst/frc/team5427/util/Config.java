@@ -114,6 +114,7 @@ public class Config {
 	public static final double PID_STRAIGHT_D = 0.00;
 	public static final double PID_STRAIGHT_POWER = .30;
 	public static final double PID_STRAIGHT_INCREMENT=.01;
+	public static final double PID_STRAIGHT_COAST_POWER = 0.01;
 //	public static final double PID_STRAIGHT_INCREMENT_DECREMENT = .001;
 	
 	public static final double PID_TURN_P = 0.051;
