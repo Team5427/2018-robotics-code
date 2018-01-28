@@ -115,6 +115,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 		Log.info("Interrupted");
 	}
 
+	//TODO SEE WHY THIS IS NEVER CALLED
 	@Override
 	protected boolean isFinished() {
 		// if(/*robot encoder value is larger than desiredDistance -
@@ -122,13 +123,15 @@ public class PIDDriveTrainSide extends PIDCommand {
 		// if(0>=Config.getCoastingDistance(desiredPower))//TODO Create Encoders in
 		// Robot and use their value here and use
 		// parameter desiredDistance
-
-		// If the robot is disabled
-		if (RobotState.isDisabled()) {
-			end();
-			return true;
-		}
-		return false;
+		//returns true if the robot is no longer PID Coasting
+//		if(pidCoasting.isFinished())
+//			return true;
+//		// If the robot is disabled
+//		if (RobotState.isDisabled()) {
+//			end();
+//			return true;
+//		}
+		return true;
 	}
 
 	public void setPower(double power) {
@@ -156,14 +159,12 @@ public class PIDDriveTrainSide extends PIDCommand {
 		SmartDashboard.putNumber("encRightVal", Math.abs(Robot.encRight.getDistance()));
 		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
 		// setting right side to pidOutput
+		if(!isCoasting)
 		scgPIDControlled.pidWrite(output);
 
 		// if current power is less than the goal, increment the power
 		if (this.power < Config.PID_STRAIGHT_POWER && !isCoasting) {
 			this.power += increment;
-		}
-		if (!isCoasting) {
-			scgConstant.set(power);
 		}
 		// else if it is equal to goal, print the time it took, and iterations
 		else {
@@ -173,11 +174,13 @@ public class PIDDriveTrainSide extends PIDCommand {
 				Log.info("Iterations: " + this.power / this.increment);
 			}
 		}
+		if(!isCoasting)
+			scgConstant.set(power);
 
 		SmartDashboard.putNumber("PID output", output);
 		if (isCoasting && this.pidCoasting == null) {
 			System.out.println("Distance traveled: " + ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2));
-			pidCoasting = new PIDCoasting(this.scgPIDControlled, this.scgConstant, this.desiredDistance);
+			pidCoasting = new PIDCoasting(this.scgConstant, this.desiredDistance,this);
 		}
 	}
 

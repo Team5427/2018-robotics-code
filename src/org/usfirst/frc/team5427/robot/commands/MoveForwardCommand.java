@@ -19,6 +19,7 @@ import org.usfirst.frc.team5427.util.Config;
  * 1) Ramp up power using Increment command. 
  * 2) Run PIDDriveTrainSide UNTIL 3) FinalDistance-CoastDistance is reached
  */
+@Deprecated
 public class MoveForwardCommand extends Command {
 	
 	//desired power that the robot will drive at

@@ -8,16 +8,18 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class PIDCoasting extends PIDCommand{
+public class PIDCoasting extends PIDCommand {
 
-	SpeedControllerGroup scgPIDControlled, scgConstant;
+	SpeedControllerGroup scgPIDControlled;
+	PIDDriveTrainSide pidStraight;
 	double desiredDistance;
-	
-	public PIDCoasting(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double desiredDistance) {
-		super(Config.PID_STRAIGHT_COAST_P,Config.PID_STRAIGHT_COAST_I,Config.PID_STRAIGHT_COAST_D);
+
+	public PIDCoasting(SpeedControllerGroup scgPIDControlled, double desiredDistance,
+			PIDDriveTrainSide pidStraight) {
+		super(Config.PID_STRAIGHT_COAST_P, Config.PID_STRAIGHT_COAST_I, Config.PID_STRAIGHT_COAST_D);
 		this.desiredDistance = desiredDistance;
 		this.scgPIDControlled = scgPIDControlled;
-		this.scgConstant = scgConstant;
+		this.pidStraight = pidStraight;
 		super.getPIDController().setOutputRange(-0.02, 0.02);
 		super.getPIDController().setSetpoint(desiredDistance);
 	}
@@ -25,16 +27,22 @@ public class PIDCoasting extends PIDCommand{
 	protected void initialize() {
 		super.getPIDController().enable();
 	}
-	
+
 	@Override
 	protected double returnPIDInput() {
-		return (Math.abs(Robot.encLeft.getDistance())+Math.abs(Robot.encRight.getDistance()))/2.0;
+		return (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0;
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
 		System.out.println("Running PIDCoasting");
-		
+//		if (desiredDistance > (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0) {
+//			this.pidStraight.setPower(Config.PID_STRAIGHT_COAST_POWER);
+//		}
+//		else if (desiredDistance < (Math.abs(Robot.encLeft.getDistance())+Math.abs(Robot.encRight.getDistance()))/2.0) {
+//			this.pidStraight.setPower(-Config.PID_STRAIGHT_COAST_POWER);
+//		}
+		this.scgPIDControlled.pidWrite(output);
 	}
 
 	@Override
@@ -48,8 +56,7 @@ public class PIDCoasting extends PIDCommand{
 		super.free();
 		super.getPIDController().disable();
 		scgPIDControlled.set(0);
-		scgConstant.set(0);
 		super.getPIDController().reset();
 	}
-	
+
 }

@@ -5,7 +5,7 @@ package org.usfirst.frc.team5427.robot.commands;
  * so that the PID Loop can take over afterwards. We may soon find this comand unnecessary
  * 
  */
-
+@Deprecated
 public class WithinFiveDegrees {
 	private double startAngle;
 	private double endAngle;
