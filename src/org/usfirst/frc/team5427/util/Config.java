@@ -132,38 +132,38 @@ public class Config {
 	public static double getCoastingDistance(double power)
 	{
 		//provides correct stopping distances for various power value ranges
-		if(power<=0.2)
-			return 0; //TODO return correct number
-		if(power<=0.3)
-			return 1; //TODO return correct number
-		if(power<=0.4)
-			return 2; //TODO return correct number
-		if(power<=0.45)
-			return 3; //TODO return correct number
-		if(power<=0.5)
-			return 4; //TODO return correct number
-		if(power<=0.55)
-			return 5; //TODO return correct number
-		if(power<=0.6)
-			return 6; //TODO return correct number
-		if(power<=0.65)
-			return 7; //TODO return correct number
-		if(power<=0.7)
-			return 8; //TODO return correct number
-		if(power<=0.75)
-			return 9; //TODO return correct number
-		if(power<=0.8)
-			return 10; //TODO return correct number
-		if(power<=0.83)
-			return 11; //TODO return correct number
-		if(power<=0.85)
-			return 12; //TODO return correct number
-		if(power<=0.9)
-			return 13; //TODO return correct number
-		if(power<=0.95)
-			return 14; //TODO return correct number
-		return 100;
-			
+//		if(power<=0.2)
+//			return 0; //TODO return correct number
+//		if(power<=0.3)
+//			return 1; //TODO return correct number
+//		if(power<=0.4)
+//			return 2; //TODO return correct number
+//		if(power<=0.45)
+//			return 3; //TODO return correct number
+//		if(power<=0.5)
+//			return 4; //TODO return correct number
+//		if(power<=0.55)
+//			return 5; //TODO return correct number
+//		if(power<=0.6)
+//			return 6; //TODO return correct number
+//		if(power<=0.65)
+//			return 7; //TODO return correct number
+//		if(power<=0.7)
+//			return 8; //TODO return correct number
+//		if(power<=0.75)
+//			return 9; //TODO return correct number
+//		if(power<=0.8)
+//			return 10; //TODO return correct number
+//		if(power<=0.83)
+//			return 11; //TODO return correct number
+//		if(power<=0.85)
+//			return 12; //TODO return correct number
+//		if(power<=0.9)
+//			return 13; //TODO return correct number
+//		if(power<=0.95)
+//			return 14; //TODO return correct number
+//		return 100;
+		return 14.93;
 	}
 
 }

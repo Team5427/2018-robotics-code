@@ -216,7 +216,7 @@ public class Robot extends IterativeRobot  {
 			pidSide.free();
 		
 		
-		pidSide = new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, 0, 40);
+		pidSide = new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, 0, 60);
 		//removes history of the PID loop (destroys the older loop)
 //		pidSide.free();
 		
