@@ -39,7 +39,7 @@ public class MoveForwardCommand extends Command {
 	protected void initialize() {
 		//TODO reset encoder value
 		new Increment(desiredPower);
-		pidDTS = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, 0);
+		pidDTS = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, 0, 40);
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
