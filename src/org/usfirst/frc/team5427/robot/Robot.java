@@ -62,7 +62,6 @@ public class Robot extends IterativeRobot  {
 	    
 	DriveWithJoystick dwj;
 	
-
 	Command m_autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	
@@ -74,6 +73,7 @@ public class Robot extends IterativeRobot  {
 	public static SpeedController motorPWM_Elevator;
 	public static Intake intakeSubsystem;
 	public PIDDriveTrainSide pidSide;
+
 	
 
 	/**
@@ -160,13 +160,13 @@ public class Robot extends IterativeRobot  {
 	 */
 	@Override
 	public void disabledInit() {
-		SmartDashboard.putNumber("encRight", encRight.getDistance());
-		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 		encRight.reset();
 		encLeft.reset();
 		if(pidSide!=null)
 			pidSide.free();
 		ahrs.reset();
+		SmartDashboard.putNumber("encRightVal", encRight.getDistance());
+		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
 		SmartDashboard.putNumber("encRight", encRight.getDistance());
 		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 	}
@@ -174,6 +174,8 @@ public class Robot extends IterativeRobot  {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("encRightVal", encRight.getDistance());
+		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
 		SmartDashboard.putNumber("encRight", encRight.getDistance());
 		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 		
@@ -215,8 +217,7 @@ public class Robot extends IterativeRobot  {
 		if(pidSide!=null)
 			pidSide.free();
 		
-		
-		pidSide = new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, 0, 60);
+		pidSide = new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, 0, 60);
 		//removes history of the PID loop (destroys the older loop)
 //		pidSide.free();
 		

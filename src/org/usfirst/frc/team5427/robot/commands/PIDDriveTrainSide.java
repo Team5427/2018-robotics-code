@@ -50,6 +50,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 	private boolean isCoasting;
 
 	private PIDCoasting pidCoasting = null;
+
 	// increment every other iteration, tried it but did not make significant diff,
 	// may come back
 	// private boolean flipFlop;
@@ -74,9 +75,8 @@ public class PIDDriveTrainSide extends PIDCommand {
 	 * @param desiredDistance:
 	 *            The distance you would like the PID Command to travel
 	 */
-	public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double p,
-			double i, double d, double setpoint, double desiredDistance) {
-		super(p, i, d);
+	public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double setpoint, double desiredDistance) {
+		super(Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D);
 		Log.init("PIDDriveTrainRight created");
 		// m_controller = new PIDController(p, i, d, m_source, m_output);
 		super.setSetpoint(setpoint);
@@ -151,8 +151,10 @@ public class PIDDriveTrainSide extends PIDCommand {
 		isCoasting = desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 < Config.getCoastingDistance(power);
 		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
 
-		SmartDashboard.putNumber("encRight", Robot.encRight.getDistance());
-		SmartDashboard.putNumber("encLeft", Robot.encLeft.getDistance());
+		SmartDashboard.putNumber("encRight", Math.abs(Robot.encRight.getDistance()));
+		SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
+		SmartDashboard.putNumber("encRightVal", Math.abs(Robot.encRight.getDistance()));
+		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
 		// setting right side to pidOutput
 		scgPIDControlled.pidWrite(output);
 
@@ -174,8 +176,8 @@ public class PIDDriveTrainSide extends PIDCommand {
 
 		SmartDashboard.putNumber("PID output", output);
 		if (isCoasting && this.pidCoasting == null) {
-			pidCoasting = new PIDCoasting(this.scgPIDControlled, this.scgConstant, this.desiredDistance,
-					Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D);
+			System.out.println("Distance traveled: " + ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2));
+			pidCoasting = new PIDCoasting(this.scgPIDControlled, this.scgConstant, this.desiredDistance);
 		}
 	}
 
@@ -187,6 +189,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 		resetOurValues();
 		scgPIDControlled.set(0);
 		scgConstant.set(0);
+		pidCoasting.free();
 		super.getPIDController().reset();
 	}
 
