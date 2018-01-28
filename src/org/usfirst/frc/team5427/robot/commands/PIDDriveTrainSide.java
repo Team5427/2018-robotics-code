@@ -148,6 +148,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
+		isCoasting = desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 < Config.getCoastingDistance(power);
 		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
 
 		SmartDashboard.putNumber("encRight", Robot.encRight.getDistance());
@@ -156,10 +157,10 @@ public class PIDDriveTrainSide extends PIDCommand {
 		scgPIDControlled.pidWrite(output);
 
 		// if current power is less than the goal, increment the power
-		if (this.power < Config.PID_STRAIGHT_POWER && !getIsCoasting()) {
+		if (this.power < Config.PID_STRAIGHT_POWER && !isCoasting) {
 			this.power += increment;
 		}
-		if (!getIsCoasting()) {
+		if (!isCoasting) {
 			scgConstant.set(power);
 		}
 		// else if it is equal to goal, print the time it took, and iterations
@@ -172,7 +173,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 		}
 
 		SmartDashboard.putNumber("PID output", output);
-		if (getIsCoasting() && this.pidCoasting == null) {
+		if (isCoasting && this.pidCoasting == null) {
 			pidCoasting = new PIDCoasting(this.scgPIDControlled, this.scgConstant, this.desiredDistance,
 					Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D);
 		}
@@ -207,10 +208,6 @@ public class PIDDriveTrainSide extends PIDCommand {
 	}
 
 	public boolean getIsCoasting() {
-		if (!isCoasting)
-			isCoasting = desiredDistance
-					- (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 < Config
-							.getCoastingDistance(power);
 		return isCoasting;
 	}
 
