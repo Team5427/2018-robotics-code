@@ -20,10 +20,12 @@ public class PIDCoasting extends PIDCommand {
 		this.desiredDistance = desiredDistance;
 		this.scgPIDControlled = scgPIDControlled;
 		this.pidStraight = pidStraight;
-		super.getPIDController().setOutputRange(-0.02, 0.02);
+		super.getPIDController().setOutputRange(-0.05, 0.05);
 		super.getPIDController().setSetpoint(desiredDistance);
+		initialize();
 	}
 
+	@Override
 	protected void initialize() {
 		super.getPIDController().enable();
 	}
@@ -35,7 +37,7 @@ public class PIDCoasting extends PIDCommand {
 
 	@Override
 	protected void usePIDOutput(double output) {
-		System.out.println("Running PIDCoasting");
+		SmartDashboard.putNumber("PID Output Coasting", output);
 //		if (desiredDistance > (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0) {
 //			this.pidStraight.setPower(Config.PID_STRAIGHT_COAST_POWER);
 //		}
@@ -47,9 +49,16 @@ public class PIDCoasting extends PIDCommand {
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		System.out.println("yeet");
+		return true;
 	}
 
+	@Override
+	protected void end() {
+		super.getPIDController().disable();
+		free();
+		super.getPIDController().reset();
+	}
 	@Override
 	public void free() {
 		Log.info("running free()");

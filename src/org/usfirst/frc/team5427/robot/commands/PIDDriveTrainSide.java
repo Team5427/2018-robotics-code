@@ -92,7 +92,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 	@Override
 	// begins the PID loop (enables)
 	protected void initialize() {
-		Log.init("Initializing");
+		
 		super.getPIDController().enable();
 	}
 
@@ -104,7 +104,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 		super.getPIDController().disable();
 		scgPIDControlled.set(0);
 		scgConstant.set(0);
-		resetOurValues();
+		free();
 		super.getPIDController().reset();
 	}
 
@@ -131,6 +131,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 //			end();
 //			return true;
 //		}
+		System.out.println("Yah");
 		return true;
 	}
 
@@ -159,9 +160,8 @@ public class PIDDriveTrainSide extends PIDCommand {
 		SmartDashboard.putNumber("encRightVal", Math.abs(Robot.encRight.getDistance()));
 		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
 		// setting right side to pidOutput
-		if(!isCoasting)
+		
 		scgPIDControlled.pidWrite(output);
-
 		// if current power is less than the goal, increment the power
 		if (this.power < Config.PID_STRAIGHT_POWER && !isCoasting) {
 			this.power += increment;
@@ -192,6 +192,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 		resetOurValues();
 		scgPIDControlled.set(0);
 		scgConstant.set(0);
+		if(pidCoasting!=null)
 		pidCoasting.free();
 		super.getPIDController().reset();
 	}
@@ -207,7 +208,6 @@ public class PIDDriveTrainSide extends PIDCommand {
 		this.increment = .01;// TODO move to Config
 		this.startTime = System.nanoTime() / 1000000000;
 		this.toGoalTime = 0;
-		this.pidCoasting = null;
 		super.getPIDController().reset();
 		Robot.encLeft.reset();
 		Robot.encRight.reset();
