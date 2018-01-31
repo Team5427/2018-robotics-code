@@ -19,14 +19,15 @@ public class PIDTurnCommand extends PIDCommand{
 	
 	//two SpeedControllerGroup objects to be controlled by this PID Loop
 	private SpeedControllerGroup scgRight, scgLeft;
+	double setPoint;
 	
 	public PIDTurnCommand(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double p, double i, double d, double setPoint) {
 		super(p,i,d);
 		this.scgRight = scgRight;
 		this.scgLeft = scgLeft;
+		this.setPoint = setPoint;
 		//lets the PID Loop the range of the input (ahrs)
 		super.setInputRange(-180, 180);
-		initialize();
 	}
 	
 	//begins the PID loop (enables)

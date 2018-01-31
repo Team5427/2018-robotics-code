@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.PIDDriveTrainSide;
+import org.usfirst.frc.team5427.robot.commands.PIDTurnCommand;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
@@ -73,6 +74,7 @@ public class Robot extends IterativeRobot  {
 	public static SpeedController motorPWM_Elevator;
 	public static Intake intakeSubsystem;
 	public PIDDriveTrainSide pidSide;
+	public PIDTurnCommand pidTurn;
 
 	
 
@@ -164,6 +166,8 @@ public class Robot extends IterativeRobot  {
 		encLeft.reset();
 		if(pidSide!=null)
 			pidSide.free();
+		if(pidTurn!=null)
+			pidTurn.free();
 		ahrs.reset();
 		SmartDashboard.putNumber("encRightVal", encRight.getDistance());
 		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
@@ -195,7 +199,7 @@ public class Robot extends IterativeRobot  {
 	 */
 	@Override
 	public void autonomousInit() {
-//		m_autonomousCommand = chooser.getSelected(); TODO remove this line of code
+//		m_	mousCommand = chooser.getSelected(); TODO remove this line of code
 		
 //		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 //		char[] sideColorArray = gameData.toCharArray();
@@ -216,8 +220,12 @@ public class Robot extends IterativeRobot  {
 		//removes history of the PID loop (destroys the older loop) if pidSide stores a PIDDRiveTRainSIde object
 		if(pidSide!=null)
 			pidSide.free();
+		if(pidTurn!=null)
+			pidTurn.free();
 		
 		pidSide = new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, 0, 60);
+		pidTurn = new PIDTurnCommand(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, 90);
+
 		//removes history of the PID loop (destroys the older loop)
 //		pidSide.free();
 		
@@ -233,6 +241,7 @@ public class Robot extends IterativeRobot  {
 		Scheduler.getInstance().run();
 		//robot stutters
 //		pidSide.incrementPower();
+		
 	}
 
 	@Override

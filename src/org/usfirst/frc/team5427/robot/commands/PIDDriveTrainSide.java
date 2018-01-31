@@ -159,9 +159,9 @@ public class PIDDriveTrainSide extends PIDCommand {
 		scgPIDControlled.pidWrite(output);
 
 		// if current power is less than the goal, increment the power
-		if (this.power < Config.PID_STRAIGHT_POWER && !isCoasting) {
+		/*if (this.power < Config.PID_STRAIGHT_POWER && !isCoasting) {
 			this.power += increment;
-		}
+		}*/
 		if (!isCoasting) {
 			scgConstant.set(power);
 		}
