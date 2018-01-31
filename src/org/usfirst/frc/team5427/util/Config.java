@@ -112,12 +112,18 @@ public class Config {
 	//.005 started oscilating
 	public static final double PID_STRAIGHT_I = 0.0025;
 	public static final double PID_STRAIGHT_D = 0.00;
+//	public static final double PID_STRAIGHT_P = 1;
+//	public static final double PID_STRAIGHT_I = 1;
+//	public static final double PID_STRAIGHT_D = 1;
 	public static final double PID_STRAIGHT_POWER = .30;
 	public static final double PID_STRAIGHT_INCREMENT=.01;
 	public static final double PID_STRAIGHT_COAST_POWER = 0.01;
-	public static final double PID_STRAIGHT_COAST_P = 0.9;
-	public static final double PID_STRAIGHT_COAST_I = 0.9;
-	public static final double PID_STRAIGHT_COAST_D = 0.9;
+	public static final double PID_STRAIGHT_COAST_P = 0.05;
+	public static final double PID_STRAIGHT_COAST_I = 0.0025;
+	public static final double PID_STRAIGHT_COAST_D = 0.0;
+//	public static final double PID_STRAIGHT_COAST_P = 1;
+//	public static final double PID_STRAIGHT_COAST_I = 1;
+//	public static final double PID_STRAIGHT_COAST_D = 1;
 //	public static final double PID_STRAIGHT_INCREMENT_DECREMENT = .001;
 	
 	public static final double PID_TURN_P = 0.051;
@@ -166,7 +172,7 @@ public class Config {
 //		if(power<=0.95)
 //			return 14; //TODO return correct number
 //		return 100;
-		return 18.93;
+		return 14.93;
 	}
 
 }
