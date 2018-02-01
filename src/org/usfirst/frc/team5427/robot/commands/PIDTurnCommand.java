@@ -23,22 +23,28 @@ public class PIDTurnCommand extends PIDCommand{
 	
 	public PIDTurnCommand(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double p, double i, double d, double setPoint) {
 		super(p,i,d);
+		System.out.println("TURN INIT");
 		this.scgRight = scgRight;
 		this.scgLeft = scgLeft;
 		this.setPoint = setPoint;
 		//lets the PID Loop the range of the input (ahrs)
 		super.setInputRange(-180, 180);
+		super.setSetpoint(setPoint);
+		scgRight.set(0.3);
+		scgLeft.set(0.3);
 	}
 	
 	//begins the PID loop (enables)
 	  public void initialize() {
 		  Log.init("Initializing");
+		  System.out.println("INITIALIZE");
 	    super.getPIDController().enable();
 	  }
 	  
 	  //Ends (disables) the PID loop and stops the motors of the SpeedControllerGroups
 	  public void end() {
 		  Log.init("Ending PIDTurn");
+		  System.out.println("ENDING PIDTURN");
 		    super.getPIDController().disable();
 		    scgRight.set(0);	
 		    scgLeft.set(0);
@@ -52,6 +58,7 @@ public class PIDTurnCommand extends PIDCommand{
 	
 
 	public boolean isFinished() {
+//		 System.out.println(Math.abs(getCurrentAngle()-super.getSetpoint())+" IS FINISHED "+super.getSetpoint());
 		return Math.abs(getCurrentAngle()-super.getSetpoint())<Config.PID_TURN_TOLERANCE;
 	}
 	
@@ -70,7 +77,8 @@ public class PIDTurnCommand extends PIDCommand{
 	@Override
 	protected void usePIDOutput(double output) {
 		// TODO check if the negative signs are corresponding with the correct values
-		scgRight.set(output);
-		scgLeft.set(-output);
+		System.out.println(output+" OUTPUT");
+		scgRight.pidWrite(output);
+		scgLeft.set(output);
 	}
 }
