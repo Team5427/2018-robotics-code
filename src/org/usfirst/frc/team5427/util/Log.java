@@ -69,8 +69,8 @@ public class Log {
 	 * @param text
 	 */
 	public static void debug(String text) {
-		if (Config.DEBUG_MODE)
-			log("[DEBUG]", text);
+//		if (Config.DEBUG_MODE)
+//			log("[DEBUG]", text);
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class Log {
 	 * @param text
 	 */
 	public static void info(String text) {
-		log("[INFO]", text);
+//		log("[INFO]", text);
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class Log {
 	 * @param text
 	 */
 	public static void fatal(String text) {
-		log("[FATAL]", text);
+//		log("[FATAL]", text);
 	}
 
 	/**
@@ -108,6 +108,6 @@ public class Log {
 	 * @param text
 	 */
 	public static void init(String text) {
-		log("[INIT]", text);
+//		log("[INIT]", text);
 	}
 }
