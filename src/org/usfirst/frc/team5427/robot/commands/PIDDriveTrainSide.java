@@ -85,7 +85,6 @@ public class PIDDriveTrainSide extends PIDCommand {
 		this.desiredDistance = desiredDistance;
 		resetOurValues();
 		super.setSetpoint(setpoint);
-		initialize();
 
 	}
 
@@ -131,8 +130,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 //			end();
 //			return true;
 //		}
-		System.out.println("Yah");
-		return true;
+		return false;
 	}
 
 	public void setPower(double power) {
@@ -181,6 +179,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 		if (isCoasting && this.pidCoasting == null) {
 			System.out.println("Distance traveled: " + ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2));
 			pidCoasting = new PIDCoasting(this.scgConstant, this.desiredDistance,this);
+			pidCoasting.start();
 		}
 	}
 
