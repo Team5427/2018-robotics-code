@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
+import org.usfirst.frc.team5427.robot.subsystems.ClimberElevator;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
@@ -54,7 +55,6 @@ public class Robot extends IterativeRobot{
 	    
 	DriveWithJoystick dwj;
 	
-
 	Command m_autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot{
 
 	public static SpeedController motorPWM_Elevator;
 	public static Intake intakeSubsystem;
-	
+	public static ClimberElevator climberElevator;
 	/**
 	 * values used for PID loops
 	 *TODO move these to Config

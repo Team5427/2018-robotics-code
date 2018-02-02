@@ -9,6 +9,8 @@ package org.usfirst.frc.team5427.robot;
 
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateIn;
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateOut;
+import org.usfirst.frc.team5427.robot.commands.MoveClimberElevator;
+import org.usfirst.frc.team5427.robot.commands.MoveElevator;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 
@@ -70,6 +72,8 @@ public class OI {
 
 	 Button elevatorForward;
 	 Button elevatorReverse;
+	 Button climberForward;
+	 Button climberReverse;
 
 	    public OI() {
 	        joy1 = new Joystick(Config.JOYSTICK_PORT);
@@ -78,16 +82,22 @@ public class OI {
 	        motorIntakeIn = new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_IN);
 	        motorIntakeOut = new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_OUT);
 //	        solenoidIntake = new JoystickButton(joy1,Config.BUTTON_SOLENOD_INTAKE);
-//	        elevatorForward = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_FORWARD);
-//	        elevatorReverse = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_REVERSE);
+	        elevatorForward = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_FORWARD);
+	        elevatorReverse = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_REVERSE);
+	        elevatorForward = new JoystickButton(joy1,Config.BUTTON_CLIMBER_FORWARD);
+	        elevatorReverse = new JoystickButton(joy1,Config.BUTTON_CLIMBER_REVERSE);
 
+	        
 	        //set what they do
 	        motorIntakeIn.whenPressed(new IntakeActivateIn());
 	        motorIntakeOut.whenPressed(new IntakeActivateOut());
+	        
 	       // solenoidIntake.whenPressed(new IntakeSolenoidSwitch());
 	        
-//	        elevatorForward.whileHeld(new MoveElevator(1));
-//	        elevatorReverse.whileHeld(new MoveElevator(2));
+	        elevatorForward.whileHeld(new MoveElevator(1));
+	        elevatorReverse.whileHeld(new MoveElevator(2));
+	        climberForward.whileHeld(new MoveClimberElevator(1));
+	        climberReverse.whileHeld(new MoveClimberElevator(2));
 	    }
 
 	    public Joystick getJoy() {
