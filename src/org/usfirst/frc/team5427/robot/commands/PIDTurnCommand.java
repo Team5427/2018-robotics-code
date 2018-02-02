@@ -7,6 +7,7 @@ import org.usfirst.frc.team5427.util.SameLine;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This command will cause the robot to turn to an exact degree value using the PID Loop
@@ -29,9 +30,10 @@ public class PIDTurnCommand extends PIDCommand{
 		this.setPoint = setPoint;
 		//lets the PID Loop the range of the input (ahrs)
 		super.setInputRange(-180, 180);
+	
 		super.setSetpoint(setPoint);
-		scgRight.set(0.3);
-		scgLeft.set(0.3);
+		scgRight.set(0.1);
+		scgLeft.set(0.1);
 	}
 	
 	//begins the PID loop (enables)
@@ -59,7 +61,8 @@ public class PIDTurnCommand extends PIDCommand{
 
 	public boolean isFinished() {
 //		 System.out.println(Math.abs(getCurrentAngle()-super.getSetpoint())+" IS FINISHED "+super.getSetpoint());
-		return Math.abs(getCurrentAngle()-super.getSetpoint())<Config.PID_TURN_TOLERANCE;
+//		return Math.abs(getCurrentAngle()-super.getSetpoint())<Config.PID_TURN_TOLERANCE;
+		return false;
 	}
 	
 
@@ -77,8 +80,14 @@ public class PIDTurnCommand extends PIDCommand{
 	@Override
 	protected void usePIDOutput(double output) {
 		// TODO check if the negative signs are corresponding with the correct values
-		System.out.println(output+" OUTPUT");
+
+		SmartDashboard.putNumber("Yaw", getCurrentAngle());
+		SmartDashboard.putNumber("PID Output", output);
+		
 		scgRight.pidWrite(output);
 		scgLeft.set(output);
+		if(isFinished()) {
+			end();
+		}
 	}
 }

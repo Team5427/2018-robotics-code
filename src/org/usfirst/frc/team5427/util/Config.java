@@ -119,12 +119,16 @@ public class Config {
 	public static final double PID_STRAIGHT_COAST_I = 0.012333;
 	public static final double PID_STRAIGHT_COAST_D = 0.0;
 //	public static final double PID_STRAIGHT_INCREMENT_DECREMENT = .001;
+
 	
-	public static final double PID_TURN_P = 0.051;
-	public static final double PID_TURN_I = 0.00251;
-	public static final double PID_TURN_D = 0.000001;
+	//values for 90 deg; p = .026
+	public static final double PID_TURN_P = 0.08;
+	public static final double PID_TURN_I = 0.0;
+	//.15-.2 (45 deg)
+	public static final double PID_TURN_D = 0.2;
 	public static final double PID_TURN_POWER = 0.1;
-	public static final double PID_TURN_TOLERANCE = 0.1;
+	public static final double PID_TURN_TOLERANCE = .1;
+	public static final double PID_TURN_SETPOINT = 45;
 	
 	/**
 	 * returns the average stopping for different powers from 0 to full power, 
