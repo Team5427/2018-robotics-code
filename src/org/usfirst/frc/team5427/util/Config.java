@@ -65,8 +65,10 @@ public class Config {
 	public static final int BUTTON_MOTOR_INTAKE_OUT = 5;
 //	
 //	public static final int BUTTON_SOLENOD_INTAKE = 2;
-//	public static final int BUTTON_ELEVATOR_FORWARD = 3;
-//	public static final int BUTTON_ELEVATOR_REVERSE= 5;
+	public static final int BUTTON_ELEVATOR_FORWARD = 3;
+	public static final int BUTTON_ELEVATOR_REVERSE= 5;
+	public static final int BUTTON_CLIMBER_FORWARD = 7;
+	public static final int BUTTON_CLIMBER_REVERSE= 8;
 
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;

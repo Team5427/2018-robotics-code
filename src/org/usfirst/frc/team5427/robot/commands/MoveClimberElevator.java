@@ -10,20 +10,16 @@ package org.usfirst.frc.team5427.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 //import org.usfirst.frc.team5427.util.Log;
-import org.usfirst.frc.team5427.util.NextLine;
 
 /**
- * @author Blake
- * This command 
+ * @author Abinav
  */
-
-@NextLine
-public class MoveElevator extends Command
-{
-	public static int direction;
+public class MoveClimberElevator extends Command {
+public static int direction;
 	
-	public MoveElevator(int direction)
+	public MoveClimberElevator(int direction)
 	{
+		requires(Robot.climberElevator);
 		this.direction = direction;
 		start();
 	}
@@ -34,9 +30,11 @@ public class MoveElevator extends Command
 	{
 		if(direction == 1)
 		{
+//			Log.init("move forward");
 			Robot.motorPWM_Elevator.set(.3);
 		}
-		else if(direction == 2){
+		else if(direction == 2)
+		{
 			Robot.motorPWM_Elevator.set(-.3);
 		}
 	}
