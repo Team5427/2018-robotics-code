@@ -129,10 +129,10 @@ public class Config {
 	//values for 90 deg; p = .026, still need to be tuned
 	public static final double PID_TURN_P = 0.045;
 	public static final double PID_TURN_I = 0;
-	public static final double PID_TURN_D = 0.2;
+	public static final double PID_TURN_D = 0.21;
 
 	
-	//values for 35 degre
+	//values for 35 degree and 25 degrees
 //	public static final double PID_TURN_P = 0.0501;
 //	public static final double PID_TURN_I = 0;
 //	public static final double PID_TURN_D = 0.11005;
