@@ -48,6 +48,7 @@ public class PIDTurnCommand extends PIDCommand{
 		  Log.init("Ending PIDTurn");
 		  System.out.println("ENDING PIDTURN");
 		    super.getPIDController().disable();
+		    super.getPIDController().free();
 		    scgRight.set(0);	
 		    scgLeft.set(0);
 	  }
