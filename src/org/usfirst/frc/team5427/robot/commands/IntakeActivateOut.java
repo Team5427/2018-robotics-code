@@ -10,7 +10,7 @@ package org.usfirst.frc.team5427.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
-import org.usfirst.frc.team5427.util.Log;
+//import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.NextLine;
 
 /**
@@ -28,7 +28,7 @@ public class IntakeActivateOut extends Command
 	{
 
 		// Use requires() here to declare subsystem dependencies
-		Log.info("Intake being activated");
+//		Log.info("Intake being activated");
 		requires(Robot.intakeSubsystem);
 	}
 
@@ -36,7 +36,7 @@ public class IntakeActivateOut extends Command
 	@Override
 	protected void initialize()
 	{
-		Log.info("Intake being initialized");
+//		Log.info("Intake being initialized");
 	}
 
 	
@@ -45,7 +45,7 @@ public class IntakeActivateOut extends Command
 
 	protected void execute()
 	{
-		Log.info("Intake being executed");
+//		Log.info("Intake being executed");
 		Robot.intakeSubsystem.setSpeed(Config.INTAKE_MOTOR_SPEED_OUT);
 //		if(Robot.oi.joy1.getThrottle()<0) {
 //			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
@@ -76,7 +76,7 @@ public class IntakeActivateOut extends Command
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Log.info("END TO INTAKE INTERRUPTED");
+//		Log.info("END TO INTAKE INTERRUPTED");
 		Robot.intakeSubsystem.setSpeed(0);
 	}
 }

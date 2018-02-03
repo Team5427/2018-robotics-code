@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5427.robot.commands;
 
 import org.usfirst.frc.team5427.robot.Robot;
-import org.usfirst.frc.team5427.util.Log;
+//import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
 
 //RobotBuilder Version: 2.0
@@ -49,7 +49,7 @@ public class DriveWithJoystick extends Command {
 
  // Called repeatedly when this Command is scheduled to run
  protected void execute() {
-	 Log.info("sending drive instruction");
+//	 Log.info("sending drive instruction");
  	Robot.driveTrain.takeJoystickInputs(Robot.oi.getJoy()); //TODO check this
 
  }
@@ -63,7 +63,7 @@ public class DriveWithJoystick extends Command {
  // Called once after isFinished returns true
  protected void end() {
  	Robot.driveTrain.stop();
-	 Log.info("robot stopped");
+//	 Log.info("robot stopped");
 
  }
 

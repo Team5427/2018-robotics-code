@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team5427.util.Log;
+//import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
 
 
@@ -24,7 +24,7 @@ public class DriveTrain extends Subsystem {
 
 	public DriveTrain(SpeedControllerGroup drive_Left, SpeedControllerGroup drive_Right, DifferentialDrive drive) {
 	
-		Log.info("DriveTrain made");
+//		Log.info("DriveTrain made");
 		this.drive = drive;
 		this.drive_Left = drive_Left;
 		this.drive_Right = drive_Right;
@@ -41,7 +41,7 @@ public class DriveTrain extends Subsystem {
 
 		// double speed = Math.abs(joy.getY()) > 0.05 ? joy.getY() : 0f;
 
-		Log.info("drive instruction recieved");
+//		Log.info("drive instruction recieved");
 		drive.arcadeDrive(-joy.getY(), joy.getZ());
 
 		// frontLeftMotor.set(speed);
@@ -52,7 +52,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void stop() {
-		Log.info("stopped motor");
+//		Log.info("stopped motor");
 		drive.stopMotor();
 	}
 }

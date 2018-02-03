@@ -26,7 +26,7 @@ import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team5427.util.Config;
 
-import org.usfirst.frc.team5427.util.Log;
+//import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
 
 /**
@@ -105,7 +105,7 @@ public class Robot extends IterativeRobot{
 		// intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD,
 		// Config.PCM_SOLENOID_REVERSE);
 		
-		Log.init("Initializing driveTrain: ");
+//		Log.init("Initializing driveTrain: ");
 		motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
 		motor_pwm_rearLeft = new SteelTalon(Config.REAR_LEFT_MOTOR);
 		speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
@@ -118,18 +118,18 @@ public class Robot extends IterativeRobot{
 		driveTrain = new DriveTrain(speedcontrollergroup_left, speedcontrollergroup_right, drive);
 		
 
-		Log.init("Initializing intake motors: ");
+//		Log.init("Initializing intake motors: ");
 		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
 		motorPWM_Intake_Right = new SteelTalon(Config.INTAKE_MOTOR_RIGHT);
 
-		Log.init("Initializing Subsystems: ");
+//		Log.init("Initializing Subsystems: ");
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
 
 		// need info of ports
-		Log.init("Initializing Encoders: ");
+//		Log.init("Initializing Encoders: ");
 		//encoderStraight = new Encoder(0, 0);
 
-		Log.init("Intializing Elevator Motor: ");
+//		Log.init("Intializing Elevator Motor: ");
 		//motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
 		
 		//encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
