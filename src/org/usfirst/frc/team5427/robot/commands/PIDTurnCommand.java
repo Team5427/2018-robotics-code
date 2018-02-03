@@ -83,6 +83,7 @@ public class PIDTurnCommand extends PIDCommand{
 		// TODO check if the negative signs are corresponding with the correct values
 
 		SmartDashboard.putNumber("Yaw", getCurrentAngle());
+		SmartDashboard.putNumber("Raw Yaw", getCurrentAngle());
 		SmartDashboard.putNumber("PID Output", output);
 		
 		scgRight.pidWrite(output);
