@@ -120,6 +120,7 @@ public class Config {
 	public static final double PID_STRAIGHT_COAST_D = 0.0;
 //	public static final double PID_STRAIGHT_INCREMENT_DECREMENT = .001;
 	
+
 	
 	public static final double PID_TURN_POWER = 0.1;
 	public static final double PID_TURN_TOLERANCE = .1;

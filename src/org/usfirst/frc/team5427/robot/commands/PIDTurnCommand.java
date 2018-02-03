@@ -30,10 +30,12 @@ public class PIDTurnCommand extends PIDCommand{
 		this.setPoint = setPoint;
 		//lets the PID Loop the range of the input (ahrs)
 		super.setInputRange(-180, 180);
+
 	
 		super.setSetpoint(setPoint);
 		scgRight.set(0.1);
 		scgLeft.set(0.1);
+
 	}
 	
 	//begins the PID loop (enables)
@@ -62,8 +64,10 @@ public class PIDTurnCommand extends PIDCommand{
 
 	public boolean isFinished() {
 //		 System.out.println(Math.abs(getCurrentAngle()-super.getSetpoint())+" IS FINISHED "+super.getSetpoint());
+
 //		return Math.abs(getCurrentAngle()-super.getSetpoint())<Config.PID_TURN_TOLERANCE;
 		return false;
+
 	}
 	
 
@@ -82,6 +86,7 @@ public class PIDTurnCommand extends PIDCommand{
 	protected void usePIDOutput(double output) {
 		// TODO check if the negative signs are corresponding with the correct values
 
+
 		SmartDashboard.putNumber("Yaw", getCurrentAngle());
 		SmartDashboard.putNumber("Raw Yaw", getCurrentAngle());
 		SmartDashboard.putNumber("PID Output", output);
@@ -91,5 +96,6 @@ public class PIDTurnCommand extends PIDCommand{
 		if(isFinished()) {
 			end();
 		}
+
 	}
 }
