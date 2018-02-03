@@ -21,6 +21,7 @@ public class PIDTurnCommand extends PIDCommand{
 	//two SpeedControllerGroup objects to be controlled by this PID Loop
 	private SpeedControllerGroup scgRight, scgLeft;
 	double setPoint;
+	private double time;
 	
 	public PIDTurnCommand(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double p, double i, double d, double setPoint) {
 		super(p,i,d);
@@ -30,8 +31,8 @@ public class PIDTurnCommand extends PIDCommand{
 		this.setPoint = setPoint;
 		//lets the PID Loop the range of the input (ahrs)
 		super.setInputRange(-180, 180);
-
-	
+		
+		time =0;
 		super.setSetpoint(setPoint);
 		scgRight.set(0.1);
 		scgLeft.set(0.1);
@@ -40,19 +41,23 @@ public class PIDTurnCommand extends PIDCommand{
 	
 	//begins the PID loop (enables)
 	  public void initialize() {
+		  Robot.ahrs.reset();
 		  Log.init("Initializing");
 		  System.out.println("INITIALIZE");
+		  time =0;
 	    super.getPIDController().enable();
 	  }
 	  
 	  //Ends (disables) the PID loop and stops the motors of the SpeedControllerGroups
 	  public void end() {
+		  
 		  Log.init("Ending PIDTurn");
 		  System.out.println("ENDING PIDTURN");
 		    super.getPIDController().disable();
 		    super.getPIDController().free();
 		    scgRight.set(0);	
 		    scgLeft.set(0);
+		    super.end();
 	  }
 
 	  //Code to run when this command is interrupted
@@ -61,11 +66,32 @@ public class PIDTurnCommand extends PIDCommand{
 	  }
 	
 	
-
+//judge range by what the angle is right now, ex: 91 instead of  90, we want to see if it flatlines
 	public boolean isFinished() {
 //		 System.out.println(Math.abs(getCurrentAngle()-super.getSetpoint())+" IS FINISHED "+super.getSetpoint());
-
-//		return Math.abs(getCurrentAngle()-super.getSetpoint())<Config.PID_TURN_TOLERANCE;
+//		
+		boolean range =  Math.abs(Math.abs(getCurrentAngle())-Math.abs(super.getSetpoint()))<Config.PID_TURN_TOLERANCE;
+		System.out.println("CurAngle: " +getCurrentAngle());
+		System.out.println("Setpt: " +super.getSetpoint()());
+		if(range && time==0) {
+			System.out.println("started time"+range);
+			time = System.nanoTime();
+		}
+		if(!range) {
+			System.out.println("out of range RANGE: "+Math.abs(Math.abs(getCurrentAngle())-Math.abs(super.getSetpoint())));
+			if(time!=0)
+				time =0;
+		}
+		
+		if(range && time!=0) {
+			System.out.println("within range"+range+" "+ Math.abs(Math.abs(getCurrentAngle())-Math.abs(super.getSetpoint())));
+			time = System.nanoTime()-time;
+			if(time>=3000000000.0) {
+				System.out.print("returned true");
+				return true;
+			}
+		}
+		
 		return false;
 
 	}

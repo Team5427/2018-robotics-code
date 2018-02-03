@@ -123,13 +123,13 @@ public class Config {
 
 	
 	public static final double PID_TURN_POWER = 0.1;
-	public static final double PID_TURN_TOLERANCE = .1;
-	public static final double PID_TURN_SETPOINT = 90;	
+	public static final double PID_TURN_TOLERANCE = 2;
+	public static final double PID_TURN_SETPOINT =90;	
 	
 	//values for 90 deg; p = .026, still need to be tuned
-	public static final double PID_TURN_P = 0.045;
+	public static final double PID_TURN_P = 0.0501;
 	public static final double PID_TURN_I = 0;
-	public static final double PID_TURN_D = 0.21;
+	public static final double PID_TURN_D = 0.107;
 
 	
 	//values for 35 degree and 25 degrees
