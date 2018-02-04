@@ -31,7 +31,6 @@ import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team5427.util.Config;
 
-import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -109,7 +108,7 @@ public class Robot extends IterativeRobot  {
 		// intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD,
 		// Config.PCM_SOLENOID_REVERSE);
 		
-		Log.init("Initializing driveTrain: ");
+//		Log.init("Initializing driveTrain: ");
 		motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
 		motor_pwm_rearLeft = new SteelTalon(Config.REAR_LEFT_MOTOR);
 		speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
@@ -122,16 +121,16 @@ public class Robot extends IterativeRobot  {
 		driveTrain = new DriveTrain(speedcontrollergroup_left, speedcontrollergroup_right, drive);
 	
 		
-		Log.init("Initializing intake motors: ");
+//		Log.init("Initializing intake motors: ");
 		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
 		motorPWM_Intake_Right = new SteelTalon(Config.INTAKE_MOTOR_RIGHT);
 
-		Log.init("Initializing Subsystems: ");
+//		Log.init("Initializing Subsystems: ");
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
 
 	
 
-		Log.init("Intializing Elevator Motor: ");
+//		Log.init("Intializing Elevator Motor: ");
 		motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
 		
 		try {
@@ -151,8 +150,6 @@ public class Robot extends IterativeRobot  {
 		encLeft.setDistancePerPulse((6 * Math.PI / 360));
 		
 		oi = new OI();
-		Log.init("Robot init done");
-		
 	}
 
 	/**
@@ -214,7 +211,6 @@ public class Robot extends IterativeRobot  {
 //		if (m_autonomousCommand != null) {
 //			m_autonomousCommand.start();
 //		}
-		Log.init("autnomous CREATED");
 		
 		ahrs.reset();
 		//removes history of the PID loop (destroys the older loop) if pidSide stores a PIDDRiveTRainSIde object
@@ -248,8 +244,7 @@ public class Robot extends IterativeRobot  {
 
 	@Override
 	public void teleopInit() {
-		Log.init("Teleop init");
-		// This makes sure that the autonomous stops running when
+		//This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
