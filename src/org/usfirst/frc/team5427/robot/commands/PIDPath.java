@@ -1,41 +1,25 @@
 package org.usfirst.frc.team5427.robot.commands;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.command.Command;
 
-public class PIDPath extends PIDCommand
+public class PIDPath extends Command
 {
-	private SpeedControllerGroup scgRight, scgLeft;
+	private PIDDriveTrainSide firstDistance, secondDistance, thirdDistance;
+	private PIDTurnCommand firstAngle, secondAngle;
 	
-	public PIDPath(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double p, double i, double d)
+	
+	public PIDPath()
 	{
-		super(p,i,d);
-		this.scgRight = scgRight;
-		this.scgLeft = scgLeft;
-		//lets the PID Loop the range of the input (ahrs)
-		super.setInputRange(-180, 180);
-		scgRight.set(0.3);
-		scgLeft.set(0.3);
-	}
-
-
-	//begins the PID loop (enables)
-	  public void initialize() {
-		  System.out.println("INITIALIZE");
-	    super.getPIDController().enable();
-	  }
-	
-	@Override
-	protected double returnPIDInput() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	protected void usePIDOutput(double output) {
-		// TODO Auto-generated method stub
 		
 	}
+
+	//begins the command
+	  public void initialize() {
+		  
+	  }
+	
+	
 
 	@Override
 	protected boolean isFinished() {
