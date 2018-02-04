@@ -39,21 +39,23 @@ public class PIDCoasting extends PIDCommand {
 	@Override
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber("PID Output Coasting", output);
-		// if (desiredDistance > (Math.abs(Robot.encLeft.getDistance()) +
-		// Math.abs(Robot.encRight.getDistance())) / 2.0) {
-		// this.pidStraight.setPower(Config.PID_STRAIGHT_COAST_POWER);
-		// }
-		// else if (desiredDistance <
-		// (Math.abs(Robot.encLeft.getDistance())+Math.abs(Robot.encRight.getDistance()))/2.0)
-		// {
-		// this.pidStraight.setPower(-Config.PID_STRAIGHT_COAST_POWER);
-		// }
+		 if (desiredDistance > (Math.abs(Robot.encLeft.getDistance()) +
+		 Math.abs(Robot.encRight.getDistance())) / 2.0) {
+			 this.pidStraight.setPower(Config.PID_STRAIGHT_COAST_POWER);
+		 }
+		 else if (desiredDistance <
+		 (Math.abs(Robot.encLeft.getDistance())+Math.abs(Robot.encRight.getDistance()))/2.0)
+		 {
+			 this.pidStraight.setPower(-Config.PID_STRAIGHT_COAST_POWER);
+		 }
 		this.scgPIDControlled.pidWrite(output);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		//TODO range like turn
+		
+		return Math.abs(returnPIDInput()-desiredDistance)<Config.PID_TURN_TOLERANCE;
 	}
 
 	@Override

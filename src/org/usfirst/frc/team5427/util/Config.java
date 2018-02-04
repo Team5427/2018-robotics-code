@@ -121,6 +121,7 @@ public class Config {
 	public static final double PID_STRAIGHT_COAST_P = 0.05;
 	public static final double PID_STRAIGHT_COAST_I = 0.0025;
 	public static final double PID_STRAIGHT_COAST_D = 0.0;
+	public static final double PID_STRAIGHT_TOLERANCE = 0.1;
 //	public static final double PID_STRAIGHT_COAST_P = 1;
 //	public static final double PID_STRAIGHT_COAST_I = 1;
 //	public static final double PID_STRAIGHT_COAST_D = 1;

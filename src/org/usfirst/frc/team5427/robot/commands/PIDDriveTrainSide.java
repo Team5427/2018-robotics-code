@@ -113,19 +113,14 @@ public class PIDDriveTrainSide extends PIDCommand {
 	//TODO SEE WHY THIS IS NEVER CALLED
 	@Override
 	protected boolean isFinished() {
-		// if(/*robot encoder value is larger than desiredDistance -
-		// Config.getCoastDistance()*/)
-		// if(0>=Config.getCoastingDistance(desiredPower))//TODO Create Encoders in
-		// Robot and use their value here and use
-		// parameter desiredDistance
-		//returns true if the robot is no longer PID Coasting
-//		if(pidCoasting.isFinished())
-//			return true;
-//		// If the robot is disabled
-//		if (RobotState.isDisabled()) {
-//			end();
-//			return true;
-//		}
+		// If the robot is finished coasting
+		if(pidCoasting.isFinished())
+			return true;
+		// If the robot is disabled
+		if (RobotState.isDisabled()) {
+			end();
+			return true;
+		}
 		return false;
 	}
 
