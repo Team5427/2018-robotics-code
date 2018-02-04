@@ -6,6 +6,7 @@ import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -51,13 +52,16 @@ public class PIDTurnCommand extends PIDCommand{
 	  //Ends (disables) the PID loop and stops the motors of the SpeedControllerGroups
 	  public void end() {
 		  
-		  Log.init("Ending PIDTurn");
-		  System.out.println("ENDING PIDTURN");
-		    super.getPIDController().disable();
-		    super.getPIDController().free();
+//		  Log.init("Ending PIDTurn");
+		  	System.out.println("ENDING PIDTURN");
+		    super.free();
+		  	super.end();
+//		    super.getPIDController().disable();
+//		    super.getPIDController().free();
 		    scgRight.set(0);	
 		    scgLeft.set(0);
-		    super.end();
+		    
+
 	  }
 
 	  //Code to run when this command is interrupted
@@ -72,10 +76,10 @@ public class PIDTurnCommand extends PIDCommand{
 //		
 		boolean range =  Math.abs(Math.abs(getCurrentAngle())-Math.abs(super.getSetpoint()))<Config.PID_TURN_TOLERANCE;
 		System.out.println("CurAngle: " +getCurrentAngle());
-		System.out.println("Setpt: " +super.getSetpoint()());
+		System.out.println("Setpt: " +super.getSetpoint());
 		if(range && time==0) {
 			System.out.println("started time"+range);
-			time = System.nanoTime();
+			time = Timer.getFPGATimestamp();
 		}
 		if(!range) {
 			System.out.println("out of range RANGE: "+Math.abs(Math.abs(getCurrentAngle())-Math.abs(super.getSetpoint())));
@@ -85,8 +89,8 @@ public class PIDTurnCommand extends PIDCommand{
 		
 		if(range && time!=0) {
 			System.out.println("within range"+range+" "+ Math.abs(Math.abs(getCurrentAngle())-Math.abs(super.getSetpoint())));
-			time = System.nanoTime()-time;
-			if(time>=3000000000.0) {
+			time = Timer.getFPGATimestamp()-time;
+			if(time>=3) {
 				System.out.print("returned true");
 				return true;
 			}
@@ -119,9 +123,9 @@ public class PIDTurnCommand extends PIDCommand{
 		
 		scgRight.pidWrite(output);
 		scgLeft.set(output);
-		if(isFinished()) {
-			end();
-		}
+//		if(isFinished()) {
+//			end();
+//		}
 
 	}
 }

@@ -262,8 +262,6 @@ public class Robot extends IterativeRobot  {
 		encRight.reset();
 		encLeft.reset();
 		
-		
-		
 		dwj = new DriveWithJoystick();
 //		Log.init("Initializing test");
 		
