@@ -27,6 +27,7 @@ public class DriveTrain extends Subsystem {
 
 	public DriveTrain(SpeedControllerGroup drive_Left, SpeedControllerGroup drive_Right, DifferentialDrive drive) {
 	
+
 		this.drive = drive;
 		this.drive_Left = drive_Left;
 		this.drive_Right = drive_Right;
@@ -53,6 +54,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void stop() {
+
 		drive.stopMotor();
 	}
 }
