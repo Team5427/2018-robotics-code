@@ -35,12 +35,12 @@ public class PIDCoasting extends PIDCommand{
 		SmartDashboard.putNumber("PID Output Coasting", output);
 		 if (desiredDistance > (Math.abs(Robot.encLeft.getDistance()) +
 		 Math.abs(Robot.encRight.getDistance())) / 2.0) {
-			 this.pidStraight.setPower(Config.PID_STRAIGHT_COAST_POWER);
+			 this.scgConstant.set(Config.PID_STRAIGHT_COAST_POWER);
 		 }
 		 else if (desiredDistance <
 		 (Math.abs(Robot.encLeft.getDistance())+Math.abs(Robot.encRight.getDistance()))/2.0)
 		 {
-			 this.pidStraight.setPower(-Config.PID_STRAIGHT_COAST_POWER);
+			 this.scgConstant.set(-Config.PID_STRAIGHT_COAST_POWER);
 		 }
 		this.scgPIDControlled.pidWrite(output);
 
