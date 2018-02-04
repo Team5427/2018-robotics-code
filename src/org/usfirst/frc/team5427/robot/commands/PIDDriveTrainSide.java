@@ -90,7 +90,6 @@ public class PIDDriveTrainSide extends PIDCommand {
 	@Override
 	// begins the PID loop (enables)
 	protected void initialize() {
-		Log.init("Initializing");
 		super.getPIDController().enable();
 	}
 

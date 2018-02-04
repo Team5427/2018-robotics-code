@@ -10,10 +10,6 @@ package org.usfirst.frc.team5427.robot.commands;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
-<<<<<<< HEAD
-=======
-//import org.usfirst.frc.team5427.util.Log;
->>>>>>> b4fc010ef5d0a35f901aa5cdb4041cef86f5c091
 import org.usfirst.frc.team5427.util.NextLine;
 
 /**
