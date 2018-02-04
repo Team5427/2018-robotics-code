@@ -23,7 +23,7 @@ tmp/
 
 #Eclipse project files
 # sysProps.xml
-.classpath
+*.classpath
 
 #Intellij
 .idea/
