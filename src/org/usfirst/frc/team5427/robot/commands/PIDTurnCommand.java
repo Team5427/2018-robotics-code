@@ -2,7 +2,6 @@ package org.usfirst.frc.team5427.robot.commands;
 
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
-import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -36,14 +35,12 @@ public class PIDTurnCommand extends PIDCommand{
 	
 	//begins the PID loop (enables)
 	  public void initialize() {
-		  Log.init("Initializing");
 		  System.out.println("INITIALIZE");
 	    super.getPIDController().enable();
 	  }
 	  
 	  //Ends (disables) the PID loop and stops the motors of the SpeedControllerGroups
 	  public void end() {
-		  Log.init("Ending PIDTurn");
 		  System.out.println("ENDING PIDTURN");
 		    super.getPIDController().disable();
 		    scgRight.set(0);	

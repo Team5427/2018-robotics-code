@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5427.robot.commands;
 
 import org.usfirst.frc.team5427.robot.Robot;
-import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
 
 //RobotBuilder Version: 2.0
@@ -62,7 +61,6 @@ public class DriveWithJoystick extends Command {
  // Called once after isFinished returns true
  protected void end() {
  	Robot.driveTrain.stop();
-	 Log.info("robot stopped");
 
  }
 

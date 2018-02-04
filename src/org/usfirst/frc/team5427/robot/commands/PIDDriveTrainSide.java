@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
-import org.usfirst.frc.team5427.util.Log;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -77,7 +76,6 @@ public class PIDDriveTrainSide extends PIDCommand {
 	 */
 	public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double setpoint, double desiredDistance) {
 		super(Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D);
-		Log.init("PIDDriveTrainRight created");
 		// m_controller = new PIDController(p, i, d, m_source, m_output);
 		super.setSetpoint(setpoint);
 		this.scgPIDControlled = scgPIDControlled;
@@ -99,7 +97,6 @@ public class PIDDriveTrainSide extends PIDCommand {
 	// SpeedControllerGroups
 	@Override
 	protected void end() {
-		Log.info("Ending PID");
 		super.getPIDController().disable();
 		scgPIDControlled.set(0);
 		scgConstant.set(0);
@@ -111,7 +108,6 @@ public class PIDDriveTrainSide extends PIDCommand {
 	@Override
 	protected void interrupted() {
 		end();
-		Log.info("Interrupted");
 	}
 
 	//TODO SEE WHY THIS IS NEVER CALLED
@@ -174,8 +170,6 @@ public class PIDDriveTrainSide extends PIDCommand {
 		else {
 			if (toGoalTime == 0) {
 				toGoalTime = System.nanoTime() / 1000000000.0 - this.startTime;
-				Log.info("TIME TO REACH PIDPOWER: " + toGoalTime);
-				Log.info("Iterations: " + this.power / this.increment);
 			}
 		}
 		if(!isCoasting)
@@ -191,7 +185,6 @@ public class PIDDriveTrainSide extends PIDCommand {
 
 	@Override
 	public void free() {
-		Log.info("running free()");
 		super.free();
 		super.getPIDController().disable();
 		resetOurValues();

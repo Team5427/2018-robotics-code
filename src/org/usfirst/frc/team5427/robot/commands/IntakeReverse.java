@@ -10,7 +10,6 @@ package org.usfirst.frc.team5427.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
-import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.NextLine;
 
 /**
@@ -24,7 +23,6 @@ public class IntakeReverse extends Command
 {
 	public IntakeReverse()
 	{
-		Log.info("Intake being activated");
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.intakeSubsystem);
 	}
@@ -33,8 +31,7 @@ public class IntakeReverse extends Command
 	@Override
 	protected void initialize()
 	{
-		Log.info("Intake being initialized");
-		
+	
 		Robot.intakeSubsystem.setSpeed(Config.INTAKE_SPEED_REVERSE);
 		
 //		if(Robot.oi.joy1.getY()<0) {
@@ -83,7 +80,6 @@ public class IntakeReverse extends Command
 	@Override
 	protected void interrupted()
 	{
-		Log.info("END TO INTAKE INTERRUPTED");
 		Robot.intakeSubsystem.setSpeed(0);
 	}
 }

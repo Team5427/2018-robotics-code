@@ -2,7 +2,6 @@ package org.usfirst.frc.team5427.robot.commands;
 
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
-import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -66,7 +65,6 @@ public class PIDCoasting extends PIDCommand {
 
 	@Override
 	public void free() {
-		Log.info("running free()");
 		super.free();
 		super.getPIDController().disable();
 		scgPIDControlled.set(0);
