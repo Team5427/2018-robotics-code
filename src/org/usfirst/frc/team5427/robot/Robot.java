@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.PIDDriveTrainSide;
+import org.usfirst.frc.team5427.robot.commands.PIDPath;
 import org.usfirst.frc.team5427.robot.commands.PIDTurnCommand;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
@@ -72,8 +73,8 @@ public class Robot extends IterativeRobot  {
 
 	public static SpeedController motorPWM_Elevator;
 	public static Intake intakeSubsystem;
-	public PIDDriveTrainSide pidSide;
-	public PIDTurnCommand pidTurn;
+//	public PIDDriveTrainSide pidSide;
+//	public PIDTurnCommand pidTurn;
 
 	
 
@@ -87,7 +88,7 @@ public class Robot extends IterativeRobot  {
 	
 
 
-	
+	public PIDPath pid;
 	public static AHRS ahrs;
 
 	/**
@@ -161,10 +162,10 @@ public class Robot extends IterativeRobot  {
 	public void disabledInit() {
 		encRight.reset();
 		encLeft.reset();
-		if(pidSide!=null)
-			pidSide.free();
-		if(pidTurn!=null)
-			pidTurn.free();
+//		if(pidSide!=null)
+//			pidSide.free();
+//		if(pidTurn!=null)
+//			pidTurn.free();
 		ahrs.reset();
 		SmartDashboard.putNumber("encRightVal", encRight.getDistance());
 		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
@@ -213,17 +214,22 @@ public class Robot extends IterativeRobot  {
 //		}
 		
 		ahrs.reset();
+		
+		pid = new PIDPath();
+		pid.start();
+//		PIDDriveTrainSide pi = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 160);
+//		pi.start();
 		//removes history of the PID loop (destroys the older loop) if pidSide stores a PIDDRiveTRainSIde object
-		if(pidSide!=null)
-			pidSide.free();
-		if(pidTurn!=null)
-			pidTurn.free();
+//		if(pidSide!=null)
+//			pidSide.free();
+//		if(pidTurn!=null)
+//			pidTurn.free();
 		
 //		pidSide = new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, 0, 60);
 
-		pidTurn = new PIDTurnCommand(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_TURN_SETPOINT);
-
-		pidTurn.start();
+//		pidTurn = new PIDTurnCommand(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_TURN_SETPOINT);
+//
+//		pidTurn.start();
 		//removes history of the PID loop (destroys the older loop)
 //		pidSide.free();
 		
