@@ -25,7 +25,6 @@ public class PIDPath extends Command
 	//begins the command
 	 public void initialize() {
 		 firstDistance.start(); 
-	  
 	 }
 
 	//uses the previous commands being null to check if a certain command needs to be started or not
