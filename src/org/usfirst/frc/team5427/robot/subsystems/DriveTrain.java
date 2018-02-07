@@ -26,7 +26,6 @@ public class DriveTrain extends Subsystem {
 	public SpeedControllerGroup drive_Right;
 
 	public DriveTrain(SpeedControllerGroup drive_Left, SpeedControllerGroup drive_Right, DifferentialDrive drive) {
-	
 
 		this.drive = drive;
 		this.drive_Left = drive_Left;
@@ -41,7 +40,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void takeJoystickInputs(Joystick joy) {
-
+		
 		// double speed = Math.abs(joy.getY()) > 0.05 ? joy.getY() : 0f;
 		drive.arcadeDrive(-joy.getY(), joy.getZ());
 
