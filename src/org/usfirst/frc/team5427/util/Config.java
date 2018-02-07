@@ -146,7 +146,7 @@ public class Config {
 //	public static final double PID_TURN_P = 0.055;
 //	public static final double PID_TURN_I = 0.0;
 //	public static final double PID_TURN_D = 0.172;
-	
+//	
 	/**
 	 * returns the average stopping for different powers from 0 to full power, 
 	 * more accuracy at the higher powers

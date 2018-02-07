@@ -15,15 +15,16 @@ public class PIDPath extends Command
 	public PIDPath()
 	{
 		//creates all of the PID Commands
-		firstDistance = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 160);
+		firstDistance = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 60);//160
 		firstAngle = new PIDTurnCommand(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, 25);
-		secondDistance = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 36);
+		secondDistance = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 20);//36
 		secondAngle = new PIDTurnCommand(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, 35);
-		thirdDistance = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 12);
+		thirdDistance = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 40);//12
 	}
 
 	//begins the command
 	 public void initialize() {
+		 System.out.println("First Dist Starting");
 		 firstDistance.start(); 
 	 }
 
@@ -35,6 +36,7 @@ public class PIDPath extends Command
 		//and the thirdDistance Command is not running, run the thirdDistance Command
 		if(null==firstDistance&&null==firstAngle&&null==secondDistance&&secondAngle.isFinished()&&!thirdDistance.isRunning())
 		{
+			System.out.println("Third Dist Starting");
 			thirdDistance.start();
 			secondAngle=null;
 
@@ -43,6 +45,7 @@ public class PIDPath extends Command
 		//and the secondAngle Command is not running, run the secondAngle Command
 		else if(null==firstDistance&&null==firstAngle&&null!=secondDistance&&secondDistance.isFinished()&&!secondAngle.isRunning())
 		{
+			System.out.println("Sec Angle Starting");
 			secondAngle.start();
 			secondDistance=null;
 
@@ -51,6 +54,7 @@ public class PIDPath extends Command
 		//and the secondDistance Command is not running, run the secondDistance Command
 		else if(null==firstDistance&&null!=firstAngle&&firstAngle.isFinished()&&!secondDistance.isRunning())
 		{
+			System.out.println("Second Dist Starting");
 			secondDistance.start();
 			firstAngle=null;
 
@@ -59,6 +63,7 @@ public class PIDPath extends Command
 		//and the firstAngle Command is not running, run the firstAngle Command
 		else if(null!=firstDistance&&firstDistance.isFinished()&&!firstAngle.isRunning())
 		{
+			System.out.println("First Angle Starting");
 			firstAngle.start();
 			firstDistance=null;
 		}
@@ -78,4 +83,10 @@ public class PIDPath extends Command
 		//returns if the last distance has finished
 		return thirdDistance.isFinished();
 	}
+	
+//	@Override
+//	protected void  end() {
+//		firstAngle.free();
+//		firstDisance
+//	}
 }

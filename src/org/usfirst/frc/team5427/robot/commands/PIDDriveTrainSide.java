@@ -83,7 +83,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 		this.desiredDistance = desiredDistance;
 		resetOurValues();
 		super.setSetpoint(setpoint);
-		initialize();
+//		initialize();
 
 	}
 
@@ -114,7 +114,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 	protected boolean isFinished() {
 
 		// If the robot is finished coasting
-		if(pidCoasting.isFinished())
+		if(pidCoasting!=null && pidCoasting.isFinished())
 			return true;
 		// if(/*robot encoder value is larger than desiredDistance -
 		// Config.getCoastDistance()*/)
