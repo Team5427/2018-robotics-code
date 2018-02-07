@@ -97,11 +97,15 @@ public class PIDDriveTrainSide extends PIDCommand {
 	// SpeedControllerGroups
 	@Override
 	protected void end() {
+		super.end();
+		System.out.println("ENDED DISTANCE "+desiredDistance);
+		System.out.println(" ENDED Distance traveled: " + ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2)+"for distance"+this.desiredDistance);
 		super.getPIDController().disable();
 		scgPIDControlled.set(0);
 		scgConstant.set(0);
 		resetOurValues();
 		super.getPIDController().reset();
+		super.free();
 	}
 
 	// Code to run when this command is interrupted
@@ -112,10 +116,13 @@ public class PIDDriveTrainSide extends PIDCommand {
 
 	@Override
 	protected boolean isFinished() {
-
+		
 		// If the robot is finished coasting
-		if(pidCoasting!=null && pidCoasting.isFinished())
+		if(pidCoasting!=null &&  pidCoasting.isFinished()) {
+			System.out.println("Is FINISHED TRUE FOr "+ desiredDistance);
+			end();
 			return true;
+		}
 		// if(/*robot encoder value is larger than desiredDistance -
 		// Config.getCoastDistance()*/)
 		// if(0>=Config.getCoastingDistance(desiredPower))//TODO Create Encoders in
@@ -175,7 +182,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 
 		SmartDashboard.putNumber("PID output", output);
 		if (isCoasting && this.pidCoasting == null) {
-			System.out.println("Distance traveled: " + ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2));
+			System.out.println("Distance traveled: " + ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2)+"for distance"+this.desiredDistance);
 			pidCoasting = new PIDCoasting(this.scgPIDControlled, this.scgConstant, this.desiredDistance);
 		}
 	}

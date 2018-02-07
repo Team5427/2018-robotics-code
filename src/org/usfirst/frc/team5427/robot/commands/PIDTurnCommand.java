@@ -22,6 +22,7 @@ public class PIDTurnCommand extends PIDCommand{
 	private SpeedControllerGroup scgRight, scgLeft;
 	double setPoint;
 	private double time;
+	private Timer timer;
 	
 	public PIDTurnCommand(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double p, double i, double d, double setPoint) {
 		super(p,i,d);
@@ -36,13 +37,15 @@ public class PIDTurnCommand extends PIDCommand{
 		super.setSetpoint(setPoint);
 		scgRight.set(0.1);
 		scgLeft.set(0.1);
+		 timer = new Timer();
+		
 
 	}
 	
 	//begins the PID loop (enables)
 	  public void initialize() {
 		  Robot.ahrs.reset();
-		  System.out.println("INITIALIZE");
+		  System.out.println("INITIALIZING PID TURN WITH ANGLE "+setPoint);
 		  time =0;
 		  super.getPIDController().enable();
 	  }
@@ -52,7 +55,7 @@ public class PIDTurnCommand extends PIDCommand{
 
 		  
 //		  Log.init("Ending PIDTurn");
-		  	System.out.println("ENDING PIDTURN");
+		  	System.out.println("ENDING PIDTURN WITH ANGLE" + setPoint);
 		    super.free();
 //		    super.getPIDController().disable();
 //		    super.getPIDController().free();
@@ -99,14 +102,17 @@ public class PIDTurnCommand extends PIDCommand{
 		double tolerance = Math.abs(getCurrentAngle() - super.getSetpoint());
 		boolean inRange = tolerance < Config.PID_TURN_TOLERANCE;
 		if(inRange) {
-			Timer timer = new Timer();
-			timer.start();
+			if(timer.get()==0)
+				timer.start();
 			if(timer.get() > 2) {
-				double tolerance2 = Math.abs(getCurrentAngle() - super.getSetpoint());
-				boolean inRange2 = tolerance < Config.PID_TURN_TOLERANCE;
-				if(inRange2)
+//				double tolerance2 = Math.abs(getCurrentAngle() - super.getSetpoint());
+//				boolean inRange2 = tolerance2 < Config.PID_TURN_TOLERANCE;
+//				if(inRange2)
 					return true;
 			}
+			
+		}
+		else {
 			timer.reset();
 		}
 		

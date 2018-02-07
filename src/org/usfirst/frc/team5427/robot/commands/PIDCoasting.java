@@ -52,7 +52,7 @@ public class PIDCoasting extends PIDCommand{
 	protected boolean isFinished() {
 		//TODO range like turn
 		
-		return Math.abs(returnPIDInput()-desiredDistance)<Config.PID_TURN_TOLERANCE;
+		return Math.abs(returnPIDInput()-desiredDistance)<Config.PID_STRAIGHT_TOLERANCE;
 	}
 
 	@Override
