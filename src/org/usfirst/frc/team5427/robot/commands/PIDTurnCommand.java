@@ -96,6 +96,20 @@ public class PIDTurnCommand extends PIDCommand{
 //			}
 //		}
 		
+		double tolerance = Math.abs(getCurrentAngle() - super.getSetpoint());
+		boolean inRange = tolerance < Config.PID_TURN_TOLERANCE;
+		if(inRange) {
+			Timer timer = new Timer();
+			timer.start();
+			if(timer.get() > 2) {
+				double tolerance2 = Math.abs(getCurrentAngle() - super.getSetpoint());
+				boolean inRange2 = tolerance < Config.PID_TURN_TOLERANCE;
+				if(inRange2)
+					return true;
+			}
+			timer.reset();
+		}
+		
 		return false;
 
 	}
