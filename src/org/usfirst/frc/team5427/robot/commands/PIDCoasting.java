@@ -4,6 +4,7 @@ import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -11,6 +12,7 @@ public class PIDCoasting extends PIDCommand{
 
 	SpeedControllerGroup scgPIDControlled, scgConstant;
 	double desiredDistance;
+	private Timer timer;
 	
 	public PIDCoasting(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double desiredDistance) {
 		super(Config.PID_STRAIGHT_COAST_P,Config.PID_STRAIGHT_COAST_I,Config.PID_STRAIGHT_COAST_D);
@@ -19,6 +21,7 @@ public class PIDCoasting extends PIDCommand{
 		this.scgConstant = scgConstant;
 		super.getPIDController().setOutputRange(-0.02, 0.02);
 		super.getPIDController().setSetpoint(desiredDistance);
+		timer = new Timer();
 	}
 
 	protected void initialize() {
@@ -52,7 +55,23 @@ public class PIDCoasting extends PIDCommand{
 	protected boolean isFinished() {
 		//TODO range like turn
 		
-		return Math.abs(returnPIDInput()-desiredDistance)<Config.PID_STRAIGHT_TOLERANCE;
+		double tolerance = Math.abs(returnPIDInput() - super.getSetpoint());
+		boolean inRange = tolerance < Config.PID_STRAIGHT_TOLERANCE;
+		if(inRange) {
+			if(timer.get()==0)
+				timer.start();
+			if(timer.get() > 2) {
+					return true;
+			}
+			
+		}
+		else {
+			timer.reset();
+		}
+		
+		return false;
+
+		//return Math.abs(returnPIDInput()-desiredDistance)<Config.PID_STRAIGHT_TOLERANCE;
 	}
 
 	@Override

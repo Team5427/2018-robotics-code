@@ -47,8 +47,10 @@ public class PIDDriveTrainSide extends PIDCommand {
 	private double desiredDistance;
 
 	private boolean isCoasting;
+	
+	private double initialStop;
 
-	private PIDCoasting pidCoasting = null;
+//	private PIDCoasting pidCoasting = null;
 
 	// increment every other iteration, tried it but did not make significant diff,
 	// may come back
@@ -98,8 +100,10 @@ public class PIDDriveTrainSide extends PIDCommand {
 	@Override
 	protected void end() {
 		super.end();
-		System.out.println("ENDED DISTANCE "+desiredDistance);
+//		System.out.println("ENDED DISTANCE "+desiredDistance);
+		System.out.println("Initial Stop: "+ initialStop);
 		System.out.println(" ENDED Distance traveled: " + ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2)+"for distance"+this.desiredDistance);
+		System.out.println(" ENDED Difference: " + (((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2) - initialStop)+"for distance"+this.desiredDistance);
 		super.getPIDController().disable();
 		scgPIDControlled.set(0);
 		scgConstant.set(0);
@@ -116,13 +120,13 @@ public class PIDDriveTrainSide extends PIDCommand {
 
 	@Override
 	protected boolean isFinished() {
-		
+		// isFinished for coasting PID
 		// If the robot is finished coasting
-		if(pidCoasting!=null &&  pidCoasting.isFinished()) {
-			System.out.println("Is FINISHED TRUE FOr "+ desiredDistance);
-			end();
-			return true;
-		}
+//		if(pidCoasting!=null &&  pidCoasting.isFinished()) {
+//			System.out.println("Is FINISHED TRUE FOr "+ desiredDistance);
+//			end();
+//			return true;
+//		}
 		// if(/*robot encoder value is larger than desiredDistance -
 		// Config.getCoastDistance()*/)
 		// if(0>=Config.getCoastingDistance(desiredPower))//TODO Create Encoders in
@@ -134,6 +138,24 @@ public class PIDDriveTrainSide extends PIDCommand {
 //			end();
 //			return true;
 //		}
+		if((Math.abs(Robot.encLeft.getDistance()) 
+				+ Math.abs(Robot.encRight.getDistance())) / 2 > desiredDistance - Config.PID_STRAIGHT_TOLERANCE) {	
+			if(Math.abs(Robot.encLeft.getRate()) < .1) {				
+				if(initialStop==0) {
+					initialStop= (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2;
+					scgPIDControlled.set(0);
+					scgConstant.set(0);
+					super.getPIDController().disable();
+					super.getPIDController().reset();
+					super.free();
+					System.out.println("turn free");
+
+				}
+				
+				System.out.println("Robot is stopped");
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -154,6 +176,9 @@ public class PIDDriveTrainSide extends PIDCommand {
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
+		if(initialStop!=0) {
+			System.out.print("PID RUNNING WHEN NOT SUPPOSED TO: "+output);
+		}
 		isCoasting = desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 < Config.getCoastingDistance(power);
 		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
 
@@ -181,10 +206,10 @@ public class PIDDriveTrainSide extends PIDCommand {
 		}
 
 		SmartDashboard.putNumber("PID output", output);
-		if (isCoasting && this.pidCoasting == null) {
-			System.out.println("Distance traveled: " + ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2)+"for distance"+this.desiredDistance);
-			pidCoasting = new PIDCoasting(this.scgPIDControlled, this.scgConstant, this.desiredDistance);
-		}
+//		if (isCoasting && this.pidCoasting == null) {
+//			System.out.println("Distance traveled: " + ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2)+"for distance"+this.desiredDistance);
+//			pidCoasting = new PIDCoasting(this.scgPIDControlled, this.scgConstant, this.desiredDistance);
+//		}
 	}
 
 	@Override
@@ -194,7 +219,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 		resetOurValues();
 		scgPIDControlled.set(0);
 		scgConstant.set(0);
-		pidCoasting.free();
+//		pidCoasting.free();
 		super.getPIDController().reset();
 	}
 
@@ -209,14 +234,16 @@ public class PIDDriveTrainSide extends PIDCommand {
 		this.increment = .01;// TODO move to Config
 		this.startTime = System.nanoTime() / 1000000000;
 		this.toGoalTime = 0;
-		this.pidCoasting = null;
+//		this.pidCoasting = null;
 		super.getPIDController().reset();
-		Robot.encLeft.reset();
-		Robot.encRight.reset();
+		this.initialStop =0;
+		
+//		Robot.encLeft.reset();
+//		Robot.encRight.reset();
 	}
 
-	public boolean getIsCoasting() {
-		return isCoasting;
-	}
+//	public boolean getIsCoasting() {
+//		return isCoasting;
+//	}
 
 }

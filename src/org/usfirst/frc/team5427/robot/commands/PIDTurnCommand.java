@@ -75,39 +75,12 @@ public class PIDTurnCommand extends PIDCommand{
 	
 //judge range by what the angle is right now, ex: 91 instead of  90, we want to see if it flatlines
 	public boolean isFinished() {
-//		 System.out.println(Math.abs(getCurrentAngle()-super.getSetpoint())+" IS FINISHED "+super.getSetpoint());
-//		
-//		boolean range =  Math.abs(Math.abs(getCurrentAngle())-Math.abs(super.getSetpoint()))<Config.PID_TURN_TOLERANCE;
-//		System.out.println("CurAngle: " +getCurrentAngle());
-//		System.out.println("Setpt: " +super.getSetpoint());
-//		if(range && time==0) {
-//			System.out.println("started time"+range);
-//			time = Timer.getFPGATimestamp();
-//		}
-//		if(!range) {
-//			System.out.println("out of range RANGE: "+Math.abs(Math.abs(getCurrentAngle())-Math.abs(super.getSetpoint())));
-//			if(time!=0)
-//				time =0;
-//		}
-//		
-//		if(range && time!=0) {
-//			System.out.println("within range"+range+" "+ Math.abs(Math.abs(getCurrentAngle())-Math.abs(super.getSetpoint())));
-//			time = Timer.getFPGATimestamp()-time;
-//			if(time>=3) {
-//				System.out.print("returned true");
-//				return true;
-//			}
-//		}
-		
 		double tolerance = Math.abs(getCurrentAngle() - super.getSetpoint());
 		boolean inRange = tolerance < Config.PID_TURN_TOLERANCE;
 		if(inRange) {
 			if(timer.get()==0)
 				timer.start();
 			if(timer.get() > 2) {
-//				double tolerance2 = Math.abs(getCurrentAngle() - super.getSetpoint());
-//				boolean inRange2 = tolerance2 < Config.PID_TURN_TOLERANCE;
-//				if(inRange2)
 					return true;
 			}
 			
