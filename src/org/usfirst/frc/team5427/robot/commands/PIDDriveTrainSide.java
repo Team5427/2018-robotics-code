@@ -104,6 +104,8 @@ public class PIDDriveTrainSide extends PIDCommand {
 		System.out.println("Initial Stop: "+ initialStop);
 		System.out.println(" ENDED Distance traveled: " + ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2)+"for distance"+this.desiredDistance);
 		System.out.println(" ENDED Difference: " + (((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2) - initialStop)+"for distance"+this.desiredDistance);
+		Robot.encRight.reset();
+		Robot.encLeft.reset();
 		super.getPIDController().disable();
 		scgPIDControlled.set(0);
 		scgConstant.set(0);
@@ -138,23 +140,23 @@ public class PIDDriveTrainSide extends PIDCommand {
 //			end();
 //			return true;
 //		}
-		if((Math.abs(Robot.encLeft.getDistance()) 
-				+ Math.abs(Robot.encRight.getDistance())) / 2 > desiredDistance - Config.PID_STRAIGHT_TOLERANCE) {	
+		if((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 > desiredDistance - Config.PID_STRAIGHT_TOLERANCE) {	
+			//robot stopped
 			if(Math.abs(Robot.encLeft.getRate()) < .1) {				
 				if(initialStop==0) {
 					initialStop= (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2;
-					scgPIDControlled.set(0);
-					scgConstant.set(0);
-					super.getPIDController().disable();
-					super.getPIDController().reset();
-					super.free();
-					System.out.println("turn free");
-
+				
+					System.out.println("sets initial stop");
 				}
 				
 				System.out.println("Robot is stopped");
 				return true;
 			}
+			scgPIDControlled.set(0);
+			scgConstant.set(0);
+			super.getPIDController().disable();
+			super.getPIDController().reset();
+			super.free();
 		}
 		return false;
 	}

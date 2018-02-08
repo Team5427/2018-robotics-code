@@ -213,6 +213,8 @@ public class Robot extends IterativeRobot  {
 //			m_autonomousCommand.start();
 //		}
 		
+		encRight.reset();
+		encLeft.reset();
 		ahrs.reset();
 		
 		pid = new PIDPath();

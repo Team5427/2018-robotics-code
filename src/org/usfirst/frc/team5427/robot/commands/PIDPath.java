@@ -83,7 +83,7 @@ public class PIDPath extends Command
 		{
 			
 			
-			
+			firstDistance.end();
 			firstDistance.cancel();
 			firstDistance=null;
 			System.out.println("First Angle Starting");
