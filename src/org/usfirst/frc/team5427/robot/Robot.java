@@ -24,9 +24,9 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team5427.robot.commands.PIDDriveTrainSide;
+import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
 import org.usfirst.frc.team5427.robot.commands.PIDPath;
-import org.usfirst.frc.team5427.robot.commands.PIDTurnCommand;
+import org.usfirst.frc.team5427.robot.commands.PIDTurn;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;

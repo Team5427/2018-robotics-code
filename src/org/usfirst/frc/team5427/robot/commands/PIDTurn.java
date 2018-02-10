@@ -16,32 +16,30 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Ethan, Varsha
  */
 @SameLine
-public class PIDTurnCommand extends PIDCommand {
+public class PIDTurn extends PIDCommand {
 	// two SpeedControllerGroup objects to be controlled by this PID Loop
 	private SpeedControllerGroup scgRight, scgLeft;
 	double setPoint;
 	private double time;
 	private Timer timer;
 
-	public PIDTurnCommand(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double p, double i, double d, double setPoint) {
-		super(p, i, d);
-		System.out.println("TURN INIT");
+	public PIDTurn(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double setPoint) {
+		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D);
 		this.scgRight = scgRight;
 		this.scgLeft = scgLeft;
 		this.setPoint = setPoint;
 		// lets the PID Loop the range of the input (ahrs)
 		super.setInputRange(-180, 180);
-		time = 0;
 		super.setSetpoint(setPoint);
 		scgRight.set(0.1);
 		scgLeft.set(0.1);
 		timer = new Timer();
+		time = 0;
 	}
 
 	// begins the PID loop (enables)
 	public void initialize() {
 		Robot.ahrs.reset();
-		System.out.println("INITIALIZING PID TURN WITH ANGLE " + setPoint);
 		time = 0;
 		super.getPIDController().enable();
 	}
@@ -49,8 +47,6 @@ public class PIDTurnCommand extends PIDCommand {
 	// Ends (disables) the PID loop and stops the motors of the
 	// SpeedControllerGroups
 	public void end() {
-		// Log.init("Ending PIDTurn");
-		System.out.println("ENDING PIDTURN WITH ANGLE" + setPoint);
 		super.free();
 		// super.getPIDController().disable();
 		// super.getPIDController().free();
@@ -94,14 +90,10 @@ public class PIDTurnCommand extends PIDCommand {
 	// set motor values with "output"
 	@Override
 	protected void usePIDOutput(double output) {
-		// TODO check if the negative signs are corresponding with the correct values
 		SmartDashboard.putNumber("Yaw", getCurrentAngle());
 		SmartDashboard.putNumber("Raw Yaw", getCurrentAngle());
 		SmartDashboard.putNumber("PID Output", output);
 		scgRight.pidWrite(output);
 		scgLeft.set(output);
-		// if(isFinished()) {
-		// end();
-		// }
 	}
 }

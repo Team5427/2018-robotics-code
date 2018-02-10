@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * In theory, this class can be used in any case where two SpeedControllerGroup
  * objects work together to accomplish the same task.
  */
+@Deprecated
 public class PIDDriveTrainSide extends PIDCommand {
 	private SpeedControllerGroup scgPIDControlled;
 	private SpeedControllerGroup scgConstant;
@@ -42,6 +43,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 	private double desiredDistance;
 	private boolean isInRange;
 	private double initialStop;
+	
 	// private PIDCoasting pidCoasting = null;
 
 	// increment every other iteration, tried it but did not make significant diff,
@@ -69,14 +71,11 @@ public class PIDDriveTrainSide extends PIDCommand {
 	 */
 	public PIDDriveTrainSide(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double setpoint, double desiredDistance) {
 		super(Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D);
-		// m_controller = new PIDController(p, i, d, m_source, m_output);
-		super.setSetpoint(setpoint);
+		resetOurValues();
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgConstant = scgConstant;
-		this.desiredDistance = desiredDistance;
-		resetOurValues();
 		super.setSetpoint(setpoint);
-		// initialize();
+		this.desiredDistance = desiredDistance;
 	}
 
 	@Override
@@ -88,7 +87,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 	// Ends (disables) the PID loop and stops the motors of the
 	// SpeedControllerGroups
 	@Override
-	protected void end() {
+	public void end() {
 		super.end();
 		Robot.encRight.reset();
 		Robot.encLeft.reset();
@@ -143,7 +142,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 	}
 
 	/**
-	 * reutrns the input of the PID LOOP (AKA AHRS Yaw)
+	 * returns the input of the PID LOOP (AKA AHRS Yaw)
 	 */
 	protected double returnPIDInput() {
 		return Robot.ahrs.getYaw();
@@ -166,6 +165,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 		if (this.power < Config.PID_STRAIGHT_POWER && !isInRange) {
 			this.power += increment;
 		}
+		
 		if (!isInRange) {
 			scgConstant.set(power);
 			scgPIDControlled.pidWrite(output);
@@ -174,6 +174,9 @@ public class PIDDriveTrainSide extends PIDCommand {
 		{
 			scgConstant.set(0);
 		}
+		
+//		scgPIDControlled.pidWrite(output);
+		
 //		// else if it is equal to goal, print the time it took, and iterations
 //		else {
 //			if (toGoalTime == 0) {

@@ -26,7 +26,7 @@ public class MoveForwardCommand extends Command {
 	//desired distance that the robot should travel, in INCHES!!!
 	private double desiredDistance; 
 	//stores the command for driving straight
-	PIDDriveTrainSide pidDTS;
+	PIDStraightMovement pidDTS;
 	
 	public MoveForwardCommand(double desiredPower) {
 		// Use requires() here to declare subsystem dependencies
