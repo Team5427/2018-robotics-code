@@ -52,7 +52,7 @@ public class Robot extends IterativeRobot  {
 	public static OI oi;
 	public static DriveTrain driveTrain;
 
-	SpeedController motor_pwm_frontLeft;
+	public static SpeedController motor_pwm_frontLeft;
     SpeedController motor_pwm_rearLeft ;
 	SpeedControllerGroup speedcontrollergroup_left;
 
@@ -244,16 +244,18 @@ public class Robot extends IterativeRobot  {
 	/**
 	 * This function is called periodically during autonomous.
 	 */
-	public int count =0;
+	
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		if(pid.firstDistance!=null&&pid.firstDistance.isRunning()) {
 				pid.firstDistance.powerIncrement();
 		}
-		count++;
-		if(System.nanoTime()/1000000000.0%1<0.05) {
-			System.out.println(count);
+		if(pid.secondDistance!=null&&pid.secondDistance.isRunning()) {
+			pid.secondDistance.powerIncrement();
+		}
+		if(pid.thirdDistance!=null&&pid.thirdDistance.isRunning()) {
+			pid.thirdDistance.powerIncrement();
 		}
 			
 		

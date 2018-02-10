@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -83,9 +84,8 @@ public class PIDDriveTrainSide extends PIDCommand {
 	// begins the PID loop (enables)
 	protected void initialize() {
 		super.getPIDController().enable();
-		this.scgPIDControlled.set(0.2);
-		this.scgConstant.set(0.2);
-		count=0;
+//		this.scgPIDControlled.set(0);
+//		this.scgConstant.set(0);
 	}
 
 	// Ends (disables) the PID loop and stops the motors of the
@@ -150,7 +150,6 @@ public class PIDDriveTrainSide extends PIDCommand {
 		if (this.power < Config.PID_STRAIGHT_POWER) {
 			this.power+=this.increment;
 			scgConstant.set(power);
-			SmartDashboard.putNumber("POWER IN INCREMENT",power);
 		}
 	}
 
@@ -165,20 +164,24 @@ public class PIDDriveTrainSide extends PIDCommand {
 	 * method to set motor values using the parameter "output" This method is
 	 * automatically called by PIDCommand
 	 */
-	private int count;
+//	private int count;
 	@Override
 	protected void usePIDOutput(double output) {
 		isInRange = desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 < Config.getCoastingDistance(power);
+//		SmartDashboard.putNumber("encRight", Math.abs(Robot.encRight.getDistance()));
+//		SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
+//		SmartDashboard.putNumber("encRightVal", Math.abs(Robot.encRight.getDistance()));
+//		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
+//		SmartDashboard.putNumber("PID output", output);
+		
+
+		SmartDashboard.putNumber("POWER IN INCREMENT", scgConstant.get());
 		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
-		SmartDashboard.putNumber("encRight", Math.abs(Robot.encRight.getDistance()));
-		SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
-		SmartDashboard.putNumber("encRightVal", Math.abs(Robot.encRight.getDistance()));
-		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
 		
 		// if current power is less than the goal, increment the power
 //		if (!isInRange) {
 //			scgConstant.set(power);
-		count++;
+
 //		if(System.nanoTime()/1000000000.0%1<0.05) {
 //			System.out.println(count);
 //		}
@@ -195,7 +198,6 @@ public class PIDDriveTrainSide extends PIDCommand {
 //				toGoalTime = System.nanoTime() / 1000000000.0 - this.startTime;
 //			}
 //		}
-		SmartDashboard.putNumber("PID output", output);
 		// if (isCoasting && this.pidCoasting == null) {
 		// System.out.println("Distance traveled: " +
 		// ((Math.abs(Robot.encLeft.getDistance()) +
@@ -225,7 +227,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 		this.power = 0;
 		this.scgPIDControlled.set(0);
 		this.scgConstant.set(0);
-		this.increment = 0.0013;// TODO move to Config
+		this.increment = 0.001;// TODO move to Config
 		this.startTime = System.nanoTime() / 1000000000;
 		this.toGoalTime = 0;
 		// this.pidCoasting = null;
