@@ -25,7 +25,7 @@ public class PIDTurnCommand extends PIDCommand {
 
 	public PIDTurnCommand(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double p, double i, double d, double setPoint) {
 		super(p, i, d);
-		System.out.println("TURN INIT");
+//		System.out.println("TURN INIT");
 		this.scgRight = scgRight;
 		this.scgLeft = scgLeft;
 		this.setPoint = setPoint;
@@ -41,7 +41,7 @@ public class PIDTurnCommand extends PIDCommand {
 	// begins the PID loop (enables)
 	public void initialize() {
 		Robot.ahrs.reset();
-		System.out.println("INITIALIZING PID TURN WITH ANGLE " + setPoint);
+//		System.out.println("INITIALIZING PID TURN WITH ANGLE " + setPoint);
 		time = 0;
 		super.getPIDController().enable();
 	}
@@ -50,7 +50,7 @@ public class PIDTurnCommand extends PIDCommand {
 	// SpeedControllerGroups
 	public void end() {
 		// Log.init("Ending PIDTurn");
-		System.out.println("ENDING PIDTURN WITH ANGLE" + setPoint);
+//		System.out.println("ENDING PIDTURN WITH ANGLE" + setPoint);
 		super.free();
 		// super.getPIDController().disable();
 		// super.getPIDController().free();

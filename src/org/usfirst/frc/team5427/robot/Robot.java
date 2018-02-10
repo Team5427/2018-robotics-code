@@ -244,9 +244,19 @@ public class Robot extends IterativeRobot  {
 	/**
 	 * This function is called periodically during autonomous.
 	 */
+	public int count =0;
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		if(pid.firstDistance!=null&&pid.firstDistance.isRunning()) {
+				pid.firstDistance.powerIncrement();
+		}
+		count++;
+		if(System.nanoTime()/1000000000.0%1<0.05) {
+			System.out.println(count);
+		}
+			
+		
 		//robot stutters
 //		pidSide.incrementPower();
 		

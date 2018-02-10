@@ -35,7 +35,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class PIDDriveTrainSide extends PIDCommand {
 	private SpeedControllerGroup scgPIDControlled;
 	private SpeedControllerGroup scgConstant;
-	private double power;
+	public double power;
 	private double increment;
 	private double toGoalTime;
 	private double startTime;
@@ -83,6 +83,9 @@ public class PIDDriveTrainSide extends PIDCommand {
 	// begins the PID loop (enables)
 	protected void initialize() {
 		super.getPIDController().enable();
+		this.scgPIDControlled.set(0.2);
+		this.scgConstant.set(0.2);
+		count=0;
 	}
 
 	// Ends (disables) the PID loop and stops the motors of the
@@ -90,6 +93,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 	@Override
 	protected void end() {
 		super.end();
+		System.out.println("ENDED DISTANCE " + this.desiredDistance);
 		Robot.encRight.reset();
 		Robot.encLeft.reset();
 		super.getPIDController().disable();
@@ -125,7 +129,8 @@ public class PIDDriveTrainSide extends PIDCommand {
 		// end();
 		// return true;
 		// }
-		if ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 > desiredDistance - Config.PID_STRAIGHT_TOLERANCE) {
+//		System.out.println((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance()))/ 2+" ");
+	if ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 > desiredDistance - Config.PID_STRAIGHT_TOLERANCE) {
 			// robot stopped
 //			if (Math.abs(Robot.encLeft.getRate()) < .1) {
 //				if (initialStop == 0) {
@@ -141,6 +146,13 @@ public class PIDDriveTrainSide extends PIDCommand {
 	public void setPower(double power) {
 		this.power = power;
 	}
+	public void powerIncrement() {
+		if (this.power < Config.PID_STRAIGHT_POWER) {
+			this.power+=this.increment;
+			scgConstant.set(power);
+			SmartDashboard.putNumber("POWER IN INCREMENT",power);
+		}
+	}
 
 	/**
 	 * reutrns the input of the PID LOOP (AKA AHRS Yaw)
@@ -153,6 +165,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 	 * method to set motor values using the parameter "output" This method is
 	 * automatically called by PIDCommand
 	 */
+	private int count;
 	@Override
 	protected void usePIDOutput(double output) {
 		isInRange = desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 < Config.getCoastingDistance(power);
@@ -163,17 +176,19 @@ public class PIDDriveTrainSide extends PIDCommand {
 		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
 		
 		// if current power is less than the goal, increment the power
-		if (this.power < Config.PID_STRAIGHT_POWER && !isInRange) {
-			this.power += increment;
-		}
-		if (!isInRange) {
-			scgConstant.set(power);
-			scgPIDControlled.pidWrite(output);
-		}
-		else
-		{
-			scgConstant.set(0);
-		}
+//		if (!isInRange) {
+//			scgConstant.set(power);
+		count++;
+//		if(System.nanoTime()/1000000000.0%1<0.05) {
+//			System.out.println(count);
+//		}
+		scgPIDControlled.pidWrite(output);
+//		}
+//		else
+//		{
+//			scgConstant.set(0);
+//			scgPIDControlled.set(0);
+//		}
 //		// else if it is equal to goal, print the time it took, and iterations
 //		else {
 //			if (toGoalTime == 0) {
@@ -210,7 +225,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 		this.power = 0;
 		this.scgPIDControlled.set(0);
 		this.scgConstant.set(0);
-		this.increment = .01;// TODO move to Config
+		this.increment = 0.0013;// TODO move to Config
 		this.startTime = System.nanoTime() / 1000000000;
 		this.toGoalTime = 0;
 		// this.pidCoasting = null;
