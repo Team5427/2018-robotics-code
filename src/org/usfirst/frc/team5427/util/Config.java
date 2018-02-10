@@ -187,7 +187,7 @@ public class Config {
 //		if(power<=0.95)
 //			return 14; //TODO return correct number
 //		return 100;
-		return 14.93;
+		return 22;
 	}
 
 }
