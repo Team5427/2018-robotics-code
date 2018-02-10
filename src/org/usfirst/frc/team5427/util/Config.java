@@ -150,6 +150,11 @@ public class Config {
 //	public static final double PID_TURN_I = 0.0;
 //	public static final double PID_TURN_D = 0.172;
 //	
+	
+	/*----------Increment----------*/
+	public static final double LINEAR_INCREMENT_VALUE = 0.0025;
+	public static final double EXPONENTIAL_INCREMENT_VALUE = 1.025;
+	
 	/**
 	 * returns the average stopping for different powers from 0 to full power, 
 	 * more accuracy at the higher powers

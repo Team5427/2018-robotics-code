@@ -248,7 +248,7 @@ public class Robot extends IterativeRobot  {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		if(pid.firstDistance!=null&&pid.firstDistance.isRunning()) {
+/*		if(pid.firstDistance!=null&&pid.firstDistance.isRunning()) {
 				pid.firstDistance.powerIncrement();
 		}
 		if(pid.secondDistance!=null&&pid.secondDistance.isRunning()) {
@@ -256,7 +256,7 @@ public class Robot extends IterativeRobot  {
 		}
 		if(pid.thirdDistance!=null&&pid.thirdDistance.isRunning()) {
 			pid.thirdDistance.powerIncrement();
-		}
+		}*/
 			
 		
 		//robot stutters

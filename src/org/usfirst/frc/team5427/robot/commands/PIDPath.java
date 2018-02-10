@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
 public class PIDPath extends Command {
 	public PIDDriveTrainSide firstDistance, secondDistance, thirdDistance;
 	public PIDTurnCommand firstAngle, secondAngle;
-	private int count;
+	private int countWait;
 	private boolean isDone;
+	private boolean isDone1;
 
 	public PIDPath() {
 		// creates all of the PID Commands
@@ -19,8 +20,10 @@ public class PIDPath extends Command {
 		secondDistance = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 40);// 36
 		secondAngle = new PIDTurnCommand(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, 35);
 		thirdDistance = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 30);// 12
-		count=0;
+		countWait=0;
 		isDone = false;
+		isDone1 = false;
+		
 	}
 
 	// begins the command
@@ -41,19 +44,28 @@ public class PIDPath extends Command {
 				secondAngle = null;
 				Robot.ahrs.reset();
 				thirdDistance.start();
-				count=0;
+				countWait=0;
 			
 		}
 		// If firstDistance, first angle are all null and secondDistance isFinished &&
 		// not null
 		// and the secondAngle Command is not running, run the secondAngle Command
-		else if (null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning()) {
+		else if ((null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning())||isDone1) {
 			
+			if(!isDone1) {
+				isDone1=true;
 				secondDistance.cancel();
 				secondDistance = null;
+			}
+			
+			countWait++;
+			if(countWait==100) {
+				
 				Robot.ahrs.reset();
 				secondAngle.start();
-				count=0;
+				countWait=0;
+				isDone1=false;
+			}
 			
 		}
 		// If firstDistance is null and firstAngle isFinished && not null
@@ -64,23 +76,24 @@ public class PIDPath extends Command {
 				firstAngle = null;
 				Robot.ahrs.reset();
 				secondDistance.start();
-				count=0;
+				countWait=0;
 			
 		}
 		// If firstDistance is NOT null and firstDistance isFinished
 		// and the firstAngle Command is not running, run the firstAngle Command
 		else if ((null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning()))||isDone) {
 //			firstDistance.end();
+			//TODO: REPLACE WITH WAIT COMMAND
 			if(!isDone) {
 				isDone=true;
 				firstDistance.cancel();
 				firstDistance = null;
 			}
-			count++;
-			if(count==100) {
+			countWait++;
+			if(countWait==100) {
 				Robot.ahrs.reset();
 				firstAngle.start();
-				count=0;
+				countWait=0;
 				isDone=false;
 			}
 		}

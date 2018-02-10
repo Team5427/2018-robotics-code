@@ -84,8 +84,10 @@ public class PIDDriveTrainSide extends PIDCommand {
 	// begins the PID loop (enables)
 	protected void initialize() {
 		super.getPIDController().enable();
-//		this.scgPIDControlled.set(0);
-//		this.scgConstant.set(0);
+		this.power = 0.05;
+		this.scgPIDControlled.set(0.05);
+		this.scgConstant.set(0.05);
+	
 	}
 
 	// Ends (disables) the PID loop and stops the motors of the
@@ -148,15 +150,26 @@ public class PIDDriveTrainSide extends PIDCommand {
 	}
 	public void powerIncrement() {
 		if (this.power < Config.PID_STRAIGHT_POWER) {
-			this.power+=this.increment;
-			scgConstant.set(power);
-
-			SmartDashboard.putNumber("POWER IN INCREMENT",power);
-			if(this.power<.1) {
-				scgPIDControlled.set(power);
+			// Linear incrementation
+//			this.power+=this.increment;
+			
+			// Exponential incrementation
+			this.power*=Config.EXPONENTIAL_INCREMENT_VALUE;
+			
+			
+			if(power==0) {
+				System.out.println("POWER SHOULD NOT BE 0");
 			}
+			SmartDashboard.putNumber("POWER IN INCREMENT",power);
+			
+			//if power less than 10% then do not do pid, increment with left side
+	
 
 		}
+//		else {
+//			scgConstant.set(power);
+//			SmartDashboard.putNumber("POWER IN ELSE",power);
+//		}
 	}
 
 	/**
@@ -173,7 +186,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 //	private int count;
 	@Override
 	protected void usePIDOutput(double output) {
-		isInRange = desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 < Config.getCoastingDistance(power);
+//		isInRange = desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 < Config.getCoastingDistance(power);
 //		SmartDashboard.putNumber("encRight", Math.abs(Robot.encRight.getDistance()));
 //		SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
 //		SmartDashboard.putNumber("encRightVal", Math.abs(Robot.encRight.getDistance()));
@@ -191,8 +204,14 @@ public class PIDDriveTrainSide extends PIDCommand {
 //		if(System.nanoTime()/1000000000.0%1<0.05) {
 //			System.out.println(count);
 //		}
+		powerIncrement();
+		scgConstant.pidWrite(power);
+		
 		if(power>=.1) {
 			scgPIDControlled.pidWrite(output);
+		}
+		else {
+			scgPIDControlled.set(power);
 		}
 //		}
 //		else
@@ -235,7 +254,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 		this.power = 0;
 		this.scgPIDControlled.set(0);
 		this.scgConstant.set(0);
-		this.increment = 0.001;// TODO move to Config
+		this.increment = 0.0025;// TODO move to Config
 		this.startTime = System.nanoTime() / 1000000000;
 		this.toGoalTime = 0;
 		// this.pidCoasting = null;
