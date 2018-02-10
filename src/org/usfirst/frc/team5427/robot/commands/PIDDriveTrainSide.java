@@ -151,6 +151,9 @@ public class PIDDriveTrainSide extends PIDCommand {
 			this.power+=this.increment;
 			scgConstant.set(power);
 			SmartDashboard.putNumber("POWER IN INCREMENT",power);
+			if(this.power<.1) {
+				scgPIDControlled.set(power);
+			}
 		}
 	}
 
@@ -182,7 +185,9 @@ public class PIDDriveTrainSide extends PIDCommand {
 //		if(System.nanoTime()/1000000000.0%1<0.05) {
 //			System.out.println(count);
 //		}
-		scgPIDControlled.pidWrite(output);
+		if(power>=.1) {
+			scgPIDControlled.pidWrite(output);
+		}
 //		}
 //		else
 //		{
