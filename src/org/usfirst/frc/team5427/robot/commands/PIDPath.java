@@ -111,8 +111,8 @@ public class PIDPath extends Command {
 	@Override
 	protected boolean isFinished() {
 		// returns if the last distance has finished
-//		if (thirdDistance != null)
-//			return thirdDistance.isFinished();
+		if (thirdDistance != null)
+			return thirdDistance.isFinished();
 		return false;
 	}
 	// @Override

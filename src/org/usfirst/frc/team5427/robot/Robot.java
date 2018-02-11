@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
 
@@ -53,11 +54,11 @@ public class Robot extends IterativeRobot  {
 	public static DriveTrain driveTrain;
 
 	public static SpeedController motor_pwm_frontLeft;
-    SpeedController motor_pwm_rearLeft ;
-	SpeedControllerGroup speedcontrollergroup_left;
+	public static SpeedController motor_pwm_rearLeft ;
+	public static SpeedControllerGroup speedcontrollergroup_left;
 
-	SpeedController motor_pwm_frontRight;
-	SpeedController motor_pwm_rearRight;
+	public static SpeedController motor_pwm_frontRight;
+	public static SpeedController motor_pwm_rearRight;
 	SpeedControllerGroup speedcontrollergroup_right;
 	DifferentialDrive drive;
 	    
@@ -166,27 +167,27 @@ public class Robot extends IterativeRobot  {
 //			pidSide.free();
 //		if(pidTurn!=null)
 //			pidTurn.free();
-		ahrs.reset();
-		SmartDashboard.putNumber("encRightVal", encRight.getDistance());
-		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
-		SmartDashboard.putNumber("encRight", encRight.getDistance());
-		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
+//		ahrs.reset();
+//		SmartDashboard.putNumber("encRightVal", encRight.getDistance());
+//		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
+//		SmartDashboard.putNumber("encRight", encRight.getDistance());
+//		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("encRightVal", encRight.getDistance());
-		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
-		SmartDashboard.putNumber("encRight", encRight.getDistance());
-		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
+//		SmartDashboard.putNumber("encRightVal", encRight.getDistance());
+//		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
+//		SmartDashboard.putNumber("encRight", encRight.getDistance());
+//		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 		
 	}
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
 	 * between different autonomous modes using the dashboard. The sendable chooser
-	 * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
+	 * co	de works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
 	 * remove all of the chooser code and uncomment the getString code to get the
 	 * auto name from the text box below the Gyro
 	 *
@@ -213,12 +214,14 @@ public class Robot extends IterativeRobot  {
 //			m_autonomousCommand.start();
 //		}
 		
-		encRight.reset();
-		encLeft.reset();
-		ahrs.reset();
+//		encRight.reset();
+//		encLeft.reset();
+//		ahrs.reset();
+//		
+//		pid = new PIDPath();
+//		pid.start();
 		
-		pid = new PIDPath();
-		pid.start();
+
 //		PIDDriveTrainSide pi = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 160);
 //		pi.start();
 		//removes history of the PID loop (destroys the older loop) if pidSide stores a PIDDRiveTRainSIde object
@@ -248,6 +251,18 @@ public class Robot extends IterativeRobot  {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Original PWR", ((PWM)Robot.motor_pwm_rearRight).getRaw());
+
+//		motor_pwm_frontRight.set(-.3);
+//		motor_pwm_frontLeft.set(.3);
+//		motor_pwm_rearLeft.set(.3);
+//		motor_pwm_rearRight.set(-.3);
+		speedcontrollergroup_left.set(.3);
+		speedcontrollergroup_right.set(-.3);
+		SmartDashboard.putNumber("Post PWR LEFT", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
+		SmartDashboard.putNumber("Post PWR RT", ((PWM)Robot.motor_pwm_rearRight).getRaw());
+
+		
 /*		if(pid.firstDistance!=null&&pid.firstDistance.isRunning()) {
 				pid.firstDistance.powerIncrement();
 		}

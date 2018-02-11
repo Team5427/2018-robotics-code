@@ -37,14 +37,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 	private SpeedControllerGroup scgPIDControlled;
 	private SpeedControllerGroup scgConstant;
 	public double power;
-	private double increment;
-	private double toGoalTime;
-	private double startTime;
 	private double desiredDistance;
-	private boolean isInRange;
-	private double initialStop;
-	// private PIDCoasting pidCoasting = null;
-
 	// increment every other iteration, tried it but did not make significant diff,
 	// may come back
 	// private boolean flipFlop;
@@ -95,7 +88,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 	@Override
 	protected void end() {
 		super.end();
-		System.out.println("ENDED DISTANCE " + this.desiredDistance);
+//		System.out.println("ENDED DISTANCE " + this.desiredDistance);
 		Robot.encRight.reset();
 		Robot.encLeft.reset();
 		super.getPIDController().disable();
@@ -152,20 +145,15 @@ public class PIDDriveTrainSide extends PIDCommand {
 		if (this.power < Config.PID_STRAIGHT_POWER) {
 			// Linear incrementation
 //			this.power+=this.increment;
-			
 			// Exponential incrementation
 			this.power*=Config.EXPONENTIAL_INCREMENT_VALUE;
-			
-			
-			if(power==0) {
-				System.out.println("POWER SHOULD NOT BE 0");
-			}
-			SmartDashboard.putNumber("POWER IN INCREMENT",power);
-			
-			//if power less than 10% then do not do pid, increment with left side
-	
-
+//			if(power==0) {
+//				System.out.println("POWER SHOULD NOT BE 0");
+//			}
+//			SmartDashboard.putNumber("POWER IN INCREMENT",power);
 		}
+		if(this.power>=Config.PID_STRAIGHT_POWER)
+		{this.power=Config.PID_STRAIGHT_POWER;}
 //		else {
 //			scgConstant.set(power);
 //			SmartDashboard.putNumber("POWER IN ELSE",power);
@@ -185,6 +173,25 @@ public class PIDDriveTrainSide extends PIDCommand {
 	 */
 //	private int count;
 	@Override
+	public void execute()
+	{
+		SmartDashboard.putNumber("Pre-incr PWR", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
+	
+		powerIncrement();
+		SmartDashboard.putNumber("Pre-set PWR", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
+
+		scgConstant.set(power);
+		
+		if(power<.1) {
+					scgPIDControlled.set(power);
+		}
+		
+		SmartDashboard.putNumber("EXEC POWER", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
+		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
+	}
+	
+	
+	@Override
 	protected void usePIDOutput(double output) {
 //		isInRange = desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 < Config.getCoastingDistance(power);
 //		SmartDashboard.putNumber("encRight", Math.abs(Robot.encRight.getDistance()));
@@ -194,8 +201,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 //		SmartDashboard.putNumber("PID output", output);
 		
 
-		SmartDashboard.putNumber("POWER IN INCREMENT", scgConstant.get());
-		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
+		
 		
 		// if current power is less than the goal, increment the power
 //		if (!isInRange) {
@@ -204,8 +210,12 @@ public class PIDDriveTrainSide extends PIDCommand {
 //		if(System.nanoTime()/1000000000.0%1<0.05) {
 //			System.out.println(count);
 //		}
-		powerIncrement();
-		scgConstant.pidWrite(power);
+//		SmartDashboard.putNumber("Pre-incr PWR", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
+//
+//		powerIncrement();
+//		SmartDashboard.putNumber("Pre-set PWR", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
+//
+//		scgConstant.set(power);
 		
 		if(power>=.1) {
 			scgPIDControlled.pidWrite(output);
@@ -213,6 +223,9 @@ public class PIDDriveTrainSide extends PIDCommand {
 		else {
 			scgPIDControlled.set(power);
 		}
+//		
+//		SmartDashboard.putNumber("POWER", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
+//		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
 //		}
 //		else
 //		{
@@ -250,17 +263,13 @@ public class PIDDriveTrainSide extends PIDCommand {
 	 * resets the values of certain
 	 */
 	public void resetOurValues() {
-		this.isInRange = false;
 		this.power = 0;
-		this.scgPIDControlled.set(0);
-		this.scgConstant.set(0);
-		this.increment = 0.0025;// TODO move to Config
-		this.startTime = System.nanoTime() / 1000000000;
-		this.toGoalTime = 0;
+//		this.scgPIDControlled.set(0);
+//		this.scgConstant.set(0);
+//		System.nanoTime() / 1000000000;
 		// this.pidCoasting = null;
 		super.getPIDController().reset();
-		this.initialStop = 0;
-		 Robot.encLeft.reset();
+		Robot.encLeft.reset();
 		 Robot.encRight.reset();
 	}
 	// public boolean getIsCoasting() {
