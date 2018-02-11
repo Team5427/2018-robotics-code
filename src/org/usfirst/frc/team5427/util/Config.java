@@ -153,7 +153,8 @@ public class Config {
 	
 	/*----------Increment----------*/
 	public static final double LINEAR_INCREMENT_VALUE = 0.0025;
-	public static final double EXPONENTIAL_INCREMENT_VALUE = 1.025;
+	public static final double EXPONENTIAL_INCREMENT_VALUE = 1.01;//Too small 1.001;//kicks to 3 ish 1.025;
+	public static final double MAX_INCREMENT_STEP = Integer.MAX_VALUE;
 	
 	/**
 	 * returns the average stopping for different powers from 0 to full power, 

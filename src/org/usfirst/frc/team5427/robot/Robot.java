@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SafePWM;
 import edu.wpi.first.wpilibj.SpeedController;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -59,6 +60,7 @@ public class Robot extends IterativeRobot  {
 
 	public static SpeedController motor_pwm_frontRight;
 	public static SpeedController motor_pwm_rearRight;
+	PIDDriveTrainSide pi;
 	SpeedControllerGroup speedcontrollergroup_right;
 	DifferentialDrive drive;
 	    
@@ -214,16 +216,19 @@ public class Robot extends IterativeRobot  {
 //			m_autonomousCommand.start();
 //		}
 		
-//		encRight.reset();
-//		encLeft.reset();
-//		ahrs.reset();
+		encRight.reset();
+		encLeft.reset();
+		ahrs.reset();
 //		
 //		pid = new PIDPath();
 //		pid.start();
-		
 
-//		PIDDriveTrainSide pi = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 160);
-//		pi.start();
+
+		//TODO Older code
+		pi = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 60);
+		pi.start();
+		
+		
 		//removes history of the PID loop (destroys the older loop) if pidSide stores a PIDDRiveTRainSIde object
 //		if(pidSide!=null)
 //			pidSide.free();
@@ -237,7 +242,8 @@ public class Robot extends IterativeRobot  {
 //		pidTurn.start();
 		//removes history of the PID loop (destroys the older loop)
 //		pidSide.free();
-		
+		SmartDashboard.putNumber("Original PWR", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
+
 			//	new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, 90);
 		
 	}
@@ -251,16 +257,28 @@ public class Robot extends IterativeRobot  {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Original PWR", ((PWM)Robot.motor_pwm_rearRight).getRaw());
+//		((SafePWM)(this.motor_pwm_frontLeft)).setExpiration(Integer.MAX_VALUE);
+		SmartDashboard.putNumber("Original PWR", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
+		SmartDashboard.putNumber("ENC L", encLeft.getDistance());
+		SmartDashboard.putNumber("ENC R", encRight.getDistance());
 
 //		motor_pwm_frontRight.set(-.3);
 //		motor_pwm_frontLeft.set(.3);
 //		motor_pwm_rearLeft.set(.3);
 //		motor_pwm_rearRight.set(-.3);
-		speedcontrollergroup_left.set(.3);
-		speedcontrollergroup_right.set(-.3);
-		SmartDashboard.putNumber("Post PWR LEFT", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
-		SmartDashboard.putNumber("Post PWR RT", ((PWM)Robot.motor_pwm_rearRight).getRaw());
+//		if(encLeft.getDistance()<60)
+//		{
+//			speedcontrollergroup_left.set(.3);
+//			speedcontrollergroup_right.set(-.3);
+//		}
+//		else if(encLeft.getDistance()>=60)
+//		{
+//			speedcontrollergroup_left.set(.01);
+//			speedcontrollergroup_right.set(-.01);
+//		}
+		
+//		SmartDashboard.putNumber("Post PWR LEFT", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
+//		SmartDashboard.putNumber("Post PWR RT", ((PWM)Robot.motor_pwm_rearRight).getRaw());
 
 		
 /*		if(pid.firstDistance!=null&&pid.firstDistance.isRunning()) {

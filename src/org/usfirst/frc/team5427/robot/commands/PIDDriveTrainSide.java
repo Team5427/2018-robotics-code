@@ -38,6 +38,8 @@ public class PIDDriveTrainSide extends PIDCommand {
 	private SpeedControllerGroup scgConstant;
 	public double power;
 	private double desiredDistance;
+	private boolean shouldBeCoasting;
+	private PIDCoasting pidCoasting;
 	// increment every other iteration, tried it but did not make significant diff,
 	// may come back
 	// private boolean flipFlop;
@@ -77,6 +79,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 	// begins the PID loop (enables)
 	protected void initialize() {
 		super.getPIDController().enable();
+//		count=0;
 		this.power = 0.05;
 		this.scgPIDControlled.set(0.05);
 		this.scgConstant.set(0.05);
@@ -107,6 +110,9 @@ public class PIDDriveTrainSide extends PIDCommand {
 
 	@Override
 	protected boolean isFinished() {
+		if(null!=pidCoasting)
+			return pidCoasting.isFinished();
+		return false;
 		// isFinished for coasting PID
 		// If the robot is finished coasting
 		// if(pidCoasting!=null && pidCoasting.isFinished()) {
@@ -125,17 +131,18 @@ public class PIDDriveTrainSide extends PIDCommand {
 		// return true;
 		// }
 //		System.out.println((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance()))/ 2+" ");
-	if ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 > desiredDistance - Config.PID_STRAIGHT_TOLERANCE) {
-			// robot stopped
-//			if (Math.abs(Robot.encLeft.getRate()) < .1) {
-//				if (initialStop == 0) {
-//					initialStop = (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2;
-//				}
-//				return true;
-//			}
-			return true;
-		}
-		return false;
+		//older idea
+//	if ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 > desiredDistance - Config.PID_STRAIGHT_TOLERANCE) {
+//			// robot stopped
+////			if (Math.abs(Robot.encLeft.getRate()) < .1) {
+////				if (initialStop == 0) {
+////					initialStop = (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2;
+////				}
+////				return true;
+////			}
+//			return true;
+//		}
+//		return false;
 	}
 
 	public void setPower(double power) {
@@ -146,7 +153,13 @@ public class PIDDriveTrainSide extends PIDCommand {
 			// Linear incrementation
 //			this.power+=this.increment;
 			// Exponential incrementation
-			this.power*=Config.EXPONENTIAL_INCREMENT_VALUE;
+//							this.power*=Config.EXPONENTIAL_INCREMENT_VALUE;
+
+//			Trying to put a limit on how large the jump can be
+			if(power*Config.EXPONENTIAL_INCREMENT_VALUE-power<Config.MAX_INCREMENT_STEP)
+				this.power*=Config.EXPONENTIAL_INCREMENT_VALUE;
+			else
+				this.power+=Config.MAX_INCREMENT_STEP;
 //			if(power==0) {
 //				System.out.println("POWER SHOULD NOT BE 0");
 //			}
@@ -171,23 +184,48 @@ public class PIDDriveTrainSide extends PIDCommand {
 	 * method to set motor values using the parameter "output" This method is
 	 * automatically called by PIDCommand
 	 */
-//	private int count;
+//	private int count=0;
 	@Override
 	public void execute()
 	{
-		SmartDashboard.putNumber("Pre-incr PWR", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
-	
-		powerIncrement();
-		SmartDashboard.putNumber("Pre-set PWR", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
-
-		scgConstant.set(power);
-		
-		if(power<.1) {
-					scgPIDControlled.set(power);
+//		count++;
+		//if you need to coast
+		if (shouldBeCoasting() && this.pidCoasting == null) {
+//			System.out.println("Distance traveled: " +
+//		((Math.abs(Robot.encLeft.getDistance()) +
+//		Math.abs(Robot.encRight.getDistance())) / 2)+"for
+//		distance"+this.desiredDistance);
+			pidCoasting = new PIDCoasting(this.scgPIDControlled, this.desiredDistance);
+			pidCoasting.start();
+			this.power=.01;
+			scgConstant.set(.01);
+			scgPIDControlled.set(.01);
 		}
+		//Otherwise, normally
+		else
+		{
+			SmartDashboard.putNumber("Pre-incr PWR", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
 		
-		SmartDashboard.putNumber("EXEC POWER", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
-		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
+			powerIncrement();
+			SmartDashboard.putNumber("Pre-set PWR", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
+	
+			scgConstant.set(power);
+			
+			if(power<.1) {
+						scgPIDControlled.set(power);
+			}
+			
+			SmartDashboard.putNumber("EXEC POWER", ((PWM)Robot.motor_pwm_frontLeft).getRaw());
+			SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
+	//		if(System.nanoTime()/1000000000.0%1<0.05) {
+	//			System.out.println(count);
+	//		}
+		}
+	}
+	
+	public boolean isIncrementing()
+	{
+		return power<Config.PID_STRAIGHT_POWER;
 	}
 	
 	
@@ -238,14 +276,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 //				toGoalTime = System.nanoTime() / 1000000000.0 - this.startTime;
 //			}
 //		}
-		// if (isCoasting && this.pidCoasting == null) {
-		// System.out.println("Distance traveled: " +
-		// ((Math.abs(Robot.encLeft.getDistance()) +
-		// Math.abs(Robot.encRight.getDistance())) / 2)+"for
-		// distance"+this.desiredDistance);
-		// pidCoasting = new PIDCoasting(this.scgPIDControlled, this.scgConstant,
-		// this.desiredDistance);
-		// }
+		
 	}
 
 	@Override
@@ -263,7 +294,9 @@ public class PIDDriveTrainSide extends PIDCommand {
 	 * resets the values of certain
 	 */
 	public void resetOurValues() {
+		this.pidCoasting = null;
 		this.power = 0;
+		shouldBeCoasting=false;
 //		this.scgPIDControlled.set(0);
 //		this.scgConstant.set(0);
 //		System.nanoTime() / 1000000000;
@@ -272,7 +305,16 @@ public class PIDDriveTrainSide extends PIDCommand {
 		Robot.encLeft.reset();
 		 Robot.encRight.reset();
 	}
-	// public boolean getIsCoasting() {
-	// return isCoasting;
-	// }
+	
+	//return the current average disatnce (encRight + encLeft)/2
+	public double getCurrentDistance()
+	{
+		return (Robot.encLeft.getDistance()+Robot.encLeft.getDistance())/2.0;
+	}
+	//return if the robot should be coasting
+	public boolean shouldBeCoasting() {
+		if(!shouldBeCoasting)
+			shouldBeCoasting = (desiredDistance - getCurrentDistance())<Config.getCoastingDistance(power);
+		return shouldBeCoasting;
+	}
 }
