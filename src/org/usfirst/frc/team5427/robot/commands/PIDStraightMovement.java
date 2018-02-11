@@ -74,6 +74,8 @@ public class PIDStraightMovement extends PIDCommand {
 		this.maximumSpeed = maximumSpeed;
 		this.desiredDistance = desiredDistance;
 		super.setSetpoint(0);
+		scgConstant.set(0);
+		scgPIDControlled.set(0);
 	}
 
 	/*
@@ -84,6 +86,7 @@ public class PIDStraightMovement extends PIDCommand {
 	@Override
 	protected void initialize() {
 		super.getPIDController().enable();
+		this.pidDistance = null;
 	}
 
 	/**
@@ -110,6 +113,7 @@ public class PIDStraightMovement extends PIDCommand {
 		SmartDashboard.putNumber("encRightVal", Math.abs(Robot.encRight.getDistance()));
 		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
 		SmartDashboard.putNumber("PID output", output);
+		SmartDashboard.putNumber("SCGconstant", scgConstant.get());
 		
 		if(this.power < this.maximumSpeed && this.pidDistance == null)
 		{
@@ -117,7 +121,7 @@ public class PIDStraightMovement extends PIDCommand {
 			scgConstant.set(power);
 		}
 		
-		if(this.power >= this.maximumSpeed)
+		if(this.power >= this.maximumSpeed && pidDistance == null)
 		{
 			this.pidDistance = new PIDDistance(this.scgConstant, this.maximumSpeed, this.desiredDistance);
 			pidDistance.start();
@@ -155,8 +159,11 @@ public class PIDStraightMovement extends PIDCommand {
 	 */
 	@Override
 	public void end() {
-		super.end();
+		this.scgPIDControlled.set(0);
+		this.scgConstant.set(0);
+		this.power = 0;
 		free();
+		super.end();
 	}
 
 	/**
@@ -167,11 +174,16 @@ public class PIDStraightMovement extends PIDCommand {
 	 */
 	@Override
 	public void free() {
-		super.free();
+		System.out.println("Free in PIDStraight");
 		super.getPIDController().disable();
 		super.getPIDController().reset();
+		this.scgConstant.set(0);
 		this.scgPIDControlled.set(0);
+		this.power = 0;
+		System.out.println("Left: " +Robot.encLeft.getDistance()+ "Right: "+Robot.encRight.getDistance());
 		Robot.encLeft.reset();
 		Robot.encRight.reset();
+		super.free();
 	}
+	
 }

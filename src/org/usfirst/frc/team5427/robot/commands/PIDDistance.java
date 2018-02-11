@@ -40,6 +40,7 @@ public class PIDDistance extends PIDCommand {
 		this.scgPIDControlled = scgPIDControlled;
 		super.getPIDController().setOutputRange(-maximumSpeed, maximumSpeed);
 		super.getPIDController().setSetpoint(desiredDistance);
+		scgPIDControlled.set(0);
 	}
 
 	/**
@@ -80,8 +81,11 @@ public class PIDDistance extends PIDCommand {
 	 */
 	@Override
 	protected boolean isFinished() {
-		if ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 > desiredDistance - Config.PID_STRAIGHT_TOLERANCE)
+		if ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 > desiredDistance - Config.PID_STRAIGHT_TOLERANCE) {
+			System.out.println("PIDDsitance finished");
 			return true;
+		}
+			//return true;
 		return false;
 	}
 	
@@ -104,6 +108,7 @@ public class PIDDistance extends PIDCommand {
 	 */
 	@Override
 	public void free() {
+		System.out.println("Free in PIDDistance");
 		super.free();
 		super.getPIDController().disable();
 		super.getPIDController().reset();
