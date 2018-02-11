@@ -87,6 +87,11 @@ public class PIDStraightMovement extends PIDCommand {
 	protected void initialize() {
 		super.getPIDController().enable();
 		this.pidDistance = null;
+		//if using exponential increment
+		power=.05;
+		scgConstant.set(.05);
+		scgPIDControlled.set(.05);
+		
 	}
 
 	/**
@@ -117,17 +122,25 @@ public class PIDStraightMovement extends PIDCommand {
 		
 		if(this.power < this.maximumSpeed && this.pidDistance == null)
 		{
-			this.power += Config.PID_STRAIGHT_INCREMENT;
+			//linear increment
+//			this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
+			this.power*=Config.PID_STRAIGHT_EXPONENTIAL_INCREMENT;
 			scgConstant.set(power);
+			if(this.power<=Config.POST_INCR_SWITCH_TO_PID)
+				scgPIDControlled.set(power);
+			else
+				scgPIDControlled.pidWrite(output);
 		}
-		
 		if(this.power >= this.maximumSpeed && pidDistance == null)
 		{
 			this.pidDistance = new PIDDistance(this.scgConstant, this.maximumSpeed, this.desiredDistance);
 			pidDistance.start();
 		}
+		else if(this.power>=this.maximumSpeed)
+		{
+			scgPIDControlled.pidWrite(output);
+		}
 		
-		scgPIDControlled.pidWrite(output);
 	}
 	
 	/**
