@@ -82,7 +82,7 @@ public class PIDDistance extends PIDCommand {
 	@Override
 	protected boolean isFinished() {
 		if ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 > desiredDistance - Config.PID_STRAIGHT_TOLERANCE) {
-			System.out.println("PIDDsitance finished");
+			System.out.println("PIDDsitance finished returned true");
 			return true;
 		}
 			//return true;
@@ -98,6 +98,7 @@ public class PIDDistance extends PIDCommand {
 	public void end() {
 		super.end();
 		free();
+		System.out.println("PIDDIST ENDS");
 	}
 	
 	/**

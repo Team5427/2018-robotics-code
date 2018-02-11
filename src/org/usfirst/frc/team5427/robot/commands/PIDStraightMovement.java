@@ -138,7 +138,15 @@ public class PIDStraightMovement extends PIDCommand {
 	@Override
 	protected boolean isFinished() {
 		if(pidDistance!=null)
+		{
+			if(pidDistance.isFinished())
+			{
+				System.out.println("< one print ....calling isFIn from Straight");
+				pidDistance.end();
+				end();
+			}
 			return pidDistance.isFinished();
+		}
 		return false;
 	}
 	
@@ -164,6 +172,7 @@ public class PIDStraightMovement extends PIDCommand {
 		this.power = 0;
 		free();
 		super.end();
+		System.out.println("ENDED PID STRAIGHT");
 	}
 
 	/**

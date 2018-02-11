@@ -89,6 +89,7 @@ public class Robot extends IterativeRobot  {
 
 
 	public PIDPath pid;
+	public PIDStraightMovement pi;
 	public static AHRS ahrs;
 
 	/**
@@ -217,8 +218,11 @@ public class Robot extends IterativeRobot  {
 		encLeft.reset();
 		ahrs.reset();
 		
-		pid = new PIDPath();
-		pid.start();
+		pi=new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 60);
+		pi.start();
+		
+//		pid = new PIDPath();
+//		pid.start();
 //		PIDDriveTrainSide pi = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 160);
 //		pi.start();
 		//removes history of the PID loop (destroys the older loop) if pidSide stores a PIDDRiveTRainSIde object
