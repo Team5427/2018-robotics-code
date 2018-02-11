@@ -133,9 +133,8 @@ public class PIDStraightMovement extends PIDCommand {
 	 */
 	@Override
 	protected boolean isFinished() {
-		if ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 > desiredDistance - Config.PID_STRAIGHT_TOLERANCE) {
-			return true;
-		}
+		if(pidDistance!=null)
+			return pidDistance.isFinished();
 		return false;
 	}
 	
