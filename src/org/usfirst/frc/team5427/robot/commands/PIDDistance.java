@@ -4,6 +4,7 @@ import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -20,7 +21,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class PIDDistance extends PIDCommand {
 	
 	//This SpeedControllerGroup is the side of the robot that this command controls.
-	SpeedControllerGroup scgPIDControlled;
+	private SpeedControllerGroup scgPIDControlled;
+	private Timer timer;
 	
 	//This is the distance we want to travel.
 	double desiredDistance;
@@ -41,6 +43,7 @@ public class PIDDistance extends PIDCommand {
 		super.getPIDController().setOutputRange(-maximumSpeed, maximumSpeed);
 		super.getPIDController().setSetpoint(desiredDistance);
 		scgPIDControlled.set(0);
+		timer = new Timer();
 	}
 
 	/**
@@ -81,11 +84,25 @@ public class PIDDistance extends PIDCommand {
 	 */
 	@Override
 	protected boolean isFinished() {
-		if ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 > desiredDistance - Config.PID_STRAIGHT_TOLERANCE) {
-			System.out.println("PIDDsitance finished returned true");
-			return true;
+//		if ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 > desiredDistance - Config.PID_STRAIGHT_TOLERANCE) {
+//			System.out.println("PIDDsitance finished returned true");
+//			return true;
+//		}
+//			//return true;
+//		return false;
+		
+		// TODO untested
+		double distFromSetpoint = Math.abs(desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2);
+		boolean inRange = distFromSetpoint < Config.PID_STRAIGHT_TOLERANCE;
+		if (inRange) {
+			if (timer.get() == 0)
+				timer.start();
+			if (timer.get() > 2) {
+				return true;
+			}
+		} else {
+			timer.reset();
 		}
-			//return true;
 		return false;
 	}
 	
