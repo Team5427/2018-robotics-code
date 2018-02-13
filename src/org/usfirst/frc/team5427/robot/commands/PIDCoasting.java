@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-//Author - Blake
+/**
+ * @author Ethan
+ */
 @SameLine
 public class PIDCoasting extends PIDCommand {
 
