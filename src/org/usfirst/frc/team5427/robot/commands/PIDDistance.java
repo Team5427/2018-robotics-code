@@ -23,7 +23,7 @@ public class PIDDistance extends PIDCommand {
 	//This SpeedControllerGroup is the side of the robot that this command controls.
 	private SpeedControllerGroup scgPIDControlled;
 	private Timer timer;
-	
+	boolean timerStarted;
 	//This is the distance we want to travel.
 	double desiredDistance;
 
@@ -54,6 +54,7 @@ public class PIDDistance extends PIDCommand {
 	@Override
 	protected void initialize() {
 		super.getPIDController().enable();
+		timerStarted=false;
 	}
 
 	/**
@@ -75,6 +76,8 @@ public class PIDDistance extends PIDCommand {
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber("PID Output Coasting", output);
 		this.scgPIDControlled.pidWrite(output);
+		if(this.returnPIDInput()>this.desiredDistance)
+			super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already set
 	}
 
 	/*
@@ -92,16 +95,23 @@ public class PIDDistance extends PIDCommand {
 //		return false;
 		
 		// TODO untested
-		double distFromSetpoint = Math.abs(desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2);
+		double distFromSetpoint = Math.abs(desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0);
 		boolean inRange = distFromSetpoint < Config.PID_STRAIGHT_TOLERANCE;
 		if (inRange) {
-			if (timer.get() == 0)
+			if (!timerStarted)
+			{
+				timer.reset();
 				timer.start();
-			if (timer.get() > 2) {
+				timerStarted=true;
+			}
+			else if (timer.get() > 2&&timerStarted) {
+				System.out.println("PIDDistance Returning true");
+				System.out.println("Left: " + Robot.encLeft.getDistance() + "Right: " + Robot.encRight.getDistance()); //TODO if this only prints once, is finished us only called once
 				return true;
 			}
 		} else {
 			timer.reset();
+			timerStarted=false;
 		}
 		return false;
 	}
