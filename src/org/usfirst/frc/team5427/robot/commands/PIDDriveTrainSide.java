@@ -163,7 +163,13 @@ public class PIDDriveTrainSide extends PIDCommand {
 		// if current power is less than the goal, increment the power
 		if (this.power < Config.PID_STRAIGHT_POWER && !isCoasting) {
 			this.power += increment;
+
 		}
+		
+		if (!isCoasting) {
+			scgConstant.set(power);
+		}
+		
 		// else if it is equal to goal, print the time it took, and iterations
 		else {
 			if (toGoalTime == 0) {

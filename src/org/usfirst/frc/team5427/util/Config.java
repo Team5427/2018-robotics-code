@@ -129,7 +129,7 @@ public class Config {
 	public static final double PID_TURN_P = 0.051;
 	public static final double PID_TURN_I = 0.00251;
 	public static final double PID_TURN_D = 0.000001;
-	public static final double PID_TURN_POWER = 0;
+	public static final double PID_TURN_POWER = 0.1;
 	public static final double PID_TURN_TOLERANCE = 0.1;
 	
 	/**
