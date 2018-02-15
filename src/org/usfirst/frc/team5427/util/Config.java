@@ -134,7 +134,7 @@ public class Config {
 //	public static final double PID_STRAIGHT_COAST_D = 1;
 	public static final double PID_STRAIGHT_DISTANCE_P = 0.2;
 	public static final double PID_STRAIGHT_DISTANCE_I = 0;
-	public static final double PID_STRAIGHT_DISTANCE_D = 0.1;
+	public static final double PID_STRAIGHT_DISTANCE_D = 0.6;
 	
 //	public static final double PID_STRAIGHT_INCREMENT_DECREMENT = .001;
 	
