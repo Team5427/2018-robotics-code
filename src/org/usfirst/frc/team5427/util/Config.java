@@ -92,10 +92,6 @@ public class Config {
 	public static final double INTAKE_FORWARD = .5;
 	
 	/*-------------Motor Offset------------------*/
-	public static final int CHANNEL_A_RIGHT = 0;
-	public static final int CHANNEL_B_RIGHT = 0;
-	public static final int CHANNEL_A_LEFT = 0;
-	public static final int CHANNEL_B_LEFT = 0;
 	public static final int ELEVATOR_MOTOR = 7;
 	
 	
@@ -119,9 +115,6 @@ public class Config {
 	public static final double PID_STRAIGHT_LINEAR_INCREMENT=.01;
 	public static final double POST_INCR_SWITCH_TO_PID = .1;
 	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=1.01;
-
-	
-	
 	
 
 	public static final double PID_STRAIGHT_COAST_POWER = 0.01;

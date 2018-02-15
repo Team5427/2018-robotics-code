@@ -144,4 +144,12 @@ public class PIDDistance extends PIDCommand {
 		Robot.encLeft.reset();
 		Robot.encRight.reset();
 	}
+	
+	/**
+	 * Returns the average distance between the 2 encoders
+	 * 
+	 */
+	public double getDistance() {
+		return (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0;
+	}
 }
