@@ -145,8 +145,8 @@ public class Robot extends IterativeRobot  {
 		
 		//create encoders
 		//TODO put port values in Config
-		encLeft = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-		encRight = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
+		encLeft = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
+		encRight = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 		//Set the Encoder to diameter*pi/360 inches per pulse (each pulse is a degree)
 		encRight.setDistancePerPulse((6 * Math.PI / 360));
 		encLeft.setDistancePerPulse((6 * Math.PI / 360));
