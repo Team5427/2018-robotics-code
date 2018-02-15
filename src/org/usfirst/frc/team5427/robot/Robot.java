@@ -146,7 +146,7 @@ public class Robot extends IterativeRobot  {
 		//create encoders
 		//TODO put port values in Config
 		encLeft = new Encoder(Config.FRONT_LEFT_MOTOR, Config.REAR_LEFT_MOTOR, false, Encoder.EncodingType.k4X);
-		encRight = new Encoder(Config.FRONT_RIGHT_MOTOR, Config.FRONT_LEFT_MOTOR, false, Encoder.EncodingType.k4X);
+		encRight = new Encoder(Config.FRONT_RIGHT_MOTOR, Config.REAR_RIGHT_MOTOR, false, Encoder.EncodingType.k4X);
 		//Set the Encoder to diameter*pi/360 inches per pulse (each pulse is a degree)
 		encRight.setDistancePerPulse((6 * Math.PI / 360));
 		encLeft.setDistancePerPulse((6 * Math.PI / 360));
@@ -218,11 +218,11 @@ public class Robot extends IterativeRobot  {
 		encLeft.reset();
 		ahrs.reset();
 		
-		pi=new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 60);
-		pi.start();
+//		pi=new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 60);
+//		pi.start();
 		
-//		pid = new PIDPath();
-//		pid.start();
+		pid = new PIDPath();
+		pid.start();
 //		PIDDriveTrainSide pi = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 160);
 //		pi.start();
 		//removes history of the PID loop (destroys the older loop) if pidSide stores a PIDDRiveTRainSIde object

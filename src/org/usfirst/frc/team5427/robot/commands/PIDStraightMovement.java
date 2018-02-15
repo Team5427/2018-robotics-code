@@ -142,7 +142,7 @@ public class PIDStraightMovement extends PIDCommand {
 			scgPIDControlled.pidWrite(output);
 		}
 
-		if(pidDistance.getDistance()>this.desiredDistance)
+		if(pidDistance!=null&&pidDistance.getDistance()>this.desiredDistance)
 			super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already set
 	}
 
