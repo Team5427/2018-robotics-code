@@ -251,8 +251,7 @@ public class Robot extends IterativeRobot  {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		
-		SmartDashboard.putNumber("L MOtor speed", speedcontrollergroup_left.get());
+//		motor_pwm_frontLeft.set(.3);
 		//robot stutters
 //		pidSide.incrementPower();
 		
