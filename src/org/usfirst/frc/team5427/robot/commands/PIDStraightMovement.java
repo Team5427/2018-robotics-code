@@ -163,7 +163,7 @@ public class PIDStraightMovement extends PIDCommand {
 	 * certain distance, with our tolerance.
 	 */
 	@Override
-	protected boolean isFinished() {
+	public boolean isFinished() {
 
 		if (pidDistance != null && pidDistance.isFinished()) {
 			System.out.println("< one print ....calling isFIn from Straight");
