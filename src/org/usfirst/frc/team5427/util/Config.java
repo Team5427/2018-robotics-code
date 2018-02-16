@@ -44,10 +44,10 @@ public class Config {
 												// with this false
 	
 	/*----------PWM PORTS-----------*/
-	public static final int FRONT_RIGHT_MOTOR = 12;//6;
-	public static final int REAR_RIGHT_MOTOR = 13;//8
-	public static final int FRONT_LEFT_MOTOR = 2;//7;
-	public static final int REAR_LEFT_MOTOR = 3;//3
+	public static final int FRONT_RIGHT_MOTOR = 12;//6; //TODO 3
+	public static final int REAR_RIGHT_MOTOR = 13;//8  //TODO 2
+	public static final int FRONT_LEFT_MOTOR = 2;//7;  //TODO 1
+	public static final int REAR_LEFT_MOTOR = 3;//3  //TODO 0
 	public static final int INTAKE_MOTOR_LEFT = 0;//4;
 	public static final int INTAKE_MOTOR_RIGHT = 1	;//5;
 	
