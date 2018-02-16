@@ -10,13 +10,28 @@ public class PIDPath extends Command {
 	private PIDStraightMovement firstDistance, secondDistance, thirdDistance;
 	private PIDTurn firstAngle, secondAngle;
 
+	//Values for 60 inches.
+	public static final double p1 = 0.1;
+	public static final double i1 = 0.0;
+	public static final double d1 = 0.55;
+	
+	//Values for 40 inches.
+	public static final double p2 = 0.08;
+	public static final double i2 = 0.0;
+	public static final double d2 = 0.55;
+	
+	//Values for 30 inches.
+	public static final double p3 = 0.04;
+	public static final double i3 = 0.0;
+	public static final double d3 = 0.55;
+	
 	public PIDPath() {
 		// creates all of the PID Commands
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 60);// 160
+		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 60, p1, i1, d1);// 160
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 25);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 40);// 36
+		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 40, p2, i2, d2);// 36
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 35);
-		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 30);// 12
+		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 30, p3, i3, d3);// 12
 	}
 
 	// begins the command

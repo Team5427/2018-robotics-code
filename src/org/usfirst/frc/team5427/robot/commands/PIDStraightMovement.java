@@ -56,28 +56,37 @@ public class PIDStraightMovement extends PIDCommand {
 
 	// This is the power that scgPIDControlled is set to.
 	private double power;
+	
+	//These are the p, i, and d values for the PID Controller in PIDDistance.
+	private double p,i,d;
 
 	/**
 	 * Constructor for PIDStraightMovement
 	 * 
 	 * @param scgPIDControlled
-	 *            - This receives the side of the robot that we are controlling with
-	 *            this PIDCommand.
+	 *  - This receives the side of the robot that we are controlling with
+	 *    this PIDCommand.
 	 * @param scgConstant
-	 *            - This receives the side of the robot that we will control with
-	 *            the PIDDistance command.
+	 *  - This receives the side of the robot that we will control with
+	 *    the PIDDistance command.
 	 * @param maximumSpeed
-	 *            - This receives the maximum speed that the robot will travel at.
+	 *  - This receives the maximum speed that the robot will travel at.
 	 * @param desiredDistance
-	 *            - This receives the distance that we want to travel.
+	 *  - This receives the distance that we want to travel.
+	 * @param p, i, d
+	 *  - These receive the P, I, and D values for the PID Controller in
+	 *    PIDDistance.
 	 */
 	public PIDStraightMovement(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant,
-			double maximumSpeed, double desiredDistance) {
+			double maximumSpeed, double desiredDistance, double p, double i, double d) {
 		super(Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D);
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgConstant = scgConstant;
 		this.maximumSpeed = maximumSpeed;
 		this.desiredDistance = desiredDistance;
+		this.p = p;
+		this.i = i;
+		this.d = d;
 		super.setSetpoint(0);
 		scgConstant.set(0);
 		scgPIDControlled.set(0);
@@ -92,6 +101,8 @@ public class PIDStraightMovement extends PIDCommand {
 	protected void initialize() {
 		super.getPIDController().enable();
 		this.pidDistance = null;
+		Robot.encLeft.reset();
+		Robot.encRight.reset();
 		// if using exponential increment
 		power = .05;
 		scgConstant.set(.05);
@@ -136,7 +147,7 @@ public class PIDStraightMovement extends PIDCommand {
 				scgPIDControlled.pidWrite(output);
 		}
 		if (this.power >= this.maximumSpeed && pidDistance == null) {
-			this.pidDistance = new PIDDistance(this.scgConstant, this.maximumSpeed, this.desiredDistance);
+			this.pidDistance = new PIDDistance(this.scgConstant, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);
 			pidDistance.start();
 		} else if (this.power >= this.maximumSpeed) {
 			scgPIDControlled.pidWrite(output);

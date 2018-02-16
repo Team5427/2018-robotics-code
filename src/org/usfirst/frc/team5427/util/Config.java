@@ -47,10 +47,10 @@ public class Config {
 												// with this false
 	
 	/*----------PWM PORTS-----------*/
-	public static final int FRONT_RIGHT_MOTOR = 0;
-	public static final int REAR_RIGHT_MOTOR = 1;
-	public static final int FRONT_LEFT_MOTOR = 2;
-	public static final int REAR_LEFT_MOTOR = 3;
+	public static final int FRONT_RIGHT_MOTOR = 0; //3
+	public static final int REAR_RIGHT_MOTOR = 1; //2
+	public static final int FRONT_LEFT_MOTOR = 2; //1
+	public static final int REAR_LEFT_MOTOR = 3; //0
 	public static final int INTAKE_MOTOR_LEFT = 4;
 	public static final int INTAKE_MOTOR_RIGHT = 5;
 	
@@ -108,13 +108,13 @@ public class Config {
 	//.005 started oscilating
 	public static final double PID_STRAIGHT_I = 0.0025;
 	public static final double PID_STRAIGHT_D = 0.00;
-	public static final double PID_STRAIGHT_POWER = .30;
+	public static final double PID_STRAIGHT_POWER = .50;
 	
 	
 	/***Increment****/
 	public static final double PID_STRAIGHT_LINEAR_INCREMENT=.01;
 	public static final double POST_INCR_SWITCH_TO_PID = .1;
-	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=1.01;
+	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=2;
 	
 
 	public static final double PID_STRAIGHT_COAST_POWER = 0.01;
@@ -125,9 +125,12 @@ public class Config {
 //	public static final double PID_STRAIGHT_COAST_P = 1;
 //	public static final double PID_STRAIGHT_COAST_I = 1;
 //	public static final double PID_STRAIGHT_COAST_D = 1;
+	
+	/* Values for moving 60 inches.
 	public static final double PID_STRAIGHT_DISTANCE_P = 0.1;
 	public static final double PID_STRAIGHT_DISTANCE_I = 0;
 	public static final double PID_STRAIGHT_DISTANCE_D = 0.55;
+	*/
 	
 //	public static final double PID_STRAIGHT_INCREMENT_DECREMENT = .001;
 	

@@ -35,9 +35,11 @@ public class PIDDistance extends PIDCommand {
 	 *  - This receives the maximum speed that the robot will travel at.
 	 * @param desiredDistance
 	 *  - This receives the distance that we want to travel.
+	 * @param p, i, d
+	 *  - These receive the P, I, and D values for the PID Controller.
 	 */
-	public PIDDistance(SpeedControllerGroup scgPIDControlled, double maximumSpeed, double desiredDistance) {
-		super(Config.PID_STRAIGHT_DISTANCE_P, Config.PID_STRAIGHT_DISTANCE_I, Config.PID_STRAIGHT_DISTANCE_D);
+	public PIDDistance(SpeedControllerGroup scgPIDControlled, double maximumSpeed, double desiredDistance, double p, double i, double d) {
+		super(p, i, d);
 		this.desiredDistance = desiredDistance;
 		this.scgPIDControlled = scgPIDControlled;
 		super.getPIDController().setOutputRange(-maximumSpeed, maximumSpeed);
