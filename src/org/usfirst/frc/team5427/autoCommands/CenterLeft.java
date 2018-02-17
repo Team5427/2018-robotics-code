@@ -2,6 +2,7 @@ package org.usfirst.frc.team5427.autoCommands;
 
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
+import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
 import org.usfirst.frc.team5427.robot.commands.PIDTurn;
 import org.usfirst.frc.team5427.util.Config;
@@ -12,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class CenterLeft extends Command {
 	private PIDStraightMovement firstDistance, secondDistance, thirdDistance;
 	private PIDTurn firstAngle, secondAngle;
+	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
 
 	//Values for 18 inches.
@@ -38,6 +40,7 @@ public class CenterLeft extends Command {
 		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 118, p2, i2, d2);
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
 		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 82, p3, i3, d3);
+		moveElevator = new MoveElevatorAuto(1); // 1 for switch
 	}
 
 	// begins the command
@@ -49,6 +52,15 @@ public class CenterLeft extends Command {
 	// uses the previous commands being null to check if a certain command needs to
 	// be started or not
 	public void execute() {
+		
+		// TODO start the intake here motor and finish this
+//		if(null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null != secondAngle && secondAngle.isFinished() && thirdDistance.isFinished()) {
+//			System.out.println("Part 5 Done.");
+//			thirdDistance.cancel();
+//			thirdDistance = null;
+//			
+//		}
+		
 		// If firstDistance, first angle, and secondDistance are all null and
 		// SecondAngle isFinished
 		// and the thirdDistance Command is not running, run the thirdDistance Command
@@ -58,6 +70,7 @@ public class CenterLeft extends Command {
 			secondAngle = null;
 			Robot.ahrs.reset();
 			thirdDistance.start();
+			moveElevator.start();
 		}
 		
 		// If firstDistance, first angle are all null and secondDistance isFinished &&
