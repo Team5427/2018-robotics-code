@@ -9,9 +9,9 @@ import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-public class CenterLeft extends AutoPath {
-	private PIDStraightMovement firstDistance, secondDistance, thirdDistance;
-	private PIDTurn firstAngle, secondAngle;
+public class RightSwitchIsRight extends AutoPath {
+	private PIDStraightMovement firstDistance, secondDistance;
+	private PIDTurn firstAngle;
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
 
@@ -25,20 +25,13 @@ public class CenterLeft extends AutoPath {
 	public static final double i2 = 0.0;
 	public static final double d2 = 0.09;
 	
-	//Values for 82 inches.
-	public static final double p3 = 0.;
-	public static final double i3 = 0.0;
-	public static final double d3 = 0.;
-	
-	public CenterLeft() {
+	public RightSwitchIsRight() {
 		// creates all of the PID Commands
 		fidget = new Fidget();
 //		fidget = null;
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 18, p1, i1, d1);
+		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 144, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 118, p2, i2, d2);
-		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
-		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 82, p3, i3, d3);
+		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 6, p2, i2, d2);
 		moveElevator = new MoveElevatorAuto(1); // 1 for switch
 	}
 
@@ -52,31 +45,9 @@ public class CenterLeft extends AutoPath {
 	// be started or not
 	public void execute() {
 		
-		// If firstDistance, first angle, and secondDistance are all null and
-		// SecondAngle isFinished
-		// and the thirdDistance Command is not running, run the thirdDistance Command
-		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null != secondAngle && secondAngle.isFinished() && !(thirdDistance.isRunning())) {
-			System.out.println("Part 4 Done.");
-			secondAngle.cancel();
-			secondAngle = null;
-			Robot.ahrs.reset();
-			thirdDistance.start();
-		}
-		
-		// If firstDistance, first angle are all null and secondDistance isFinished &&
-		// not null
-		// and the secondAngle Command is not running, run the secondAngle Command
-		else if (null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning()) {
-			System.out.println("Part 3 Done.");
-			secondDistance.cancel();
-			secondDistance = null;
-			Robot.ahrs.reset();
-			secondAngle.start();
-		}
-		
 		// If firstDistance is null and firstAngle isFinished && not null
 		// and the secondDistance Command is not running, run the secondDistance Command
-		else if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !secondDistance.isRunning()) {
+		if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !secondDistance.isRunning()) {
 			System.out.println("Part 2 Done.");
 			firstAngle.cancel();
 			firstAngle = null;
@@ -94,7 +65,7 @@ public class CenterLeft extends AutoPath {
 			firstAngle.start();
 		}
 		
-		if(null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
+		else if(null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
 			System.out.println("Fidget Done.");
 			fidget.cancel();
 			fidget = null;
@@ -107,7 +78,7 @@ public class CenterLeft extends AutoPath {
 	@Override
 	public boolean isFinished() {
 		// returns if the last distance has finished and the robot has shot the box
-		if (thirdDistance != null && thirdDistance.isFinished() && !Robot.intakeSubsystem.setSpeedTime(.3, 2))
+		if (secondDistance != null && secondDistance.isFinished() && !Robot.intakeSubsystem.setSpeedTime(.3, 2))
 			return true;
 		return false;
 		
