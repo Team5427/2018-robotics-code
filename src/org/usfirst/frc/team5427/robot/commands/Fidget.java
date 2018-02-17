@@ -21,7 +21,7 @@ public class Fidget extends Command {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.driveTrain);
 		this.forwardDone = false;
-		setTimeout(0.5);
+		setTimeout(0.2);
 	}
 
 	// Called just before this Command runs the first time
@@ -34,13 +34,15 @@ public class Fidget extends Command {
 	protected void execute() {
 		if(!forwardDone)
 		{
+			System.out.println("Forward not done.");
 			Robot.driveTrain.drive_Left.set(0.8);
 			Robot.driveTrain.drive_Right.set(-0.8);
 		}
-		else
+		else if(forwardDone)
 		{
-			Robot.driveTrain.drive_Left.set(-0.8);
-			Robot.driveTrain.drive_Right.set(0.8);
+			System.out.println("Forward done.");
+			Robot.driveTrain.drive_Left.set(-0.4);
+			Robot.driveTrain.drive_Right.set(0.4);
 		}
 	}
 
@@ -50,7 +52,7 @@ public class Fidget extends Command {
 		if(this.isTimedOut() && !forwardDone)
 		{
 			forwardDone = true;
-			setTimeout(0.5);
+			setTimeout(0.6);
 		}
 		else if(this.isTimedOut() && forwardDone)
 		{

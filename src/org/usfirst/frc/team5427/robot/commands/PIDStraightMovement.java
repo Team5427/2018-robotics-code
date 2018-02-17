@@ -105,8 +105,8 @@ public class PIDStraightMovement extends PIDCommand {
 		Robot.encRight.reset();
 		// if using exponential increment
 		power = .05;
-		scgConstant.set(.05);
-		scgPIDControlled.set(.05);
+		scgConstant.set(.1);
+		scgPIDControlled.set(.1);
 
 	}
 
