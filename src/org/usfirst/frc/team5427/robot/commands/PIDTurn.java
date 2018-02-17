@@ -53,6 +53,7 @@ public class PIDTurn extends PIDCommand {
 		scgRight.set(0);
 		scgLeft.set(0);
 		super.end();
+		System.out.println("PIDTurn ENDED!");
 	}
 
 	// Code to run when this command is interrupted
@@ -62,15 +63,16 @@ public class PIDTurn extends PIDCommand {
 
 	// judge range by what the angle is right now, ex: 91 instead of 90, we want to
 	// see if it flatlines
+	@Override
 	public boolean isFinished() {
 		double tolerance = Math.abs(Math.abs(getCurrentAngle()) - Math.abs(super.getSetpoint()));
 		boolean inRange = tolerance < Config.PID_TURN_TOLERANCE;
 		if (inRange) {
 			if (timer.get() == 0) {
-				System.out.println("Timer is 0 ! (PIDTurn)");
 				timer.start();
 			}
-			if (timer.get() > 2) {
+			if (timer.get() > .75) {
+				System.out.println("PIDTurn finished returns true");
 				return true;
 			}
 		} else {

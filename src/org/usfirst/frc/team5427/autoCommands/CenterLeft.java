@@ -17,7 +17,7 @@ public class CenterLeft extends Command {
 	private Fidget fidget;
 
 	//Values for 18 inches.
-	public static final double p1 = 0.009;
+	public static final double p1 = 0.0125;
 	public static final double i1 = 0.0;
 	public static final double d1 = 0.02;
 	
@@ -27,9 +27,9 @@ public class CenterLeft extends Command {
 	public static final double d2 = 0.09;
 	
 	//Values for 82 inches.
-	public static final double p3 = 0.;
+	public static final double p3 = 0.1;
 	public static final double i3 = 0.0;
-	public static final double d3 = 0.;
+	public static final double d3 = 0.1;
 	
 	public CenterLeft() {
 		// creates all of the PID Commands
