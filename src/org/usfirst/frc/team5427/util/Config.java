@@ -157,6 +157,18 @@ public class Config {
 //	public static final double PID_TURN_I = 0.0;
 //	public static final double PID_TURN_D = 0.172;
 //	
+	
+	
+	/**********Auto Chooser*********/
+	public static final int AUTO_NONE = -1;
+	public static final int RED = 1;
+	public static final int BLUE = 2;
+	public static final int RIGHT = 1;
+	public static final int CENTER = 2;
+	public static final int LEFT = 3;
+	public static final int SWITCH = 1;
+	public static final int SCALE = 2;
+	
 	/**
 	 * returns the average stopping for different powers from 0 to full power, 
 	 * more accuracy at the higher powers
