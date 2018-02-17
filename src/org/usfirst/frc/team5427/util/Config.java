@@ -108,7 +108,7 @@ public class Config {
 	//.005 started oscilating
 	public static final double PID_STRAIGHT_I = 0.0025;
 	public static final double PID_STRAIGHT_D = 0.00;
-	public static final double PID_STRAIGHT_POWER = .50;
+	public static final double PID_STRAIGHT_POWER = .30;
 	
 	
 	/***Increment****/
@@ -147,9 +147,9 @@ public class Config {
 
 	
 	//values for 35 degree and 25 degrees
-	public static final double PID_TURN_P = 0.0501;
+	public static final double PID_TURN_P = 0.0402;
 	public static final double PID_TURN_I = 0;
-	public static final double PID_TURN_D = 0.11005;
+	public static final double PID_TURN_D = 0.115;
 	
 	//VALUES FOR 45 Degrees, relatively tuned
 //	public static final double PID_TURN_P = 0.055;

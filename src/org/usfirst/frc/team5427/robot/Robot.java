@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
+import org.usfirst.frc.team5427.autoCommands.CenterLeft;
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
@@ -88,7 +89,9 @@ public class Robot extends IterativeRobot  {
 	
 
 
-	public PIDPath pid;
+	public CenterLeft autoPath;
+	public PIDTurn turnToAngle;
+	
 	public PIDStraightMovement pi;
 	public static AHRS ahrs;
 
@@ -221,8 +224,15 @@ public class Robot extends IterativeRobot  {
 //		pi=new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 60);
 //		pi.start();
 		
-		pid = new PIDPath();
-		pid.start();
+//		pid = new PIDPath();
+//		pid.start();
+		
+		autoPath = new CenterLeft();
+		autoPath.start();
+		
+//		turnToAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
+//		turnToAngle.start();
+		
 //		PIDDriveTrainSide pi = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 160);
 //		pi.start();
 		//removes history of the PID loop (destroys the older loop) if pidSide stores a PIDDRiveTRainSIde object
