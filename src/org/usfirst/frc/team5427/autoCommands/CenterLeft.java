@@ -17,9 +17,9 @@ public class CenterLeft extends Command {
 	private Fidget fidget;
 
 	//Values for 18 inches.
-	public static final double p1 = 0.1;
+	public static final double p1 = 0.009;
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.55;
+	public static final double d1 = 0.02;
 	
 	//Values for 118 inches.
 	public static final double p2 = 0.08;
