@@ -97,32 +97,25 @@ public class PIDDistance extends PIDCommand {
 	 */
 	@Override
 	protected boolean isFinished() {
-//		if ((Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2 > desiredDistance - Config.PID_STRAIGHT_TOLERANCE) {
-//			System.out.println("PIDDsitance finished returned true");
-//			return true;
-//		}
-//			//return true;
-//		return false;
-		
-		// TODO untested
-//		double distFromSetpoint = Math.abs(desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0);
-//		boolean inRange = distFromSetpoint < Config.PID_STRAIGHT_TOLERANCE;
-//		if (inRange) {
-//			if (!timerStarted)
-//			{
-//				timer.reset();
-//				timer.start();
-//				timerStarted=true;
-//			}
-//			else if (timer.get() > 1&&timerStarted) {
-//				System.out.println("PIDDistance Returning true");
-//				System.out.println("Left: " + Robot.encLeft.getDistance() + "Right: " + Robot.encRight.getDistance()); //TODO if this only prints once, is finished us only called once
-//				return true;
-//			}
-//		} else {
-//			timer.reset();
-//			timerStarted=false;
-//		}
+		// TODO NOT untested !
+		double distFromSetpoint = Math.abs(desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0);
+		boolean inRange = distFromSetpoint < Config.PID_STRAIGHT_TOLERANCE;
+		if (inRange) {
+			if (!timerStarted)
+			{
+				timer.reset();
+				timer.start();
+				timerStarted=true;
+			}
+			else if (timer.get() > 1&&timerStarted) {
+				System.out.println("PIDDistance Returning true");
+				System.out.println("Left: " + Robot.encLeft.getDistance() + "Right: " + Robot.encRight.getDistance()); //TODO if this only prints once, is finished us only called once
+				return true;
+			}
+		} else {
+			timer.reset();
+			timerStarted=false;
+		}
 		return false;
 	}
 	

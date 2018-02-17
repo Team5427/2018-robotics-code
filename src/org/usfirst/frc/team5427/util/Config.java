@@ -51,9 +51,9 @@ public class Config {
 	public static final int REAR_RIGHT_MOTOR = 1; //2
 	public static final int FRONT_LEFT_MOTOR = 2; //1
 	public static final int REAR_LEFT_MOTOR = 3; //0
-	public static final int INTAKE_MOTOR_LEFT = 4;
+	public static final int INTAKE_MOTOR_LEFT = 6;
 	public static final int INTAKE_MOTOR_RIGHT = 5;
-	public static final int ELEVATOR_MOTOR = 7;
+	public static final int ELEVATOR_MOTOR = 4;
 	
 	/*----------Speeds----------*/
 	public static final double INTAKE_SPEED_FORWARD = .3;
@@ -138,7 +138,7 @@ public class Config {
 //	public static final double PID_STRAIGHT_INCREMENT_DECREMENT = .001;
 	
 	public static final double PID_TURN_POWER = 0.1;
-	public static final double PID_TURN_TOLERANCE = 2;
+	public static final double PID_TURN_TOLERANCE = 5;
 	public static final double PID_TURN_SETPOINT =90;	
 	
 //	//values for 90 deg; p = .026, still need to be tuned

@@ -62,7 +62,6 @@ public class CenterLeft extends Command {
 			secondAngle = null;
 			Robot.ahrs.reset();
 			thirdDistance.start();
-			moveElevator.start();
 		}
 		
 		// If firstDistance, first angle are all null and secondDistance isFinished &&
@@ -102,18 +101,20 @@ public class CenterLeft extends Command {
 			fidget = null;
 			Robot.ahrs.reset();
 			firstDistance.start();
+			moveElevator.start();
 		}
 	}
 
 	@Override
 	protected boolean isFinished() {
 		// returns if the last distance has finished and the robot has shot the box
-//		if (thirdDistance != null && thirdDistance.isFinished() && !Robot.intakeSubsystem.setSpeedTime(.3, 2))
-//			return true;
-		
-		if (firstDistance != null)
-			return firstDistance.isFinished();
+		if (thirdDistance != null && thirdDistance.isFinished() && !Robot.intakeSubsystem.setSpeedTime(.3, 2))
+			return true;
 		return false;
+		
+//		if (firstDistance != null)
+//			return firstDistance.isFinished();
+//		return false;
 	}
 	
 	// @Override

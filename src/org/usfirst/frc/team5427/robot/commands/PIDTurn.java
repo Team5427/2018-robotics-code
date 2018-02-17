@@ -63,11 +63,13 @@ public class PIDTurn extends PIDCommand {
 	// judge range by what the angle is right now, ex: 91 instead of 90, we want to
 	// see if it flatlines
 	public boolean isFinished() {
-		double tolerance = Math.abs(getCurrentAngle() - super.getSetpoint());
+		double tolerance = Math.abs(Math.abs(getCurrentAngle()) - Math.abs(super.getSetpoint()));
 		boolean inRange = tolerance < Config.PID_TURN_TOLERANCE;
 		if (inRange) {
-			if (timer.get() == 0)
+			if (timer.get() == 0) {
+				System.out.println("Timer is 0 ! (PIDTurn)");
 				timer.start();
+			}
 			if (timer.get() > 2) {
 				return true;
 			}
