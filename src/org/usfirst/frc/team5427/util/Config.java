@@ -99,6 +99,9 @@ public class Config {
 	public static final double DRIVE_SPEED_INCREMENT_VALUE=.01;
 	public static final double DRIVE_INCREMENT_WAIT_VALUE=.01;
 	
+	public static final double ELEVATOR_TIME_SWITCH = 0;
+	public static final double ELEVATOR_TIME_SCALE = 0;
+	
 	
 	/*-------------PID VALUES------------------*/
 	//former p = .085, i = .008333, d = .001042
@@ -133,8 +136,6 @@ public class Config {
 	*/
 	
 //	public static final double PID_STRAIGHT_INCREMENT_DECREMENT = .001;
-	
-
 	
 	public static final double PID_TURN_POWER = 0.1;
 	public static final double PID_TURN_TOLERANCE = 2;
