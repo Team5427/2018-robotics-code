@@ -10,16 +10,12 @@ package org.usfirst.frc.team5427.robot.subsystems;
 import org.usfirst.frc.team5427.util.NextLine;
 
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
-<<<<<<< HEAD
- * @author Varsha 
- * Subsystem for the two flywheels that turn in opposite directions 
-=======
  * @author Varsha Subsystem for the two flywheels that turn in opposite
  *         directions
->>>>>>> 94e8af4f05a4c8b429ccd908753676d73dff71e0
  */
 
 @NextLine
@@ -28,6 +24,8 @@ public class Intake extends Subsystem
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	private SpeedController leftFlywheel, rightFlywheel;
+	private Timer timer;
+	private boolean timerStarted;
 
 	// motor biases
 	public static final double LEFT_FLYWHEEL_BIAS_FORWARD = 1;
@@ -52,6 +50,8 @@ public class Intake extends Subsystem
 	{
 		this.leftFlywheel = leftFlywheel;
 		this.rightFlywheel = rightFlywheel;
+		timer = new Timer();
+		timerStarted = false;
 	}
 
 	public void setSpeed(double speed)
@@ -68,6 +68,30 @@ public class Intake extends Subsystem
 		leftFlywheel.set(speed * LEFT_FLYWHEEL_BIAS_FORWARD + LEFT_FLYWHEEL_OFFSET_FORWARD);
 		rightFlywheel.set(-speed * RIGHT_FLYWHEEL_BIAS_BACKWARD + RIGHT_FLYWHEEL_OFFSET_BACKWARD);
 
+	}
+	
+	public boolean setSpeedTime(double speed, double time)
+	{
+		if(!timerStarted) {
+			timer.reset();
+			timer.start();
+			timerStarted=true;
+		}
+		if(timer.get() < time) {
+			if (speed < 0)// if the speed is negative
+			{
+				// left goes backward, right goes forward
+				leftFlywheel.set(speed * LEFT_FLYWHEEL_BIAS_BACKWARD + LEFT_FLYWHEEL_OFFSET_BACKWARD);
+				rightFlywheel.set(-speed * RIGHT_FLYWHEEL_BIAS_FORWARD + RIGHT_FLYWHEEL_OFFSET_FORWARD);
+			}
+			// otherwise
+			// left goes forward, right goes backward
+			leftFlywheel.set(speed * LEFT_FLYWHEEL_BIAS_FORWARD + LEFT_FLYWHEEL_OFFSET_FORWARD);
+			rightFlywheel.set(-speed * RIGHT_FLYWHEEL_BIAS_BACKWARD + RIGHT_FLYWHEEL_OFFSET_BACKWARD);
+		}
+		else
+			return true;
+		return false;
 	}
 
 	public void initDefaultCommand()

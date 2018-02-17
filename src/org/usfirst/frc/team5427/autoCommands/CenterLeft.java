@@ -53,14 +53,6 @@ public class CenterLeft extends Command {
 	// be started or not
 	public void execute() {
 		
-		// TODO start the intake here motor and finish this
-//		if(null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null != secondAngle && secondAngle.isFinished() && thirdDistance.isFinished()) {
-//			System.out.println("Part 5 Done.");
-//			thirdDistance.cancel();
-//			thirdDistance = null;
-//			
-//		}
-		
 		// If firstDistance, first angle, and secondDistance are all null and
 		// SecondAngle isFinished
 		// and the thirdDistance Command is not running, run the thirdDistance Command
@@ -115,9 +107,9 @@ public class CenterLeft extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		// returns if the last distance has finished
-//		if (thirdDistance != null)
-//			return thirdDistance.isFinished();
+		// returns if the last distance has finished and the robot has shot the box
+//		if (thirdDistance != null && thirdDistance.isFinished() && !Robot.intakeSubsystem.setSpeedTime(.3, 2))
+//			return true;
 		
 		if (firstDistance != null)
 			return firstDistance.isFinished();

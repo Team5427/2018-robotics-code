@@ -53,6 +53,7 @@ public class Config {
 	public static final int REAR_LEFT_MOTOR = 3; //0
 	public static final int INTAKE_MOTOR_LEFT = 4;
 	public static final int INTAKE_MOTOR_RIGHT = 5;
+	public static final int ELEVATOR_MOTOR = 7;
 	
 	/*----------Speeds----------*/
 	public static final double INTAKE_SPEED_FORWARD = .3;
@@ -92,14 +93,13 @@ public class Config {
 	public static final double INTAKE_FORWARD = .5;
 	
 	/*-------------Motor Offset------------------*/
-	public static final int ELEVATOR_MOTOR = 7;
 	
 	
 	/*------------Other Motor/Program Values------------*/
 	public static final double DRIVE_SPEED_INCREMENT_VALUE=.01;
 	public static final double DRIVE_INCREMENT_WAIT_VALUE=.01;
 	
-	public static final double ELEVATOR_TIME_SWITCH = 0;
+	public static final double ELEVATOR_TIME_SWITCH = 4; // TODO change to actual value (seconds)
 	public static final double ELEVATOR_TIME_SCALE = 0;
 	
 	
