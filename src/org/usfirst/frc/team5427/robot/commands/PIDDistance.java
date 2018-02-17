@@ -26,6 +26,8 @@ public class PIDDistance extends PIDCommand {
 	boolean timerStarted;
 	//This is the distance we want to travel.
 	double desiredDistance;
+	//This is the max speed for the output range of the PID Controller.
+	double maximumSpeed;
 
 	/**
 	 * Constructor for PIDDistance
@@ -42,6 +44,7 @@ public class PIDDistance extends PIDCommand {
 		super(p, i, d);
 		this.desiredDistance = desiredDistance;
 		this.scgPIDControlled = scgPIDControlled;
+		this.maximumSpeed = maximumSpeed;
 		super.getPIDController().setOutputRange(-maximumSpeed, maximumSpeed);
 		super.getPIDController().setSetpoint(desiredDistance);
 		scgPIDControlled.set(0);
@@ -78,8 +81,13 @@ public class PIDDistance extends PIDCommand {
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber("PID Output Coasting", output);
 		this.scgPIDControlled.pidWrite(output);
-		if(this.returnPIDInput()>this.desiredDistance)
-			super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already set
+//		if(this.returnPIDInput()>this.desiredDistance)
+//			super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already set
+//		if(this.returnPIDInput()>(this.desiredDistance*.75))
+//		{
+//			this.maximumSpeed*=0.95;
+//			super.getPIDController().setOutputRange(-this.maximumSpeed,this.maximumSpeed);
+//		}
 	}
 
 	/*
@@ -97,24 +105,24 @@ public class PIDDistance extends PIDCommand {
 //		return false;
 		
 		// TODO untested
-		double distFromSetpoint = Math.abs(desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0);
-		boolean inRange = distFromSetpoint < Config.PID_STRAIGHT_TOLERANCE;
-		if (inRange) {
-			if (!timerStarted)
-			{
-				timer.reset();
-				timer.start();
-				timerStarted=true;
-			}
-			else if (timer.get() > 2&&timerStarted) {
-				System.out.println("PIDDistance Returning true");
-				System.out.println("Left: " + Robot.encLeft.getDistance() + "Right: " + Robot.encRight.getDistance()); //TODO if this only prints once, is finished us only called once
-				return true;
-			}
-		} else {
-			timer.reset();
-			timerStarted=false;
-		}
+//		double distFromSetpoint = Math.abs(desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0);
+//		boolean inRange = distFromSetpoint < Config.PID_STRAIGHT_TOLERANCE;
+//		if (inRange) {
+//			if (!timerStarted)
+//			{
+//				timer.reset();
+//				timer.start();
+//				timerStarted=true;
+//			}
+//			else if (timer.get() > 1&&timerStarted) {
+//				System.out.println("PIDDistance Returning true");
+//				System.out.println("Left: " + Robot.encLeft.getDistance() + "Right: " + Robot.encRight.getDistance()); //TODO if this only prints once, is finished us only called once
+//				return true;
+//			}
+//		} else {
+//			timer.reset();
+//			timerStarted=false;
+//		}
 		return false;
 	}
 	

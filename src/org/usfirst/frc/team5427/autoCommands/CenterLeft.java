@@ -22,14 +22,14 @@ public class CenterLeft extends Command {
 	public static final double d1 = 0.02;
 	
 	//Values for 118 inches.
-	public static final double p2 = 0.08;
+	public static final double p2 = 0.1;
 	public static final double i2 = 0.0;
-	public static final double d2 = 0.55;
+	public static final double d2 = 0.09;
 	
 	//Values for 82 inches.
-	public static final double p3 = 0.04;
+	public static final double p3 = 0.;
 	public static final double i3 = 0.0;
-	public static final double d3 = 0.55;
+	public static final double d3 = 0.;
 	
 	public CenterLeft() {
 		// creates all of the PID Commands
