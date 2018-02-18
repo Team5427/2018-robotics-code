@@ -34,7 +34,6 @@ public class PIDTurn extends PIDCommand {
 		scgRight.set(0.1);
 		scgLeft.set(0.1);
 		timer = new Timer();
-		time = 0;
 	}
 
 	// begins the PID loop (enables)
@@ -68,6 +67,7 @@ public class PIDTurn extends PIDCommand {
 		double tolerance = Math.abs(Math.abs(getCurrentAngle()) - Math.abs(super.getSetpoint()));
 		boolean inRange = tolerance < Config.PID_TURN_TOLERANCE;
 		if (inRange) {
+			System.out.println("In Range.");
 			if (timer.get() == 0) {
 				timer.start();
 			}

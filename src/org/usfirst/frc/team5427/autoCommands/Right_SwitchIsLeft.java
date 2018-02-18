@@ -29,9 +29,9 @@ public class Right_SwitchIsLeft extends AutoPath {
 		// creates all of the PID Commands
 		fidget = new Fidget();
 //		fidget = null;
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 218, p1, i1, d1);
+		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 218, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 228, p2, i2, d2);
+		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 228, p2, i2, d2);
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
 		moveElevator = new MoveElevatorAuto(1); // 1 for switch
 	}
@@ -90,7 +90,7 @@ public class Right_SwitchIsLeft extends AutoPath {
 	@Override
 	public boolean isFinished() {
 		// returns if the last distance has finished and the robot has shot the box
-		if (secondAngle != null && secondAngle.isFinished() && !Robot.intakeSubsystem.setSpeedTime(.3, 2))
+		if (secondAngle != null && secondAngle.isFinished())
 			return true;
 		return false;
 		

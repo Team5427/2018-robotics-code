@@ -107,7 +107,7 @@ public class PIDDistance extends PIDCommand {
 				timer.start();
 				timerStarted=true;
 			}
-			else if (timer.get() > 1&&timerStarted) {
+			else if (timer.get() > 0.5&&timerStarted) {
 				System.out.println("PIDDistance Returning true");
 				System.out.println("Left: " + Robot.encLeft.getDistance() + "Right: " + Robot.encRight.getDistance()); //TODO if this only prints once, is finished us only called once
 				return true;

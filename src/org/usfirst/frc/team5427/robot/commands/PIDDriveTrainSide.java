@@ -162,7 +162,7 @@ public class PIDDriveTrainSide extends PIDCommand {
 		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
 		
 		// if current power is less than the goal, increment the power
-		if (this.power < Config.PID_STRAIGHT_POWER && !isInRange) {
+		if (this.power < Config.PID_STRAIGHT_POWER_SHORT && !isInRange) {
 			this.power += increment;
 		}
 		

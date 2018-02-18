@@ -16,22 +16,22 @@ public class Left_SwitchIsLeft extends AutoPath {
 	private Fidget fidget;
 
 	//Values for 154 inches.
-	public static final double p1 = 0.0188;
+	public static final double p1 = 0.023;//0.0188
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.02;
+	public static final double d1 = 0.015;
 	
 	//Values for 6 inches.
-	public static final double p2 = 0.1;
+	public static final double p2 = 0.03;
 	public static final double i2 = 0.0;
-	public static final double d2 = 0.09;
+	public static final double d2 = 0.01;
 	
 	public Left_SwitchIsLeft() {
 		// creates all of the PID Commands
 		fidget = new Fidget();
 //		fidget = null;
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 154, p1, i1, d1);
+		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 154, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 6, p2, i2, d2);
+		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 6, p2, i2, d2);
 		moveElevator = new MoveElevatorAuto(1); // 1 for switch
 	}
 
@@ -78,7 +78,7 @@ public class Left_SwitchIsLeft extends AutoPath {
 	@Override
 	public boolean isFinished() {
 		// returns if the last distance has finished and the robot has shot the box
-		if (secondDistance != null && secondDistance.isFinished() && !Robot.intakeSubsystem.setSpeedTime(.3, 2))
+		if (secondDistance != null && secondDistance.isFinished())
 			return true;
 		return false;
 		

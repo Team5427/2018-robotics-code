@@ -70,33 +70,33 @@ public class Intake extends Subsystem
 
 	}
 	
-	public boolean setSpeedTime(double speed, double time)
-	{
-		if(!timerStarted) {
-			timer.reset();
-			timer.start();
-			timerStarted=true;
-		}
-		if(timer.get() < time) {
-			if (speed < 0)// if the speed is negative
-			{
-				// left goes backward, right goes forward
-				leftFlywheel.set(speed * LEFT_FLYWHEEL_BIAS_BACKWARD + LEFT_FLYWHEEL_OFFSET_BACKWARD);
-				rightFlywheel.set(-speed * RIGHT_FLYWHEEL_BIAS_FORWARD + RIGHT_FLYWHEEL_OFFSET_FORWARD);
-			}
-			// otherwise
-			// left goes forward, right goes backward
-			leftFlywheel.set(speed * LEFT_FLYWHEEL_BIAS_FORWARD + LEFT_FLYWHEEL_OFFSET_FORWARD);
-			rightFlywheel.set(-speed * RIGHT_FLYWHEEL_BIAS_BACKWARD + RIGHT_FLYWHEEL_OFFSET_BACKWARD);
-		}
-		else
-		{
-			leftFlywheel.set(0);
-			rightFlywheel.set(0);
-			return true;
-		}
-		return false;
-	}
+//	public boolean setSpeedTime(double speed, double time)
+//	{
+//		if(!timerStarted) {
+//			timer.reset();
+//			timer.start();
+//			timerStarted=true;
+//		}
+//		if(timer.get() < time) {
+//			if (speed < 0)// if the speed is negative
+//			{
+//				// left goes backward, right goes forward
+//				leftFlywheel.set(speed * LEFT_FLYWHEEL_BIAS_BACKWARD + LEFT_FLYWHEEL_OFFSET_BACKWARD);
+//				rightFlywheel.set(-speed * RIGHT_FLYWHEEL_BIAS_FORWARD + RIGHT_FLYWHEEL_OFFSET_FORWARD);
+//			}
+//			// otherwise
+//			// left goes forward, right goes backward
+//			leftFlywheel.set(speed * LEFT_FLYWHEEL_BIAS_FORWARD + LEFT_FLYWHEEL_OFFSET_FORWARD);
+//			rightFlywheel.set(-speed * RIGHT_FLYWHEEL_BIAS_BACKWARD + RIGHT_FLYWHEEL_OFFSET_BACKWARD);
+//		}
+//		else
+//		{
+//			leftFlywheel.set(0);
+//			rightFlywheel.set(0);
+//			return true;
+//		}
+//		return false;
+//	}
 
 	public void initDefaultCommand()
 	{

@@ -37,7 +37,6 @@ public class MoveElevatorAuto extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		System.out.println("in MoveElevatorAuto");
 		
 		if(height == 1) {
 			Robot.motorPWM_Elevator.set(.3);

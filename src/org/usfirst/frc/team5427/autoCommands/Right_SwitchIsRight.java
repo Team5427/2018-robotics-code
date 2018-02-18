@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5427.autoCommands;
 
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
@@ -15,23 +16,23 @@ public class Right_SwitchIsRight extends AutoPath {
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
 
-	//Values for 18 inches.
-	public static final double p1 = 0.0188;
+	//Values for 154 inches.
+	public static final double p1 = 0.03; //0.0188
 	public static final double i1 = 0.0;
 	public static final double d1 = 0.02;
 	
-	//Values for 118 inches.
-	public static final double p2 = 0.1;
+	//Values for 6 inches.
+	public static final double p2 = 0.04;
 	public static final double i2 = 0.0;
-	public static final double d2 = 0.09;
+	public static final double d2 = 0.0;
 	
 	public Right_SwitchIsRight() {
 		// creates all of the PID Commands
 		fidget = new Fidget();
 //		fidget = null;
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 154, p1, i1, d1);
+		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 154, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 6, p2, i2, d2);
+		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 6, p2, i2, d2);
 		moveElevator = new MoveElevatorAuto(1); // 1 for switch
 	}
 
@@ -78,7 +79,7 @@ public class Right_SwitchIsRight extends AutoPath {
 	@Override
 	public boolean isFinished() {
 		// returns if the last distance has finished and the robot has shot the box
-		if (secondDistance != null && secondDistance.isFinished() && !Robot.intakeSubsystem.setSpeedTime(.3, 2))
+		if (secondDistance != null && secondDistance.isFinished())
 			return true;
 		return false;
 		
