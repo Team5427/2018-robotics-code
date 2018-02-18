@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.SpeedController;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -26,6 +27,15 @@ import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.autoCommands.CenterLeft;
 import org.usfirst.frc.team5427.autoCommands.CenterRight;
 import org.usfirst.frc.team5427.autoCommands.Right_SwitchIsLeft;
+//import org.usfirst.frc.team5427.autoCommands.LeftScaleIsLeft;
+//import org.usfirst.frc.team5427.autoCommands.LeftScaleIsRight;
+//import org.usfirst.frc.team5427.autoCommands.LeftSwitchIsLeft;
+import org.usfirst.frc.team5427.autoCommands.LeftSwitchIsRight;
+import org.usfirst.frc.team5427.autoCommands.RightScaleIsLeft;
+import org.usfirst.frc.team5427.autoCommands.RightScaleIsRight;
+import org.usfirst.frc.team5427.autoCommands.RightSwitchIsLeft;
+import org.usfirst.frc.team5427.autoCommands.RightSwitchIsRight;
+>>>>>>> 87bfa8b17ba129ae817ecaa4abddadde79334484
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
@@ -90,8 +100,18 @@ public class Robot extends IterativeRobot  {
 	public static Encoder encLeft;
 	public static Encoder encRight;
 	
+<<<<<<< HEAD
 
 
+=======
+	private String gameData;
+	private int color;
+	private int position;
+	private int cube;
+	private char switchSide;
+	private char scaleSide;
+	
+>>>>>>> 87bfa8b17ba129ae817ecaa4abddadde79334484
 	public AutoPath autoPath;
 	public PIDTurn turnToAngle;
 	public PIDStraightMovement moveToDistance;
@@ -225,14 +245,74 @@ public class Robot extends IterativeRobot  {
 		encLeft.reset();
 		ahrs.reset();
 		
+
 //		pi=new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 18, .025, 0, 0);
+
+		
+		//TODO Change
+//		gameData = DriverStation.getInstance().getGameSpecificMessage();
+//		
+//		switchSide = gameData.charAt(0);
+//		scaleSide = gameData.charAt(1);
+//		
+//		position = oi.autoPositionChooser.getSelected();
+//		cube = oi.autoCubeChooser.getSelected();
+//		if(position == 1)
+//		{
+//			if(cube == 1)
+//			{
+//				if(switchSide == 'R')
+//					autoPath = new RightSwitchIsRight();
+//				else if(switchSide == 'L')
+//					autoPath = new RightSwitchIsLeft();
+//			}
+//			else if(cube == 2)
+//			{
+//				if(scaleSide == 'R')
+//					autoPath = new RightScaleIsRight();
+//				else if(scaleSide == 'L')
+//					autoPath = new RightScaleIsLeft();
+//			}
+//		}
+//		else if(position == 2)
+//		{
+//			if(switchSide == 'R')
+//				autoPath = new CenterRight();
+//			else if(switchSide == 'L')
+//				autoPath = new CenterLeft();
+//		}
+//		else if(position == 3)
+//		{
+//			if(cube == 1)
+//			{
+//				if(switchSide == 'R')
+//					autoPath = new LeftSwitchIsRight();
+//				else if(switchSide == 'L')
+//					autoPath = new LeftSwitchIsLeft();
+//			}
+//			else if(cube == 2)
+//			{
+//				if(scaleSide == 'R')
+//					autoPath = new LeftScaleIsRight();
+//				else if(scaleSide == 'L')
+//					autoPath = new LeftScaleIsLeft();
+//			}
+//		}
+//		autoPath.start();
+////		pi=new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 60);
+		///break
 //		pi.start();
 		
 //		pid = new PIDPath();
 //		pid.start();
 		
+
 		autoPath = new Right_SwitchIsLeft();
 		autoPath.start();
+
+//		autoPath = new CenterLeft();
+//		autoPath.start();
+>>>>>>> 87bfa8b17ba129ae817ecaa4abddadde79334484
 		
 //		moveToDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 82, 
 //				0.06, 0.0, 0.05);
