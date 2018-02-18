@@ -87,6 +87,8 @@ public class PIDStraightMovement extends PIDCommand {
 		this.p = p;
 		this.i = i;
 		this.d = d;
+		Robot.encLeft.reset();
+		Robot.encRight.reset();
 		super.setSetpoint(0);
 		scgConstant.set(0);
 		scgPIDControlled.set(0);

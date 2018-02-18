@@ -90,7 +90,11 @@ public class Intake extends Subsystem
 			rightFlywheel.set(-speed * RIGHT_FLYWHEEL_BIAS_BACKWARD + RIGHT_FLYWHEEL_OFFSET_BACKWARD);
 		}
 		else
+		{
+			leftFlywheel.set(0);
+			rightFlywheel.set(0);
 			return true;
+		}
 		return false;
 	}
 

@@ -16,16 +16,20 @@ public class CenterLeft extends AutoPath {
 	private Fidget fidget;
 
 	//Values for 18 inches.
-	public static final double p1 = 0.0125;
+	public static final double p1 = 0.05;
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.02;
+	public static final double d1 = 0.0;
 	
 	//Values for 118 inches.
 	public static final double p2 = 0.1;
 	public static final double i2 = 0.0;
 	public static final double d2 = 0.09;
 	
-	//Values for 82 inches.
+//	//Values for 82 inches.
+//	public static final double p3 = 0.1;
+//	public static final double i3 = 0.0;
+//	public static final double d3 = 0.1;
+	//vals for 70 in
 	public static final double p3 = 0.1;
 	public static final double i3 = 0.0;
 	public static final double d3 = 0.1;
@@ -38,7 +42,7 @@ public class CenterLeft extends AutoPath {
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
 		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 118, p2, i2, d2);
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
-		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 82, p3, i3, d3);
+		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 70, p3, i3, d3);
 		moveElevator = new MoveElevatorAuto(1); // 1 for switch
 	}
 

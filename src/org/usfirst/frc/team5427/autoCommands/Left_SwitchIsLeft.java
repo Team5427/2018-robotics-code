@@ -9,7 +9,7 @@ import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-public class LeftSwitchIsLeft extends AutoPath {
+public class Left_SwitchIsLeft extends AutoPath {
 	private PIDStraightMovement firstDistance, secondDistance;
 	private PIDTurn firstAngle;
 	private MoveElevatorAuto moveElevator;
@@ -30,7 +30,7 @@ public class LeftSwitchIsLeft extends AutoPath {
 	public static final double i3 = 0.0;
 	public static final double d3 = 0.;
 	
-	public LeftSwitchIsLeft() {
+	public Left_SwitchIsLeft() {
 		// creates all of the PID Commands
 		fidget = new Fidget();
 //		fidget = null;

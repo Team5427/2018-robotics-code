@@ -22,7 +22,10 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
+import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.autoCommands.CenterLeft;
+import org.usfirst.frc.team5427.autoCommands.CenterRight;
+import org.usfirst.frc.team5427.autoCommands.Right_SwitchIsLeft;
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
@@ -89,7 +92,7 @@ public class Robot extends IterativeRobot  {
 	
 
 
-	public CenterLeft autoPath;
+	public AutoPath autoPath;
 	public PIDTurn turnToAngle;
 	public PIDStraightMovement moveToDistance;
 	
@@ -222,13 +225,13 @@ public class Robot extends IterativeRobot  {
 		encLeft.reset();
 		ahrs.reset();
 		
-//		pi=new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 60);
+//		pi=new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 18, .025, 0, 0);
 //		pi.start();
 		
 //		pid = new PIDPath();
 //		pid.start();
 		
-		autoPath = new CenterLeft();
+		autoPath = new Right_SwitchIsLeft();
 		autoPath.start();
 		
 //		moveToDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 82, 

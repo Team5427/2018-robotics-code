@@ -14,17 +14,17 @@ public class CenterRight extends AutoPath {
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
 
-	//Values for 18 inches.
-	public static final double p1 = 0.009;
+	//Values for 88 inches.
+	public static final double p1 = 0.1;
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.02;
+	public static final double d1 = 0.1;
 	
 	public CenterRight() {
 		// creates all of the PID Commands
 		fidget = new Fidget();
 //		fidget = null;
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 108, p1, i1, d1);
-		moveElevator = new MoveElevatorAuto(1); // 1 for switch
+		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 88, p1, i1, d1);
+		moveElevator = new MoveElevatorAuto(1); // 1 for switch TODO put into config a timer val 
 	}
 
 	// begins the command

@@ -59,7 +59,7 @@ public class MoveElevatorAuto extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.motorPWM_Elevator.disable();
+		Robot.motorPWM_Elevator.set(0);
 		timer.reset();
 	}
 
@@ -67,7 +67,8 @@ public class MoveElevatorAuto extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.motorPWM_Elevator.disable();
+//		Robot.motorPWM_Elevator.disable();
+		Robot.motorPWM_Elevator.set(0);
 		timer.reset();
 	}
 }
