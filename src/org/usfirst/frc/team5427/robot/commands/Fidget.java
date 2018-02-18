@@ -34,13 +34,11 @@ public class Fidget extends Command {
 	protected void execute() {
 		if(!forwardDone)
 		{
-			System.out.println("Forward not done.");
 			Robot.driveTrain.drive_Left.set(0.8);
 			Robot.driveTrain.drive_Right.set(-0.8);
 		}
 		else if(forwardDone)
 		{
-			System.out.println("Forward done.");
 			Robot.driveTrain.drive_Left.set(-0.4);
 			Robot.driveTrain.drive_Right.set(0.4);
 		}

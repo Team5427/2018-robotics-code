@@ -141,9 +141,9 @@ public class PIDStraightMovement extends PIDCommand {
 		if (this.power < this.maximumSpeed && this.pidDistance == null) {
 			// linear increment
 			// this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
-			this.power *= Config.PID_STRAIGHT_EXPONENTIAL_INCREMENT;
+			this.power *= (Config.PID_STRAIGHT_EXPONENTIAL_INCREMENT*.3)/this.maximumSpeed;
 			scgConstant.set(power);
-			if (this.power <= Config.POST_INCR_SWITCH_TO_PID)
+			if (this.power < this.maximumSpeed)//Config.POST_INCR_SWITCH_TO_PID)
 				scgPIDControlled.set(power);
 			else
 				scgPIDControlled.pidWrite(output);
@@ -167,10 +167,9 @@ public class PIDStraightMovement extends PIDCommand {
 	@Override
 	public boolean isFinished() {
 
-		if (pidDistance != null && pidDistance.isFinished()) {
-			System.out.println("< one print ....calling isFIn from Straight");
+		if (pidDistance != null && pidDistance.isFinished() && Math.abs(Robot.ahrs.getYaw())<1) {
 			pidDistance.end();//TODO check if ending works correctly
-			end();
+			end();//TODO take these out
 			return true;
 		}
 		return false;

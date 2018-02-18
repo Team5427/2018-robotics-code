@@ -24,8 +24,8 @@ public class Intake extends Subsystem
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	private SpeedController leftFlywheel, rightFlywheel;
-	private Timer timer;
-	private boolean timerStarted;
+//	private Timer timer;
+//	private boolean timerStarted;
 
 	// motor biases
 	public static final double LEFT_FLYWHEEL_BIAS_FORWARD = 1;
@@ -50,12 +50,13 @@ public class Intake extends Subsystem
 	{
 		this.leftFlywheel = leftFlywheel;
 		this.rightFlywheel = rightFlywheel;
-		timer = new Timer();
-		timerStarted = false;
+//		timer = new Timer();
+//		timerStarted = false;
 	}
 
 	public void setSpeed(double speed)
 	{
+		System.out.println("Setting intake speed to: "+speed);
 		if (speed < 0)// if the speed is negative
 		{
 			// left goes backward, right goes forward

@@ -100,7 +100,7 @@ public class PIDDistance extends PIDCommand {
 		// TODO NOT untested !
 		double distFromSetpoint = Math.abs(desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0);
 		boolean inRange = distFromSetpoint < Config.PID_STRAIGHT_TOLERANCE;
-		if (inRange) {
+		if (inRange && Math.abs(Robot.ahrs.getYaw())<1) {
 			if (!timerStarted)
 			{
 				timer.reset();

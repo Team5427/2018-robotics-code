@@ -52,7 +52,6 @@ public class PIDTurn extends PIDCommand {
 		scgRight.set(0);
 		scgLeft.set(0);
 		super.end();
-		System.out.println("PIDTurn ENDED!");
 	}
 
 	// Code to run when this command is interrupted

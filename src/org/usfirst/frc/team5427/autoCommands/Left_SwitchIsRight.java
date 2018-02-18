@@ -15,23 +15,23 @@ public class Left_SwitchIsRight extends AutoPath {
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
 
-	//Values for 18 inches.
-	public static final double p1 = 0.009;
+	//Values for 218 inches.
+	public static final double p1 = 0.1;
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.02;
+	public static final double d1 = 0.3;
 	
-	//Values for 118 inches.
+	//Values for 228 inches.
 	public static final double p2 = 0.1;
 	public static final double i2 = 0.0;
-	public static final double d2 = 0.09;
+	public static final double d2 = 0.3;
 	
 	public Left_SwitchIsRight() {
 		// creates all of the PID Commands
 		fidget = new Fidget();
 //		fidget = null;
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 218, p1, i1, d1);
+		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 218, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 228, p2, i2, d2);
+		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 172, p2, i2, d2);
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
 		moveElevator = new MoveElevatorAuto(1); // 1 for switch
 	}

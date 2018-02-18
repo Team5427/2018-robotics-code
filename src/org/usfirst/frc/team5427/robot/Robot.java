@@ -297,15 +297,15 @@ public class Robot extends IterativeRobot  {
 //		pid = new PIDPath();
 //		pid.start();
 
-		autoPath = new Left_SwitchIsLeft();
+		autoPath = new Left_SwitchIsRight();
 		autoPath.start();
 
 //		autoPath = new CenterLeft();
 //		autoPath.start();
 
 		
-//		moveToDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 6, 
-//				0.04, 0.0, 0.0);
+//		moveToDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 218, 
+//				0.1, 0.0, 0.3);
 //		moveToDistance.start();
 		
 //		turnToAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
