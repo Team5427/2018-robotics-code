@@ -59,6 +59,10 @@ public class Config {
 	public static final double INTAKE_SPEED_FORWARD = .3;
 	public static final double INTAKE_SPEED_REVERSE = -.3;
 	
+	
+	/*--------Timeouts------*/
+	public static final double AUTO_INTAKE_TIMEOUT = 2;
+	
 	/*----------Pneumatic Control Module PORTS-----------*/
 	public static final int PCM_SOLENOID_FORWARD = 0;
 	public static final int PCM_SOLENOID_REVERSE = 1;
@@ -168,6 +172,7 @@ public class Config {
 	public static final int LEFT = 3;
 	public static final int SWITCH = 1;
 	public static final int SCALE = 2;
+	
 	
 	/**
 	 * returns the average stopping for different powers from 0 to full power, 
