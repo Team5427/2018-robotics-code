@@ -9,7 +9,7 @@ import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-public class LeftSwitchIsRight extends AutoPath {
+public class Left_SwitchIsRight extends AutoPath {
 	private PIDStraightMovement firstDistance, secondDistance;
 	private PIDTurn firstAngle, secondAngle;
 	private MoveElevatorAuto moveElevator;
@@ -25,13 +25,13 @@ public class LeftSwitchIsRight extends AutoPath {
 	public static final double i2 = 0.0;
 	public static final double d2 = 0.09;
 	
-	public LeftSwitchIsRight() {
+	public Left_SwitchIsRight() {
 		// creates all of the PID Commands
 		fidget = new Fidget();
 //		fidget = null;
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 218, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 228, p2, i2, d2);
+		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 180, p2, i2, d2);
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
 		moveElevator = new MoveElevatorAuto(1); // 1 for switch
 	}

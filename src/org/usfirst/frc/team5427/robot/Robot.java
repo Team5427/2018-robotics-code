@@ -16,30 +16,26 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.SpeedController;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-import org.usfirst.frc.team5427.autoCommands.AutoPath;
-import org.usfirst.frc.team5427.autoCommands.CenterLeft;
-import org.usfirst.frc.team5427.autoCommands.CenterRight;
-import org.usfirst.frc.team5427.autoCommands.Right_SwitchIsLeft;
-//import org.usfirst.frc.team5427.autoCommands.LeftScaleIsLeft;
-//import org.usfirst.frc.team5427.autoCommands.LeftScaleIsRight;
-//import org.usfirst.frc.team5427.autoCommands.LeftSwitchIsLeft;
-import org.usfirst.frc.team5427.autoCommands.LeftSwitchIsRight;
-import org.usfirst.frc.team5427.autoCommands.RightScaleIsLeft;
-import org.usfirst.frc.team5427.autoCommands.RightScaleIsRight;
-import org.usfirst.frc.team5427.autoCommands.RightSwitchIsLeft;
-import org.usfirst.frc.team5427.autoCommands.RightSwitchIsRight;
->>>>>>> 87bfa8b17ba129ae817ecaa4abddadde79334484
+import org.usfirst.frc.team5427.autoCommands.*;
+//import org.usfirst.frc.team5427.autoCommands.AutoPath;
+//import org.usfirst.frc.team5427.autoCommands.Center_SwitchIsLeft;
+//import org.usfirst.frc.team5427.autoCommands.Center_SwitchIsRight;
+//import org.usfirst.frc.team5427.autoCommands.Right_SwitchIsLeft;
+//import org.usfirst.frc.team5427.autoCommands.Left_ScaleIsLeft;
+//import org.usfirst.frc.team5427.autoCommands.Left_ScaleIsRight;
+//import org.usfirst.frc.team5427.autoCommands.Left_SwitchIsLeft;
+//import org.usfirst.frc.team5427.autoCommands.Left_SwitchIsRight;
+//import org.usfirst.frc.team5427.autoCommands.Right_ScaleIsLeft;
+//import org.usfirst.frc.team5427.autoCommands.Right_ScaleIsRight;
+//import org.usfirst.frc.team5427.autoCommands.Right_SwitchIsRight;
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
-import org.usfirst.frc.team5427.robot.commands.PIDPath;
 import org.usfirst.frc.team5427.robot.commands.PIDTurn;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
@@ -100,10 +96,6 @@ public class Robot extends IterativeRobot  {
 	public static Encoder encLeft;
 	public static Encoder encRight;
 	
-<<<<<<< HEAD
-
-
-=======
 	private String gameData;
 	private int color;
 	private int position;
@@ -111,7 +103,6 @@ public class Robot extends IterativeRobot  {
 	private char switchSide;
 	private char scaleSide;
 	
->>>>>>> 87bfa8b17ba129ae817ecaa4abddadde79334484
 	public AutoPath autoPath;
 	public PIDTurn turnToAngle;
 	public PIDStraightMovement moveToDistance;
@@ -305,14 +296,13 @@ public class Robot extends IterativeRobot  {
 		
 //		pid = new PIDPath();
 //		pid.start();
-		
 
-		autoPath = new Right_SwitchIsLeft();
+		autoPath = new Right_SwitchIsRight();
 		autoPath.start();
 
 //		autoPath = new CenterLeft();
 //		autoPath.start();
->>>>>>> 87bfa8b17ba129ae817ecaa4abddadde79334484
+
 		
 //		moveToDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 82, 
 //				0.06, 0.0, 0.05);

@@ -9,8 +9,8 @@ import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-public class RightSwitchIsRight extends AutoPath {
-	private PIDStraightMovement firstDistance, secondDistance;
+public class Right_ScaleIsRight extends AutoPath {
+	private PIDStraightMovement firstDistance;
 	private PIDTurn firstAngle;
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
@@ -20,18 +20,13 @@ public class RightSwitchIsRight extends AutoPath {
 	public static final double i1 = 0.0;
 	public static final double d1 = 0.02;
 	
-	//Values for 118 inches.
-	public static final double p2 = 0.1;
-	public static final double i2 = 0.0;
-	public static final double d2 = 0.09;
 	
-	public RightSwitchIsRight() {
+	public Right_ScaleIsRight() {
 		// creates all of the PID Commands
 		fidget = new Fidget();
 //		fidget = null;
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 144, p1, i1, d1);
+		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 374, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER, 6, p2, i2, d2);
 		moveElevator = new MoveElevatorAuto(1); // 1 for switch
 	}
 
@@ -45,26 +40,15 @@ public class RightSwitchIsRight extends AutoPath {
 	// be started or not
 	public void execute() {
 		
-		// If firstDistance is null and firstAngle isFinished && not null
-		// and the secondDistance Command is not running, run the secondDistance Command
-		if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !secondDistance.isRunning()) {
-			System.out.println("Part 2 Done.");
-			firstAngle.cancel();
-			firstAngle = null;
-			Robot.ahrs.reset();
-			secondDistance.start();
-		}
-		
 		// If firstDistance is NOT null and firstDistance isFinished
 		// and the firstAngle Command is not running, run the firstAngle Command
-		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+		if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
 			System.out.println("Part 1 Done.");
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
 			firstAngle.start();
 		}
-		
 		else if(null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
 			System.out.println("Fidget Done.");
 			fidget.cancel();
@@ -78,7 +62,7 @@ public class RightSwitchIsRight extends AutoPath {
 	@Override
 	public boolean isFinished() {
 		// returns if the last distance has finished and the robot has shot the box
-		if (secondDistance != null && secondDistance.isFinished() && !Robot.intakeSubsystem.setSpeedTime(.3, 2))
+		if (firstAngle != null && firstAngle.isFinished() && !Robot.intakeSubsystem.setSpeedTime(.3, 2))
 			return true;
 		return false;
 		

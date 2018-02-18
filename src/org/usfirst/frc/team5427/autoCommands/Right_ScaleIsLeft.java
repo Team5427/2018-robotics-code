@@ -9,7 +9,7 @@ import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-public class RightScaleIsLeft extends AutoPath {
+public class Right_ScaleIsLeft extends AutoPath {
 	private PIDStraightMovement firstDistance, secondDistance, thirdDistance;
 	private PIDTurn firstAngle, secondAngle, thirdAngle;
 	private MoveElevatorAuto moveElevator;
@@ -30,7 +30,7 @@ public class RightScaleIsLeft extends AutoPath {
 	public static final double i3 = 0.0;
 	public static final double d3 = 0.;
 	
-	public RightScaleIsLeft() {
+	public Right_ScaleIsLeft() {
 		// creates all of the PID Commands
 		fidget = new Fidget();
 //		fidget = null;

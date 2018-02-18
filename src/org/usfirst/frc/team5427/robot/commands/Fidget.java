@@ -21,7 +21,7 @@ public class Fidget extends Command {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.driveTrain);
 		this.forwardDone = false;
-		setTimeout(0.2);
+		setTimeout(0.1);
 	}
 
 	// Called just before this Command runs the first time

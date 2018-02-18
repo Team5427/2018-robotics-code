@@ -72,7 +72,6 @@ public class PIDTurn extends PIDCommand {
 				timer.start();
 			}
 			if (timer.get() > .75) {
-				System.out.println("PIDTurn finished returns true");
 				return true;
 			}
 		} else {
@@ -97,6 +96,7 @@ public class PIDTurn extends PIDCommand {
 		SmartDashboard.putNumber("Yaw", getCurrentAngle());
 		SmartDashboard.putNumber("Raw Yaw", getCurrentAngle());
 		SmartDashboard.putNumber("PID Output", output);
+		System.out.println("Turn Command Running.");
 		scgRight.pidWrite(output);
 		scgLeft.set(output);
 	}

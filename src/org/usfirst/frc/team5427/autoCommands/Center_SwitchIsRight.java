@@ -9,7 +9,7 @@ import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-public class CenterRight extends AutoPath {
+public class Center_SwitchIsRight extends AutoPath {
 	private PIDStraightMovement firstDistance;
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
@@ -19,7 +19,7 @@ public class CenterRight extends AutoPath {
 	public static final double i1 = 0.0;
 	public static final double d1 = 0.1;
 	
-	public CenterRight() {
+	public Center_SwitchIsRight() {
 		// creates all of the PID Commands
 		fidget = new Fidget();
 //		fidget = null;
