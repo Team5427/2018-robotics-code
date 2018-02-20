@@ -9,62 +9,51 @@ package org.usfirst.frc.team5427.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.util.Config;
 //import org.usfirst.frc.team5427.util.Log;
+import org.usfirst.frc.team5427.util.NextLine;
 
 /**
- * @author Abinav
+ * @author Blake This command
  */
-public class MoveClimberElevator extends Command {
-public static int direction;
-	
-	public MoveClimberElevator(int direction)
-	{
-//		requires(Robot.climberElevator);
-		this.direction = direction;
-		start();
+
+@NextLine
+public class MoveElevatorDown extends Command {
+
+	public MoveElevatorDown() {
 	}
 
 	// Called just before this Command runs the first time
 	@Override
-	protected void initialize()
-	{
-		if(direction == 1)
-		{
-//			Log.init("move forward");
-			Robot.motorPWM_Elevator.set(.3);
-		}
-		else if(direction == 2)
-		{
-			Robot.motorPWM_Elevator.set(-.3);
-		}
+	protected void initialize() {
+
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
-	protected void execute()
-	{
-		
+	protected void execute() {
+		Robot.motorPWM_Elevator.set(-Config.ELEVATOR_MOTOR_SPEED_DOWN);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
-	protected boolean isFinished()
-	{
-		return false;
+	protected boolean isFinished() {
+		System.out.print("checking fin");
+
+			return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_ELEVATOR_DOWN);
+		
 	}
 
 	// Called once after isFinished returns true
 	@Override
-	protected void end()
-	{
+	protected void end() {
 		Robot.motorPWM_Elevator.set(0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
-	protected void interrupted()
-	{
+	protected void interrupted() {
 		end();
 	}
 }

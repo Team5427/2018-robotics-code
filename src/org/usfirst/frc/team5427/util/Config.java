@@ -44,12 +44,17 @@ public class Config {
 												// with this false
 	
 	/*----------PWM PORTS-----------*/
-	public static final int FRONT_RIGHT_MOTOR = 12;//6; //TODO 3
-	public static final int REAR_RIGHT_MOTOR = 13;//8  //TODO 2
+	public static final int FRONT_RIGHT_MOTOR =0;//6; //TODO 3
+	public static final int REAR_RIGHT_MOTOR = 1;//8  //TODO 2
 	public static final int FRONT_LEFT_MOTOR = 2;//7;  //TODO 1
 	public static final int REAR_LEFT_MOTOR = 3;//3  //TODO 0
-	public static final int INTAKE_MOTOR_LEFT = 0;//4;
-	public static final int INTAKE_MOTOR_RIGHT = 1	;//5;
+	public static final int INTAKE_MOTOR_LEFT = 4;//4;
+	public static final int INTAKE_MOTOR_RIGHT = 5;//5;
+	public static final int ELEVATOR_MOTOR= 7;
+//itake 5
+	//rope 7
+	//shoooter 4
+	
 	
 	/*----------Pneumatic Control Module PORTS-----------*/
 	public static final int PCM_SOLENOID_FORWARD = 0;
@@ -58,6 +63,8 @@ public class Config {
 	/*-------------Motor Speeds-------------------*/
 	public static final double INTAKE_MOTOR_SPEED_IN = 0.3;
 	public static final double INTAKE_MOTOR_SPEED_OUT = -0.3;
+	public static final double ELEVATOR_MOTOR_SPEED_UP=0.3;
+	public static final double ELEVATOR_MOTOR_SPEED_DOWN=-0.3;
 	
 	
 	/* ----------Joystick Buttons---------- */
@@ -65,8 +72,8 @@ public class Config {
 	public static final int BUTTON_MOTOR_INTAKE_OUT = 5;
 //	
 //	public static final int BUTTON_SOLENOD_INTAKE = 2;
-	public static final int BUTTON_ELEVATOR_FORWARD = 3;
-	public static final int BUTTON_ELEVATOR_REVERSE= 5;
+	public static final int BUTTON_ELEVATOR_UP = 6;
+	public static final int BUTTON_ELEVATOR_DOWN= 4;
 	public static final int BUTTON_CLIMBER_FORWARD = 7;
 	public static final int BUTTON_CLIMBER_REVERSE= 8;
 

@@ -130,7 +130,7 @@ public class Robot extends IterativeRobot{
 		//encoderStraight = new Encoder(0, 0);
 
 //		Log.init("Intializing Elevator Motor: ");
-		//motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
+		motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
 		
 		//encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
 		//encLeft = new Encoder(2,3,false,Encoder.EncodingType.k4X);
