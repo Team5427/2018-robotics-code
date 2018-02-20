@@ -141,9 +141,9 @@ public class PIDStraightMovement extends PIDCommand {
 		if (this.power < this.maximumSpeed && this.pidDistance == null) {
 			// linear increment
 			// this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
-			this.power *= (Config.PID_STRAIGHT_EXPONENTIAL_INCREMENT*.3)/this.maximumSpeed;
+			this.power *= Config.PID_STRAIGHT_EXPONENTIAL_INCREMENT;
 			scgConstant.set(power);
-			if (this.power < this.maximumSpeed)//Config.POST_INCR_SWITCH_TO_PID)
+			if (this.power < Config.POST_INCR_SWITCH_TO_PID)
 				scgPIDControlled.set(power);
 			else
 				scgPIDControlled.pidWrite(output);

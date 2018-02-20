@@ -17,14 +17,14 @@ public class Right_SwitchIsRight extends AutoPath {
 	private Fidget fidget;
 
 	//Values for 154 inches.
-	public static final double p1 = 0.03; //0.0188
+	public static final double p1 = 0.021; //0.0188
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.02;
+	public static final double d1 = 0.016;
 	
 	//Values for 6 inches.
-	public static final double p2 = 0.04;
+	public static final double p2 = 0.03;
 	public static final double i2 = 0.0;
-	public static final double d2 = 0.0;
+	public static final double d2 = 0.01;
 	
 	public Right_SwitchIsRight() {
 		// creates all of the PID Commands

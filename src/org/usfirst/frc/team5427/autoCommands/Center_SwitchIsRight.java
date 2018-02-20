@@ -17,7 +17,7 @@ public class Center_SwitchIsRight extends AutoPath {
 	//Values for 88 inches.
 	public static final double p1 = 0.1;
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.1;
+	public static final double d1 = 0.08;
 	
 	public Center_SwitchIsRight() {
 		// creates all of the PID Commands

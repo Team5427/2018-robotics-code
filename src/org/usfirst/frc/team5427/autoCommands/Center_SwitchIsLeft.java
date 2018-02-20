@@ -16,23 +16,23 @@ public class Center_SwitchIsLeft extends AutoPath {
 	private Fidget fidget;
 
 	//Values for 18 inches.
-	public static final double p1 = 0.05;
+	public static final double p1 = 0.009;
 	public static final double i1 = 0.0;
 	public static final double d1 = 0.0;
 	
 	//Values for 118 inches.
-	public static final double p2 = 0.1;
+	public static final double p2 = 0.042;
 	public static final double i2 = 0.0;
-	public static final double d2 = 0.09;
+	public static final double d2 = 0.08;
 	
 //	//Values for 82 inches.
 //	public static final double p3 = 0.1;
 //	public static final double i3 = 0.0;
 //	public static final double d3 = 0.1;
 	//vals for 70 in
-	public static final double p3 = 0.1;
+	public static final double p3 = 0.025;
 	public static final double i3 = 0.0;
-	public static final double d3 = 0.1;
+	public static final double d3 = 0.0;
 	
 	public Center_SwitchIsLeft() {
 		// creates all of the PID Commands

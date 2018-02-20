@@ -16,9 +16,9 @@ public class Right_ScaleIsRight extends AutoPath {
 	private Fidget fidget;
 
 	//Values for 18 inches.
-	public static final double p1 = 0.009;
+	public static final double p1 = 0.013;
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.02;
+	public static final double d1 = 0.019;
 	
 	
 	public Right_ScaleIsRight() {

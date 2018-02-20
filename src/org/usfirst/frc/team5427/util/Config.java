@@ -117,13 +117,11 @@ public class Config {
 	public static final double PID_STRAIGHT_D = 0.00;
 	public static final double PID_STRAIGHT_POWER_SHORT = 0.35;
 	public static final double PID_STRAIGHT_POWER_LONG = 0.5;
-	
-	
+
 	/***Increment****/
 	public static final double PID_STRAIGHT_LINEAR_INCREMENT=.01;
 	public static final double POST_INCR_SWITCH_TO_PID = .1;
 	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=2;
-	
 
 	public static final double PID_STRAIGHT_COAST_POWER = 0.01;
 	public static final double PID_STRAIGHT_COAST_P = 0.275;
@@ -143,7 +141,7 @@ public class Config {
 //	public static final double PID_STRAIGHT_INCREMENT_DECREMENT = .001;
 	
 	public static final double PID_TURN_POWER = 0.1;
-	public static final double PID_TURN_TOLERANCE = 2;
+	public static final double PID_TURN_TOLERANCE = 3;
 	public static final double PID_TURN_SETPOINT =90;	
 	
 //	//values for 90 deg; p = .026, still need to be tuned

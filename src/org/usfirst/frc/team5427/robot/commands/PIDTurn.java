@@ -70,7 +70,7 @@ public class PIDTurn extends PIDCommand {
 			if (timer.get() == 0) {
 				timer.start();
 			}
-			if (timer.get() > .75) {
+			if (timer.get() > .5) {
 				return true;
 			}
 		} else {
