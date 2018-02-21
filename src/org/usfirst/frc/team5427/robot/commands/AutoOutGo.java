@@ -29,7 +29,6 @@ public class AutoOutGo extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		System.out.println("Shooting Cube");
 		Robot.intakeSubsystem.setSpeed(.3);
 	}
 

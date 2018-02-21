@@ -56,7 +56,6 @@ public class Intake extends Subsystem
 
 	public void setSpeed(double speed)
 	{
-		System.out.println("Setting intake speed to: "+speed);
 		if (speed < 0)// if the speed is negative
 		{
 			// left goes backward, right goes forward

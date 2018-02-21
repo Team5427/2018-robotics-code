@@ -128,6 +128,7 @@ public class Robot extends IterativeRobot  {
 		// intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD,
 		// Config.PCM_SOLENOID_REVERSE);
 		
+		
 //		Log.init("Initializing driveTrain: ");
 		motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
 		motor_pwm_rearLeft = new SteelTalon(Config.REAR_LEFT_MOTOR);
@@ -138,6 +139,7 @@ public class Robot extends IterativeRobot  {
 		speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
 		
 		drive = new DifferentialDrive(speedcontrollergroup_left, speedcontrollergroup_right);
+		drive.setSafetyEnabled(false);
 		driveTrain = new DriveTrain(speedcontrollergroup_left, speedcontrollergroup_right, drive);
 	
 		
@@ -303,7 +305,6 @@ public class Robot extends IterativeRobot  {
 //		autoPath = new CenterLeft();
 //		autoPath.start();
 
-		
 //		moveToDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 218, 
 //				0.1, 0.0, 0.3);
 //		moveToDistance.start();

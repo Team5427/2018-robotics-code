@@ -108,8 +108,6 @@ public class PIDDistance extends PIDCommand {
 				timerStarted=true;
 			}
 			else if (timer.get() > 0.5&&timerStarted) {
-				System.out.println("PIDDistance Returning true");
-				System.out.println("Left: " + Robot.encLeft.getDistance() + "Right: " + Robot.encRight.getDistance()); //TODO if this only prints once, is finished us only called once
 				return true;
 			}
 		} else {
@@ -128,7 +126,6 @@ public class PIDDistance extends PIDCommand {
 	public void end() {
 		super.end();
 		free();
-		System.out.println("PIDDIST ENDS");
 	}
 	
 	/**
@@ -139,7 +136,6 @@ public class PIDDistance extends PIDCommand {
 	 */
 	@Override
 	public void free() {
-		System.out.println("Free in PIDDistance");
 		super.free();
 		super.getPIDController().disable();
 		super.getPIDController().reset();

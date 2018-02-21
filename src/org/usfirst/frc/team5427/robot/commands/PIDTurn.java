@@ -66,7 +66,7 @@ public class PIDTurn extends PIDCommand {
 		double tolerance = Math.abs(Math.abs(getCurrentAngle()) - Math.abs(super.getSetpoint()));
 		boolean inRange = tolerance < Config.PID_TURN_TOLERANCE;
 		if (inRange) {
-			System.out.println("In Range.");
+//			System.out.println("In Range.");
 			if (timer.get() == 0) {
 				timer.start();
 			}
@@ -95,7 +95,7 @@ public class PIDTurn extends PIDCommand {
 		SmartDashboard.putNumber("Yaw", getCurrentAngle());
 		SmartDashboard.putNumber("Raw Yaw", getCurrentAngle());
 		SmartDashboard.putNumber("PID Output", output);
-		System.out.println("Turn Command Running.");
+//		System.out.println("Turn Command Running.");
 		scgRight.pidWrite(output);
 		scgLeft.set(output);
 	}

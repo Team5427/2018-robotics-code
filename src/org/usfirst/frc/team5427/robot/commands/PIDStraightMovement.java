@@ -194,7 +194,7 @@ public class PIDStraightMovement extends PIDCommand {
 	 */
 	@Override
 	public void end() {
-		System.out.println("Ending PID Straight");
+//		System.out.println("Ending PID Straight");
 //		pidDistance.end();//TODO put this back in?
 
 		this.scgPIDControlled.set(0);
@@ -202,7 +202,7 @@ public class PIDStraightMovement extends PIDCommand {
 		this.power = 0;
 		free();
 		super.end();
-		System.out.println("ENDED PID STRAIGHT");
+//		System.out.println("ENDED PID STRAIGHT");
 	}
 
 	/**
@@ -213,7 +213,7 @@ public class PIDStraightMovement extends PIDCommand {
 	 */
 	@Override
 	public void free() {
-		System.out.println("Free in PIDStraight");
+//		System.out.println("Free in PIDStraight");
 		super.getPIDController().disable();
 		super.getPIDController().reset();
 		this.scgConstant.set(0);
