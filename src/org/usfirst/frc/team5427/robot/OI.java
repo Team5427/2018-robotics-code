@@ -73,8 +73,8 @@ public class OI {
 
 	 Button elevatorUp;
 	 Button elevatorDown;
-	 Button climberForward;
-	 Button climberReverse;
+	 Button climberUp;
+	 Button climberDown;
 
 	    public OI() {
 	        joy1 = new Joystick(Config.JOYSTICK_PORT);
@@ -85,8 +85,8 @@ public class OI {
 //	        solenoidIntake = new JoystickButton(joy1,Config.BUTTON_SOLENOD_INTAKE);
 	        elevatorUp = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_UP);
 	        elevatorDown = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_DOWN);
-//	        elevatorForward = new JoystickButton(joy1,Config.BUTTON_CLIMBER_FORWARD);
-//	        elevatorReverse = new JoystickButton(joy1,Config.BUTTON_CLIMBER_REVERSE);
+	        climberUp = new JoystickButton(joy1,Config.BUTTON_CLIMBER_FORWARD);
+	        climberDown = new JoystickButton(joy1,Config.BUTTON_CLIMBER_REVERSE);
 
 	        
 	        //set what they do
@@ -97,8 +97,8 @@ public class OI {
 	        
 	        elevatorUp.whenPressed(new MoveElevatorUp());
 	        elevatorDown.whenPressed(new MoveElevatorDown());
-//	        climberForward.whileHeld(new MoveClimberElevator(1));
-//	        climberReverse.whileHeld(new MoveClimberElevator(2));
+	        climberUp.whileHeld(new MoveClimberElevator(1));
+	        climberDown.whileHeld(new MoveClimberElevator(2));
 	    }
 
 	    public Joystick getJoy() {
