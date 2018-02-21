@@ -16,10 +16,11 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
+//import org.usfirst.frc.team5427.robot.OurClasses.PWMVictorSPX;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.subsystems.ClimberElevator;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
@@ -106,12 +107,12 @@ public class Robot extends IterativeRobot{
 		// Config.PCM_SOLENOID_REVERSE);
 		
 //		Log.init("Initializing driveTrain: ");
-		motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
-		motor_pwm_rearLeft = new SteelTalon(Config.REAR_LEFT_MOTOR);
+		motor_pwm_frontLeft = new PWMVictorSPX(Config.FRONT_LEFT_MOTOR);
+		motor_pwm_rearLeft = new PWMVictorSPX(Config.REAR_LEFT_MOTOR);
 		speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
 		
-		motor_pwm_frontRight = new SteelTalon(Config.FRONT_RIGHT_MOTOR);
-		motor_pwm_rearRight = new SteelTalon(Config.REAR_RIGHT_MOTOR);
+		motor_pwm_frontRight = new PWMVictorSPX(Config.FRONT_RIGHT_MOTOR);
+		motor_pwm_rearRight = new PWMVictorSPX(Config.REAR_RIGHT_MOTOR);
 		speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
 		
 		drive = new DifferentialDrive(speedcontrollergroup_left, speedcontrollergroup_right);
@@ -119,8 +120,8 @@ public class Robot extends IterativeRobot{
 		
 
 //		Log.init("Initializing intake motors: ");
-		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
-		motorPWM_Intake_Right = new SteelTalon(Config.INTAKE_MOTOR_RIGHT);
+		motorPWM_Intake_Left = new PWMVictorSPX(Config.INTAKE_MOTOR_LEFT);
+		motorPWM_Intake_Right = new PWMVictorSPX(Config.INTAKE_MOTOR_RIGHT);
 
 //		Log.init("Initializing Subsystems: ");
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
@@ -130,7 +131,7 @@ public class Robot extends IterativeRobot{
 		//encoderStraight = new Encoder(0, 0);
 
 //		Log.init("Intializing Elevator Motor: ");
-		motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
+		motorPWM_Elevator = new PWMVictorSPX(Config.ELEVATOR_MOTOR);
 		
 		//encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
 		//encLeft = new Encoder(2,3,false,Encoder.EncodingType.k4X);
