@@ -173,6 +173,7 @@ public class Config {
 	public static final int SCALE = 2;
 	
 	
+	
 	/**
 	 * returns the average stopping for different powers from 0 to full power, 
 	 * more accuracy at the higher powers

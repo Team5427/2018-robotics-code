@@ -83,6 +83,7 @@ public class Robot extends IterativeRobot  {
 
 	public static SpeedController motorPWM_Elevator;
 	public static Intake intakeSubsystem;
+	
 //	public PIDDriveTrainSide pidSide;
 //	public PIDTurnCommand pidTurn;
 
@@ -98,8 +99,8 @@ public class Robot extends IterativeRobot  {
 	
 	private String gameData;
 	private int color;
-	private int position;
-	private int cube;
+	private int field_position;
+	private int switch_or_scale;
 	private char switchSide;
 	private char scaleSide;
 	
@@ -109,6 +110,7 @@ public class Robot extends IterativeRobot  {
 	
 	public PIDStraightMovement pi;
 	public static AHRS ahrs;
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -225,14 +227,15 @@ public class Robot extends IterativeRobot  {
 //		char firstSwitch = sideColorArray[0];
 //		char scale = sideColorArray[1];
 //		char lastSwitch = sideColorArray[2];
+		
 //		Log.init(""+"First: "+ firstSwitch +"\nScale: "+ scale +"\nLast: "+ lastSwitch);
-		//the characters have L for left or R for right
+//		the characters have L for left or R for right
 
-		// schedule the autonomous command (example) TODO delete these lines of code after
-		//we implement our own autonomous commands
-//		if (m_autonomousCommand != null) {
-//			m_autonomousCommand.start();
-//		}
+//		 schedule the autonomous command (example) TODO delete these lines of code after
+//		we implement our own autonomous commands
+		if (m_autonomousCommand != null) {
+			m_autonomousCommand.start();
+		}
 		
 		encRight.reset();
 		encLeft.reset();
@@ -242,56 +245,58 @@ public class Robot extends IterativeRobot  {
 //		pi=new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 18, .025, 0, 0);
 
 		
-		//TODO Change
-//		gameData = DriverStation.getInstance().getGameSpecificMessage();
-//		
-//		switchSide = gameData.charAt(0);
-//		scaleSide = gameData.charAt(1);
-//		
-//		position = oi.autoPositionChooser.getSelected();
-//		cube = oi.autoCubeChooser.getSelected();
-//		if(position == 1)
-//		{
-//			if(cube == 1)
-//			{
-//				if(switchSide == 'R')
-//					autoPath = new RightSwitchIsRight();
-//				else if(switchSide == 'L')
-//					autoPath = new RightSwitchIsLeft();
-//			}
-//			else if(cube == 2)
-//			{
-//				if(scaleSide == 'R')
-//					autoPath = new RightScaleIsRight();
-//				else if(scaleSide == 'L')
-//					autoPath = new RightScaleIsLeft();
-//			}
-//		}
-//		else if(position == 2)
-//		{
-//			if(switchSide == 'R')
-//				autoPath = new CenterRight();
-//			else if(switchSide == 'L')
-//				autoPath = new CenterLeft();
-//		}
-//		else if(position == 3)
-//		{
-//			if(cube == 1)
-//			{
-//				if(switchSide == 'R')
-//					autoPath = new LeftSwitchIsRight();
-//				else if(switchSide == 'L')
-//					autoPath = new LeftSwitchIsLeft();
-//			}
-//			else if(cube == 2)
-//			{
-//				if(scaleSide == 'R')
-//					autoPath = new LeftScaleIsRight();
-//				else if(scaleSide == 'L')
-//					autoPath = new LeftScaleIsLeft();
-//			}
-//		}
-//		autoPath.start();
+//		TODO Change
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		
+		switchSide = gameData.charAt(0);
+		scaleSide = gameData.charAt(1);
+		
+		field_position = oi.autoPositionChooser.getSelected();	
+		switch_or_scale = oi.autoCubeChooser.getSelected();
+		
+		
+		if(field_position == 1)
+		{
+			if(switch_or_scale == 1)
+			{
+				if(switchSide == 'R')
+					autoPath = new Right_SwitchIsRight();
+				else if(switchSide == 'L')
+					autoPath = new Right_SwitchIsLeft();
+			}
+			else if(switch_or_scale == 2)
+			{
+				if(scaleSide == 'R')
+					autoPath = new Right_ScaleIsRight();
+				else if(scaleSide == 'L')
+					autoPath = new Right_ScaleIsLeft();
+			}
+		}
+		else if(field_position == 2)
+		{
+			if(switchSide == 'R')
+				autoPath = new Center_SwitchIsRight();
+			else if(switchSide == 'L')
+				autoPath = new Center_SwitchIsLeft();
+		}
+		else if(field_position == 3)
+		{
+			if(switch_or_scale == 1)
+			{
+				if(switchSide == 'R')
+					autoPath = new Left_SwitchIsRight();
+				else if(switchSide == 'L')
+					autoPath = new Left_SwitchIsLeft();
+			}
+			else if(switch_or_scale == 2)
+			{
+				if(scaleSide == 'R')
+					autoPath = new Left_ScaleIsRight();
+				else if(scaleSide == 'L')
+					autoPath = new Left_ScaleIsLeft();
+			}
+		}
+		autoPath.start();
 ////		pi=new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 60);
 		///break
 //		pi.start();
