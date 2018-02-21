@@ -73,6 +73,8 @@ public class OI {
 		elevatorForward.whileHeld(new MoveElevator(1));
 		elevatorReverse.whileHeld(new MoveElevator(2));
 		
+		
+		
 		autoColorChooser.addDefault(" ", Config.AUTO_NONE);
 		autoColorChooser.addObject("Red", Config.RED);
 		autoColorChooser.addObject("Blue", Config.BLUE);
@@ -81,6 +83,10 @@ public class OI {
 		autoPositionChooser.addObject("Left", Config.LEFT);
 		autoCubeChooser.addObject("Switch", Config.SWITCH);
 		autoCubeChooser.addObject("Scale", Config.SCALE);	
+		
+		SmartDashboard.putData("Field Position",autoPositionChooser);
+		SmartDashboard.putData("Switch or Scale",autoCubeChooser);
+		
 	}
 
 	public Joystick getJoy() {
