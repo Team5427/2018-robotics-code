@@ -15,20 +15,19 @@ public class Left_SwitchIsRight extends AutoPath {
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
 
-	//Values for 234 inches.
-	public static final double p1 = 0.1;
+	//Values for 154 inches.
+	public static final double p1 = 0.02;//0.0188
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.3;
+	public static final double d1 = 0.016;
 	
-	//Values for 172 inches.
-	public static final double p2 = 0.08;
+	//Values for 6 inches.
+	public static final double p2 = 0.03;
 	public static final double i2 = 0.0;
-	public static final double d2 = 0.2;
+	public static final double d2 = 0.01;
 	
-	public Left_SwitchIsRight() {  
+	public Left_SwitchIsRight() {
 		// creates all of the PID Commands
 		fidget = new Fidget();
-//		fidget = null;
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 234, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
 		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 172, p2, i2, d2);
@@ -56,7 +55,6 @@ public class Left_SwitchIsRight extends AutoPath {
 			Robot.ahrs.reset();
 			secondAngle.start();
 		}
-		
 		// If firstDistance is null and firstAngle isFinished && not null
 		// and the secondDistance Command is not running, run the secondDistance Command
 		else if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !secondDistance.isRunning()) {
@@ -90,7 +88,7 @@ public class Left_SwitchIsRight extends AutoPath {
 	@Override
 	public boolean isFinished() {
 		// returns if the last distance has finished and the robot has shot the box
-		if (secondAngle != null && secondAngle.isFinished())
+		if (secondDistance != null && secondAngle.isFinished())
 			return true;
 		return false;
 		

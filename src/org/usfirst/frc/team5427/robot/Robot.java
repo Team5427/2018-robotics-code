@@ -247,57 +247,57 @@ public class Robot extends IterativeRobot  {
 
 		
 //		TODO Change
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
+//		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		
-		switchSide = gameData.charAt(0);
-		scaleSide = gameData.charAt(1);
+//		switchSide = gameData.charAt(0);
+//		scaleSide = gameData.charAt(1);
 		
-		field_position = oi.autoPositionChooser.getSelected();	
-		switch_or_scale = oi.autoCubeChooser.getSelected();
-		
-		
-		if(field_position == 1)
-		{
-			if(switch_or_scale == 1)
-			{
-				if(switchSide == 'R')
-					autoPath = new Right_SwitchIsRight();
-				else if(switchSide == 'L')
-					autoPath = new Right_SwitchIsLeft();
-			}
-			else if(switch_or_scale == 2)
-			{
-				if(scaleSide == 'R')
-					autoPath = new Right_ScaleIsRight();
-				else if(scaleSide == 'L')
-					autoPath = new Right_ScaleIsLeft();
-			}
-		}
-		else if(field_position == 2)
-		{
-			if(switchSide == 'R')
-				autoPath = new Center_SwitchIsRight();
-			else if(switchSide == 'L')
-				autoPath = new Center_SwitchIsLeft();
-		}
-		else if(field_position == 3)
-		{
-			if(switch_or_scale == 1)
-			{
-				if(switchSide == 'R')
-					autoPath = new Left_SwitchIsRight();
-				else if(switchSide == 'L')
-					autoPath = new Left_SwitchIsLeft();
-			}
-			else if(switch_or_scale == 2)
-			{
-				if(scaleSide == 'R')
-					autoPath = new Left_ScaleIsRight();
-				else if(scaleSide == 'L')
-					autoPath = new Left_ScaleIsLeft();
-			}
-		}
-		autoPath.start();
+//		field_position = oi.autoPositionChooser.getSelected();	
+//		switch_or_scale = oi.autoCubeChooser.getSelected();
+//		
+//		
+//		if(field_position == 1)
+//		{
+//			if(switch_or_scale == 1)
+//			{
+//				if(switchSide == 'R')
+//					autoPath = new Right_SwitchIsRight();
+//				else if(switchSide == 'L')
+//					autoPath = new Right_SwitchIsLeft();
+//			}
+//			else if(switch_or_scale == 2)
+//			{
+//				if(scaleSide == 'R')
+//					autoPath = new Right_ScaleIsRight();
+//				else if(scaleSide == 'L')
+//					autoPath = new Right_ScaleIsLeft();
+//			}
+//		}
+//		else if(field_position == 2)
+//		{
+//			if(switchSide == 'R')
+//				autoPath = new Center_SwitchIsRight();
+//			else if(switchSide == 'L')
+//				autoPath = new Center_SwitchIsLeft();
+//		}
+//		else if(field_position == 3)
+//		{
+//			if(switch_or_scale == 1)
+//			{
+//				if(switchSide == 'R')
+//					autoPath = new Left_SwitchIsRight();
+//				else if(switchSide == 'L')
+//					autoPath = new Left_SwitchIsLeft();
+//			}
+//			else if(switch_or_scale == 2)
+//			{
+//				if(scaleSide == 'R')
+//					autoPath = new Left_ScaleIsRight();
+//				else if(scaleSide == 'L')
+//					autoPath = new Left_ScaleIsLeft();
+//			}
+//		}
+//		autoPath.start();
 ////		pi=new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 60);
 		///break
 //		pi.start();
