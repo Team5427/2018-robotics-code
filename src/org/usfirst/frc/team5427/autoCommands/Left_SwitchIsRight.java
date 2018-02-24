@@ -15,12 +15,12 @@ public class Left_SwitchIsRight extends AutoPath {
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
 
-	//Values for 154 inches.
+	//Values for 243 inches.
 	public static final double p1 = 0.0115;
 	public static final double i1 = 0.0;
 	public static final double d1 = 0.018;
 	
-	//Values for 6 inches.
+	//Values for 172 inches.
 	public static final double p2 = 0.022;
 	public static final double i2 = 0.0;
 	public static final double d2 = 0.012;

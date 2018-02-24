@@ -42,6 +42,8 @@ public class Center_SwitchIsRight extends AutoPath {
 			fidget.cancel();
 			fidget = null;
 			Robot.ahrs.reset();
+			Robot.encLeft.reset();
+			Robot.encRight.reset();
 			firstDistance.start();
 			moveElevator.start();
 		}
