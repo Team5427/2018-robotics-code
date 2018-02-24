@@ -9,6 +9,7 @@ import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
+// 30.7 in. between the middle of the 6 boxes lined up on the switch. 17.7 in. apart.
 public class Right_SwitchIsLeft extends AutoPath {
 	private PIDStraightMovement firstDistance, secondDistance;
 	private PIDTurn firstAngle, secondAngle;
@@ -29,7 +30,7 @@ public class Right_SwitchIsLeft extends AutoPath {
 		// creates all of the PID Commands
 		fidget = new Fidget();
 //		fidget = null;
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 221, p1, i1, d1);
+		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 215, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
 		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 172, p2, i2, d2);
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);

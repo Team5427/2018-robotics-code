@@ -21,18 +21,14 @@ public class Center_SwitchIsLeft extends AutoPath {
 	public static final double d1 = 0.0;
 	
 	//Values for 118 inches.
-	public static final double p2 = 0.042;
+	public static final double p2 = 0.031;
 	public static final double i2 = 0.0;
 	public static final double d2 = 0.08;
 	
-//	//Values for 82 inches.
-//	public static final double p3 = 0.1;
-//	public static final double i3 = 0.0;
-//	public static final double d3 = 0.1;
 	//vals for 70 in
 	public static final double p3 = 0.025;
 	public static final double i3 = 0.0;
-	public static final double d3 = 0.0;
+	public static final double d3 = 0.06;
 	
 	public Center_SwitchIsLeft() {
 		// creates all of the PID Commands
@@ -106,7 +102,7 @@ public class Center_SwitchIsLeft extends AutoPath {
 			firstAngle.start();
 		}
 		
-		if(null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
+		else if(null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
 			System.out.println("Fidget Done.");
 			fidget.cancel();
 			fidget = null;
