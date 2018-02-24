@@ -305,7 +305,7 @@ public class Robot extends IterativeRobot  {
 //		pid = new PIDPath();
 //		pid.start();
 
-		autoPath = new Center_SwitchIsLeft();
+		autoPath = new Left_ScaleIsRight();
 		autoPath.start();
 
 //		autoPath = new CenterLeft();
