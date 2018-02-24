@@ -116,7 +116,7 @@ public class Left_ScaleIsRight extends AutoPath {
 	@Override
 	public boolean isFinished() {
 		// returns if the last distance has finished and the robot has shot the box
-		if (thirdAngle != null && thirdAngle.isFinished())
+		if (thirdDistance == null && thirdAngle.isFinished())
 			return true;
 		return false;
 		

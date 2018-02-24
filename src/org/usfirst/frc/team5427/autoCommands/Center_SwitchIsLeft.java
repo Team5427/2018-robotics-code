@@ -111,7 +111,7 @@ public class Center_SwitchIsLeft extends AutoPath {
 	@Override
 	public boolean isFinished() {
 		// returns if the last distance has finished and the robot has shot the box
-		if (thirdDistance != null && thirdDistance.isFinished())
+		if (secondAngle == null && thirdDistance.isFinished())
 			return true;
 		return false;
 		
