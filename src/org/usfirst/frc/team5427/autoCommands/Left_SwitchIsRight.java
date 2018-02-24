@@ -16,19 +16,19 @@ public class Left_SwitchIsRight extends AutoPath {
 	private Fidget fidget;
 
 	//Values for 154 inches.
-	public static final double p1 = 0.02;//0.0188
+	public static final double p1 = 0.0115;
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.016;
+	public static final double d1 = 0.018;
 	
 	//Values for 6 inches.
-	public static final double p2 = 0.03;
+	public static final double p2 = 0.022;
 	public static final double i2 = 0.0;
-	public static final double d2 = 0.01;
+	public static final double d2 = 0.012;
 	
 	public Left_SwitchIsRight() {
 		// creates all of the PID Commands
 		fidget = new Fidget();
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 234, p1, i1, d1);
+		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 243, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
 		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 172, p2, i2, d2);
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
@@ -53,6 +53,8 @@ public class Left_SwitchIsRight extends AutoPath {
 			secondDistance.cancel();
 			secondDistance = null;
 			Robot.ahrs.reset();
+			Robot.encLeft.reset();
+			Robot.encRight.reset();
 			secondAngle.start();
 		}
 		// If firstDistance is null and firstAngle isFinished && not null
@@ -62,6 +64,8 @@ public class Left_SwitchIsRight extends AutoPath {
 			firstAngle.cancel();
 			firstAngle = null;
 			Robot.ahrs.reset();
+			Robot.encLeft.reset();
+			Robot.encRight.reset();
 			secondDistance.start();
 		}
 		
@@ -72,6 +76,8 @@ public class Left_SwitchIsRight extends AutoPath {
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
+			Robot.encLeft.reset();
+			Robot.encRight.reset();
 			firstAngle.start();
 		}
 		
@@ -80,6 +86,8 @@ public class Left_SwitchIsRight extends AutoPath {
 			fidget.cancel();
 			fidget = null;
 			Robot.ahrs.reset();
+			Robot.encLeft.reset();
+			Robot.encRight.reset();
 			firstDistance.start();
 			moveElevator.start();
 		}

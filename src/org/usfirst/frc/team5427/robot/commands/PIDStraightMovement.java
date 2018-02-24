@@ -87,8 +87,7 @@ public class PIDStraightMovement extends PIDCommand {
 		this.p = p;
 		this.i = i;
 		this.d = d;
-		Robot.encLeft.reset();
-		Robot.encRight.reset();
+		this.power = 0.1;
 		super.setSetpoint(0);
 		scgConstant.set(0);
 		scgPIDControlled.set(0);
@@ -155,8 +154,8 @@ public class PIDStraightMovement extends PIDCommand {
 			scgPIDControlled.pidWrite(output);
 		}
 
-		if(pidDistance!=null&&pidDistance.getDistance()>this.desiredDistance)
-			super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already set
+//		if(pidDistance!=null&&pidDistance.getDistance()>this.desiredDistance)
+//			super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already set
 	}
 
 	/**
@@ -167,7 +166,7 @@ public class PIDStraightMovement extends PIDCommand {
 	@Override
 	public boolean isFinished() {
 
-		if (pidDistance != null && pidDistance.isFinished() && Math.abs(Robot.ahrs.getYaw())<1) {
+		if (pidDistance != null && pidDistance.isFinished() && Math.abs(Robot.ahrs.getYaw())<3) {
 			pidDistance.end();//TODO check if ending works correctly
 			end();//TODO take these out
 			return true;
@@ -196,10 +195,9 @@ public class PIDStraightMovement extends PIDCommand {
 	public void end() {
 //		System.out.println("Ending PID Straight");
 //		pidDistance.end();//TODO put this back in?
-
 		this.scgPIDControlled.set(0);
 		this.scgConstant.set(0);
-		this.power = 0;
+		this.power = 0.1;
 		free();
 		super.end();
 //		System.out.println("ENDED PID STRAIGHT");
@@ -214,14 +212,9 @@ public class PIDStraightMovement extends PIDCommand {
 	@Override
 	public void free() {
 //		System.out.println("Free in PIDStraight");
+		super.free();
 		super.getPIDController().disable();
 		super.getPIDController().reset();
-		this.scgConstant.set(0);
-		this.scgPIDControlled.set(0);
-		this.power = 0;
-		Robot.encLeft.reset();
-		Robot.encRight.reset();
-		super.free();
 	}
 
 }
