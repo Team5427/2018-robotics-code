@@ -20,7 +20,7 @@ public class Left_ScaleIsRight extends AutoPath {
 	public static final double i1 = 0.0;
 	public static final double d1 = 0.018;
 	
-	//Values for 220 inches
+	//Values for 250 inches
 	public static final double p2 = 0.0111; //.1
 	public static final double i2 = 0.0;
 	public static final double d2 = 0.018; //.09
@@ -30,7 +30,7 @@ public class Left_ScaleIsRight extends AutoPath {
 //	public static final double i3 = 0.0;
 //	public static final double d3 = 0.1;
 	
-	//Values for 30 inches. CHANGE THESE NOT TUNED
+	//Values for 75 inches.
 	public static final double p3 = 0.025;
 	public static final double i3 = 0.0;
 	public static final double d3 = 0.01;
