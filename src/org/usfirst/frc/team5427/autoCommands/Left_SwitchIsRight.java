@@ -15,20 +15,20 @@ public class Left_SwitchIsRight extends AutoPath {
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
 
-	//Values for 243 inches.
-	public static final double p1 = 0.0115;
+	//Values for 241 inches.
+	public static final double p1 = 0.0113;
 	public static final double i1 = 0.0;
 	public static final double d1 = 0.018;
 	
 	//Values for 172 inches.
-	public static final double p2 = 0.022;
+	public static final double p2 = 0.0225;
 	public static final double i2 = 0.0;
 	public static final double d2 = 0.012;
 	
 	public Left_SwitchIsRight() {
 		// creates all of the PID Commands
 		fidget = new Fidget();
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 243, p1, i1, d1);
+		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 241, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
 		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 172, p2, i2, d2);
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
