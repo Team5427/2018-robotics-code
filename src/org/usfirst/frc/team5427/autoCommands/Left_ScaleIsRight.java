@@ -16,14 +16,14 @@ public class Left_ScaleIsRight extends AutoPath {
 	private Fidget fidget;
 
 	//Values for 232 inches.
-	public static final double p1 = 0.027;
+	public static final double p1 = 0.0111;
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.025;
+	public static final double d1 = 0.018;
 	
-	//Values for 225(?) inches
-	public static final double p2 = 0.024; //.1
+	//Values for 220 inches
+	public static final double p2 = 0.0111; //.1
 	public static final double i2 = 0.0;
-	public static final double d2 = 0.023; //.09
+	public static final double d2 = 0.018; //.09
 	
 //	//Values for 82 inches.
 //	public static final double p3 = 0.1;
@@ -31,19 +31,19 @@ public class Left_ScaleIsRight extends AutoPath {
 //	public static final double d3 = 0.1;
 	
 	//Values for 30 inches. CHANGE THESE NOT TUNED
-	public static final double p3 = 0.1;
+	public static final double p3 = 0.025;
 	public static final double i3 = 0.0;
-	public static final double d3 = 0.1;
+	public static final double d3 = 0.01;
 	
 	public Left_ScaleIsRight() {
 		// creates all of the PID Commands
 		fidget = new Fidget();
 //		fidget = null;
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 232, p1, i1, d1);
+		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 239, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 225, p2, i2, d2); // used to be 244
+		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 250, p2, i2, d2); // used to be 244
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
-		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 30, p3, i3, d3);
+		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 75, p3, i3, d3);
 		thirdAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
 		moveElevator = new MoveElevatorAuto(1); // 1 for switch
 	}
