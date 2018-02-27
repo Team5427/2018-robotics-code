@@ -4,7 +4,6 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team5427.robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,18 +22,6 @@ import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 import org.usfirst.frc.team5427.autoCommands.*;
-//import org.usfirst.frc.team5427.autoCommands.AutoPath;
-//import org.usfirst.frc.team5427.autoCommands.Center_SwitchIsLeft;
-//import org.usfirst.frc.team5427.autoCommands.Center_SwitchIsRight;
-//import org.usfirst.frc.team5427.autoCommands.Right_SwitchIsLeft;
-//import org.usfirst.frc.team5427.autoCommands.Left_ScaleIsLeft;
-//import org.usfirst.frc.team5427.autoCommands.Left_ScaleIsRight;
-//import org.usfirst.frc.team5427.autoCommands.Left_SwitchIsLeft;
-//import org.usfirst.frc.team5427.autoCommands.Left_SwitchIsRight;
-//import org.usfirst.frc.team5427.autoCommands.Right_ScaleIsLeft;
-//import org.usfirst.frc.team5427.autoCommands.Right_ScaleIsRight;
-//import org.usfirst.frc.team5427.autoCommands.Right_SwitchIsRight;
-//import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
 import org.usfirst.frc.team5427.robot.commands.PIDTurn;
@@ -47,8 +34,6 @@ import org.usfirst.frc.team5427.util.SameLine;
 
 import com.kauailabs.navx.frc.AHRS;
 
-//import com.kauailabs.navx.frc.AHRS;
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -57,61 +42,38 @@ import com.kauailabs.navx.frc.AHRS;
  * project.
  */
 @SameLine
-public class Robot extends IterativeRobot  {
+public class Robot extends IterativeRobot {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
-
 	public static OI oi;
 	public static DriveTrain driveTrain;
-
 	SpeedController motor_pwm_frontLeft;
-    SpeedController motor_pwm_rearLeft ;
+	SpeedController motor_pwm_rearLeft;
 	SpeedControllerGroup speedcontrollergroup_left;
-
 	SpeedController motor_pwm_frontRight;
 	SpeedController motor_pwm_rearRight;
 	SpeedControllerGroup speedcontrollergroup_right;
 	DifferentialDrive drive;
-	    
 	DriveWithJoystick dwj;
-	
 	Command m_autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
-	
 	public static DoubleSolenoid intakeSolenoid;
-
 	public static SpeedController motorPWM_Intake_Left;
 	public static SpeedController motorPWM_Intake_Right;
-
 	public static SpeedController motorPWM_Elevator;
 	public static Intake intakeSubsystem;
-	
-//	public PIDDriveTrainSide pidSide;
-//	public PIDTurnCommand pidTurn;
-
-	
-
-	/**
-	 * values used for PID loops
-	 *TODO move these to Config
-	 */
-	
 	public static Encoder encLeft;
 	public static Encoder encRight;
-	
 	private String gameData;
 	private int color;
 	private int field_position;
 	private int switch_or_scale;
 	private char switchSide;
 	private char scaleSide;
-	
 	public AutoPath autoPath;
 	public PIDTurn turnToAngle;
 	public PIDStraightMovement moveToDistance;
-	
 	public PIDStraightMovement pi;
 	public static AHRS ahrs;
-	
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -119,61 +81,30 @@ public class Robot extends IterativeRobot  {
 	 */
 	@Override
 	public void robotInit() {
-		// driveTrain = new DriveTrain();
-
-//		chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-
-		/*
-		 * COMMENTED DUE TO ERRORS TODO ADD PORTS FOR SOLENOID
-		 */
-		// Log.init("Initializing solenoid");
-		// intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD,
-		// Config.PCM_SOLENOID_REVERSE);
-		
-		
-//		Log.init("Initializing driveTrain: ");
 		motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
 		motor_pwm_rearLeft = new SteelTalon(Config.REAR_LEFT_MOTOR);
 		speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
-		
 		motor_pwm_frontRight = new SteelTalon(Config.FRONT_RIGHT_MOTOR);
 		motor_pwm_rearRight = new SteelTalon(Config.REAR_RIGHT_MOTOR);
 		speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
-		
 		drive = new DifferentialDrive(speedcontrollergroup_left, speedcontrollergroup_right);
 		drive.setSafetyEnabled(false);
 		driveTrain = new DriveTrain(speedcontrollergroup_left, speedcontrollergroup_right, drive);
-	
-		
-//		Log.init("Initializing intake motors: ");
 		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
 		motorPWM_Intake_Right = new SteelTalon(Config.INTAKE_MOTOR_RIGHT);
-
-//		Log.init("Initializing Subsystems: ");
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
-
-	
-
-//		Log.init("Intializing Elevator Motor: ");
 		motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
-		
 		try {
 			ahrs = new AHRS(SPI.Port.kMXP);
-
-		} catch (RuntimeException ex) {
+		}
+		catch (RuntimeException ex) {
 			DriverStation.reportError("Error instantiating navX-MXP: " + ex.getMessage(), true);
 		}
-
-		
-		//create encoders
-		//TODO put port values in Config
 		encLeft = new Encoder(Config.FRONT_LEFT_MOTOR, Config.REAR_LEFT_MOTOR, false, Encoder.EncodingType.k4X);
 		encRight = new Encoder(Config.FRONT_RIGHT_MOTOR, Config.REAR_RIGHT_MOTOR, false, Encoder.EncodingType.k4X);
-		//Set the Encoder to diameter*pi/360 inches per pulse (each pulse is a degree)
+		// Set the Encoder to diameter*pi/360 inches per pulse (each pulse is a degree)
 		encRight.setDistancePerPulse((6 * Math.PI / 360));
 		encLeft.setDistancePerPulse((6 * Math.PI / 360));
-		
 		oi = new OI();
 	}
 
@@ -186,10 +117,6 @@ public class Robot extends IterativeRobot  {
 	public void disabledInit() {
 		encRight.reset();
 		encLeft.reset();
-//		if(pidSide!=null)
-//			pidSide.free();
-//		if(pidTurn!=null)
-//			pidTurn.free();
 		ahrs.reset();
 		SmartDashboard.putNumber("encRightVal", encRight.getDistance());
 		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
@@ -204,7 +131,6 @@ public class Robot extends IterativeRobot  {
 		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
 		SmartDashboard.putNumber("encRight", encRight.getDistance());
 		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
-		
 	}
 
 	/**
@@ -221,124 +147,54 @@ public class Robot extends IterativeRobot  {
 	 */
 	@Override
 	public void autonomousInit() {
-//		m_	mousCommand = chooser.getSelected(); TODO remove this line of code
-		
-//		String gameData = DriverStation.getInstance().getGameSpecificMessage();
-//		char[] sideColorArray = gameData.toCharArray();
-//		char firstSwitch = sideColorArray[0];
-//		char scale = sideColorArray[1];
-//		char lastSwitch = sideColorArray[2];
-		
-//		Log.init(""+"First: "+ firstSwitch +"\nScale: "+ scale +"\nLast: "+ lastSwitch);
-//		the characters have L for left or R for right
-
-//		 schedule the autonomous command (example) TODO delete these lines of code after
-//		we implement our own autonomous commands
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
-		}
-		
 		encRight.reset();
 		encLeft.reset();
 		ahrs.reset();
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		switchSide = gameData.charAt(0);
+		scaleSide = gameData.charAt(1);
+		field_position = oi.autoPositionChooser.getSelected();
+		switch_or_scale = oi.autoCubeChooser.getSelected();
 		
-
-//		pi=new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 18, .025, 0, 0);
-
+		if (field_position == 1) {
+			if (switch_or_scale == 1) {
+				if (switchSide == 'R')
+					autoPath = new Right_SwitchIsRight();
+				else if (switchSide == 'L')
+					autoPath = new Right_SwitchIsLeft();
+			}
+			else if (switch_or_scale == 2) {
+				if (scaleSide == 'R')
+					autoPath = new Right_ScaleIsRight();
+				else if (scaleSide == 'L')
+					autoPath = new Right_ScaleIsLeft();
+			}
+		}
+		else if (field_position == 2) {
+			if (switchSide == 'R')
+				autoPath = new Center_SwitchIsRight();
+			else if (switchSide == 'L')
+				autoPath = new Center_SwitchIsLeft();
+		}
+		else if (field_position == 3) {
+			if (switch_or_scale == 1) {
+				if (switchSide == 'R')
+					autoPath = new Left_SwitchIsRight();
+				else if (switchSide == 'L')
+					autoPath = new Left_SwitchIsLeft();
+			}
+			else if (switch_or_scale == 2) {
+				if (scaleSide == 'R')
+					autoPath = new Left_ScaleIsRight();
+				else if (scaleSide == 'L')
+					autoPath = new Left_ScaleIsLeft();
+			}
+		}
 		
-//		TODO Change
-//		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		
-//		switchSide = gameData.charAt(0);
-//		scaleSide = gameData.charAt(1);
-		
-//		field_position = oi.autoPositionChooser.getSelected();	
-//		switch_or_scale = oi.autoCubeChooser.getSelected();
-//		
-//		
-//		if(field_position == 1)
-//		{
-//			if(switch_or_scale == 1)
-//			{
-//				if(switchSide == 'R')
-//					autoPath = new Right_SwitchIsRight();
-//				else if(switchSide == 'L')
-//					autoPath = new Right_SwitchIsLeft();
-//			}
-//			else if(switch_or_scale == 2)
-//			{
-//				if(scaleSide == 'R')
-//					autoPath = new Right_ScaleIsRight();
-//				else if(scaleSide == 'L')
-//					autoPath = new Right_ScaleIsLeft();
-//			}
-//		}
-//		else if(field_position == 2)
-//		{
-//			if(switchSide == 'R')
-//				autoPath = new Center_SwitchIsRight();
-//			else if(switchSide == 'L')
-//				autoPath = new Center_SwitchIsLeft();
-//		}
-//		else if(field_position == 3)
-//		{
-//			if(switch_or_scale == 1)
-//			{
-//				if(switchSide == 'R')
-//					autoPath = new Left_SwitchIsRight();
-//				else if(switchSide == 'L')
-//					autoPath = new Left_SwitchIsLeft();
-//			}
-//			else if(switch_or_scale == 2)
-//			{
-//				if(scaleSide == 'R')
-//					autoPath = new Left_ScaleIsRight();
-//				else if(scaleSide == 'L')
-//					autoPath = new Left_ScaleIsLeft();
-//			}
-//		}
-//		autoPath.start();
-////		pi=new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0.3, 60);
-		///break
-//		pi.start();
-		
-//		pid = new PIDPath();
-//		pid.start();
-
+		autoPath.start();
 		autoPath = new Right_ScaleIsLeft();
 		autoPath.start();
-
-//		autoPath = new CenterLeft();
-//		autoPath.start();
-
-//		moveToDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 218, 
-//				0.1, 0.0, 0.3);
-//		moveToDistance.start();
-		
-//		turnToAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
-//		turnToAngle.start();
-		
-//		PIDDriveTrainSide pi = new PIDDriveTrainSide(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 0, 160);
-//		pi.start();
-		//removes history of the PID loop (destroys the older loop) if pidSide stores a PIDDRiveTRainSIde object
-//		if(pidSide!=null)
-//			pidSide.free();
-//		if(pidTurn!=null)
-//			pidTurn.free();
-		
-//		pidSide = new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, 0, 60);
-
-//		pidTurn = new PIDTurnCommand(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_TURN_SETPOINT);
-//
-//		pidTurn.start();
-		//removes history of the PID loop (destroys the older loop)
-//		pidSide.free();
-		
-			//	new PIDDriveTrainSide(driveTrain.drive_Right, driveTrain.drive_Left, Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, 90);
-		
 	}
-	
-
 
 	/**
 	 * This function is called periodically during autonomous.
@@ -346,31 +202,23 @@ public class Robot extends IterativeRobot  {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-//		motor_pwm_frontLeft.set(.3);
-		//robot stutters
-//		pidSide.incrementPower();
-		
 	}
 
 	@Override
 	public void teleopInit() {
-		//This makes sure that the autonomous stops running when
+		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		
 		encRight.reset();
 		encLeft.reset();
-		
 		dwj = new DriveWithJoystick();
 		dwj.start();
-//		Log.init("Initializing test");
-		
 	}
-	
+
 	/**
 	 * This function is called periodically during operator control.
 	 */
@@ -380,32 +228,13 @@ public class Robot extends IterativeRobot  {
 	}
 
 	@Override
-	public void testInit()
-	{	
-		// for straight(setpoint is 1. going straight)
-	
-		
+	public void testInit() {
 	}
 
-//	
-//	enum Mode{Straight, Left, Right}
-//	Mode mode = Mode.Straight;
-//	PIDAction currentPIDAction;
-//	
-//	public void turnAngleClockwise(double degrees) {
-//		if(currentPIDAction.isFinished()) {
-//			//currentPIDAction = new PIDAction(startAngle, endAngle, currentAngle);
-//		}
-//	}
-	
 	/**
 	 * This function is called periodically during test mode.
 	 */
 	@Override
 	public void testPeriodic() {
-
-			
 	}
-
-   
 }
