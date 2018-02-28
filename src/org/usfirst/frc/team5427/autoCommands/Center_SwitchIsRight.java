@@ -17,9 +17,9 @@ public class Center_SwitchIsRight extends AutoPath {
 	private Fidget fidget;
 	
 	// Values for 88 inches.
-	public static final double p1 = 0.1;
+	public static final double p1 = 0.03;
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.08;
+	public static final double d1 = 0.12;
 
 	public Center_SwitchIsRight() {
 		fidget = new Fidget();

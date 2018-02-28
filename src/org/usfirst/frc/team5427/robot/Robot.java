@@ -150,49 +150,56 @@ public class Robot extends IterativeRobot {
 		encRight.reset();
 		encLeft.reset();
 		ahrs.reset();
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		switchSide = gameData.charAt(0);
-		scaleSide = gameData.charAt(1);
-		field_position = oi.autoPositionChooser.getSelected();
-		switch_or_scale = oi.autoCubeChooser.getSelected();
+//		gameData = DriverStation.getInstance().getGameSpecificMessage();
+//		switchSide = gameData.charAt(0);
+//		scaleSide = gameData.charAt(1);
+//		field_position = oi.autoPositionChooser.getSelected();
+//		switch_or_scale = oi.autoCubeChooser.getSelected();
 		
-		if (field_position == 1) {
-			if (switch_or_scale == 1) {
-				if (switchSide == 'R')
-					autoPath = new Right_SwitchIsRight();
-				else if (switchSide == 'L')
-					autoPath = new Right_SwitchIsLeft();
-			}
-			else if (switch_or_scale == 2) {
-				if (scaleSide == 'R')
-					autoPath = new Right_ScaleIsRight();
-				else if (scaleSide == 'L')
-					autoPath = new Right_ScaleIsLeft();
-			}
-		}
-		else if (field_position == 2) {
-			if (switchSide == 'R')
-				autoPath = new Center_SwitchIsRight();
-			else if (switchSide == 'L')
-				autoPath = new Center_SwitchIsLeft();
-		}
-		else if (field_position == 3) {
-			if (switch_or_scale == 1) {
-				if (switchSide == 'R')
-					autoPath = new Left_SwitchIsRight();
-				else if (switchSide == 'L')
-					autoPath = new Left_SwitchIsLeft();
-			}
-			else if (switch_or_scale == 2) {
-				if (scaleSide == 'R')
-					autoPath = new Left_ScaleIsRight();
-				else if (scaleSide == 'L')
-					autoPath = new Left_ScaleIsLeft();
-			}
-		}
+//		if (field_position == 1) {
+//			if (switch_or_scale == 1) {
+//				if (switchSide == 'R')
+//					autoPath = new Right_SwitchIsRight();
+//				else if (switchSide == 'L')
+//					autoPath = new Right_SwitchIsLeft();
+//			}
+//			else if (switch_or_scale == 2) {
+//				if (scaleSide == 'R')
+//					autoPath = new Right_ScaleIsRight();
+//				else if (scaleSide == 'L')
+//					autoPath = new Right_ScaleIsLeft();
+//			}
+//		}
+//		else if (field_position == 2) {
+//			if (switchSide == 'R')
+//				autoPath = new Center_SwitchIsRight();
+//			else if (switchSide == 'L')
+//				autoPath = new Center_SwitchIsLeft();
+//		}
+//		else if (field_position == 3) {
+//			if (switch_or_scale == 1) {
+//				if (switchSide == 'R')
+//					autoPath = new Left_SwitchIsRight();
+//				else if (switchSide == 'L')
+//					autoPath = new Left_SwitchIsLeft();
+//			}
+//			else if (switch_or_scale == 2) {
+//				if (scaleSide == 'R')
+//					autoPath = new Left_ScaleIsRight();
+//				else if (scaleSide == 'L')
+//					autoPath = new Left_ScaleIsLeft();
+//			}
+//		}
+//		
+//		autoPath.start();
 		
-		autoPath.start();
-		autoPath = new Right_ScaleIsLeft();
+		// Tested and fully functional (within 15 seconds):
+		// Center_SwitchIsLeft, Center_SwitchIsRight, Left_SwitchIsLeft,
+		
+		// Not fully functional:
+		// Left_SwitchIsRight- Takes too long
+		// 
+		autoPath = new Right_SwitchIsLeft();
 		autoPath.start();
 	}
 
