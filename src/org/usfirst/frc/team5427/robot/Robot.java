@@ -155,7 +155,6 @@ public class Robot extends IterativeRobot {
 //		scaleSide = gameData.charAt(1);
 //		field_position = oi.autoPositionChooser.getSelected();
 //		switch_or_scale = oi.autoCubeChooser.getSelected();
-		
 //		if (field_position == 1) {
 //			if (switch_or_scale == 1) {
 //				if (switchSide == 'R')
@@ -200,6 +199,7 @@ public class Robot extends IterativeRobot {
 		// Not fully functional:
 		// Left_SwitchIsRight- Takes too long
 		// 
+
 		autoPath = new Left_ScaleIsRight();
 		autoPath.start();
 		
