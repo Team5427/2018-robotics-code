@@ -71,6 +71,8 @@ public class Config {
 	public static final double INTAKE_MOTOR_SPEED_OUT = -0.3;
 	public static final double ELEVATOR_MOTOR_SPEED_UP=0.3;
 	public static final double ELEVATOR_MOTOR_SPEED_DOWN=-0.3;
+	public static final double CLIMBER_MOTOR_SPEED_UP=0.3;
+	public static final double CLIMBER_MOTOR_SPEED_DOWN=-0.3;
 	
 	
 	/* ----------Joystick Buttons---------- */
@@ -80,8 +82,8 @@ public class Config {
 //	public static final int BUTTON_SOLENOD_INTAKE = 2;
 	public static final int BUTTON_ELEVATOR_UP = 5;
 	public static final int BUTTON_ELEVATOR_DOWN= 3;
-	public static final int BUTTON_CLIMBER_FORWARD = 6;
-	public static final int BUTTON_CLIMBER_REVERSE= 4;
+	public static final int BUTTON_CLIMBER_UP = 6;
+	public static final int BUTTON_CLIMBER_DOWN= 4;
 
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;

@@ -61,6 +61,7 @@ public class Robot extends IterativeRobot{
 	public static SpeedController motorPWM_Intake_Left;
 	public static SpeedController motorPWM_Intake_Right;
 	public static SpeedController motorPWM_Elevator;
+	public static SpeedController motorPWM_Climber;
 	public static Intake intakeSubsystem;
 	public static Encoder encLeft;
 	public static Encoder encRight;
@@ -118,7 +119,6 @@ public class Robot extends IterativeRobot{
 		motor_pwm_frontLeft = new PWMVictorSPX(Config.FRONT_LEFT_MOTOR);
 		motor_pwm_rearLeft = new PWMVictorSPX(Config.REAR_LEFT_MOTOR);
 		speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
-		
 		motor_pwm_frontRight = new PWMVictorSPX(Config.FRONT_RIGHT_MOTOR);
 		motor_pwm_rearRight = new PWMVictorSPX(Config.REAR_RIGHT_MOTOR);
 		speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
@@ -129,9 +129,12 @@ public class Robot extends IterativeRobot{
 //		Log.init("Initializing intake motors: ");
 		motorPWM_Intake_Left = new PWMVictorSPX(Config.INTAKE_MOTOR_LEFT);
 		motorPWM_Intake_Right = new PWMVictorSPX(Config.INTAKE_MOTOR_RIGHT);
-		
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
+		
 		motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
+		
+		motorPWM_Climber = new SteelTalon(Config.CLIMBER_MOTOR);
+		
 		try {
 			ahrs = new AHRS(SPI.Port.kMXP);
 		}

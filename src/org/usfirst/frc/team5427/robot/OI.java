@@ -77,8 +77,8 @@ public class OI {
 //        solenoidIntake = new JoystickButton(joy1,Config.BUTTON_SOLENOD_INTAKE);
         elevatorUp = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_UP);
         elevatorDown = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_DOWN);
-        climberUp = new JoystickButton(joy1,Config.BUTTON_CLIMBER_FORWARD);
-        climberDown = new JoystickButton(joy1,Config.BUTTON_CLIMBER_REVERSE);
+        climberUp = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_UP);
+        climberDown = new JoystickButton(joy1,Config.BUTTON_CLIMBER_DOWN);
 
         
         //set what they do
