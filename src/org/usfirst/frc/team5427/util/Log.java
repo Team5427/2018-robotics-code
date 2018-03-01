@@ -71,6 +71,8 @@
 //	public static void debug(String text) {
 ////		if (Config.DEBUG_MODE)
 ////			log("[DEBUG]", text);
+//		if (Config.DEBUG_MODE)
+//			log("[DEBUG]", text);
 //	}
 //
 //	/**
@@ -99,7 +101,7 @@
 //	 * @param text
 //	 */
 //	public static void fatal(String text) {
-////		log("[FATAL]", text);
+//		log("[FATAL]", text);
 //	}
 //
 //	/**

@@ -18,18 +18,17 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
-
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-
 import org.usfirst.frc.team5427.autoCommands.*;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
 import org.usfirst.frc.team5427.robot.commands.PIDTurn;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team5427.util.Config;
-
+//import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -42,7 +41,8 @@ import com.kauailabs.navx.frc.AHRS;
  * project.
  */
 @SameLine
-public class Robot extends IterativeRobot {
+
+public class Robot extends IterativeRobot{
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 	public static DriveTrain driveTrain;
@@ -54,6 +54,7 @@ public class Robot extends IterativeRobot {
 	SpeedControllerGroup speedcontrollergroup_right;
 	DifferentialDrive drive;
 	DriveWithJoystick dwj;
+
 	Command m_autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	public static DoubleSolenoid intakeSolenoid;
@@ -76,22 +77,59 @@ public class Robot extends IterativeRobot {
 	public static AHRS ahrs;
 
 	/**
+	 * values used for PID loops
+	 *TODO move these to Config
+	 */
+	public double pidRightP = .085000;
+	public double pidRightI = .008333;
+	public double pidRightD = .001042;
+
+	public double pidLeftP;
+	public double pidLeftI;
+	public double pidLeftD;
+
+	//double startTime;
+	double rotateToAngleRate=0;
+	double rightMotorSpeed = 0;
+	double leftMotorSpeed = 0;
+
+
+	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-		motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
-		motor_pwm_rearLeft = new SteelTalon(Config.REAR_LEFT_MOTOR);
+
+		// driveTrain = new DriveTrain();
+
+//		chooser.addDefault("Default Auto", new ExampleCommand());
+		// chooser.addObject("My Auto", new MyAutoCommand());
+
+		/*
+		 * COMMENTED DUE TO ERRORS TODO ADD PORTS FOR SOLENOID
+		 */
+
+		// Log.init("Initializing solenoid");
+		// intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD,
+		// Config.PCM_SOLENOID_REVERSE);
+		
+//		Log.init("Initializing driveTrain: ");
+		motor_pwm_frontLeft = new PWMVictorSPX(Config.FRONT_LEFT_MOTOR);
+		motor_pwm_rearLeft = new PWMVictorSPX(Config.REAR_LEFT_MOTOR);
 		speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
-		motor_pwm_frontRight = new SteelTalon(Config.FRONT_RIGHT_MOTOR);
-		motor_pwm_rearRight = new SteelTalon(Config.REAR_RIGHT_MOTOR);
+		
+		motor_pwm_frontRight = new PWMVictorSPX(Config.FRONT_RIGHT_MOTOR);
+		motor_pwm_rearRight = new PWMVictorSPX(Config.REAR_RIGHT_MOTOR);
 		speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
 		drive = new DifferentialDrive(speedcontrollergroup_left, speedcontrollergroup_right);
 		drive.setSafetyEnabled(false);
 		driveTrain = new DriveTrain(speedcontrollergroup_left, speedcontrollergroup_right, drive);
-		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
-		motorPWM_Intake_Right = new SteelTalon(Config.INTAKE_MOTOR_RIGHT);
+
+//		Log.init("Initializing intake motors: ");
+		motorPWM_Intake_Left = new PWMVictorSPX(Config.INTAKE_MOTOR_LEFT);
+		motorPWM_Intake_Right = new PWMVictorSPX(Config.INTAKE_MOTOR_RIGHT);
+		
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
 		motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
 		try {
@@ -105,6 +143,23 @@ public class Robot extends IterativeRobot {
 		// Set the Encoder to diameter*pi/360 inches per pulse (each pulse is a degree)
 		encRight.setDistancePerPulse((6 * Math.PI / 360));
 		encLeft.setDistancePerPulse((6 * Math.PI / 360));
+		
+
+
+
+//		Log.init("Initializing Subsystems: ");
+		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
+
+		// need info of ports
+//		Log.init("Initializing Encoders: ");
+		//encoderStraight = new Encoder(0, 0);
+
+//		Log.init("Intializing Elevator Motor: ");
+		motorPWM_Elevator = new PWMVictorSPX(Config.ELEVATOR_MOTOR);
+		
+		//encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
+		//encLeft = new Encoder(2,3,false,Encoder.EncodingType.k4X);
+
 		oi = new OI();
 	}
 
@@ -155,11 +210,7 @@ public class Robot extends IterativeRobot {
 //		scaleSide = gameData.charAt(1);
 //		field_position = oi.autoPositionChooser.getSelected();
 //		switch_or_scale = oi.autoCubeChooser.getSelected();
-<<<<<<< HEAD
-//		
-=======
-		
->>>>>>> 0625315a2d237d01e0efd85f05dbcfe53cd509a7
+
 //		if (field_position == 1) {
 //			if (switch_or_scale == 1) {
 //				if (switchSide == 'R')
@@ -196,9 +247,7 @@ public class Robot extends IterativeRobot {
 //		}
 //		
 //		autoPath.start();
-<<<<<<< HEAD
-		autoPath = new Center_SwitchIsRight();
-=======
+
 		
 		// Tested and fully functional (within 15 seconds):
 		// Center_SwitchIsLeft, Center_SwitchIsRight, Left_SwitchIsLeft,
@@ -207,7 +256,6 @@ public class Robot extends IterativeRobot {
 		// Left_SwitchIsRight- Takes too long
 		// 
 		autoPath = new Right_SwitchIsLeft();
->>>>>>> 0625315a2d237d01e0efd85f05dbcfe53cd509a7
 		autoPath.start();
 	}
 
@@ -228,10 +276,26 @@ public class Robot extends IterativeRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+
 		encRight.reset();
 		encLeft.reset();
 		dwj = new DriveWithJoystick();
-		dwj.start();
+		dwj.start();		
+		/*encRight.reset();
+		encLeft.reset();
+		
+		encRight.setDistancePerPulse((6*Math.PI)/360);
+		encLeft.setDistancePerPulse((6*Math.PI)/360);
+		*/
+		//360 cycles per WPILIB REvolution
+		//Even though AndyMark SAYS:
+		//1440 pulses per revolution
+		//360 cycles per revolution
+		//4 pulses per cycle
+		//Log.info();
+		
+		//dwj = new DriveWithJoystick();
+
 	}
 
 	/**
@@ -240,16 +304,37 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		//4 counts for every rev
+		/*SmartDashboard.putNumber("RightCount", encRight.get());
+		SmartDashboard.putNumber("LeftCount", encLeft.get());
+		
+		SmartDashboard.putNumber("RightDist",encRight.getDistance());
+		SmartDashboard.putNumber("LeftDist",encLeft.getDistance());*/
 	}
 
 	@Override
-	public void testInit() {
+	public void testInit()
+	{	
+//		try
+//		{
+//			Thread.sleep(500);
+//		}
+//		catch (Exception e)
+//		{
+//			e.printStackTrace();
+//		}
+//		startTime = System.nanoTime() / 1000000000.;
+		
+		
 	}
+
 
 	/**
 	 * This function is called periodically during test mode.
 	 */
 	@Override
-	public void testPeriodic() {
+	public void testPeriodic() {	
+ 		
 	}
+	
 }

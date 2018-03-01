@@ -1,8 +1,5 @@
 package org.usfirst.frc.team5427.util;
 
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 //TODO FIXED CODE fEB 20 2017
 /**
  * This file will store ALL of the variables, offsets, measurements, etc. that
@@ -54,7 +51,8 @@ public class Config {
 	public static final int INTAKE_MOTOR_LEFT = 6;
 	public static final int INTAKE_MOTOR_RIGHT = 5;
 	public static final int ELEVATOR_MOTOR = 4;
-	
+	public static final int CLIMBER_MOTOR = 4;
+
 	/*----------Speeds----------*/
 	public static final double INTAKE_SPEED_FORWARD = .3;
 	public static final double INTAKE_SPEED_REVERSE = -.3;
@@ -62,17 +60,29 @@ public class Config {
 	
 	/*--------Timeouts------*/
 	public static final double AUTO_INTAKE_TIMEOUT = 2;
+
 	
 	/*----------Pneumatic Control Module PORTS-----------*/
 	public static final int PCM_SOLENOID_FORWARD = 0;
 	public static final int PCM_SOLENOID_REVERSE = 1;
 
-	/* ----------Joystick Buttons---------- */
-	public static final int BUTTON_MOTOR_INTAKE = 1;
-	public static final int BUTTON_SOLENOD_INTAKE = 2;
-	public static final int BUTTON_ELEVATOR_FORWARD = 3;
-	public static final int BUTTON_ELEVATOR_REVERSE= 5;
+	/*-------------Motor Speeds-------------------*/
+	public static final double INTAKE_MOTOR_SPEED_IN = 0.3;
+	public static final double INTAKE_MOTOR_SPEED_OUT = -0.3;
+	public static final double ELEVATOR_MOTOR_SPEED_UP=0.3;
+	public static final double ELEVATOR_MOTOR_SPEED_DOWN=-0.3;
 	
+	
+	/* ----------Joystick Buttons---------- */
+	public static final int BUTTON_MOTOR_INTAKE_IN = 2;//nOTE: BUTTTON 3 LAGS
+	public static final int BUTTON_MOTOR_INTAKE_OUT = 1;
+//	
+//	public static final int BUTTON_SOLENOD_INTAKE = 2;
+	public static final int BUTTON_ELEVATOR_UP = 5;
+	public static final int BUTTON_ELEVATOR_DOWN= 3;
+	public static final int BUTTON_CLIMBER_FORWARD = 6;
+	public static final int BUTTON_CLIMBER_REVERSE= 4;
+
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;
 	public static final int ALT_JOYSTICK_PORT = 0;
@@ -84,17 +94,9 @@ public class Config {
 	// Speeds for the different things that the robot needs to do
 	// Controlled by grip
 	// later
-	/* -------------PWM ID----------*/
-	// For example to map the left and right motors, you could define the
-	// following variables to use with your drivetrain subsystem.
-	public static final int frontleftValue = 2;
-	public static final int frontrightValue = 0;
-	public static final int rearleftValue = 3;
-	public static final int rearrightValue = 1;
-
+	
+	
 	/*-------------Motor Bias-------------------*/
-	public static final double INTAKE_BACKWARD = 1;
-	public static final double INTAKE_FORWARD = .5;
 	
 	/*-------------Motor Offset------------------*/
 	

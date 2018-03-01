@@ -7,74 +7,74 @@
 
 package org.usfirst.frc.team5427.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.NextLine;
 
 /**
- * @author Blake 
- * Command is used to change the direction of the Solenoid controlling the intake of Power Cubes.
+ * This command simply sets the speed of the intake motors to the current
+ * throttle on the joystick.
  * 
- * TODO: Test whether this needs to be held & set to off or just press once.
+ * @author Blake
  */
 
 @NextLine
-public class IntakeSolenoidSwitch extends Command
+public class IntakeActivateIn extends Command
 {
-	//Stores whether or not the solenoid is forward for use in determining the direction to switch in.
-	public static boolean isForward = false;
-
-	public IntakeSolenoidSwitch()
+	
+	public IntakeActivateIn()
 	{
-		// No Subsystem Needed
-		
-//		isForward = false;
+
+		// Use requires() here to declare subsystem dependencies
+//		Log.info("Intake being activated");
+		requires(Robot.intakeSubsystem);
 	}
 
-	/* Called when the command initially runs.
-	 * Checks to see if the position of the Solenoid is forward or reverse.
-	 * If forward, it moves to reverse.
-	 * If reverse, it moves to forward.
-	 */
+	// Called just before this Command runs the first time
 	@Override
 	protected void initialize()
 	{
-		if(isForward)
-			Robot.intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
-			
-		else
-			Robot.intakeSolenoid.set(DoubleSolenoid.Value.kForward);
-
-		isForward = !isForward;
+//		Log.info("Intake being initialized");
 	}
 
+	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
+
 	protected void execute()
 	{
-		
+//		Log.info("Intake being executed");
+		Robot.intakeSubsystem.setSpeed(Config.INTAKE_MOTOR_SPEED_IN);
+//		if(Robot.oi.joy1.getThrottle()<0) {
+//			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
+//			Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle());
+//		}
+//		else {
+//			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
+//			Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle());
+//		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished()
 	{
-		return true;
-	}
- 
-	// Called once after isFinished returns true
-	@Override
-	protected void end()
-	{
-		
+		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_IN))//TODO change to Config
+			return true;
+		return false;
 	}
 
-	// Should be unnecessary considering it does not require a subsystem.
+	// Called once after isFinished returns true
+	@Override
+	protected void end() {
+		Robot.intakeSubsystem.stop();
+	}
+
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
-	protected void interrupted()
-	{
+	protected void interrupted() {
+		Robot.intakeSubsystem.setSpeed(0);
 	}
 }
