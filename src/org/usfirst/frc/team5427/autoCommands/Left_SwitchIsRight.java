@@ -16,7 +16,7 @@ public class Left_SwitchIsRight extends AutoPath {
 	private Fidget fidget;
 
 	//Values for 241 inches.
-	public static final double p1 = 0.0113;
+	public static final double p1 = 0.011;
 	public static final double i1 = 0.0;
 	public static final double d1 = 0.018;
 	

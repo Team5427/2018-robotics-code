@@ -155,7 +155,11 @@ public class Robot extends IterativeRobot {
 //		scaleSide = gameData.charAt(1);
 //		field_position = oi.autoPositionChooser.getSelected();
 //		switch_or_scale = oi.autoCubeChooser.getSelected();
+<<<<<<< HEAD
 //		
+=======
+		
+>>>>>>> 0625315a2d237d01e0efd85f05dbcfe53cd509a7
 //		if (field_position == 1) {
 //			if (switch_or_scale == 1) {
 //				if (switchSide == 'R')
@@ -192,7 +196,18 @@ public class Robot extends IterativeRobot {
 //		}
 //		
 //		autoPath.start();
+<<<<<<< HEAD
 		autoPath = new Center_SwitchIsRight();
+=======
+		
+		// Tested and fully functional (within 15 seconds):
+		// Center_SwitchIsLeft, Center_SwitchIsRight, Left_SwitchIsLeft,
+		
+		// Not fully functional:
+		// Left_SwitchIsRight- Takes too long
+		// 
+		autoPath = new Right_SwitchIsLeft();
+>>>>>>> 0625315a2d237d01e0efd85f05dbcfe53cd509a7
 		autoPath.start();
 	}
 

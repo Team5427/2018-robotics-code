@@ -21,6 +21,7 @@ public class Center_SwitchIsRight extends AutoPath {
 	public static final double i1 = 0.0;
 	public static final double d1 = 0.12;//0.06; //.05
 
+
 	public Center_SwitchIsRight() {
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 88, p1, i1, d1);
