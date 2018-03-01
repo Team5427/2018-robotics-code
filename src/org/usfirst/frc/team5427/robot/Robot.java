@@ -194,13 +194,18 @@ public class Robot extends IterativeRobot {
 //		autoPath.start();
 		
 		// Tested and fully functional (within 15 seconds):
-		// Center_SwitchIsLeft, Center_SwitchIsRight, Left_SwitchIsLeft,
+		// Center_SwitchIsLeft, Center_SwitchIsRight, Left_SwitchIsLeft, Left_ScaleIsLeft, Right_SwitchIsRight, 
+		// Right_ScaleIsRight, Left_SwitchIsRight, Right_SwitchIsLeft, 
 		
 		// Not fully functional:
 		// Left_SwitchIsRight- Takes too long
 		// 
-		autoPath = new Right_SwitchIsLeft();
+		autoPath = new Left_ScaleIsRight();
 		autoPath.start();
+		
+//		moveToDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 245,
+//				0.0208, 0.0, 0.026);
+//		moveToDistance.start();
 	}
 
 	/**

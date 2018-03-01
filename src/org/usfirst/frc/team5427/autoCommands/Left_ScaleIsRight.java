@@ -22,10 +22,10 @@ public class Left_ScaleIsRight extends AutoPath {
 	public static final double i1 = 0.0;
 	public static final double d1 = 0.018;
 	
-	// Values for 250 inches
-	public static final double p2 = 0.0111;
+	// Values for 245 inches
+	public static final double p2 = 0.0208;
 	public static final double i2 = 0.0;
-	public static final double d2 = 0.018;
+	public static final double d2 = 0.026;
 	
 	// Values for 75 inches.
 	public static final double p3 = 0.025;
@@ -36,7 +36,7 @@ public class Left_ScaleIsRight extends AutoPath {
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 239, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 250, p2, i2, d2); // used to be 244
+		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 245, p2, i2, d2); // used to be 244
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
 		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 75, p3, i3, d3);
 		thirdAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);

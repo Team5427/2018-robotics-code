@@ -116,7 +116,7 @@ public class Config {
 	public static final double PID_STRAIGHT_I = 0.0025;
 	public static final double PID_STRAIGHT_D = 0.00;
 	public static final double PID_STRAIGHT_POWER_SHORT = 0.35;
-	public static final double PID_STRAIGHT_POWER_LONG = 0.5;
+	public static final double PID_STRAIGHT_POWER_LONG = 0.6;
 
 	/***Increment****/
 	public static final double PID_STRAIGHT_LINEAR_INCREMENT=.01;

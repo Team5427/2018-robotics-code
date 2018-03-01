@@ -15,8 +15,8 @@ public class Right_ScaleIsRight extends AutoPath {
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
 
-	//Values for 18 inches.
-	public static final double p1 = 0.013;
+	//Values for 318 inches.
+	public static final double p1 = 0.0215;
 	public static final double i1 = 0.0;
 	public static final double d1 = 0.019;
 	
