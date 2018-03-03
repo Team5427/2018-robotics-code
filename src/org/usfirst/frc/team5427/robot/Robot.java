@@ -126,11 +126,12 @@ public class Robot extends IterativeRobot{
 		drive.setSafetyEnabled(false);
 		driveTrain = new DriveTrain(speedcontrollergroup_left, speedcontrollergroup_right, drive);
 
-//		Log.init("Initializing intake motors: ");
-//		motorPWM_Intake_Left = new PWMVictorSPX(Config.INTAKE_MOTOR_LEFT);
-//		motorPWM_Intake_Right = new PWMVictorSPX(Config.INTAKE_MOTOR_RIGHT);
-//		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
+		motorPWM_Intake_Left = new PWMVictorSPX(Config.INTAKE_MOTOR_LEFT);
+		motorPWM_Intake_Right = new PWMVictorSPX(Config.INTAKE_MOTOR_RIGHT);
+		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
 		
+		motorPWM_Elevator = new PWMVictorSPX(Config.ELEVATOR_MOTOR);
+
 		
 //		motorPWM_Climber = new SteelTalon(Config.CLIMBER_MOTOR);
 		
@@ -149,15 +150,10 @@ public class Robot extends IterativeRobot{
 
 
 
-//		Log.init("Initializing Subsystems: ");
-//		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
-
 		// need info of ports
 //		Log.init("Initializing Encoders: ");
 		//encoderStraight = new Encoder(0, 0);
 
-//		Log.init("Intializing Elevator Motor: ");
-		motorPWM_Elevator = new PWMVictorSPX(Config.ELEVATOR_MOTOR);
 		
 		//encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
 		//encLeft = new Encoder(2,3,false,Encoder.EncodingType.k4X);

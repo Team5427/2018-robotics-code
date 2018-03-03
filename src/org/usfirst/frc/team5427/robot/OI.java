@@ -6,8 +6,8 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc.team5427.robot;
 
-//import org.usfirst.frc.team5427.robot.commands.IntakeActivateIn;
-//import org.usfirst.frc.team5427.robot.commands.IntakeActivateOut;
+import org.usfirst.frc.team5427.robot.commands.IntakeActivateIn;
+import org.usfirst.frc.team5427.robot.commands.IntakeActivateOut;
 //import org.usfirst.frc.team5427.robot.commands.MoveClimberDown;
 //import org.usfirst.frc.team5427.robot.commands.MoveClimberUp;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorDown;
@@ -83,9 +83,9 @@ public class OI {
         climberDown = new JoystickButton(joy1,Config.BUTTON_CLIMBER_DOWN);
 
         
-//        //set what they do
-//        motorIntakeIn.whenPressed(new IntakeActivateIn());
-//        motorIntakeOut.whenPressed(new IntakeActivateOut());
+        //set what they do
+        motorIntakeIn.whenPressed(new IntakeActivateIn());
+        motorIntakeOut.whenPressed(new IntakeActivateOut());
 //        
        // solenoidIntake.whenPressed(new IntakeSolenoidSwitch());
         
