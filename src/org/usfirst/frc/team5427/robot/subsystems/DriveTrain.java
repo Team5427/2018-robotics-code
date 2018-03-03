@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
+import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.SameLine;
 
 
@@ -40,12 +41,16 @@ public class DriveTrain extends Subsystem {
 
 		drive.arcadeDrive(-joy.getY(), joy.getZ());
 
-		// frontLeftMotor.set(speed);
-		// frontRightMotor.set(speed);
-		// //rearLeftMotor.set(speed);
-		// rearRightMotor.set(speed);
+		
+		//TODO use these to sort of disable some of the motors
+//		Robot.motor_pwm_frontLeft.set(0);
+//		Robot.motor_pwm_rearLeft.set(0);
+//		Robot.motor_pwm_frontRight.set(0);
+//		Robot.motor_pwm_rearRight.set(0);
+		
 
 	}
+	
 
 	public void stop() {
 

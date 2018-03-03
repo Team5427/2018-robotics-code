@@ -46,11 +46,11 @@ public class Robot extends IterativeRobot{
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 	public static DriveTrain driveTrain;
-	SpeedController motor_pwm_frontLeft;
-	SpeedController motor_pwm_rearLeft;
+	public static SpeedController motor_pwm_frontLeft;
+	public static SpeedController motor_pwm_rearLeft;
 	SpeedControllerGroup speedcontrollergroup_left;
-	SpeedController motor_pwm_frontRight;
-	SpeedController motor_pwm_rearRight;
+	public static SpeedController motor_pwm_frontRight;
+	public static SpeedController motor_pwm_rearRight;
 	SpeedControllerGroup speedcontrollergroup_right;
 	DifferentialDrive drive;
 	DriveWithJoystick dwj;

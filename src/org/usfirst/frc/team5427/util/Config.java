@@ -44,12 +44,12 @@ public class Config {
 												// with this false
 	
 	/*----------PWM PORTS-----------*/
-	public static final int FRONT_RIGHT_MOTOR = 0; //3
-	public static final int REAR_RIGHT_MOTOR = 1; //2
-	public static final int FRONT_LEFT_MOTOR = 2; //1
-	public static final int REAR_LEFT_MOTOR = 3; //0
-	public static final int INTAKE_MOTOR_LEFT = 6;
-	public static final int INTAKE_MOTOR_RIGHT = 5;
+	public static final int FRONT_RIGHT_MOTOR = 3; //3
+	public static final int REAR_RIGHT_MOTOR = 2; //2
+	public static final int FRONT_LEFT_MOTOR = 1; //1
+	public static final int REAR_LEFT_MOTOR = 0; //0
+	public static final int INTAKE_MOTOR_LEFT = 7;
+	public static final int INTAKE_MOTOR_RIGHT = 9;
 	public static final int ELEVATOR_MOTOR = 8;
 	public static final int CLIMBER_MOTOR = 4;
 
@@ -65,9 +65,9 @@ public class Config {
 
 	/*-------------Motor Speeds-------------------*/
 	public static final double INTAKE_MOTOR_SPEED_IN = 0.3;
-	public static final double INTAKE_MOTOR_SPEED_OUT = -0.3;
-	public static final double INTAKE_MOTOR_SPEED_REVERSE = -0.3;
-	public static final double ELEVATOR_MOTOR_SPEED_UP=1.0;
+	public static final double INTAKE_MOTOR_SPEED_OUT = -1.0;
+	public static final double INTAKE_MOTOR_SPEED_REVERSE = -1.0;
+	public static final double ELEVATOR_MOTOR_SPEED_UP=.5;
 	public static final double ELEVATOR_MOTOR_SPEED_DOWN=-.5;
 	public static final double CLIMBER_MOTOR_SPEED_UP=0.3;
 	public static final double CLIMBER_MOTOR_SPEED_DOWN=-0.3;
