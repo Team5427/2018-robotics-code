@@ -32,7 +32,7 @@ public class MoveElevatorDown extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.motorPWM_Elevator.set(-Config.ELEVATOR_MOTOR_SPEED_DOWN);
+		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_DOWN);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

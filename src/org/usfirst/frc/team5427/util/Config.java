@@ -48,14 +48,11 @@ public class Config {
 	public static final int REAR_RIGHT_MOTOR = 1; //2
 	public static final int FRONT_LEFT_MOTOR = 2; //1
 	public static final int REAR_LEFT_MOTOR = 3; //0
-	public static final int INTAKE_MOTOR_LEFT = 6;
-	public static final int INTAKE_MOTOR_RIGHT = 5;
-	public static final int ELEVATOR_MOTOR = 4;
+//	public static final int INTAKE_MOTOR_LEFT = 6;
+//	public static final int INTAKE_MOTOR_RIGHT = 5;
+	public static final int ELEVATOR_MOTOR = 8;
 	public static final int CLIMBER_MOTOR = 4;
 
-	/*----------Speeds----------*/
-	public static final double INTAKE_SPEED_FORWARD = .3;
-	public static final double INTAKE_SPEED_REVERSE = -.3;
 	
 	
 	/*--------Timeouts------*/
@@ -69,8 +66,8 @@ public class Config {
 	/*-------------Motor Speeds-------------------*/
 	public static final double INTAKE_MOTOR_SPEED_IN = 0.3;
 	public static final double INTAKE_MOTOR_SPEED_OUT = -0.3;
-	public static final double ELEVATOR_MOTOR_SPEED_UP=0.3;
-	public static final double ELEVATOR_MOTOR_SPEED_DOWN=-0.3;
+	public static final double ELEVATOR_MOTOR_SPEED_UP=1.0;
+	public static final double ELEVATOR_MOTOR_SPEED_DOWN=-.5;
 	public static final double CLIMBER_MOTOR_SPEED_UP=0.3;
 	public static final double CLIMBER_MOTOR_SPEED_DOWN=-0.3;
 	

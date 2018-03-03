@@ -61,7 +61,7 @@ public class Robot extends IterativeRobot{
 	public static SpeedController motorPWM_Intake_Left;
 	public static SpeedController motorPWM_Intake_Right;
 	public static SpeedController motorPWM_Elevator;
-	public static SpeedController motorPWM_Climber;
+//	public static SpeedController motorPWM_Climber;
 	public static Intake intakeSubsystem;
 	public static Encoder encLeft;
 	public static Encoder encRight;
@@ -127,31 +127,30 @@ public class Robot extends IterativeRobot{
 		driveTrain = new DriveTrain(speedcontrollergroup_left, speedcontrollergroup_right, drive);
 
 //		Log.init("Initializing intake motors: ");
-		motorPWM_Intake_Left = new PWMVictorSPX(Config.INTAKE_MOTOR_LEFT);
-		motorPWM_Intake_Right = new PWMVictorSPX(Config.INTAKE_MOTOR_RIGHT);
-		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
+//		motorPWM_Intake_Left = new PWMVictorSPX(Config.INTAKE_MOTOR_LEFT);
+//		motorPWM_Intake_Right = new PWMVictorSPX(Config.INTAKE_MOTOR_RIGHT);
+//		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
 		
-		motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
 		
-		motorPWM_Climber = new SteelTalon(Config.CLIMBER_MOTOR);
+//		motorPWM_Climber = new SteelTalon(Config.CLIMBER_MOTOR);
 		
-		try {
-			ahrs = new AHRS(SPI.Port.kMXP);
-		}
-		catch (RuntimeException ex) {
-			DriverStation.reportError("Error instantiating navX-MXP: " + ex.getMessage(), true);
-		}
-		encLeft = new Encoder(Config.FRONT_LEFT_MOTOR, Config.REAR_LEFT_MOTOR, false, Encoder.EncodingType.k4X);
-		encRight = new Encoder(Config.FRONT_RIGHT_MOTOR, Config.REAR_RIGHT_MOTOR, false, Encoder.EncodingType.k4X);
-		// Set the Encoder to diameter*pi/360 inches per pulse (each pulse is a degree)
-		encRight.setDistancePerPulse((6 * Math.PI / 360));
-		encLeft.setDistancePerPulse((6 * Math.PI / 360));
-		
+//		try {
+//			ahrs = new AHRS(SPI.Port.kMXP);
+//		}
+//		catch (RuntimeException ex) {
+//			DriverStation.reportError("Error instantiating navX-MXP: " + ex.getMessage(), true);
+//		}
+//		encLeft = new Encoder(Config.FRONT_LEFT_MOTOR, Config.REAR_LEFT_MOTOR, false, Encoder.EncodingType.k4X);
+//		encRight = new Encoder(Config.FRONT_RIGHT_MOTOR, Config.REAR_RIGHT_MOTOR, false, Encoder.EncodingType.k4X);
+//		// Set the Encoder to diameter*pi/360 inches per pulse (each pulse is a degree)
+//		encRight.setDistancePerPulse((6 * Math.PI / 360));
+//		encLeft.setDistancePerPulse((6 * Math.PI / 360));
+//		
 
 
 
 //		Log.init("Initializing Subsystems: ");
-		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
+//		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
 
 		// need info of ports
 //		Log.init("Initializing Encoders: ");
@@ -173,22 +172,22 @@ public class Robot extends IterativeRobot{
 	 */
 	@Override
 	public void disabledInit() {
-		encRight.reset();
-		encLeft.reset();
-		ahrs.reset();
-		SmartDashboard.putNumber("encRightVal", encRight.getDistance());
-		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
-		SmartDashboard.putNumber("encRight", encRight.getDistance());
-		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
+////		encRight.reset();
+////		encLeft.reset();
+////		ahrs.reset();
+//		SmartDashboard.putNumber("encRightVal", encRight.getDistance());
+//		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
+//		SmartDashboard.putNumber("encRight", encRight.getDistance());
+//		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 	}
 
 	@Override
 	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("encRightVal", encRight.getDistance());
-		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
-		SmartDashboard.putNumber("encRight", encRight.getDistance());
-		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
+//		Scheduler.getInstance().run();
+//		SmartDashboard.putNumber("encRightVal", encRight.getDistance());
+//		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
+//		SmartDashboard.putNumber("encRight", encRight.getDistance());
+//		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 	}
 
 	/**
@@ -205,10 +204,10 @@ public class Robot extends IterativeRobot{
 	 */
 	@Override
 	public void autonomousInit() {
-		encRight.reset();
-		encLeft.reset();
-		ahrs.reset();
-//		gameData = DriverStation.getInstance().getGameSpecificMessage();
+//		encRight.reset();
+//		encLeft.reset();
+//		ahrs.reset();
+////		gameData = DriverStation.getInstance().getGameSpecificMessage();
 //		switchSide = gameData.charAt(0);
 //		scaleSide = gameData.charAt(1);
 //		field_position = oi.autoPositionChooser.getSelected();
@@ -258,8 +257,8 @@ public class Robot extends IterativeRobot{
 		// Not fully functional:
 		// Left_SwitchIsRight- Takes too long
 		// 
-		autoPath = new Right_SwitchIsLeft();
-		autoPath.start();
+//		autoPath = new Right_SwitchIsLeft();
+//		autoPath.start();
 	}
 
 	/**
@@ -280,8 +279,8 @@ public class Robot extends IterativeRobot{
 			m_autonomousCommand.cancel();
 		}
 
-		encRight.reset();
-		encLeft.reset();
+//		encRight.reset();
+//		encLeft.reset();
 		dwj = new DriveWithJoystick();
 		dwj.start();		
 		/*encRight.reset();
