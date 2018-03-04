@@ -54,6 +54,9 @@ public class Config {
 	public static final int CLIMBER_MOTOR = 4;
 
 	
+	/*----------DIO PORTS-----------*/
+	public static final int ENCODER_LEFT_CHANNEL_A=0;
+	public static final int ENCODER_LEFT_CHANNEL_B=1;
 	
 	/*--------Timeouts------*/
 	public static final double AUTO_INTAKE_TIMEOUT = 2;

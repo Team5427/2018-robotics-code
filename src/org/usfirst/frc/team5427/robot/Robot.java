@@ -91,7 +91,6 @@ public class Robot extends IterativeRobot{
 	public double pidLeftI;
 	public double pidLeftD;
 
-	//double startTime;
 	double rotateToAngleRate=0;
 	double rightMotorSpeed = 0;
 	double leftMotorSpeed = 0;
@@ -137,17 +136,17 @@ public class Robot extends IterativeRobot{
 		
 //		motorPWM_Climber = new SteelTalon(Config.CLIMBER_MOTOR);
 		
-//		try {
-//			ahrs = new AHRS(SPI.Port.kMXP);
-//		}
-//		catch (RuntimeException ex) {
-//			DriverStation.reportError("Error instantiating navX-MXP: " + ex.getMessage(), true);
-//		}
-//		encLeft = new Encoder(Config.FRONT_LEFT_MOTOR, Config.REAR_LEFT_MOTOR, false, Encoder.EncodingType.k4X);
+		try {
+			ahrs = new AHRS(SPI.Port.kMXP);
+		}
+		catch (RuntimeException ex) {
+			DriverStation.reportError("Error instantiating navX-MXP: " + ex.getMessage(), true);
+		}
+		encLeft = new Encoder(Config.ENCODER_LEFT_CHANNEL_A, Config.ENCODER_LEFT_CHANNEL_B, false, Encoder.EncodingType.k4X);
 //		encRight = new Encoder(Config.FRONT_RIGHT_MOTOR, Config.REAR_RIGHT_MOTOR, false, Encoder.EncodingType.k4X);
 //		// Set the Encoder to diameter*pi/360 inches per pulse (each pulse is a degree)
 //		encRight.setDistancePerPulse((6 * Math.PI / 360));
-//		encLeft.setDistancePerPulse((6 * Math.PI / 360));
+		encLeft.setDistancePerPulse((6 * Math.PI / 360));
 //		
 
 
@@ -171,21 +170,21 @@ public class Robot extends IterativeRobot{
 	@Override
 	public void disabledInit() {
 ////		encRight.reset();
-////		encLeft.reset();
-////		ahrs.reset();
+		encLeft.reset();
+		ahrs.reset();
 //		SmartDashboard.putNumber("encRightVal", encRight.getDistance());
-//		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
+		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
 //		SmartDashboard.putNumber("encRight", encRight.getDistance());
-//		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
+		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 	}
 
 	@Override
 	public void disabledPeriodic() {
 //		Scheduler.getInstance().run();
 //		SmartDashboard.putNumber("encRightVal", encRight.getDistance());
-//		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
+		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
 //		SmartDashboard.putNumber("encRight", encRight.getDistance());
-//		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
+		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 	}
 
 	/**
@@ -203,8 +202,8 @@ public class Robot extends IterativeRobot{
 	@Override
 	public void autonomousInit() {
 //		encRight.reset();
-//		encLeft.reset();
-//		ahrs.reset();
+		encLeft.reset();
+		ahrs.reset();
 ////		gameData = DriverStation.getInstance().getGameSpecificMessage();
 //		switchSide = gameData.charAt(0);
 //		scaleSide = gameData.charAt(1);
@@ -247,7 +246,6 @@ public class Robot extends IterativeRobot{
 //		}
 //		
 //		autoPath.start();
-//		Fidget f = new Fidget();
 		f= new Fidget();
 		f.start();
 		b=false;
