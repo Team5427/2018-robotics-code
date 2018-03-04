@@ -21,6 +21,8 @@ import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import org.usfirst.frc.team5427.autoCommands.*;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
+import org.usfirst.frc.team5427.robot.commands.Fidget;
+import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
 import org.usfirst.frc.team5427.robot.commands.PIDTurn;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
@@ -245,7 +247,10 @@ public class Robot extends IterativeRobot{
 //		}
 //		
 //		autoPath.start();
-
+//		Fidget f = new Fidget();
+		f= new Fidget();
+		f.start();
+		b=false;
 		
 		// Tested and fully functional (within 15 seconds):
 		// Center_SwitchIsLeft, Center_SwitchIsRight, Left_SwitchIsLeft,
@@ -256,13 +261,20 @@ public class Robot extends IterativeRobot{
 //		autoPath = new Right_SwitchIsLeft();
 //		autoPath.start();
 	}
-
+	boolean b = false;
+	Fidget f;
 	/**
 	 * This function is called periodically during autonomous.
 	 */
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		if(f.isFinished() &&!b)
+		{
+			new MoveElevatorAuto(1).start();
+			b=true;
+		}
+
 	}
 
 	@Override

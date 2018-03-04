@@ -24,14 +24,18 @@ public class MoveElevatorAuto extends Command {
 	
 	public MoveElevatorAuto(int height) {
 		this.height = height;
-		timer = new Timer();
+//		timer = new Timer();
+		if(1==height)
+			this.setTimeout(Config.ELEVATOR_TIME_SWITCH);
+		if(2==height)
+			this.setTimeout(Config.ELEVATOR_TIME_SCALE);
 		//requires(Robot.kExampleSubsystem);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		timer.start();
+//		timer.start();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -39,10 +43,10 @@ public class MoveElevatorAuto extends Command {
 	protected void execute() {
 		
 		if(height == 1) {
-			Robot.motorPWM_Elevator.set(.3);
+			Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
 		}
 		else if(height == 2) {
-			Robot.motorPWM_Elevator.set(.3);
+			Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
 		}
 	}
 
@@ -50,9 +54,10 @@ public class MoveElevatorAuto extends Command {
 	@Override
 	protected boolean isFinished() {
 		// TODO change Config values for time
-		if((height == 1 && timer.get() > Config.ELEVATOR_TIME_SWITCH) || (height == 2 && timer.get() > Config.ELEVATOR_TIME_SCALE))
-			return true;
-		return false;
+//		if((height == 1 && timer.get() > Config.ELEVATOR_TIME_SWITCH) || (height == 2 && timer.get() > Config.ELEVATOR_TIME_SCALE))
+//			return true;
+//		return false;
+		return isTimedOut();
 	}
 
 	// Called once after isFinished returns true

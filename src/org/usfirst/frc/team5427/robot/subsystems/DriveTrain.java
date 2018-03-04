@@ -39,7 +39,7 @@ public class DriveTrain extends Subsystem {
 		
 		// double speed = Math.abs(joy.getY()) > 0.05 ? joy.getY() : 0f;
 
-		drive.arcadeDrive(-joy.getY(), joy.getZ());
+		drive.arcadeDrive(-joy.getY(), joy.getZ()*.75);
 
 		
 		//TODO use these to sort of disable some of the motors

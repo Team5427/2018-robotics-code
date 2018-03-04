@@ -67,14 +67,14 @@ public class Config {
 	public static final double INTAKE_MOTOR_SPEED_IN = 0.3;
 	public static final double INTAKE_MOTOR_SPEED_OUT = -1.0;
 	public static final double INTAKE_MOTOR_SPEED_REVERSE = -1.0;
-	public static final double ELEVATOR_MOTOR_SPEED_UP=.5;
-	public static final double ELEVATOR_MOTOR_SPEED_DOWN=-.5;
+	public static final double ELEVATOR_MOTOR_SPEED_UP=0.8; //this speed is final
+	public static final double ELEVATOR_MOTOR_SPEED_DOWN=-.5; ///this speed is final
 	public static final double CLIMBER_MOTOR_SPEED_UP=0.3;
 	public static final double CLIMBER_MOTOR_SPEED_DOWN=-0.3;
 	
 	
 	/* ----------Joystick Buttons---------- */
-	public static final int BUTTON_MOTOR_INTAKE_IN = 2;//nOTE: BUTTTON 3 LAGS
+	public static final int BUTTON_MOTOR_INTAKE_IN = 7;//NOTE: BUTTTONS 3 and 8 LAG
 	public static final int BUTTON_MOTOR_INTAKE_OUT = 1;
 //	
 //	public static final int BUTTON_SOLENOD_INTAKE = 2;
@@ -105,8 +105,8 @@ public class Config {
 	public static final double DRIVE_SPEED_INCREMENT_VALUE=.01;
 	public static final double DRIVE_INCREMENT_WAIT_VALUE=.01;
 	
-	public static final double ELEVATOR_TIME_SWITCH = 4; // TODO change to actual value (seconds)
-	public static final double ELEVATOR_TIME_SCALE = 0;
+	public static final double ELEVATOR_TIME_SWITCH = 1.0; // TODO change to actual value (seconds)
+	public static final double ELEVATOR_TIME_SCALE = 1.0;
 	
 	
 	/*-------------PID VALUES------------------*/
