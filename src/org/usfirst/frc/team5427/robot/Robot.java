@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
@@ -78,6 +79,8 @@ public class Robot extends IterativeRobot{
 	public PIDStraightMovement moveToDistance;
 	public PIDStraightMovement pi;
 	public static AHRS ahrs;
+	public static DigitalInput elevatorLimitSwitchUp;
+	public static DigitalInput elevatorLimitSwitchDown;
 
 	/**
 	 * values used for PID loops
@@ -118,6 +121,8 @@ public class Robot extends IterativeRobot{
 		// Config.PCM_SOLENOID_REVERSE);
 		
 //		Log.init("Initializing driveTrain: ");
+		elevatorLimitSwitchUp = new DigitalInput(Config.ELEVATOR_LIMIT_SWITCH_UP);
+		elevatorLimitSwitchDown = new DigitalInput(Config.ELEVATOR_LIMIT_SWITCH_DOWN);
 		motor_pwm_frontLeft = new PWMVictorSPX(Config.FRONT_LEFT_MOTOR);
 		motor_pwm_rearLeft = new PWMVictorSPX(Config.REAR_LEFT_MOTOR);
 		speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);

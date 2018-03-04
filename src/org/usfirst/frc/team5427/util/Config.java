@@ -72,6 +72,8 @@ public class Config {
 	public static final double CLIMBER_MOTOR_SPEED_UP=0.3;
 	public static final double CLIMBER_MOTOR_SPEED_DOWN=-0.3;
 	
+	public static final int ELEVATOR_LIMIT_SWITCH_UP = 0;
+	public static final int ELEVATOR_LIMIT_SWITCH_DOWN = 0;
 	
 	/* ----------Joystick Buttons---------- */
 	public static final int BUTTON_MOTOR_INTAKE_IN = 7;//NOTE: BUTTTONS 3 and 8 LAG

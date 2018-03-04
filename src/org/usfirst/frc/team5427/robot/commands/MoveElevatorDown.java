@@ -38,10 +38,9 @@ public class MoveElevatorDown extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		System.out.print("checking fin");
-
-			return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_ELEVATOR_DOWN);
-		
+		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_ELEVATOR_DOWN) || Robot.elevatorLimitSwitchDown.get())
+			return true;
+		return false;
 	}
 
 	// Called once after isFinished returns true
