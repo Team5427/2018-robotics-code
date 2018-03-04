@@ -11,12 +11,19 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.cscore.AxisCamera;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Talon;
+
+import org.usfirst.frc.team5427.robot.OI;
 import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import org.usfirst.frc.team5427.autoCommands.*;
@@ -96,6 +103,10 @@ public class Robot extends IterativeRobot{
 	double leftMotorSpeed = 0;
 
 
+	public static CameraServer camServer;
+	public static UsbCamera usbCam;
+	public static AxisCamera axisCam;
+	
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
@@ -159,6 +170,24 @@ public class Robot extends IterativeRobot{
 		//encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
 		//encLeft = new Encoder(2,3,false,Encoder.EncodingType.k4X);
 
+		
+		camServer = CameraServer.getInstance();
+		
+//		usbCam = new UsbCamera("USB Camera",0);
+//		usbCam.setFPS(15);
+//		camServer.addCamera(usbCam);
+		
+//		camServer.startAutomaticCapture(usbCam);
+		
+		axisCam = new AxisCamera("Axis Camera", "10.54.27.11");
+		axisCam.setFPS(15);
+		camServer.addAxisCamera("Axis Camera","10.54.27.11");
+		
+		camServer.startAutomaticCapture(axisCam);
+		
+		camServer.addServer("USB Camera Server");
+//		camServer.putVideo("USB Camera",100,100);
+//		
 		oi = new OI();
 	}
 
