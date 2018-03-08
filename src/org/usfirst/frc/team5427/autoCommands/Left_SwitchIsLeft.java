@@ -14,7 +14,11 @@ public class Left_SwitchIsLeft extends AutoPath {
 	private PIDTurn firstAngle;
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
+	private double startTime, currentTime;
 
+	//Times
+	public static final double timeOut1 = 0;
+	
 	//Values for 154 inches.
 	public static final double p1 = 0.025;//0.0188
 	public static final double i1 = 0.0;
@@ -28,7 +32,6 @@ public class Left_SwitchIsLeft extends AutoPath {
 	public Left_SwitchIsLeft() {
 		// creates all of the PID Commands
 		fidget = new Fidget();
-//		fidget = null;
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 154, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
 		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 6, p2, i2, d2);
@@ -37,13 +40,14 @@ public class Left_SwitchIsLeft extends AutoPath {
 
 	// begins the command
 	public void initialize() {
+		startTime = System.nanoTime()/1000000000.;
 		fidget.start();		
-//		firstDistance.start();
 	}
 
 	// uses the previous commands being null to check if a certain command needs to
 	// be started or not
 	public void execute() {
+		currentTime = System.nanoTime()/1000000000.;
 		
 		// If firstDistance is null and firstAngle isFinished && not null
 		// and the secondDistance Command is not running, run the secondDistance Command
@@ -59,7 +63,7 @@ public class Left_SwitchIsLeft extends AutoPath {
 		
 		// If firstDistance is NOT null and firstDistance isFinished
 		// and the firstAngle Command is not running, run the firstAngle Command
-		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+		else if ((null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) || currentTime - startTime > timeOut1) {
 			System.out.println("Part 1 Done.");
 			firstDistance.cancel();
 			firstDistance = null;
@@ -86,7 +90,7 @@ public class Left_SwitchIsLeft extends AutoPath {
 		// returns if the last distance has finished and the robot has shot the box
 		if (firstAngle == null && secondDistance.isFinished())
 			return true;
-		return false;
+		return false; 
 		
 //		if (firstDistance != null)
 //			return firstDistance.isFinished();
