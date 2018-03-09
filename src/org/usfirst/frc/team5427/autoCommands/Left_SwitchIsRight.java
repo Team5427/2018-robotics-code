@@ -14,7 +14,12 @@ public class Left_SwitchIsRight extends AutoPath {
 	private PIDTurn firstAngle, secondAngle;
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
-
+	private double startTime, currentTime;
+	
+	//Times
+	public static final double timeOut1 = 0;
+	public static final double timeOut2 = 0;
+	
 	//Values for 241 inches.
 	public static final double p1 = 0.011;
 	public static final double i1 = 0.0;
@@ -39,16 +44,18 @@ public class Left_SwitchIsRight extends AutoPath {
 	public void initialize() {
 		fidget.start();		
 //		firstDistance.start();
+		startTime = System.nanoTime()/1000000000.;
 	}
 
 	// uses the previous commands being null to check if a certain command needs to
 	// be started or not
 	public void execute() {
+		currentTime = System.nanoTime()/1000000000.;
 		
 		// If firstDistance, first angle are all null and secondDistance isFinished &&
 		// not null
 		// and the secondAngle Command is not running, run the secondAngle Command
-		if (null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning()) {
+		if ((null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning()) || currentTime - startTime > timeOut2) {
 			System.out.println("Part 3 Done.");
 			secondDistance.cancel();
 			secondDistance = null;
@@ -71,7 +78,7 @@ public class Left_SwitchIsRight extends AutoPath {
 		
 		// If firstDistance is NOT null and firstDistance isFinished
 		// and the firstAngle Command is not running, run the firstAngle Command
-		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+		else if ((null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) || currentTime - startTime > timeOut2) {
 			System.out.println("Part 1 Done.");
 			firstDistance.cancel();
 			firstDistance = null;
