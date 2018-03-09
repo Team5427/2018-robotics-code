@@ -15,6 +15,13 @@ public class Right_SwitchIsRight extends AutoPath {
 	private PIDTurn firstAngle;
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
+	
+	//the start and current time of the auto path in seconds
+	private double startTime, currentTime;
+	
+	//Times TODO: test for times
+	public static final double timeOut1 = 0;
+	public static final double timeOut2 = 0;
 
 	//Values for 154 inches.
 	public static final double p1 = 0.021; //0.0188
@@ -38,6 +45,7 @@ public class Right_SwitchIsRight extends AutoPath {
 
 	// begins the command
 	public void initialize() {
+		startTime = System.nanoTime()/1000000000.;
 		fidget.start();		
 //		firstDistance.start();
 	}
@@ -45,7 +53,7 @@ public class Right_SwitchIsRight extends AutoPath {
 	// uses the previous commands being null to check if a certain command needs to
 	// be started or not
 	public void execute() {
-		
+		currentTime = System.nanoTime()/1000000000.;
 		// If firstDistance is null and firstAngle isFinished && not null
 		// and the secondDistance Command is not running, run the secondDistance Command
 		if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !secondDistance.isRunning()) {
@@ -60,7 +68,7 @@ public class Right_SwitchIsRight extends AutoPath {
 		
 		// If firstDistance is NOT null and firstDistance isFinished
 		// and the firstAngle Command is not running, run the firstAngle Command
-		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning()) || currentTime - startTime > timeOut1) {
 			System.out.println("Part 1 Done.");
 			firstDistance.cancel();
 			firstDistance = null;
@@ -85,7 +93,7 @@ public class Right_SwitchIsRight extends AutoPath {
 	@Override
 	public boolean isFinished() {
 		// returns if the last distance has finished and the robot has shot the box
-		if (firstAngle == null && secondDistance.isFinished())
+		if (firstAngle == null && secondDistance.isFinished() || currentTime - startTime > timeOut2)
 			return true;
 		return false;
 		

@@ -15,6 +15,13 @@ public class Right_SwitchIsLeft extends AutoPath {
 	private PIDTurn firstAngle, secondAngle;
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
+	
+	//the start and current time of the auto path in seconds
+	private double startTime, currentTime;
+	
+	//Times TODO: test for times
+	public static final double timeOut1 = 0;
+	public static final double timeOut2 = 0;
 
 	//Values for 211 inches.
 	public static final double p1 = 0.025;
@@ -39,6 +46,7 @@ public class Right_SwitchIsLeft extends AutoPath {
 
 	// begins the command
 	public void initialize() {
+		startTime = System.nanoTime()/1000000000.;
 		fidget.start();		
 //		firstDistance.start();
 	}
@@ -46,11 +54,11 @@ public class Right_SwitchIsLeft extends AutoPath {
 	// uses the previous commands being null to check if a certain command needs to
 	// be started or not
 	public void execute() {
-		
+		currentTime = System.nanoTime()/1000000000.;
 		// If firstDistance, first angle are all null and secondDistance isFinished &&
 		// not null
 		// and the secondAngle Command is not running, run the secondAngle Command
-		if (null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning()) {
+		if (null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning() || currentTime - startTime > timeOut2) {
 			System.out.println("Part 3 Done.");
 			secondDistance.cancel();
 			secondDistance = null;
@@ -74,7 +82,7 @@ public class Right_SwitchIsLeft extends AutoPath {
 		
 		// If firstDistance is NOT null and firstDistance isFinished
 		// and the firstAngle Command is not running, run the firstAngle Command
-		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning()) || currentTime - startTime > timeOut1) {
 			System.out.println("Part 1 Done.");
 			firstDistance.cancel();
 			firstDistance = null;

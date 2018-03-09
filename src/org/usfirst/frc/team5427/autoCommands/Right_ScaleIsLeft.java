@@ -15,6 +15,14 @@ public class Right_ScaleIsLeft extends AutoPath {
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
 	
+	//the start and current time of the auto path in seconds
+	private double startTime, currentTime;
+	
+	//Times TODO: test for times
+	public static final double timeOut1 = 0;
+	public static final double timeOut2 = 0;
+	public static final double timeOut3 = 0;
+	
 	// Values for 211 inches.
 	public static final double p1 = 0.025;
 	public static final double i1 = 0.0;
@@ -45,6 +53,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 
 	// begins the command
 	public void initialize() {
+		startTime = System.nanoTime()/1000000000.;
 		fidget.start();
 		// firstDistance.start();
 	}
@@ -52,7 +61,8 @@ public class Right_ScaleIsLeft extends AutoPath {
 	// uses the previous commands being null to check if a certain command needs to
 	// be started or not
 	public void execute() {
-		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == secondAngle && null != thirdDistance && thirdDistance.isFinished() && !(thirdAngle.isRunning())) {
+		currentTime = System.nanoTime()/1000000000.;
+		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == secondAngle && null != thirdDistance && thirdDistance.isFinished() && !(thirdAngle.isRunning()) || currentTime - startTime > timeOut3) {
 			System.out.println("Part 5 Done.");
 			thirdDistance.cancel();
 			thirdDistance = null;
@@ -76,7 +86,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 		// If firstDistance, first angle are all null and secondDistance isFinished &&
 		// not null
 		// and the secondAngle Command is not running, run the secondAngle Command
-		else if (null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning()) {
+		else if (null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning() || currentTime - startTime > timeOut2) {
 			System.out.println("Part 3 Done.");
 			secondDistance.cancel();
 			secondDistance = null;
@@ -98,7 +108,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 		}
 		// If firstDistance is NOT null and firstDistance isFinished
 		// and the firstAngle Command is not running, run the firstAngle Command
-		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning()) || currentTime - startTime > timeOut1) {
 			System.out.println("Part 1 Done.");
 			firstDistance.cancel();
 			firstDistance = null;
