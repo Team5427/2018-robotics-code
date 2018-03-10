@@ -64,7 +64,7 @@ public class MoveElevatorAuto extends Command {
 	@Override
 	protected void end() {
 		Robot.motorPWM_Elevator.set(0);
-		timer.reset();
+//		timer.reset();
 	}
 
 	// Called when another command which requires one or more of the same
@@ -73,6 +73,6 @@ public class MoveElevatorAuto extends Command {
 	protected void interrupted() {
 //		Robot.motorPWM_Elevator.disable();
 		Robot.motorPWM_Elevator.set(0);
-		timer.reset();
+//		timer.reset();
 	}
 }

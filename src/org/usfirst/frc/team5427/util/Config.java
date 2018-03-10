@@ -75,8 +75,8 @@ public class Config {
 	public static final double CLIMBER_MOTOR_SPEED_UP=0.3;
 	public static final double CLIMBER_MOTOR_SPEED_DOWN=-0.3;
 	
-	public static final int ELEVATOR_LIMIT_SWITCH_UP = 0;
-	public static final int ELEVATOR_LIMIT_SWITCH_DOWN = 0;
+	public static final int ELEVATOR_LIMIT_SWITCH_UP = 5;
+	public static final int ELEVATOR_LIMIT_SWITCH_DOWN = 3;
 	
 	/* ----------Joystick Buttons---------- */
 	public static final int BUTTON_MOTOR_INTAKE_IN = 7;//NOTE: BUTTTONS 3 and 8 LAG
@@ -110,18 +110,18 @@ public class Config {
 	public static final double DRIVE_SPEED_INCREMENT_VALUE=.01;
 	public static final double DRIVE_INCREMENT_WAIT_VALUE=.01;
 	
-	public static final double ELEVATOR_TIME_SWITCH = 1.0; // TODO change to actual value (seconds)
-	public static final double ELEVATOR_TIME_SCALE = 1.0;
+	public static final double ELEVATOR_TIME_SWITCH = .10; // TODO change to actual value (seconds)
+	public static final double ELEVATOR_TIME_SCALE = .10;
 	
 	
 	/*-------------PID VALUES------------------*/
 	//former p = .085, i = .008333, d = .001042
 	
 	//for straight no d, for turn no i
-	public static final double PID_STRAIGHT_P = 0.05;
+	public static final double PID_STRAIGHT_P = 0.25;//0.05;
 	//.005 started oscilating
-	public static final double PID_STRAIGHT_I = 0.0025;
-	public static final double PID_STRAIGHT_D = 0.00;
+	public static final double PID_STRAIGHT_I = 0;//0.0025;
+	public static final double PID_STRAIGHT_D = 0.05;//0.00;
 	public static final double PID_STRAIGHT_POWER_SHORT = 0.35;
 	public static final double PID_STRAIGHT_POWER_LONG = 0.5;
 
@@ -178,6 +178,7 @@ public class Config {
 	public static final int LEFT = 3;
 	public static final int SWITCH = 1;
 	public static final int SCALE = 2;
+	public static final double PID_UPDATE_PERIOD = 0.01;
 	
 	
 	

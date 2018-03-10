@@ -48,7 +48,7 @@ public class Right_ScaleIsRight extends AutoPath {
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			firstAngle.start();
 		}
 		else if(null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
@@ -57,7 +57,7 @@ public class Right_ScaleIsRight extends AutoPath {
 			fidget = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			firstDistance.start();
 			moveElevator.start();
 		}

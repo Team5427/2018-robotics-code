@@ -58,7 +58,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 			thirdDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			thirdAngle.start();
 		}
 		// If firstDistance, first angle, and secondDistance are all null and
@@ -70,7 +70,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 			secondAngle = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			thirdDistance.start();
 		}
 		// If firstDistance, first angle are all null and secondDistance isFinished &&
@@ -82,7 +82,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 			secondDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			secondAngle.start();
 		}
 		// If firstDistance is null and firstAngle isFinished && not null
@@ -93,7 +93,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 			firstAngle = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			secondDistance.start();
 		}
 		// If firstDistance is NOT null and firstDistance isFinished
@@ -104,7 +104,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			firstAngle.start();
 		}
 		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
@@ -113,7 +113,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 			fidget = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			firstDistance.start();
 			moveElevator.start();
 		}

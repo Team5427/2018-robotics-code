@@ -45,7 +45,7 @@ public class Left_ScaleIsLeft extends AutoPath {
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			firstAngle.start();
 		}
 		
@@ -55,7 +55,7 @@ public class Left_ScaleIsLeft extends AutoPath {
 			fidget = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			firstDistance.start();
 			moveElevator.start();
 		}

@@ -33,7 +33,7 @@ public class Right_SwitchIsRight extends AutoPath {
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 154, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
 		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 6, p2, i2, d2);
-		moveElevator = new MoveElevatorAuto(1); // 1 for switch
+		//moveElevator = new MoveElevatorAuto(1); // 1 for switch
 	}
 
 	// begins the command
@@ -54,7 +54,7 @@ public class Right_SwitchIsRight extends AutoPath {
 			firstAngle = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			secondDistance.start();
 		}
 		
@@ -66,7 +66,7 @@ public class Right_SwitchIsRight extends AutoPath {
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			firstAngle.start();
 		}
 		
@@ -76,9 +76,9 @@ public class Right_SwitchIsRight extends AutoPath {
 			fidget = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			firstDistance.start();
-			moveElevator.start();
+			//moveElevator.start();
 		}
 	}
 

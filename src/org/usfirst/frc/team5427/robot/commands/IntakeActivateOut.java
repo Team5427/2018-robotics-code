@@ -46,6 +46,7 @@ public class IntakeActivateOut extends Command
 	protected void execute()
 	{
 //		Log.info("Intake being executed");
+//		if(Robot.motorPWM_Intake_Left.get)
 		Robot.intakeSubsystem.setSpeed(Config.INTAKE_MOTOR_SPEED_OUT);
 //		if(Robot.oi.joy1.getThrottle()<0) {
 //			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
@@ -61,7 +62,7 @@ public class IntakeActivateOut extends Command
 	@Override
 	protected boolean isFinished()
 	{
-		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_OUT))//TODO change to Config
+		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_OUT))
 			return true;
 		return false;
 	}
@@ -69,7 +70,8 @@ public class IntakeActivateOut extends Command
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.intakeSubsystem.stop();
+		Robot.intakeSubsystem.setSpeed(0);
+//		this.free();
 	}
 
 	// Called when another command which requires one or more of the same

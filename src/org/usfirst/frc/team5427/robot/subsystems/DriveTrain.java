@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.util.SameLine;
 
 
@@ -32,12 +33,12 @@ public class DriveTrain extends Subsystem {
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-//		setDefaultCommand(new DriveWithJoystick());
+		setDefaultCommand(new DriveWithJoystick());
 	}
 
 	public void takeJoystickInputs(Joystick joy) {
 		
-		// double speed = Math.abs(joy.getY()) > 0.05 ? joy.getY() : 0f;
+		 double speed = Math.abs(joy.getY()) > 0.05 ? joy.getY() : 0f;
 
 		drive.arcadeDrive(-joy.getY(), joy.getZ()*.75);
 

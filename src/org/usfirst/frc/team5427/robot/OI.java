@@ -89,8 +89,8 @@ public class OI {
 //        
        // solenoidIntake.whenPressed(new IntakeSolenoidSwitch());
         
-        elevatorUp.whenPressed(new MoveElevatorUp());
-        elevatorDown.whenPressed(new MoveElevatorDown());
+        elevatorUp.whenPressed(Robot.mou);
+        elevatorDown.whenPressed(Robot.mod);
 //        
 //        climberUp.whenPressed(new MoveClimberUp());
 //        climberDown.whenPressed(new MoveClimberDown());

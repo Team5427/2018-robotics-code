@@ -56,7 +56,7 @@ public class Right_SwitchIsLeft extends AutoPath {
 			secondDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			secondAngle.start();
 		}
 		
@@ -68,7 +68,7 @@ public class Right_SwitchIsLeft extends AutoPath {
 			firstAngle = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			secondDistance.start();
 		}
 		
@@ -80,7 +80,7 @@ public class Right_SwitchIsLeft extends AutoPath {
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			firstAngle.start();
 		}
 		
@@ -90,7 +90,7 @@ public class Right_SwitchIsLeft extends AutoPath {
 			fidget = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			firstDistance.start();
 			moveElevator.start();
 		}

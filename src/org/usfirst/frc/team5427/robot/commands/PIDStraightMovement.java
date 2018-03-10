@@ -79,7 +79,7 @@ public class PIDStraightMovement extends PIDCommand {
 	 */
 	public PIDStraightMovement(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant,
 			double maximumSpeed, double desiredDistance, double p, double i, double d) {
-		super(Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D);
+		super(Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, Config.PID_UPDATE_PERIOD);
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgConstant = scgConstant;
 		this.maximumSpeed = maximumSpeed;
@@ -89,8 +89,8 @@ public class PIDStraightMovement extends PIDCommand {
 		this.d = d;
 		this.power = 0.1;
 		super.setSetpoint(0);
-		scgConstant.set(0);
-		scgPIDControlled.set(0);
+		//scgConstant.set(0);
+		//scgPIDControlled.set(0);
 	}
 
 	/*
@@ -98,16 +98,23 @@ public class PIDStraightMovement extends PIDCommand {
 	 * constructor of the command is run. We only use this to start the
 	 * PIDController of moving straight.
 	 */
+	int e;
+	int c ; 
 	@Override
 	protected void initialize() {
+		c=0;
+		e=0;
+		SmartDashboard.putNumber("c", c);
+		SmartDashboard.putNumber("E", e);
+
 		super.getPIDController().enable();
 		this.pidDistance = null;
 		Robot.encLeft.reset();
-		Robot.encRight.reset();
+//		Robot.encRight.reset();
 		// if using exponential increment
-		power = .05;
+		power = .1;
 		scgConstant.set(.1);
-		scgPIDControlled.set(.1);
+		scgPIDControlled.set(-.1);
 
 	}
 
@@ -129,33 +136,45 @@ public class PIDStraightMovement extends PIDCommand {
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
-		SmartDashboard.putNumber("encRight", Math.abs(Robot.encRight.getDistance()));
-		SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
-		SmartDashboard.putNumber("encRightVal", Math.abs(Robot.encRight.getDistance()));
-		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
-		SmartDashboard.putNumber("PID output", output);
-		SmartDashboard.putNumber("SCGconstant", scgConstant.get());
+		SmartDashboard.putNumber("c", c++);
 
+		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
+//		SmartDashboard.putNumber("encRight", Math.abs(Robot.encRight.getDistance()));
+		SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
+//		SmartDashboard.putNumber("encRightVal", Math.abs(Robot.encRight.getDistance()));
+		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
+		
 		if (this.power < this.maximumSpeed && this.pidDistance == null) {
 			// linear increment
 			// this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
 			this.power *= Config.PID_STRAIGHT_EXPONENTIAL_INCREMENT;
 			scgConstant.set(power);
 			if (this.power < Config.POST_INCR_SWITCH_TO_PID)
-				scgPIDControlled.set(power);
+				//TODO change this
+				scgPIDControlled.set(-power);
 			else
 				scgPIDControlled.pidWrite(output);
+				
+				SmartDashboard.putNumber("PID output", output);
+				SmartDashboard.putNumber("SCGconstant", scgConstant.get());
+
 		}
+//		else
+//		{
+//			scgConstant.set(power);
+//			scgPIDControlled.pidWrite(output);
+//		}
+		
 		if (this.power >= this.maximumSpeed && pidDistance == null) {
 			this.pidDistance = new PIDDistance(this.scgConstant, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);
 			pidDistance.start();
-		} else if (this.power >= this.maximumSpeed) {
+		} 
+		else if (this.power >= this.maximumSpeed) {
 			scgPIDControlled.pidWrite(output);
 		}
 
-//		if(pidDistance!=null&&pidDistance.getDistance()>this.desiredDistance)
-//			super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already set
+		if(pidDistance!=null&&pidDistance.getDistance()>this.desiredDistance)
+			super.getPIDController().setOutputRange(-.5, .5);//TODO do not set if already set
 	}
 
 	/**
@@ -195,9 +214,11 @@ public class PIDStraightMovement extends PIDCommand {
 	public void end() {
 //		System.out.println("Ending PID Straight");
 //		pidDistance.end();//TODO put this back in?
+		SmartDashboard.putNumber("E", ++e);
+
 		this.scgPIDControlled.set(0);
 		this.scgConstant.set(0);
-		this.power = 0.1;
+		this.power = 0;
 		free();
 		super.end();
 //		System.out.println("ENDED PID STRAIGHT");
