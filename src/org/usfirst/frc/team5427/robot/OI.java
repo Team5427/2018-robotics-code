@@ -84,13 +84,13 @@ public class OI {
 
         
         //set what they do
-        motorIntakeIn.whenPressed(new IntakeActivateIn());
-        motorIntakeOut.whenPressed(new IntakeActivateOut());
+        motorIntakeIn.whileHeld(new IntakeActivateIn());
+        motorIntakeOut.whileHeld(new IntakeActivateOut());
 //        
        // solenoidIntake.whenPressed(new IntakeSolenoidSwitch());
         
-        elevatorUp.whenPressed(Robot.mou);
-        elevatorDown.whenPressed(Robot.mod);
+        elevatorUp.whileHeld(Robot.mou);
+        elevatorDown.whileHeld(Robot.mod);
 //        
 //        climberUp.whenPressed(new MoveClimberUp());
 //        climberDown.whenPressed(new MoveClimberDown());

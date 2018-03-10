@@ -32,7 +32,7 @@ public class MoveElevatorUp extends Command {
 	protected void initialize() {
 		x=0;
 //		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
-
+		this.setInterruptible(true);
 	}
 	int x =0;
 

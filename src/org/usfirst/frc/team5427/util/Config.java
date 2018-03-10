@@ -117,6 +117,7 @@ public class Config {
 	/*-------------PID VALUES------------------*/
 	//former p = .085, i = .008333, d = .001042
 	
+	public static final double PID_UPDATE_PERIOD = 0.01;
 	//for straight no d, for turn no i
 	public static final double PID_STRAIGHT_P = 0.25;//0.05;
 	//.005 started oscilating
@@ -178,7 +179,6 @@ public class Config {
 	public static final int LEFT = 3;
 	public static final int SWITCH = 1;
 	public static final int SCALE = 2;
-	public static final double PID_UPDATE_PERIOD = 0.01;
 	
 	
 	

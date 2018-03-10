@@ -36,6 +36,7 @@ public class IntakeActivateIn extends Command
 	protected void initialize()
 	{
 //		Log.info("Intake being initialized");
+		this.setInterruptible(true);
 	}
 
 	
@@ -75,6 +76,6 @@ public class IntakeActivateIn extends Command
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.intakeSubsystem.setSpeed(0);
+		end();
 	}
 }

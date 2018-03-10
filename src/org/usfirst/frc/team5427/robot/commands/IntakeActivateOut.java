@@ -37,6 +37,7 @@ public class IntakeActivateOut extends Command
 	protected void initialize()
 	{
 //		Log.info("Intake being initialized");
+		this.setInterruptible(true);
 	}
 
 	
@@ -79,6 +80,6 @@ public class IntakeActivateOut extends Command
 	@Override
 	protected void interrupted() {
 //		Log.info("END TO INTAKE INTERRUPTED");
-		Robot.intakeSubsystem.setSpeed(0);
+		end();
 	}
 }
