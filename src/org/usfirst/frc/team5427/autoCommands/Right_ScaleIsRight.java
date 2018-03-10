@@ -14,6 +14,12 @@ public class Right_ScaleIsRight extends AutoPath {
 	private PIDTurn firstAngle;
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
+	
+	//the start and current time of the auto path in seconds
+	private double startTime, currentTime;
+	
+	//Times TODO: test for times
+	public static final double timeOut1 = 0;
 
 	//Values for 18 inches.
 	public static final double p1 = 0.013;
@@ -32,6 +38,7 @@ public class Right_ScaleIsRight extends AutoPath {
 
 	// begins the command
 	public void initialize() {
+		startTime = System.nanoTime()/1000000000.;
 		fidget.start();		
 //		firstDistance.start();
 	}
@@ -39,10 +46,10 @@ public class Right_ScaleIsRight extends AutoPath {
 	// uses the previous commands being null to check if a certain command needs to
 	// be started or not
 	public void execute() {
-		
+		currentTime = System.nanoTime()/1000000000.;
 		// If firstDistance is NOT null and firstDistance isFinished
 		// and the firstAngle Command is not running, run the firstAngle Command
-		if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+		if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning()) || currentTime - startTime > timeOut1) {
 			System.out.println("Part 1 Done.");
 			firstDistance.cancel();
 			firstDistance = null;

@@ -16,6 +16,10 @@ public class Left_ScaleIsLeft extends AutoPath {
 	private PIDTurn firstAngle;
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
+	private double startTime, currentTime;
+	
+	//Time
+	public static final double timeOut1 = 0;
 	
 	// Values for 18 inches.
 	public static final double p1 = 0.021;
@@ -31,15 +35,18 @@ public class Left_ScaleIsLeft extends AutoPath {
 
 	// begins the command
 	public void initialize() {
+		startTime = System.nanoTime()/1000000000.;
 		fidget.start();
 	}
 
 	// uses the previous commands being null to check if a certain command needs to
 	// be started or not
 	public void execute() {
+		currentTime = System.nanoTime()/1000000000.;
+		
 		// If firstDistance is NOT null and firstDistance isFinished
 		// and the firstAngle Command is not running, run the firstAngle Command
-		if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+		if ((null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) || currentTime - startTime > timeOut1) {
 			System.out.println("Part 1 Done.");
 			firstDistance.cancel();
 			firstDistance = null;
