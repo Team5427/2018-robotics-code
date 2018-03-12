@@ -164,11 +164,11 @@ public class Robot extends IterativeRobot {
 		// encoderStraight = new Encoder(0, 0);
 		// encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
 		// encLeft = new Encoder(2,3,false,Encoder.EncodingType.k4X);
-		camServer = CameraServer.getInstance();
-		usbCam = new UsbCamera("USB Camera", 0);
-		usbCam.setFPS(15);
-		camServer.addCamera(usbCam);
-		camServer.startAutomaticCapture(usbCam);
+//		camServer = CameraServer.getInstance();
+//		usbCam = new UsbCamera("USB Camera", 0);
+//		usbCam.setFPS(15);
+//		camServer.addCamera(usbCam);
+//		camServer.startAutomaticCapture(usbCam);
 		usbCam1 = new UsbCamera("USB Camera", 1);
 		usbCam1.setFPS(15);
 		camServer.addCamera(usbCam1);
@@ -186,6 +186,25 @@ public class Robot extends IterativeRobot {
 		// Log.info("E");
 		//
 		// Log.info("E");
+
+//		axisCam = new AxisCamera("Axis Camera", "10.54.27.62");
+//		axisCam.setFPS(15);
+//		camServer.addAxisCamera("Axis Camera", "10.54.27.62");
+//
+//		camServer.startAutomaticCapture(axisCam);
+//		
+		
+		// TODO DON'T UNCOMMENT THIS!
+//		camServer.addServer("USB Camera Server");
+//		 camServer.putVideo("USB Camera",100,100);
+		
+		
+//		Log.info("E");
+//
+//		Log.info("E");
+//
+//		Log.info("E");
+
 		//
 		oi = new OI();
 	}
