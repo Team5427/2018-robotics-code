@@ -34,6 +34,7 @@ public class PIDTurn extends PIDCommand {
 	
 		scgRight.set(0.1);
 		scgLeft.set(0.1);
+		this.setTimeout(1.5);
 		timer = new Timer();
 	}
 	
@@ -82,7 +83,7 @@ public class PIDTurn extends PIDCommand {
 		} else {
 			timer.reset();
 		}
-		return false;
+		return this.isTimedOut();
 	}
 
 	public double getCurrentAngle() {

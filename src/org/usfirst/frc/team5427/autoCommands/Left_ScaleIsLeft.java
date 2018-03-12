@@ -43,6 +43,9 @@ public class Left_ScaleIsLeft extends AutoPath {
 	// be started or not
 	public void execute() {
 		currentTime = System.nanoTime()/1000000000.;
+
+		if(moveElevator != null)
+			moveElevator.isFinished();
 		
 		// If firstDistance is NOT null and firstDistance isFinished
 		// and the firstAngle Command is not running, run the firstAngle Command

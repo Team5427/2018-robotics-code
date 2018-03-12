@@ -8,8 +8,6 @@ import org.usfirst.frc.team5427.robot.commands.PIDTurn;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-
 @SameLine
 public class Center_SwitchIsLeft extends AutoPath {
 	private PIDStraightMovement firstDistance, secondDistance, thirdDistance;
@@ -19,12 +17,12 @@ public class Center_SwitchIsLeft extends AutoPath {
 	private double startTime, currentTime;
 	
 	//Times
-	public static final double timeOut1 = 0;
-	public static final double timeOut2 = 0;
-	public static final double timeOut3 = 0;
+	public static final double timeOut1 = 15;
+	public static final double timeOut2 = 15;
+	public static final double timeOut3 = 13;
 	
 	// Values for 18 inches.
-	public static final double p1 = 0.009;
+	public static final double p1 = 0.02;
 	public static final double i1 = 0.0;
 	public static final double d1 = 0.0;
 	
@@ -42,7 +40,7 @@ public class Center_SwitchIsLeft extends AutoPath {
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 18, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 118, p2, i2, d2);
+		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 130, p2, i2, d2);
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
 		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 70, p3, i3, d3);
 		moveElevator = new MoveElevatorAuto(1);
@@ -50,6 +48,7 @@ public class Center_SwitchIsLeft extends AutoPath {
 
 	public void initialize() {
 		startTime = System.nanoTime()/1000000000.;
+		
 		fidget.start();
 	}
 
@@ -57,6 +56,9 @@ public class Center_SwitchIsLeft extends AutoPath {
 	// be started or not
 	public void execute() {
 		currentTime = System.nanoTime()/1000000000.;
+		
+		if(moveElevator != null)
+			moveElevator.isFinished();
 		
 		// If firstDistance, first angle, and secondDistance are all null and
 		// SecondAngle isFinished
@@ -68,13 +70,14 @@ public class Center_SwitchIsLeft extends AutoPath {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 //			Robot.encRight.reset();
+			moveElevator.start();
 			thirdDistance.start();
 		}
 		
 		// If firstDistance, first angle are all null and secondDistance isFinished &&
 		// not null
 		// and the secondAngle Command is not running, run the secondAngle Command
-		else if ((null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning()) || (currentTime - startTime) > timeOut2) {
+		else if ((null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && ((secondDistance.isFinished() && !secondAngle.isRunning())) || (currentTime - startTime) > timeOut2)) {
 			System.out.println("Part 3 Done.");
 			secondDistance.cancel();
 			secondDistance = null;
@@ -97,7 +100,7 @@ public class Center_SwitchIsLeft extends AutoPath {
 		}
 		// If firstDistance is NOT null and firstDistance isFinished
 		// and the firstAngle Command is not running, run the firstAngle Command
-		else if ((null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) || (currentTime - startTime) < timeOut1) {
+		else if ((null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) || (currentTime - startTime) > timeOut1) {
 			System.out.println("Part 1 Done.");
 			firstDistance.cancel();
 			firstDistance = null;
@@ -115,7 +118,6 @@ public class Center_SwitchIsLeft extends AutoPath {
 			Robot.encLeft.reset();
 //			Robot.encRight.reset();
 			firstDistance.start();
-			moveElevator.start();
 		}
 	}
 

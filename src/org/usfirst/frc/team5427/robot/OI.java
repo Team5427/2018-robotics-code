@@ -30,7 +30,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 /**
  * This file makes the joystick This file will use the same line method
  * 
- * @author Akshat
  */
 @SameLine
 public class OI {
@@ -95,18 +94,20 @@ public class OI {
 //        climberUp.whenPressed(new MoveClimberUp());
 //        climberDown.whenPressed(new MoveClimberDown());
         
-
-		autoColorChooser.addDefault(" ", Config.AUTO_NONE);
-		autoColorChooser.addObject("Red", Config.RED);
-		autoColorChooser.addObject("Blue", Config.BLUE);
+        autoPositionChooser.addDefault("CHOOSE ONE", Config.AUTO_NONE);
 		autoPositionChooser.addObject("Right", Config.RIGHT);
 		autoPositionChooser.addObject("Center", Config.CENTER);
 		autoPositionChooser.addObject("Left", Config.LEFT);
+		
+		autoCubeChooser.addDefault("CHOOSE ONE", Config.AUTO_NONE);
 		autoCubeChooser.addObject("Switch", Config.SWITCH);
 		autoCubeChooser.addObject("Scale", Config.SCALE);	
 		
 		SmartDashboard.putData("Field Position",autoPositionChooser);
-		SmartDashboard.putData("Switch or Scale",autoCubeChooser);
+		SmartDashboard.putData("Cube Placement",autoCubeChooser);
+		SmartDashboard.putString("Position Selector", "Position Selector");
+		SmartDashboard.putString("Cube Placement Selector", "Cube Placement Selector");
+		SmartDashboard.putString("Intake Camera", "Intake Camera");
     }
 
     public Joystick getJoy() {

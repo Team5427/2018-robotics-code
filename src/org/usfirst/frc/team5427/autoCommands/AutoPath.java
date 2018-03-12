@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 @SameLine
 public class AutoPath extends Command {
+	
 	@Override
 	public boolean isFinished() {
 		return false;

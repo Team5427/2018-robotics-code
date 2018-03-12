@@ -62,6 +62,10 @@ public class Right_ScaleIsLeft extends AutoPath {
 	// be started or not
 	public void execute() {
 		currentTime = System.nanoTime()/1000000000.;
+
+		if(moveElevator != null)
+			moveElevator.isFinished();
+		
 		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == secondAngle && null != thirdDistance && thirdDistance.isFinished() && !(thirdAngle.isRunning()) || currentTime - startTime > timeOut3) {
 			System.out.println("Part 5 Done.");
 			thirdDistance.cancel();

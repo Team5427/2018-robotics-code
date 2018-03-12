@@ -52,11 +52,13 @@ public class MoveElevatorAuto extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
-	protected boolean isFinished() {
+	public boolean isFinished() {
 		// TODO change Config values for time
 //		if((height == 1 && timer.get() > Config.ELEVATOR_TIME_SWITCH) || (height == 2 && timer.get() > Config.ELEVATOR_TIME_SCALE))
 //			return true;
 //		return false;
+		if(!Robot.elevatorLimitSwitchUp.get())
+			return true;
 		return isTimedOut();
 	}
 
@@ -73,6 +75,7 @@ public class MoveElevatorAuto extends Command {
 	protected void interrupted() {
 //		Robot.motorPWM_Elevator.disable();
 		Robot.motorPWM_Elevator.set(0);
+		end();
 //		timer.reset();
 	}
 }

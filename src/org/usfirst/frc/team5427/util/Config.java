@@ -110,8 +110,8 @@ public class Config {
 	public static final double DRIVE_SPEED_INCREMENT_VALUE=.01;
 	public static final double DRIVE_INCREMENT_WAIT_VALUE=.01;
 	
-	public static final double ELEVATOR_TIME_SWITCH = .10; // TODO change to actual value (seconds)
-	public static final double ELEVATOR_TIME_SCALE = .10;
+	public static final double ELEVATOR_TIME_SWITCH = 1.4; // TODO change to actual value (seconds)
+	public static final double ELEVATOR_TIME_SCALE = 2.8;
 	
 	
 	/*-------------PID VALUES------------------*/
@@ -119,10 +119,10 @@ public class Config {
 	
 	public static final double PID_UPDATE_PERIOD = 0.01;
 	//for straight no d, for turn no i
-	public static final double PID_STRAIGHT_P = 0.25;//0.05;
+	public static final double PID_STRAIGHT_P = 0.06;//0.05;
 	//.005 started oscilating
-	public static final double PID_STRAIGHT_I = 0;//0.0025;
-	public static final double PID_STRAIGHT_D = 0.05;//0.00;
+	public static final double PID_STRAIGHT_I = 0.0;//0.0025;
+	public static final double PID_STRAIGHT_D = 0.008;//0.00;
 	public static final double PID_STRAIGHT_POWER_SHORT = 0.35;
 	public static final double PID_STRAIGHT_POWER_LONG = 0.5;
 
@@ -135,7 +135,7 @@ public class Config {
 	public static final double PID_STRAIGHT_COAST_P = 0.275;
 	public static final double PID_STRAIGHT_COAST_I = 0.012333;
 	public static final double PID_STRAIGHT_COAST_D = 0.0;
-	public static final double PID_STRAIGHT_TOLERANCE = 3;//.1
+	public static final double PID_STRAIGHT_TOLERANCE = 5;//.1
 //	public static final double PID_STRAIGHT_COAST_P = 1;
 //	public static final double PID_STRAIGHT_COAST_I = 1;
 //	public static final double PID_STRAIGHT_COAST_D = 1;
@@ -149,7 +149,7 @@ public class Config {
 //	public static final double PID_STRAIGHT_INCREMENT_DECREMENT = .001;
 	
 	public static final double PID_TURN_POWER = 0.1;
-	public static final double PID_TURN_TOLERANCE = 10;
+	public static final double PID_TURN_TOLERANCE = 5;
 	public static final double PID_TURN_SETPOINT =90;	
 	
 //	//values for 90 deg; p = .026, still need to be tuned
@@ -159,9 +159,9 @@ public class Config {
 
 	
 	//values for 35 degree and 25 degrees
-	public static final double PID_TURN_P = 0.0402;
+	public static final double PID_TURN_P = 0.015;
 	public static final double PID_TURN_I = 0;
-	public static final double PID_TURN_D = 0.115;
+	public static final double PID_TURN_D = 0.01;
 	
 	//VALUES FOR 45 Degrees, relatively tuned
 //	public static final double PID_TURN_P = 0.055;
@@ -179,6 +179,7 @@ public class Config {
 	public static final int LEFT = 3;
 	public static final int SWITCH = 1;
 	public static final int SCALE = 2;
+	public static final double PID_STRAIGHT_POWER_MED = .4;
 	
 	
 	
