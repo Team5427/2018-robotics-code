@@ -169,10 +169,10 @@ public class Robot extends IterativeRobot {
 //		usbCam.setFPS(15);
 //		camServer.addCamera(usbCam);
 //		camServer.startAutomaticCapture(usbCam);
-		usbCam1 = new UsbCamera("USB Camera", 1);
-		usbCam1.setFPS(15);
-		camServer.addCamera(usbCam1);
-		camServer.startAutomaticCapture(usbCam1);
+//		usbCam1 = new UsbCamera("USB Camera", 1);
+//		usbCam1.setFPS(15);
+//		camServer.addCamera(usbCam1);
+//		camServer.startAutomaticCapture(usbCam1);
 		//// axisCam = new AxisCamera("Axis Camera", "10.54.27.11");
 		//// axisCam.setFPS(15);
 		//// camServer.addAxisCamera("Axis Camera", "10.54.27.11");
