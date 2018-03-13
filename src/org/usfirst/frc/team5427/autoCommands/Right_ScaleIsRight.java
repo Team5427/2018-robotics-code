@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5427.autoCommands;
 
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.robot.commands.DriveForward;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
@@ -118,7 +119,7 @@ public class Right_ScaleIsRight extends AutoPath {
 	
 	@Override
 	protected void end() {
-		new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 10, p2, i2, d2).start();
+		new DriveForward(0.5).start();
 		super.end();
 	}
 }
