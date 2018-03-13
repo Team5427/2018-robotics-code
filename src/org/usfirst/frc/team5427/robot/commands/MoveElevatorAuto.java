@@ -42,10 +42,10 @@ public class MoveElevatorAuto extends Command {
 	@Override
 	protected void execute() {
 		
-		if(height == 1) {
-			Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
+		if(!Robot.elevatorLimitSwitchUp.get()) {
+			Robot.motorPWM_Elevator.set(0);
 		}
-		else if(height == 2) {
+		else {
 			Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
 		}
 	}
@@ -58,7 +58,7 @@ public class MoveElevatorAuto extends Command {
 //			return true;
 //		return false;
 		if(!Robot.elevatorLimitSwitchUp.get())
-			return true;
+			Robot.motorPWM_Elevator.set(0);;
 		return isTimedOut();
 	}
 
