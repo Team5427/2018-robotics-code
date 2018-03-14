@@ -23,6 +23,23 @@ public class PIDTurn extends PIDCommand {
 	private double time;
 	private Timer timer;
 
+	
+	public PIDTurn(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double setPoint, double time) {
+		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_UPDATE_PERIOD);
+		this.scgRight = scgRight;
+		this.scgLeft = scgLeft;
+		this.setPoint = setPoint;
+		// lets the PID Loop the range of the input (ahrs)
+		super.setInputRange(-180, 180);
+		super.setSetpoint(setPoint);
+	
+		scgRight.set(0.1);
+		scgLeft.set(0.1);
+		this.setTimeout(time);//TODO change to TIME
+		timer = new Timer();
+	}
+	
+	
 	public PIDTurn(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double setPoint) {
 		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_UPDATE_PERIOD);
 		this.scgRight = scgRight;
@@ -34,7 +51,7 @@ public class PIDTurn extends PIDCommand {
 	
 		scgRight.set(0.1);
 		scgLeft.set(0.1);
-		this.setTimeout(1.5);
+		this.setTimeout(1.5);//TODO change to TIME
 		timer = new Timer();
 	}
 	
