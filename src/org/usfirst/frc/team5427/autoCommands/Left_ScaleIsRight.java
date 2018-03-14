@@ -21,9 +21,9 @@ public class Left_ScaleIsRight extends AutoPath {
 	private double startTime, currentTime;
 	
 	//Times
-	public static final double timeOut1 = 0;
-	public static final double timeOut2 = 0;
-	public static final double timeOut3 = 0;
+	public static final double timeOut1 = 20;
+	public static final double timeOut2 = 20;
+	public static final double timeOut3 = 20;
 	
 	// Values for 239 inches.
 	public static final double p1 = 0.0111;
@@ -43,12 +43,12 @@ public class Left_ScaleIsRight extends AutoPath {
 
 	public Left_ScaleIsRight() {
 		fidget = new Fidget();
-		fidgetSpinner = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -10);
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 1, 239, p1, i1, d1);
-		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 1, 250, p2, i2, d2); // used to be 244
-		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
-		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 1, 15, p3, i3, d3);
+		fidgetSpinner = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -15);
+		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, .8, 212, p1, i1, d1);
+		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 70);
+		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, .8, 220, p2, i2, d2); // used to be 244
+		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -105);
+		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 25, p3, i3, d3);
 		thirdAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -42);
 		fourthDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 30, p1, i1, d1);
 		moveElevator = new MoveElevatorAuto(2);
@@ -80,7 +80,7 @@ public class Left_ScaleIsRight extends AutoPath {
 //			secondDistance.start();
 //			moveElevator.start();
 		}
-		if ((null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == secondAngle && null != thirdDistance && thirdDistance.isFinished() && !(thirdAngle.isRunning())) || currentTime - startTime > timeOut3) {
+		if ((null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == secondAngle && null != thirdDistance && thirdDistance.isFinished() )&& !(thirdAngle.isRunning()) || currentTime - startTime > timeOut3) {
 			System.out.println("Part 5 Done.");
 			thirdDistance.cancel();
 			thirdDistance = null;
@@ -97,6 +97,7 @@ public class Left_ScaleIsRight extends AutoPath {
 			secondAngle = null;
 			Robot.ahrs.reset();
 			thirdDistance.start();
+
 		}
 		
 		else if ((null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning()) || currentTime - startTime > timeOut2) {
@@ -118,6 +119,8 @@ public class Left_ScaleIsRight extends AutoPath {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 //			Robot.encRight.reset();
+			moveElevator.start();
+
 			secondDistance.start();
 		}
 		
