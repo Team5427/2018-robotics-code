@@ -164,11 +164,11 @@ public class Robot extends IterativeRobot {
 		// encoderStraight = new Encoder(0, 0);
 		// encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
 		// encLeft = new Encoder(2,3,false,Encoder.EncodingType.k4X);
-//		camServer = CameraServer.getInstance();
-//		usbCam = new UsbCamera("USB Camera", 0);
-//		usbCam.setFPS(15);
-//		camServer.addCamera(usbCam);
-//		camServer.startAutomaticCapture(usbCam);
+		camServer = CameraServer.getInstance();
+		usbCam = new UsbCamera("USB Camera", 0);
+		usbCam.setFPS(15);
+		camServer.addCamera(usbCam);
+		camServer.startAutomaticCapture(usbCam);
 //		usbCam1 = new UsbCamera("USB Camera", 1);
 //		usbCam1.setFPS(15);
 //		camServer.addCamera(usbCam1);
