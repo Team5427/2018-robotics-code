@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5427.autoCommands;
 
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.robot.commands.DriveBackward;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
@@ -35,8 +36,8 @@ public class Right_ScaleIsRight extends AutoPath {
 		fidget = new Fidget();
 		fidgetSpinner = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -18.5);
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG+.1, 250, p1, i1, d1);
-		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -45);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 25, p1, i1, d1);
+		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -42);
+		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 35, p1, i1, d1);
 		moveElevator = new MoveElevatorAuto(2);
 		setTimeout(13.75);
 	}
@@ -116,7 +117,8 @@ public class Right_ScaleIsRight extends AutoPath {
 	@Override
 	protected void end() {
 		moveElevator.cancel();
-		super.end();
+		new AutoOutGo().start();
 		new DriveBackward(2).start();
+		super.end();
 	}
 }

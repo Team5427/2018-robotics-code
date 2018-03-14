@@ -304,7 +304,7 @@ public class Robot extends IterativeRobot {
 //		new MoveElevatorAuto(2).start();
 //		new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 18, .02, 0, 0).start();
 
-		autoPath=new Left_ScaleIsLeft();
+		autoPath=new Right_ScaleIsRight();
 		autoPath.start();
 		// f = new Fidget();
 		// f.start();
