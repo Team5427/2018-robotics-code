@@ -15,7 +15,8 @@ public class AutoPath extends Command {
 
 	@Override
 	protected void end() {
-		super.end();
 		new AutoOutGo().start();
+		super.end();
+		
 	}
 }

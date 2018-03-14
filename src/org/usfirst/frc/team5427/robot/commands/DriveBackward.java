@@ -19,13 +19,13 @@ public class DriveBackward extends Command {
 	public DriveBackward(double time) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.driveTrain);
-		this.time = time;
+		setTimeout(time);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		this.setTimeout(this.time);
+//		this.setTimeout(this.time);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
