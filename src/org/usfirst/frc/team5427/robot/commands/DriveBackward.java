@@ -13,10 +13,10 @@ import org.usfirst.frc.team5427.robot.Robot;
 /**
  * An example command.  You can replace me with your own command.
  */
-public class DriveForward extends Command {
+public class DriveBackward extends Command {
 	private double time;
 	
-	public DriveForward(double time) {
+	public DriveBackward(double time) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.driveTrain);
 		this.time = time;
@@ -31,8 +31,8 @@ public class DriveForward extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.driveTrain.drive_Left.set(.2);
-		Robot.driveTrain.drive_Right.set(-.2);
+		Robot.driveTrain.drive_Left.set(-.3);
+		Robot.driveTrain.drive_Right.set(.3);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

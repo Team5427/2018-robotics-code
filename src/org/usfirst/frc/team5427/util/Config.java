@@ -129,7 +129,7 @@ public class Config {
 	/***Increment****/
 	public static final double PID_STRAIGHT_LINEAR_INCREMENT=.01;
 	public static final double POST_INCR_SWITCH_TO_PID = .1;
-	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=1.5;
+	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=1.25;
 
 	public static final double PID_STRAIGHT_COAST_POWER = 0.01;
 	public static final double PID_STRAIGHT_COAST_P = 0.275;

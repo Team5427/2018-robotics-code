@@ -49,6 +49,11 @@ public class MoveElevatorAuto extends Command {
 			Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
 		}
 	}
+	
+	public boolean maxHeightReached()
+	{
+		return isTimedOut();
+	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
@@ -58,7 +63,12 @@ public class MoveElevatorAuto extends Command {
 //			return true;
 //		return false;
 		if(!Robot.elevatorLimitSwitchUp.get())
-			Robot.motorPWM_Elevator.set(0);;
+			Robot.motorPWM_Elevator.set(0);
+//		else {
+//			Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
+//		}
+		if(2==height)
+			return false;
 		return isTimedOut();
 	}
 

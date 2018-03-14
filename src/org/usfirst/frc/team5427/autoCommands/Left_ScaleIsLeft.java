@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5427.autoCommands;
 
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.robot.commands.DriveBackward;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
@@ -12,7 +13,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 @SameLine
 public class Left_ScaleIsLeft extends AutoPath {
-	private PIDStraightMovement firstDistance;
+	private PIDStraightMovement firstDistance, secondDistance;
 	private PIDTurn fidgetSpinner,firstAngle;
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
@@ -25,13 +26,19 @@ public class Left_ScaleIsLeft extends AutoPath {
 	public static final double p1 = 0.011;
 	public static final double i1 = 0.0;
 	public static final double d1 = 0.018;
+	
+	public static final double p2 = 0.2;
+	public static final double i2 = 0.0;
+	public static final double d2 = 0.1;
 
 	public Left_ScaleIsLeft() {
 		fidget = new Fidget();
 		fidgetSpinner = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -18.5);
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 220, p1, i1, d1);
+		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG+.1, 250, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 45);
-		moveElevator = new MoveElevatorAuto(1);
+		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 25, p1, i1, d1);
+		moveElevator = new MoveElevatorAuto(2);
+		setTimeout(13.75);
 	}
 
 	// begins the command
@@ -47,6 +54,17 @@ public class Left_ScaleIsLeft extends AutoPath {
 
 		if(moveElevator != null)
 			moveElevator.isFinished();
+		if (null == fidget && null == firstDistance && firstAngle ==null&& moveElevator.maxHeightReached() && (!secondDistance.isRunning())) {
+			System.out.println("Part 17 Done.");
+//			firstAngle.cancel();
+//			firstAngle = null;
+			Robot.ahrs.reset();
+			Robot.encLeft.reset();
+			secondDistance.start();
+//			Robot.encRight.reset();
+//			secondDistance.start();
+//			moveElevator.start();
+		}
 		if (null == fidget && null == firstDistance && firstAngle !=null&& firstAngle.isFinished() && !(moveElevator.isRunning())) {
 			System.out.println("Part 1 Done.");
 			firstAngle.cancel();
@@ -90,13 +108,15 @@ public class Left_ScaleIsLeft extends AutoPath {
 	@Override
 	public boolean isFinished() {
 		// returns if the last distance has finished and the robot has shot the box
-		if (firstAngle == null && moveElevator.isFinished())
+		if (firstAngle == null && secondDistance.isFinished())
 			return true;
-		return false;
+		return isTimedOut();
 	}
 
 	@Override
 	protected void end() {
+		moveElevator.cancel();
 		super.end();
+		new DriveBackward(2).start();
 	}
 }

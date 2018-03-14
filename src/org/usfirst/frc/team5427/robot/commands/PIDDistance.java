@@ -22,6 +22,7 @@ public class PIDDistance extends PIDCommand {
 	// This SpeedControllerGroup is the side of the robot that this command
 	// controls.
 	private SpeedControllerGroup scgPIDControlled;
+	private SpeedControllerGroup scgNot;
 	private Timer timer;
 	boolean timerStarted;
 	// This is the distance we want to travel.
@@ -43,14 +44,14 @@ public class PIDDistance extends PIDCommand {
 	 *            i, d - These receive the P, I, and D values for the PID
 	 *            Controller.
 	 */
-	public PIDDistance(SpeedControllerGroup scgPIDControlled, double maximumSpeed, double desiredDistance, double p, double i, double d) {
+	public PIDDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgNot, double maximumSpeed, double desiredDistance, double p, double i, double d) {
 		super(p, i, d, Config.PID_UPDATE_PERIOD);
 		this.desiredDistance = desiredDistance;
 		this.scgPIDControlled = scgPIDControlled;
 		this.maximumSpeed = maximumSpeed;
 		super.getPIDController().setOutputRange(-maximumSpeed, maximumSpeed);
 		super.getPIDController().setSetpoint(desiredDistance);
-		scgPIDControlled.set(0);
+		this.scgNot=scgNot;
 		timer = new Timer();
 	}
 
@@ -131,6 +132,8 @@ public class PIDDistance extends PIDCommand {
 	 */
 	@Override
 	public void end() {
+		scgPIDControlled.set(0);
+		scgNot.set(0);
 		super.end();
 		free();
 	}
