@@ -81,14 +81,14 @@ public class Config {
 	/* ----------Joystick Buttons---------- */
 	public static final int BUTTON_MOTOR_INTAKE_IN = 7;//NOTE: BUTTTONS 3 and 8 LAG
 	public static final int BUTTON_MOTOR_INTAKE_OUT = 1;
+	public static final int BUTTON_MOTOR_INTAKE_OUT_SLOW = 2;
 //	
 //	public static final int BUTTON_SOLENOD_INTAKE = 2;
 	public static final int BUTTON_ELEVATOR_UP = 5;
 	public static final int BUTTON_ELEVATOR_DOWN= 3;
-	public static final int BUTTON_ELEVATOR_AUTO= 9;
 	public static final int BUTTON_CLIMBER_UP = 6;
 	public static final int BUTTON_CLIMBER_DOWN= 4;
-
+	
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;
 	public static final int ALT_JOYSTICK_PORT = 0;
