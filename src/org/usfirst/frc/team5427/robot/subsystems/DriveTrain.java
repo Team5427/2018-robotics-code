@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.util.SameLine;
 
 
@@ -32,14 +33,14 @@ public class DriveTrain extends Subsystem {
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-//		setDefaultCommand(new DriveWithJoystick());
+		setDefaultCommand(new DriveWithJoystick());
 	}
 
 	public void takeJoystickInputs(Joystick joy) {
 		
-		// double speed = Math.abs(joy.getY()) > 0.05 ? joy.getY() : 0f;
+		 double speed = Math.abs(joy.getY()) > 0.05 ? joy.getY() : 0f;
 
-		drive.arcadeDrive(-joy.getY(), joy.getZ());
+		drive.arcadeDrive(-joy.getY(), joy.getZ()*.75);
 
 		
 		//TODO use these to sort of disable some of the motors
@@ -47,6 +48,10 @@ public class DriveTrain extends Subsystem {
 //		Robot.motor_pwm_rearLeft.set(0);
 //		Robot.motor_pwm_frontRight.set(0);
 //		Robot.motor_pwm_rearRight.set(0);
+//		Robot.motor_pwm_frontLeft.disable();
+//		Robot.motor_pwm_rearLeft.disable();
+//		Robot.motor_pwm_frontRight.disable();
+//		Robot.motor_pwm_rearRight.disable();
 		
 
 	}

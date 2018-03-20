@@ -22,6 +22,7 @@ public class PIDDistance extends PIDCommand {
 	// This SpeedControllerGroup is the side of the robot that this command
 	// controls.
 	private SpeedControllerGroup scgPIDControlled;
+	private SpeedControllerGroup scgNot;
 	private Timer timer;
 	boolean timerStarted;
 	// This is the distance we want to travel.
@@ -43,14 +44,14 @@ public class PIDDistance extends PIDCommand {
 	 *            i, d - These receive the P, I, and D values for the PID
 	 *            Controller.
 	 */
-	public PIDDistance(SpeedControllerGroup scgPIDControlled, double maximumSpeed, double desiredDistance, double p, double i, double d) {
-		super(p, i, d);
+	public PIDDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgNot, double maximumSpeed, double desiredDistance, double p, double i, double d) {
+		super(p, i, d, Config.PID_UPDATE_PERIOD);
 		this.desiredDistance = desiredDistance;
 		this.scgPIDControlled = scgPIDControlled;
 		this.maximumSpeed = maximumSpeed;
 		super.getPIDController().setOutputRange(-maximumSpeed, maximumSpeed);
 		super.getPIDController().setSetpoint(desiredDistance);
-		scgPIDControlled.set(0);
+		this.scgNot=scgNot;
 		timer = new Timer();
 	}
 
@@ -72,7 +73,7 @@ public class PIDDistance extends PIDCommand {
 	 */
 	@Override
 	protected double returnPIDInput() {
-		return (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0;
+		return (Math.abs(Robot.encLeft.getDistance()));
 	}
 
 	/**
@@ -84,6 +85,8 @@ public class PIDDistance extends PIDCommand {
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber("PID Output Coasting", output);
 		this.scgPIDControlled.pidWrite(output);
+		SmartDashboard.putNumber("SCGconstant", scgPIDControlled.get());
+
 		// if(this.returnPIDInput()>this.desiredDistance)
 		// super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already
 		// set
@@ -102,7 +105,7 @@ public class PIDDistance extends PIDCommand {
 	@Override
 	protected boolean isFinished() {
 		// TODO NOT untested !
-		double distFromSetpoint = Math.abs(desiredDistance - (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0);
+		double distFromSetpoint = Math.abs(desiredDistance - (Math.abs(Robot.encLeft.getDistance())));
 		boolean inRange = distFromSetpoint < Config.PID_STRAIGHT_TOLERANCE;
 		if (inRange && Math.abs(Robot.ahrs.getYaw()) < 3) {
 			if (!timerStarted) {
@@ -129,6 +132,8 @@ public class PIDDistance extends PIDCommand {
 	 */
 	@Override
 	public void end() {
+		scgPIDControlled.set(0);
+		scgNot.set(0);
 		super.end();
 		free();
 	}
@@ -152,6 +157,7 @@ public class PIDDistance extends PIDCommand {
 	 * 
 	 */
 	public double getDistance() {
-		return (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0;
+		return Math.abs(Robot.encLeft.getDistance());
+		//return (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0;
 	}
 }

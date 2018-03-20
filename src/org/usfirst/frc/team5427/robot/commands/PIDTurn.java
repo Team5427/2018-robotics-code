@@ -23,17 +23,41 @@ public class PIDTurn extends PIDCommand {
 	private double time;
 	private Timer timer;
 
-	public PIDTurn(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double setPoint) {
-		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D);
+	
+	public PIDTurn(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double setPoint, double time) {
+		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_UPDATE_PERIOD);
 		this.scgRight = scgRight;
 		this.scgLeft = scgLeft;
 		this.setPoint = setPoint;
 		// lets the PID Loop the range of the input (ahrs)
 		super.setInputRange(-180, 180);
 		super.setSetpoint(setPoint);
+	
 		scgRight.set(0.1);
 		scgLeft.set(0.1);
+		this.setTimeout(time);//TODO change to TIME
 		timer = new Timer();
+	}
+	
+	
+	public PIDTurn(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double setPoint) {
+		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_UPDATE_PERIOD);
+		this.scgRight = scgRight;
+		this.scgLeft = scgLeft;
+		this.setPoint = setPoint;
+		// lets the PID Loop the range of the input (ahrs)
+		super.setInputRange(-180, 180);
+		super.setSetpoint(setPoint);
+	
+		scgRight.set(0.1);
+		scgLeft.set(0.1);
+		this.setTimeout(1.5);//TODO change to TIME
+		timer = new Timer();
+	}
+	
+	@Override
+	protected void execute() {
+		
 	}
 
 	// begins the PID loop (enables)
@@ -76,7 +100,7 @@ public class PIDTurn extends PIDCommand {
 		} else {
 			timer.reset();
 		}
-		return false;
+		return this.isTimedOut();
 	}
 
 	public double getCurrentAngle() {
@@ -95,8 +119,15 @@ public class PIDTurn extends PIDCommand {
 		SmartDashboard.putNumber("Yaw", getCurrentAngle());
 		SmartDashboard.putNumber("Raw Yaw", getCurrentAngle());
 		SmartDashboard.putNumber("PID Output", output);
+		
 //		System.out.println("Turn Command Running.");
 		scgRight.pidWrite(output);
-		scgLeft.set(output);
+		
+		scgLeft.pidWrite(output);
+		
+		SmartDashboard.putNumber("fl", Robot.motor_pwm_frontLeft.get());
+		SmartDashboard.putNumber("rl", Robot.motor_pwm_rearLeft.get());
+		SmartDashboard.putNumber("fr", Robot.motor_pwm_frontRight.get());
+		SmartDashboard.putNumber("rr", Robot.motor_pwm_rearRight.get());
 	}
 }

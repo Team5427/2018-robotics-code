@@ -45,15 +45,18 @@ public class Config {
 	
 	/*----------PWM PORTS-----------*/
 	public static final int FRONT_RIGHT_MOTOR = 3; //3
-	public static final int REAR_RIGHT_MOTOR = 2; //2
+	public static final int REAR_RIGHT_MOTOR = 6; //2
 	public static final int FRONT_LEFT_MOTOR = 1; //1
 	public static final int REAR_LEFT_MOTOR = 0; //0
 	public static final int INTAKE_MOTOR_LEFT = 7;
-	public static final int INTAKE_MOTOR_RIGHT = 9;
-	public static final int ELEVATOR_MOTOR = 8;
+	public static final int INTAKE_MOTOR_RIGHT = 8;
+	public static final int ELEVATOR_MOTOR = 9;
 	public static final int CLIMBER_MOTOR = 4;
 
 	
+	/*----------DIO PORTS-----------*/
+	public static final int ENCODER_LEFT_CHANNEL_A=0;
+	public static final int ENCODER_LEFT_CHANNEL_B=1;
 	
 	/*--------Timeouts------*/
 	public static final double AUTO_INTAKE_TIMEOUT = 2;
@@ -67,14 +70,16 @@ public class Config {
 	public static final double INTAKE_MOTOR_SPEED_IN = 0.3;
 	public static final double INTAKE_MOTOR_SPEED_OUT = -1.0;
 	public static final double INTAKE_MOTOR_SPEED_REVERSE = -1.0;
-	public static final double ELEVATOR_MOTOR_SPEED_UP=.5;
-	public static final double ELEVATOR_MOTOR_SPEED_DOWN=-.5;
+	public static final double ELEVATOR_MOTOR_SPEED_UP=0.8; //this speed is final
+	public static final double ELEVATOR_MOTOR_SPEED_DOWN=-.5; ///this speed is final
 	public static final double CLIMBER_MOTOR_SPEED_UP=0.3;
 	public static final double CLIMBER_MOTOR_SPEED_DOWN=-0.3;
 	
+	public static final int ELEVATOR_LIMIT_SWITCH_UP = 5;
+	public static final int ELEVATOR_LIMIT_SWITCH_DOWN = 4;
 	
 	/* ----------Joystick Buttons---------- */
-	public static final int BUTTON_MOTOR_INTAKE_IN = 2;//nOTE: BUTTTON 3 LAGS
+	public static final int BUTTON_MOTOR_INTAKE_IN = 7;//NOTE: BUTTTONS 3 and 8 LAG
 	public static final int BUTTON_MOTOR_INTAKE_OUT = 1;
 //	
 //	public static final int BUTTON_SOLENOD_INTAKE = 2;
@@ -105,31 +110,32 @@ public class Config {
 	public static final double DRIVE_SPEED_INCREMENT_VALUE=.01;
 	public static final double DRIVE_INCREMENT_WAIT_VALUE=.01;
 	
-	public static final double ELEVATOR_TIME_SWITCH = 4; // TODO change to actual value (seconds)
-	public static final double ELEVATOR_TIME_SCALE = 0;
+	public static final double ELEVATOR_TIME_SWITCH = 1.4; // TODO change to actual value (seconds)
+	public static final double ELEVATOR_TIME_SCALE = 2.8;
 	
 	
 	/*-------------PID VALUES------------------*/
 	//former p = .085, i = .008333, d = .001042
 	
+	public static final double PID_UPDATE_PERIOD = 0.01;
 	//for straight no d, for turn no i
-	public static final double PID_STRAIGHT_P = 0.05;
+	public static final double PID_STRAIGHT_P = 0.06;//0.05;
 	//.005 started oscilating
-	public static final double PID_STRAIGHT_I = 0.0025;
-	public static final double PID_STRAIGHT_D = 0.00;
+	public static final double PID_STRAIGHT_I = 0.0;//0.0025;
+	public static final double PID_STRAIGHT_D = 0.008;//0.00;
 	public static final double PID_STRAIGHT_POWER_SHORT = 0.35;
 	public static final double PID_STRAIGHT_POWER_LONG = 0.5;
 
 	/***Increment****/
 	public static final double PID_STRAIGHT_LINEAR_INCREMENT=.01;
 	public static final double POST_INCR_SWITCH_TO_PID = .1;
-	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=1.5;
+	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=1.25;
 
 	public static final double PID_STRAIGHT_COAST_POWER = 0.01;
 	public static final double PID_STRAIGHT_COAST_P = 0.275;
 	public static final double PID_STRAIGHT_COAST_I = 0.012333;
 	public static final double PID_STRAIGHT_COAST_D = 0.0;
-	public static final double PID_STRAIGHT_TOLERANCE = 3;//.1
+	public static final double PID_STRAIGHT_TOLERANCE = 5;//.1
 //	public static final double PID_STRAIGHT_COAST_P = 1;
 //	public static final double PID_STRAIGHT_COAST_I = 1;
 //	public static final double PID_STRAIGHT_COAST_D = 1;
@@ -143,7 +149,7 @@ public class Config {
 //	public static final double PID_STRAIGHT_INCREMENT_DECREMENT = .001;
 	
 	public static final double PID_TURN_POWER = 0.1;
-	public static final double PID_TURN_TOLERANCE = 10;
+	public static final double PID_TURN_TOLERANCE = 3;
 	public static final double PID_TURN_SETPOINT =90;	
 	
 //	//values for 90 deg; p = .026, still need to be tuned
@@ -153,9 +159,9 @@ public class Config {
 
 	
 	//values for 35 degree and 25 degrees
-	public static final double PID_TURN_P = 0.0402;
+	public static final double PID_TURN_P = 0.015;
 	public static final double PID_TURN_I = 0;
-	public static final double PID_TURN_D = 0.115;
+	public static final double PID_TURN_D = 0.01;
 	
 	//VALUES FOR 45 Degrees, relatively tuned
 //	public static final double PID_TURN_P = 0.055;
@@ -173,6 +179,7 @@ public class Config {
 	public static final int LEFT = 3;
 	public static final int SWITCH = 1;
 	public static final int SCALE = 2;
+	public static final double PID_STRAIGHT_POWER_MED = .4;
 	
 	
 	

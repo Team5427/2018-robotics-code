@@ -36,6 +36,7 @@ public class IntakeActivateIn extends Command
 	protected void initialize()
 	{
 //		Log.info("Intake being initialized");
+		this.setInterruptible(true);
 	}
 
 	
@@ -60,7 +61,7 @@ public class IntakeActivateIn extends Command
 	@Override
 	protected boolean isFinished()
 	{
-		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_IN))//TODO change to Config
+		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_IN))
 			return true;
 		return false;
 	}
@@ -68,13 +69,13 @@ public class IntakeActivateIn extends Command
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.intakeSubsystem.stop();
+		Robot.intakeSubsystem.setSpeed(0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.intakeSubsystem.setSpeed(0);
+		end();
 	}
 }

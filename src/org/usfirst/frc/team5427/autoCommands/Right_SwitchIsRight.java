@@ -15,16 +15,23 @@ public class Right_SwitchIsRight extends AutoPath {
 	private PIDTurn firstAngle;
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
+	
+	//the start and current time of the auto path in seconds
+	private double startTime, currentTime;
+	
+	//Times TODO: test for times
+	public static final double timeOut1 = 15;
+	public static final double timeOut2 = 15;
 
 	//Values for 154 inches.
-	public static final double p1 = 0.021; //0.0188
+	public static final double p1 = 0.0105; //0.0188
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.016;
+	public static final double d1 = 0.008;
 	
-	//Values for 6 inches.
-	public static final double p2 = 0.03;
+	//Values for 16 inches.
+	public static final double p2 = 0.016;
 	public static final double i2 = 0.0;
-	public static final double d2 = 0.01;
+	public static final double d2 = 0.006;
 	
 	public Right_SwitchIsRight() {
 		// creates all of the PID Commands
@@ -32,12 +39,13 @@ public class Right_SwitchIsRight extends AutoPath {
 //		fidget = null;
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 154, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 6, p2, i2, d2);
+		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 28, p2, i2, d2);
 		moveElevator = new MoveElevatorAuto(1); // 1 for switch
 	}
 
 	// begins the command
 	public void initialize() {
+		startTime = System.nanoTime()/1000000000.;
 		fidget.start();		
 //		firstDistance.start();
 	}
@@ -45,28 +53,33 @@ public class Right_SwitchIsRight extends AutoPath {
 	// uses the previous commands being null to check if a certain command needs to
 	// be started or not
 	public void execute() {
+		currentTime = System.nanoTime()/1000000000.;
+
+		if(moveElevator != null)
+			moveElevator.isFinished();
 		
 		// If firstDistance is null and firstAngle isFinished && not null
 		// and the secondDistance Command is not running, run the secondDistance Command
-		if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !secondDistance.isRunning()) {
+		if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !(secondDistance.isRunning())) {
 			System.out.println("Part 2 Done.");
 			firstAngle.cancel();
 			firstAngle = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
+			moveElevator.start();
 			secondDistance.start();
 		}
 		
 		// If firstDistance is NOT null and firstDistance isFinished
 		// and the firstAngle Command is not running, run the firstAngle Command
-		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning()) || currentTime - startTime > timeOut1) {
 			System.out.println("Part 1 Done.");
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			firstAngle.start();
 		}
 		
@@ -74,18 +87,17 @@ public class Right_SwitchIsRight extends AutoPath {
 			System.out.println("Fidget Done.");
 			fidget.cancel();
 			fidget = null;
-			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			Robot.encRight.reset();
+//			Robot.encRight.reset();
 			firstDistance.start();
-			moveElevator.start();
+			//moveElevator.start();
 		}
 	}
 
 	@Override
 	public boolean isFinished() {
 		// returns if the last distance has finished and the robot has shot the box
-		if (firstAngle == null && secondDistance.isFinished())
+		if (firstAngle == null && secondDistance.isFinished() || currentTime - startTime > timeOut2)
 			return true;
 		return false;
 		

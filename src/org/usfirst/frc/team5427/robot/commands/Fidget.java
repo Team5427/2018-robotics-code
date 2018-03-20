@@ -34,13 +34,13 @@ public class Fidget extends Command {
 	protected void execute() {
 		if(!forwardDone)
 		{
-			Robot.driveTrain.drive_Left.set(0.8);
-			Robot.driveTrain.drive_Right.set(-0.8);
+			Robot.driveTrain.drive_Left.set(0.5);
+			Robot.driveTrain.drive_Right.set(-0.5);
 		}
 		else if(forwardDone)
 		{
-			Robot.driveTrain.drive_Left.set(-0.4);
-			Robot.driveTrain.drive_Right.set(0.4);
+			Robot.driveTrain.drive_Left.set(-0.3);
+			Robot.driveTrain.drive_Right.set(0.3);
 		}
 	}
 
