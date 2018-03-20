@@ -85,6 +85,7 @@ public class Config {
 //	public static final int BUTTON_SOLENOD_INTAKE = 2;
 	public static final int BUTTON_ELEVATOR_UP = 5;
 	public static final int BUTTON_ELEVATOR_DOWN= 3;
+	public static final int BUTTON_ELEVATOR_AUTO= 9;
 	public static final int BUTTON_CLIMBER_UP = 6;
 	public static final int BUTTON_CLIMBER_DOWN= 4;
 

@@ -11,6 +11,7 @@ import org.usfirst.frc.team5427.robot.commands.IntakeActivateOut;
 //import org.usfirst.frc.team5427.robot.commands.MoveClimberDown;
 //import org.usfirst.frc.team5427.robot.commands.MoveClimberUp;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorDown;
+import org.usfirst.frc.team5427.robot.commands.MoveElevatorFull;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorUp;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
@@ -64,6 +65,7 @@ public class OI {
 	Button elevatorDown;
 	Button climberUp;
 	Button climberDown;
+	Button elevatorAutoFull;
 
 	SendableChooser<Integer> autoColorChooser = new SendableChooser<Integer>();
 	SendableChooser<Integer> autoPositionChooser = new SendableChooser<Integer>();
@@ -90,6 +92,7 @@ public class OI {
         
         elevatorUp.whileHeld(Robot.mou);
         elevatorDown.whileHeld(Robot.mod);
+        elevatorAutoFull.whenPressed(new MoveElevatorFull());
 //        
 //        climberUp.whenPressed(new MoveClimberUp());
 //        climberDown.whenPressed(new MoveClimberDown());
