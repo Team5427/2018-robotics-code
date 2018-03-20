@@ -45,12 +45,12 @@ public class Config {
 	
 	/*----------PWM PORTS-----------*/
 	public static final int FRONT_RIGHT_MOTOR = 3; //3
-	public static final int REAR_RIGHT_MOTOR = 2; //2
+	public static final int REAR_RIGHT_MOTOR = 6; //2
 	public static final int FRONT_LEFT_MOTOR = 1; //1
 	public static final int REAR_LEFT_MOTOR = 0; //0
 	public static final int INTAKE_MOTOR_LEFT = 7;
-	public static final int INTAKE_MOTOR_RIGHT = 9;
-	public static final int ELEVATOR_MOTOR = 8;
+	public static final int INTAKE_MOTOR_RIGHT = 8;
+	public static final int ELEVATOR_MOTOR = 9;
 	public static final int CLIMBER_MOTOR = 4;
 
 	
@@ -76,7 +76,7 @@ public class Config {
 	public static final double CLIMBER_MOTOR_SPEED_DOWN=-0.3;
 	
 	public static final int ELEVATOR_LIMIT_SWITCH_UP = 5;
-	public static final int ELEVATOR_LIMIT_SWITCH_DOWN = 3;
+	public static final int ELEVATOR_LIMIT_SWITCH_DOWN = 4;
 	
 	/* ----------Joystick Buttons---------- */
 	public static final int BUTTON_MOTOR_INTAKE_IN = 7;//NOTE: BUTTTONS 3 and 8 LAG

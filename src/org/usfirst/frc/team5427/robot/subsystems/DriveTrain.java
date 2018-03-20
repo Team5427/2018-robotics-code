@@ -48,6 +48,10 @@ public class DriveTrain extends Subsystem {
 //		Robot.motor_pwm_rearLeft.set(0);
 //		Robot.motor_pwm_frontRight.set(0);
 //		Robot.motor_pwm_rearRight.set(0);
+//		Robot.motor_pwm_frontLeft.disable();
+//		Robot.motor_pwm_rearLeft.disable();
+//		Robot.motor_pwm_frontRight.disable();
+//		Robot.motor_pwm_rearRight.disable();
 		
 
 	}

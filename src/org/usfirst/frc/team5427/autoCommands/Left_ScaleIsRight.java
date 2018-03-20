@@ -150,8 +150,12 @@ public class Left_ScaleIsRight extends AutoPath {
 	@Override
 	protected void end() {
 		moveElevator.cancel();
+		if(isFinished())
+		{
 		new AutoOutGo().start();
 		new DriveBackward(2).start();
-		super.end();
+		}
+//		super.end();
 	}
+
 }

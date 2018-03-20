@@ -257,55 +257,57 @@ public class Robot extends IterativeRobot {
 		// this.speedcontrollergroup_left, .3, 154, 0.0115, 0, 0.005).start();
 		// new PIDTurn(speedcontrollergroup_left, speedcontrollergroup_right,
 		// 90).start();
-//		gameData = DriverStation.getInstance().getGameSpecificMessage();
-//		switchSide = gameData.charAt(0);
-//		scaleSide = gameData.charAt(1);
-//		field_position = oi.autoPositionChooser.getSelected();
-//		switch_or_scale = oi.autoCubeChooser.getSelected();
-//		SmartDashboard.putString("SwitchSide", switchSide + "");
-//		SmartDashboard.putString("ScaleSide", scaleSide + "");
-//		SmartDashboard.putString("FieldPosition", field_position + "");
-//		SmartDashboard.putString("CubePlacement", switch_or_scale + "");
-//		if (field_position == 1) {
-//			if (switch_or_scale == 1) {
-//				if (switchSide == 'R')
-//					autoPath = new Right_SwitchIsRight();
-//				else if (switchSide == 'L')
-//					autoPath = new Right_SwitchIsLeft();
-//			}
-//			else if (switch_or_scale == 2) {
-//				if (scaleSide == 'R')
-//					autoPath = new Right_ScaleIsRight();
-//				else if (scaleSide == 'L')
-//					autoPath = new Right_ScaleIsLeft();
-//			}
-//		}
-//		else if (field_position == 2) {
-//			if (switchSide == 'R')
-//				autoPath = new Center_SwitchIsRight();
-//			else if (switchSide == 'L')
-//				autoPath = new Center_SwitchIsLeft();
-//		}
-//		else if (field_position == 3) {
-//			if (switch_or_scale == 1) {
-//				if (switchSide == 'R')
-//					autoPath = new Left_SwitchIsRight();
-//				else if (switchSide == 'L')
-//					autoPath = new Left_SwitchIsLeft();
-//			}
-//			else if (switch_or_scale == 2) {
-//				if (scaleSide == 'R')
-//					autoPath = new Left_ScaleIsRight();
-//				else if (scaleSide == 'L')
-//					autoPath = new Left_ScaleIsLeft();
-//			}
-//		}
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		switchSide = gameData.charAt(0);
+		scaleSide = gameData.charAt(1);
+		field_position = oi.autoPositionChooser.getSelected();
+		switch_or_scale = oi.autoCubeChooser.getSelected();
+		SmartDashboard.putString("SwitchSide", switchSide + "");
+		SmartDashboard.putString("ScaleSide", scaleSide + "");
+		SmartDashboard.putString("FieldPosition", field_position + "");
+		SmartDashboard.putString("CubePlacement", switch_or_scale + "");
+		if (field_position == 1) {
+			if (switch_or_scale == 1) {
+				if (switchSide == 'R')
+					autoPath = new Right_SwitchIsRight();
+				else if (switchSide == 'L')
+					autoPath = new Right_SwitchIsLeft();
+			}
+			else if (switch_or_scale == 2) {
+				if (scaleSide == 'R')
+					autoPath = new Right_ScaleIsRight();
+				else if (scaleSide == 'L')
+					autoPath = new Right_ScaleIsLeft();
+			}
+		}
+		else if (field_position == 2) {
+			if (switchSide == 'R')
+				autoPath = new Center_SwitchIsRight();
+			else if (switchSide == 'L')
+				autoPath = new Center_SwitchIsLeft();
+		}
+		else if (field_position == 3) {
+			if (switch_or_scale == 1) {
+				if (switchSide == 'R')
+					autoPath = new Left_SwitchIsRight();
+				else if (switchSide == 'L')
+					autoPath = new Left_SwitchIsLeft();
+			}
+			else if (switch_or_scale == 2) {
+				if (scaleSide == 'R')
+					autoPath = new Left_ScaleIsRight();
+				else if (scaleSide == 'L')
+					autoPath = new Left_ScaleIsLeft();
+			}
+		}
+		if(autoPath!=null)
+			autoPath.start();
 		
 //		new MoveElevatorAuto(2).start();
-//		new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 18, .02, 0, 0).start();
+//		new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 30, .02, 0, 0).start();
 
-		autoPath=new Right_ScaleIsLeft();
-		autoPath.start();
+//		autoPath=new Right_ScaleIsLeft();
+//		autoPath.start();
 		// f = new Fidget();
 		// f.start();
 		// b = false;
@@ -332,6 +334,54 @@ public class Robot extends IterativeRobot {
 		// new MoveElevatorAuto(1).start();
 		// b = true;
 		// }
+		if(null==autoPath)
+		{
+			gameData = DriverStation.getInstance().getGameSpecificMessage();
+			switchSide = gameData.charAt(0);
+			scaleSide = gameData.charAt(1);
+			field_position = oi.autoPositionChooser.getSelected();
+			switch_or_scale = oi.autoCubeChooser.getSelected();
+			SmartDashboard.putString("SwitchSide", switchSide + "");
+			SmartDashboard.putString("ScaleSide", scaleSide + "");
+			SmartDashboard.putString("FieldPosition", field_position + "");
+			SmartDashboard.putString("CubePlacement", switch_or_scale + "");
+			if (field_position == 1) {
+				if (switch_or_scale == 1) {
+					if (switchSide == 'R')
+						autoPath = new Right_SwitchIsRight();
+					else if (switchSide == 'L')
+						autoPath = new Right_SwitchIsLeft();
+				}
+				else if (switch_or_scale == 2) {
+					if (scaleSide == 'R')
+						autoPath = new Right_ScaleIsRight();
+					else if (scaleSide == 'L')
+						autoPath = new Right_ScaleIsLeft();
+				}
+			}
+			else if (field_position == 2) {
+				if (switchSide == 'R')
+					autoPath = new Center_SwitchIsRight();
+				else if (switchSide == 'L')
+					autoPath = new Center_SwitchIsLeft();
+			}
+			else if (field_position == 3) {
+				if (switch_or_scale == 1) {
+					if (switchSide == 'R')
+						autoPath = new Left_SwitchIsRight();
+					else if (switchSide == 'L')
+						autoPath = new Left_SwitchIsLeft();
+				}
+				else if (switch_or_scale == 2) {
+					if (scaleSide == 'R')
+						autoPath = new Left_ScaleIsRight();
+					else if (scaleSide == 'L')
+						autoPath = new Left_ScaleIsLeft();
+				}
+			}
+			if(autoPath!=null)
+				autoPath.start();
+		}
 	}
 
 	@Override

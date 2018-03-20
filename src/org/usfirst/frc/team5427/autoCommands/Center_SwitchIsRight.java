@@ -20,7 +20,7 @@ public class Center_SwitchIsRight extends AutoPath {
 	private double startTime, currentTime;
 	
 	//Times TODO: test for times
-	public static final double timeOut1 = 15;
+//	public static final double timeOut1 = 15;
 	
 	// Values for 72 inches.
 	public static final double p1 = 0.025; //.06
@@ -38,6 +38,7 @@ public class Center_SwitchIsRight extends AutoPath {
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 86, p1, i1, d1);
 		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 16, p2, i2, d2);
 		moveElevator = new MoveElevatorAuto(1);
+		setTimeout(13.5);
 	}
 
 	// begins the command
@@ -77,9 +78,9 @@ public class Center_SwitchIsRight extends AutoPath {
 	@Override
 	public boolean isFinished() {
 		// returns if the last distance has finished and the robot has shot the box
-		if (firstDistance == null && secondDistance.isFinished() || currentTime - startTime > timeOut1)
+		if (firstDistance == null && secondDistance.isFinished())
 			return true;
-		return false;
+		return isTimedOut();
 	}
 
 	@Override
