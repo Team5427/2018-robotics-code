@@ -29,6 +29,8 @@ public class PIDDistance extends PIDCommand {
 	double desiredDistance;
 	// This is the max speed for the output range of the PID Controller.
 	double maximumSpeed;
+	
+	PIDStraightMovement straightMovement;
 
 	/**
 	 * Constructor for PIDDistance
@@ -44,7 +46,7 @@ public class PIDDistance extends PIDCommand {
 	 *            i, d - These receive the P, I, and D values for the PID
 	 *            Controller.
 	 */
-	public PIDDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgNot, double maximumSpeed, double desiredDistance, double p, double i, double d) {
+	public PIDDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgNot, double maximumSpeed, double desiredDistance, PIDStraightMovement straightPID, double p, double i, double d) {
 		super(p, i, d, Config.PID_UPDATE_PERIOD);
 		this.desiredDistance = desiredDistance;
 		this.scgPIDControlled = scgPIDControlled;
@@ -52,6 +54,7 @@ public class PIDDistance extends PIDCommand {
 		super.getPIDController().setOutputRange(-maximumSpeed, maximumSpeed);
 		super.getPIDController().setSetpoint(desiredDistance);
 		this.scgNot=scgNot;
+		this.straightMovement = straightMovement;
 		timer = new Timer();
 	}
 
@@ -136,6 +139,7 @@ public class PIDDistance extends PIDCommand {
 		scgNot.set(0);
 		super.end();
 		free();
+		straightMovement.end();
 	}
 
 	/**

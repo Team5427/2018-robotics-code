@@ -142,7 +142,8 @@ public class PIDStraightMovement extends PIDCommand {
 			// this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
 			this.power *= Config.PID_STRAIGHT_EXPONENTIAL_INCREMENT;
 			scgConstant.set(power);
-			if (this.power < Config.POST_INCR_SWITCH_TO_PID)
+//			if (this.power < Config.POST_INCR_SWITCH_TO_PID)
+			if(getVelocity() < Config.SWITCH_TO_PID_VELOCITY)
 				// TODO change this
 				scgPIDControlled.set(-power);
 			else
@@ -156,7 +157,7 @@ public class PIDStraightMovement extends PIDCommand {
 		// scgPIDControlled.pidWrite(output);
 		// }
 		if (this.power >= this.maximumSpeed && pidDistance == null) {
-			this.pidDistance = new PIDDistance(this.scgConstant, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);
+			this.pidDistance = new PIDDistance(this.scgConstant, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this, this.p, this.i, this.d);
 			pidDistance.start();
 		}
 		else if (this.power >= this.maximumSpeed) {
@@ -173,11 +174,11 @@ public class PIDStraightMovement extends PIDCommand {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (pidDistance != null && pidDistance.isFinished() && Math.abs(Robot.ahrs.getYaw()) < 3) {
-			pidDistance.end();// TODO check if ending works correctly
-			end();// TODO take these out
-			return true;
-		}
+//		if (pidDistance != null && pidDistance.isFinished() && Math.abs(Robot.ahrs.getYaw()) < 3) {
+//			pidDistance.end();// TODO check if ending works correctly
+//			end();// TODO take these out
+//			return true;
+//		}
 		return false;
 	}
 
