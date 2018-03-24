@@ -44,10 +44,10 @@ public class Config {
 												// with this false
 	
 	/*----------PWM PORTS-----------*/
-	public static final int FRONT_RIGHT_MOTOR = 3; //3
-	public static final int REAR_RIGHT_MOTOR = 6; //2
-	public static final int FRONT_LEFT_MOTOR = 1; //1
-	public static final int REAR_LEFT_MOTOR = 0; //0
+	public static final int FRONT_RIGHT_MOTOR = 0; //3 3
+	public static final int REAR_RIGHT_MOTOR = 1; //2 6
+	public static final int FRONT_LEFT_MOTOR = 2; //1 1
+	public static final int REAR_LEFT_MOTOR = 3; //0 0
 	public static final int INTAKE_MOTOR_LEFT = 7;
 	public static final int INTAKE_MOTOR_RIGHT = 8;
 	public static final int ELEVATOR_MOTOR = 9;
@@ -140,6 +140,7 @@ public class Config {
 	public static final double PID_STRAIGHT_COAST_I = 0.012333;
 	public static final double PID_STRAIGHT_COAST_D = 0.0;
 	public static final double PID_STRAIGHT_TOLERANCE = 5;//.1
+	public static final double PID_STRAIGHT_ACTIVATE_DISTANCE = 20;
 //	public static final double PID_STRAIGHT_COAST_P = 1;
 //	public static final double PID_STRAIGHT_COAST_I = 1;
 //	public static final double PID_STRAIGHT_COAST_D = 1;

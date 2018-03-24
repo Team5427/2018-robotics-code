@@ -45,7 +45,7 @@ public class PIDDistance extends PIDCommand {
 	 *            Controller.
 	 */
 	public PIDDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgNot, double maximumSpeed, double desiredDistance, double p, double i, double d) {
-		super(p, i, d, Config.PID_UPDATE_PERIOD);
+		super(.02, 0, 0, Config.PID_UPDATE_PERIOD); // TODO Change back to .02
 		this.desiredDistance = desiredDistance;
 		this.scgPIDControlled = scgPIDControlled;
 		this.maximumSpeed = maximumSpeed;
@@ -84,7 +84,11 @@ public class PIDDistance extends PIDCommand {
 	@Override
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber("PID Output Coasting", output);
-		this.scgPIDControlled.pidWrite(output);
+		
+		if(Math.abs(desiredDistance - Math.abs(Robot.encLeft.getDistance())) <= Config.PID_STRAIGHT_ACTIVATE_DISTANCE)
+			this.scgPIDControlled.pidWrite(output);
+		else
+			this.scgPIDControlled.pidWrite(maximumSpeed);
 		SmartDashboard.putNumber("SCGconstant", scgPIDControlled.get());
 
 		// if(this.returnPIDInput()>this.desiredDistance)

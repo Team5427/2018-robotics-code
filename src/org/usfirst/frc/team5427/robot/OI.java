@@ -93,7 +93,7 @@ public class OI {
         
         elevatorUp.whileHeld(Robot.mou);
         elevatorDown.whileHeld(Robot.mod);
-        elevatorAutoFull.whenPressed(new MoveElevatorFull());
+        //elevatorAutoFull.whenPressed(new MoveElevatorFull());
 //        
 //        climberUp.whenPressed(new MoveClimberUp());
 //        climberDown.whenPressed(new MoveClimberDown());
