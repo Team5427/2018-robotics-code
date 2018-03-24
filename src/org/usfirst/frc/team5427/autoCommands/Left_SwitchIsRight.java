@@ -110,7 +110,7 @@ public class Left_SwitchIsRight extends AutoPath {
 //			Robot.encRight.reset();
 			firstAngle.start();
 		}
-		
+		// If the fidget is finished, run the firstDistance command
 		else if ((null != fidget && fidget.isFinished() && !(firstDistance.isRunning()))) {
 			System.out.println("Fidget Done.");
 			fidget.cancel();

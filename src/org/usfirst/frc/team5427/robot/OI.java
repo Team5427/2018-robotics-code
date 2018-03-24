@@ -116,8 +116,6 @@ public class OI {
 
     public Joystick getJoy() {
         return joy1;
-    }
-	 
-	 
+    } 
 	    
 }
