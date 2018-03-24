@@ -8,11 +8,9 @@ package org.usfirst.frc.team5427.robot;
 
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateIn;
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateOut;
-//import org.usfirst.frc.team5427.robot.commands.MoveClimberDown;
-//import org.usfirst.frc.team5427.robot.commands.MoveClimberUp;
-import org.usfirst.frc.team5427.robot.commands.MoveElevatorDown;
+import org.usfirst.frc.team5427.robot.commands.MoveClimberArmDown;
+import org.usfirst.frc.team5427.robot.commands.MoveClimberArmUp;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorFull;
-import org.usfirst.frc.team5427.robot.commands.MoveElevatorUp;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 
@@ -63,8 +61,8 @@ public class OI {
 	Button motorIntakeOut;
 	Button elevatorUp;
 	Button elevatorDown;
-	Button climberUp;
-	Button climberDown;
+	Button climberArmUp;
+	Button climberArmDown;
 	Button elevatorAutoFull;
 
 	SendableChooser<Integer> autoColorChooser = new SendableChooser<Integer>();
@@ -81,8 +79,10 @@ public class OI {
 //        solenoidIntake = new JoystickButton(joy1,Config.BUTTON_SOLENOD_INTAKE);
         elevatorUp = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_UP);
         elevatorDown = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_DOWN);
-        climberUp = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_UP);
-        climberDown = new JoystickButton(joy1,Config.BUTTON_CLIMBER_DOWN);
+        elevatorAutoFull = new JoystickButton(joy1, Config.BUTTON_ELEVATOR_FULL);
+        
+        climberArmUp = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_UP);
+        climberArmDown = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_DOWN);
 
         
         //set what they do
@@ -95,8 +95,8 @@ public class OI {
         elevatorDown.whileHeld(Robot.mod);
         //elevatorAutoFull.whenPressed(new MoveElevatorFull());
 //        
-//        climberUp.whenPressed(new MoveClimberUp());
-//        climberDown.whenPressed(new MoveClimberDown());
+        climberArmUp.whenPressed(new MoveClimberArmUp());
+        climberArmDown.whenPressed(new MoveClimberArmDown());
         
         autoPositionChooser.addDefault("CHOOSE ONE", Config.AUTO_NONE);
 		autoPositionChooser.addObject("Right", Config.RIGHT);

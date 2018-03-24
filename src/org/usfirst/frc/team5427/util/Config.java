@@ -51,6 +51,9 @@ public class Config {
 	public static final int INTAKE_MOTOR_LEFT = 7;
 	public static final int INTAKE_MOTOR_RIGHT = 8;
 	public static final int ELEVATOR_MOTOR = 9;
+
+	public static final int CLIMBER_ARM_MOTOR = 7; //this is for the climber arm
+
 	public static final int CLIMBER_MOTOR_LEFT = 4;
 	public static final int CLIMBER_MOTOR_RIGHT = 5; // TODO Change to actual port
 
@@ -87,8 +90,9 @@ public class Config {
 //	public static final int BUTTON_SOLENOD_INTAKE = 2;
 	public static final int BUTTON_ELEVATOR_UP = 5;
 	public static final int BUTTON_ELEVATOR_DOWN= 3;
-	public static final int BUTTON_CLIMBER_UP = 6;
-	public static final int BUTTON_CLIMBER_DOWN= 4;
+	public static final int BUTTON_ELEVATOR_FULL= 11;
+	public static final int BUTTON_CLIMBER_ARM_UP = 10;
+	public static final int BUTTON_CLIMBER_ARM_DOWN= 9;
 	
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;
