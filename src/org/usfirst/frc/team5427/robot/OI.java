@@ -78,7 +78,6 @@ public class OI {
         motorIntakeIn = new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_IN);
         motorIntakeOut = new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_OUT);
         motorIntakeOut = new JoystickButton(joy1, Config.BUTTON_MOTOR_INTAKE_OUT_SLOW);
-//        solenoidIntake = new JoystickButton(joy1,Config.BUTTON_SOLENOD_INTAKE);
         elevatorUp = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_UP);
         elevatorDown = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_DOWN);
         climberUp = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_UP);
@@ -89,7 +88,6 @@ public class OI {
         motorIntakeIn.whileHeld(new IntakeActivateIn());
         motorIntakeOut.whileHeld(new IntakeActivateOut());
 //        
-       // solenoidIntake.whenPressed(new IntakeSolenoidSwitch());
         
         elevatorUp.whileHeld(Robot.mou);
         elevatorDown.whileHeld(Robot.mod);
