@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
@@ -44,7 +45,6 @@ import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.Log;
 //import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
-
 import com.kauailabs.navx.frc.AHRS;
 
 /**
@@ -73,7 +73,8 @@ public class Robot extends IterativeRobot {
 	public static SpeedController motorPWM_Intake_Left;
 	public static SpeedController motorPWM_Intake_Right;
 	public static SpeedController motorPWM_Elevator;
-	// public static SpeedController motorPWM_Climber;
+	// public static SpeedController motorPWM_Climber_Left;
+	// public static SpeedController motorPWM_Climber_Right;
 	public static Intake intakeSubsystem;
 	public static Encoder encLeft;
 	// public static Encoder encRight;
@@ -115,15 +116,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		// Initialize ports
 		// driveTrain = new DriveTrain();
 		// chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		/*
-		 * COMMENTED DUE TO ERRORS TODO ADD PORTS FOR SOLENOID
-		 */
-		// Log.init("Initializing solenoid");
-		// intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD,
-		// Config.PCM_SOLENOID_REVERSE);
 		// Log.init("Initializing driveTrain: ");
 		elevatorLimitSwitchUp = new DigitalInput(Config.ELEVATOR_LIMIT_SWITCH_UP);
 		elevatorLimitSwitchUp.setSubsystem("ELSU");
@@ -144,7 +140,8 @@ public class Robot extends IterativeRobot {
 		motorPWM_Intake_Right = new PWMVictorSPX(Config.INTAKE_MOTOR_RIGHT);
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
 		motorPWM_Elevator = new PWMVictorSPX(Config.ELEVATOR_MOTOR);
-		// motorPWM_Climber = new SteelTalon(Config.CLIMBER_MOTOR);
+		// motorPWM_Climber_Left = new Spark(Config.CLIMBER_MOTOR_LEFT);
+		// motorPWM_Climber_Right = new Spark(Config.CLIMBER_MOTOR_RIGHT);
 		try {
 			ahrs = new AHRS(SPI.Port.kMXP);
 		}
@@ -257,6 +254,8 @@ public class Robot extends IterativeRobot {
 		// this.speedcontrollergroup_left, .3, 154, 0.0115, 0, 0.005).start();
 		// new PIDTurn(speedcontrollergroup_left, speedcontrollergroup_right,
 		// 90).start();
+		
+		// Receives the array telling us which side of the switch and scale is ours.
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		switchSide = gameData.charAt(0);
 		scaleSide = gameData.charAt(1);
@@ -266,6 +265,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("ScaleSide", scaleSide + "");
 		SmartDashboard.putString("FieldPosition", field_position + "");
 		SmartDashboard.putString("CubePlacement", switch_or_scale + "");
+		
+		// Automatically determines which autonomous to run based on the game data sent to us 
 		if (field_position == 1) {
 			if (switch_or_scale == 1) {
 				if (switchSide == 'R')
@@ -334,6 +335,7 @@ public class Robot extends IterativeRobot {
 		// new MoveElevatorAuto(1).start();
 		// b = true;
 		// }
+		// If we didn't pick a path in init, try again until we do. Run the auto we picked
 		if(null==autoPath)
 		{
 			gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -422,8 +424,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		// System.out.print("E:");
-		// Log.info("E");
+
 		if (elevatorLimitSwitchUp.get())
 			SmartDashboard.putNumber("UPLS", 1);
 		else
@@ -432,7 +433,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("a", mou.isFinished());
 		SmartDashboard.putBoolean("a", mod.isFinished());
 		// System.out.print("E:"+elevatorLimitSwitchUp.get());
-		// System.out.print("EEEEE");
 		// 4 counts for every rev
 		/*
 		 * SmartDashboard.putNumber("RightCount", encRight.get());

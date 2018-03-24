@@ -51,7 +51,8 @@ public class Config {
 	public static final int INTAKE_MOTOR_LEFT = 7;
 	public static final int INTAKE_MOTOR_RIGHT = 8;
 	public static final int ELEVATOR_MOTOR = 9;
-	public static final int CLIMBER_MOTOR = 4;
+	public static final int CLIMBER_MOTOR_LEFT = 4;
+	public static final int CLIMBER_MOTOR_RIGHT = 5; // TODO Change to actual port
 
 	
 	/*----------DIO PORTS-----------*/

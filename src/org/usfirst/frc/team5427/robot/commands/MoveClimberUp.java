@@ -32,21 +32,21 @@
 //	// Called repeatedly when this Command is scheduled to run
 //	@Override
 //	protected void execute() {
-//		Robot.motorPWM_Climber.set(Config.CLIMBER_MOTOR_SPEED_UP);
+//		Robot.motorPWM_Climber_Left.set(Config.CLIMBER_MOTOR_SPEED_UP);
+//		Robot.motorPWM_Climber_Right.set(Config.CLIMBER_MOTOR_SPEED_UP);
 //	}
 //
 //	// Make this return true when this Command no longer needs to run execute()
 //	@Override
 //	protected boolean isFinished() {
-//
-//			return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_CLIMBER_UP);
-//		
+//		return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_CLIMBER_UP);
 //	}
 //
 //	// Called once after isFinished returns true
 //	@Override
 //	protected void end() {
-//		Robot.motorPWM_Elevator.stopMotor();
+//		Robot.motorPWM_Climber_Left.set(0);
+//		Robot.motorPWM_Climber_Right.set(0);
 //	}
 //
 //	// Called when another command which requires one or more of the same
