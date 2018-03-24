@@ -107,9 +107,7 @@ public class PIDStraightMovement extends PIDCommand {
 		Robot.encLeft.reset();
 		// Robot.encRight.reset();
 		// if using exponential increment
-		power = .1;
-		scgConstant.set(.1);
-		scgPIDControlled.set(-.1);
+		power = .01;
 	}
 
 	/**
@@ -130,24 +128,22 @@ public class PIDStraightMovement extends PIDCommand {
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-		SmartDashboard.putNumber("c", c++);
+		SmartDashboard.putNumber("Velocity", Robot.encLeft.getRate());
 		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
-		// SmartDashboard.putNumber("encRight", Math.abs(Robot.encRight.getDistance()));
 		SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
-		// SmartDashboard.putNumber("encRightVal",
-		// Math.abs(Robot.encRight.getDistance()));
 		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
 		if (this.power < this.maximumSpeed && this.pidDistance == null) {
 			// linear increment
 			// this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
-			this.power *= Config.PID_STRAIGHT_EXPONENTIAL_INCREMENT;
 			scgConstant.set(power);
 //			if (this.power < Config.POST_INCR_SWITCH_TO_PID)
-			if(getVelocity() < Config.SWITCH_TO_PID_VELOCITY)
-				// TODO change this
-				scgPIDControlled.set(-power);
-			else
+//			if(Robot.encLeft.getRate() < -Config.SWITCH_TO_PID_VELOCITY)
+//				// TODO change this
+//				scgPIDControlled.set(-power);
+//			else
 				scgPIDControlled.pidWrite(output);
+			this.power *= Config.PID_STRAIGHT_EXPONENTIAL_INCREMENT;
+//			this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
 			SmartDashboard.putNumber("PID output", output);
 			SmartDashboard.putNumber("SCGconstant", scgConstant.get());
 		}
@@ -163,8 +159,8 @@ public class PIDStraightMovement extends PIDCommand {
 		else if (this.power >= this.maximumSpeed) {
 			scgPIDControlled.pidWrite(output);
 		}
-		if (pidDistance != null && pidDistance.getDistance() > this.desiredDistance)
-			super.getPIDController().setOutputRange(-.5, .5);// TODO do not set if already set
+//		if (pidDistance != null && pidDistance.getDistance() > this.desiredDistance)
+//			super.getPIDController().setOutputRange(-.5, .5);// TODO do not set if already set
 	}
 
 	/**
@@ -174,11 +170,11 @@ public class PIDStraightMovement extends PIDCommand {
 	 */
 	@Override
 	public boolean isFinished() {
-//		if (pidDistance != null && pidDistance.isFinished() && Math.abs(Robot.ahrs.getYaw()) < 3) {
-//			pidDistance.end();// TODO check if ending works correctly
-//			end();// TODO take these out
-//			return true;
-//		}
+		if (pidDistance != null && pidDistance.isFinished() && Math.abs(Robot.ahrs.getYaw()) < 3) {
+			pidDistance.end();// TODO check if ending works correctly
+			end();// TODO take these out
+			return true;
+		}
 		return false;
 	}
 
@@ -225,11 +221,4 @@ public class PIDStraightMovement extends PIDCommand {
 		super.getPIDController().reset();
 	}
 
-	public double getVelocity() {
-		startTime = System.nanoTime() / 1000000000.;
-		startDistance = Robot.encLeft.getDistance();
-		endTime = System.nanoTime() / 1000000000.;
-		endDistance = Robot.encLeft.getDistance();
-		return (endDistance - startDistance) / (endTime - startTime);
-	}
 }

@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -130,20 +131,22 @@ public class Robot extends IterativeRobot {
 		elevatorLimitSwitchDown = new DigitalInput(Config.ELEVATOR_LIMIT_SWITCH_DOWN);
 		// elevatorLimitSwitchUp.free();
 		// elevatorLimitSwitchDown.
-		motor_pwm_frontLeft = new PWMVictorSPX(Config.FRONT_LEFT_MOTOR);
-		motor_pwm_rearLeft = new PWMVictorSPX(Config.REAR_LEFT_MOTOR);
-		// motor_pwm_rearLeft
+		
+		//TODO Change back to PWMVictorSPX for 2018 robot!
+		motor_pwm_frontLeft = new SteelTalon(Config.FRONT_LEFT_MOTOR);
+		motor_pwm_rearLeft = new SteelTalon(Config.REAR_LEFT_MOTOR);
 		speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
-		motor_pwm_frontRight = new PWMVictorSPX(Config.FRONT_RIGHT_MOTOR);
-		motor_pwm_rearRight = new PWMVictorSPX(Config.REAR_RIGHT_MOTOR);
+		motor_pwm_frontRight = new SteelTalon(Config.FRONT_RIGHT_MOTOR);
+		motor_pwm_rearRight = new SteelTalon(Config.REAR_RIGHT_MOTOR);
 		speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
 		drive = new DifferentialDrive(speedcontrollergroup_left, speedcontrollergroup_right);
 		drive.setSafetyEnabled(false);
 		driveTrain = new DriveTrain(speedcontrollergroup_left, speedcontrollergroup_right, drive);
-		motorPWM_Intake_Left = new PWMVictorSPX(Config.INTAKE_MOTOR_LEFT);
-		motorPWM_Intake_Right = new PWMVictorSPX(Config.INTAKE_MOTOR_RIGHT);
+		motorPWM_Intake_Left = new SteelTalon(Config.INTAKE_MOTOR_LEFT);
+		motorPWM_Intake_Right = new SteelTalon(Config.INTAKE_MOTOR_RIGHT);
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
-		motorPWM_Elevator = new PWMVictorSPX(Config.ELEVATOR_MOTOR);
+		motorPWM_Elevator = new SteelTalon(Config.ELEVATOR_MOTOR);
+		
 		// motorPWM_Climber = new SteelTalon(Config.CLIMBER_MOTOR);
 		try {
 			ahrs = new AHRS(SPI.Port.kMXP);
@@ -164,11 +167,13 @@ public class Robot extends IterativeRobot {
 		// encoderStraight = new Encoder(0, 0);
 		// encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
 		// encLeft = new Encoder(2,3,false,Encoder.EncodingType.k4X);
-		camServer = CameraServer.getInstance();
-		usbCam = new UsbCamera("USB Camera", 0);
-		usbCam.setFPS(15);
-		camServer.addCamera(usbCam);
-		camServer.startAutomaticCapture(usbCam);
+		
+//		camServer = CameraServer.getInstance();
+//		usbCam = new UsbCamera("USB Camera", 0);
+//		usbCam.setFPS(15);
+//		camServer.addCamera(usbCam);
+//		camServer.startAutomaticCapture(usbCam);
+		
 //		usbCam1 = new UsbCamera("USB Camera", 1);
 //		usbCam1.setFPS(15);
 //		camServer.addCamera(usbCam1);
@@ -253,58 +258,60 @@ public class Robot extends IterativeRobot {
 		// encRight.reset();
 		encLeft.reset();
 		ahrs.reset();
+		
+		System.out.println("Robot work");
 		// new PIDStraightMovement(this.speedcontrollergroup_right,
 		// this.speedcontrollergroup_left, .3, 154, 0.0115, 0, 0.005).start();
 		// new PIDTurn(speedcontrollergroup_left, speedcontrollergroup_right,
 		// 90).start();
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		switchSide = gameData.charAt(0);
-		scaleSide = gameData.charAt(1);
-		field_position = oi.autoPositionChooser.getSelected();
-		switch_or_scale = oi.autoCubeChooser.getSelected();
-		SmartDashboard.putString("SwitchSide", switchSide + "");
-		SmartDashboard.putString("ScaleSide", scaleSide + "");
-		SmartDashboard.putString("FieldPosition", field_position + "");
-		SmartDashboard.putString("CubePlacement", switch_or_scale + "");
-		if (field_position == 1) {
-			if (switch_or_scale == 1) {
-				if (switchSide == 'R')
-					autoPath = new Right_SwitchIsRight();
-				else if (switchSide == 'L')
-					autoPath = new Right_SwitchIsLeft();
-			}
-			else if (switch_or_scale == 2) {
-				if (scaleSide == 'R')
-					autoPath = new Right_ScaleIsRight();
-				else if (scaleSide == 'L')
-					autoPath = new Right_ScaleIsLeft();
-			}
-		}
-		else if (field_position == 2) {
-			if (switchSide == 'R')
-				autoPath = new Center_SwitchIsRight();
-			else if (switchSide == 'L')
-				autoPath = new Center_SwitchIsLeft();
-		}
-		else if (field_position == 3) {
-			if (switch_or_scale == 1) {
-				if (switchSide == 'R')
-					autoPath = new Left_SwitchIsRight();
-				else if (switchSide == 'L')
-					autoPath = new Left_SwitchIsLeft();
-			}
-			else if (switch_or_scale == 2) {
-				if (scaleSide == 'R')
-					autoPath = new Left_ScaleIsRight();
-				else if (scaleSide == 'L')
-					autoPath = new Left_ScaleIsLeft();
-			}
-		}
-		if(autoPath!=null)
-			autoPath.start();
+//		gameData = DriverStation.getInstance().getGameSpecificMessage();
+//		switchSide = gameData.charAt(0);
+//		scaleSide = gameData.charAt(1);
+//		field_position = oi.autoPositionChooser.getSelected();
+//		switch_or_scale = oi.autoCubeChooser.getSelected();
+//		SmartDashboard.putString("SwitchSide", switchSide + "");
+//		SmartDashboard.putString("ScaleSide", scaleSide + "");
+//		SmartDashboard.putString("FieldPosition", field_position + "");
+//		SmartDashboard.putString("CubePlacement", switch_or_scale + "");
+//		if (field_position == 1) {
+//			if (switch_or_scale == 1) {
+//				if (switchSide == 'R')
+//					autoPath = new Right_SwitchIsRight();
+//				else if (switchSide == 'L')
+//					autoPath = new Right_SwitchIsLeft();
+//			}
+//			else if (switch_or_scale == 2) {
+//				if (scaleSide == 'R')
+//					autoPath = new Right_ScaleIsRight();
+//				else if (scaleSide == 'L')
+//					autoPath = new Right_ScaleIsLeft();
+//			}
+//		}
+//		else if (field_position == 2) {
+//			if (switchSide == 'R')
+//				autoPath = new Center_SwitchIsRight();
+//			else if (switchSide == 'L')
+//				autoPath = new Center_SwitchIsLeft();
+//		}
+//		else if (field_position == 3) {
+//			if (switch_or_scale == 1) {
+//				if (switchSide == 'R')
+//					autoPath = new Left_SwitchIsRight();
+//				else if (switchSide == 'L')
+//					autoPath = new Left_SwitchIsLeft();
+//			}
+//			else if (switch_or_scale == 2) {
+//				if (scaleSide == 'R')
+//					autoPath = new Left_ScaleIsRight();
+//				else if (scaleSide == 'L')
+//					autoPath = new Left_ScaleIsLeft();
+//			}
+//		}
+//		if(autoPath!=null)
+//			autoPath.start();
 		
 //		new MoveElevatorAuto(2).start();
-//		new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 30, .02, 0, 0).start();
+		new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, .6, 60, .0285, 0, 0.001).start();
 
 //		autoPath=new Right_ScaleIsLeft();
 //		autoPath.start();
@@ -334,54 +341,54 @@ public class Robot extends IterativeRobot {
 		// new MoveElevatorAuto(1).start();
 		// b = true;
 		// }
-		if(null==autoPath)
-		{
-			gameData = DriverStation.getInstance().getGameSpecificMessage();
-			switchSide = gameData.charAt(0);
-			scaleSide = gameData.charAt(1);
-			field_position = oi.autoPositionChooser.getSelected();
-			switch_or_scale = oi.autoCubeChooser.getSelected();
-			SmartDashboard.putString("SwitchSide", switchSide + "");
-			SmartDashboard.putString("ScaleSide", scaleSide + "");
-			SmartDashboard.putString("FieldPosition", field_position + "");
-			SmartDashboard.putString("CubePlacement", switch_or_scale + "");
-			if (field_position == 1) {
-				if (switch_or_scale == 1) {
-					if (switchSide == 'R')
-						autoPath = new Right_SwitchIsRight();
-					else if (switchSide == 'L')
-						autoPath = new Right_SwitchIsLeft();
-				}
-				else if (switch_or_scale == 2) {
-					if (scaleSide == 'R')
-						autoPath = new Right_ScaleIsRight();
-					else if (scaleSide == 'L')
-						autoPath = new Right_ScaleIsLeft();
-				}
-			}
-			else if (field_position == 2) {
-				if (switchSide == 'R')
-					autoPath = new Center_SwitchIsRight();
-				else if (switchSide == 'L')
-					autoPath = new Center_SwitchIsLeft();
-			}
-			else if (field_position == 3) {
-				if (switch_or_scale == 1) {
-					if (switchSide == 'R')
-						autoPath = new Left_SwitchIsRight();
-					else if (switchSide == 'L')
-						autoPath = new Left_SwitchIsLeft();
-				}
-				else if (switch_or_scale == 2) {
-					if (scaleSide == 'R')
-						autoPath = new Left_ScaleIsRight();
-					else if (scaleSide == 'L')
-						autoPath = new Left_ScaleIsLeft();
-				}
-			}
-			if(autoPath!=null)
-				autoPath.start();
-		}
+//		if(null==autoPath)
+//		{
+//			gameData = DriverStation.getInstance().getGameSpecificMessage();
+//			switchSide = gameData.charAt(0);
+//			scaleSide = gameData.charAt(1);
+//			field_position = oi.autoPositionChooser.getSelected();
+//			switch_or_scale = oi.autoCubeChooser.getSelected();
+//			SmartDashboard.putString("SwitchSide", switchSide + "");
+//			SmartDashboard.putString("ScaleSide", scaleSide + "");
+//			SmartDashboard.putString("FieldPosition", field_position + "");
+//			SmartDashboard.putString("CubePlacement", switch_or_scale + "");
+//			if (field_position == 1) {
+//				if (switch_or_scale == 1) {
+//					if (switchSide == 'R')
+//						autoPath = new Right_SwitchIsRight();
+//					else if (switchSide == 'L')
+//						autoPath = new Right_SwitchIsLeft();
+//				}
+//				else if (switch_or_scale == 2) {
+//					if (scaleSide == 'R')
+//						autoPath = new Right_ScaleIsRight();
+//					else if (scaleSide == 'L')
+//						autoPath = new Right_ScaleIsLeft();
+//				}
+//			}
+//			else if (field_position == 2) {
+//				if (switchSide == 'R')
+//					autoPath = new Center_SwitchIsRight();
+//				else if (switchSide == 'L')
+//					autoPath = new Center_SwitchIsLeft();
+//			}
+//			else if (field_position == 3) {
+//				if (switch_or_scale == 1) {
+//					if (switchSide == 'R')
+//						autoPath = new Left_SwitchIsRight();
+//					else if (switchSide == 'L')
+//						autoPath = new Left_SwitchIsLeft();
+//				}
+//				else if (switch_or_scale == 2) {
+//					if (scaleSide == 'R')
+//						autoPath = new Left_ScaleIsRight();
+//					else if (scaleSide == 'L')
+//						autoPath = new Left_ScaleIsLeft();
+//				}
+//			}
+//			if(autoPath!=null)
+//				autoPath.start();
+//		}
 	}
 
 	@Override
@@ -429,17 +436,18 @@ public class Robot extends IterativeRobot {
 		else
 			SmartDashboard.putNumber("UPLS", 0);
 		// TODO This needs to be here for limit switches to work!
-		SmartDashboard.putBoolean("a", mou.isFinished());
-		SmartDashboard.putBoolean("a", mod.isFinished());
+		
 		// System.out.print("E:"+elevatorLimitSwitchUp.get());
 		// System.out.print("EEEEE");
 		// 4 counts for every rev
+		
+		System.out.println("Velocity: "+encLeft.getRate());
 		/*
 		 * SmartDashboard.putNumber("RightCount", encRight.get());
 		 * SmartDashboard.putNumber("LeftCount", encLeft.get());
 		 * 
 		 * SmartDashboard.putNumber("RightDist",encRight.getDistance());
-		 * SmartDashboard.putNumber("LeftDist",encLeft.getDistance());
-		 */
+		 * 
+		 */SmartDashboard.putNumber("e",encLeft.getDistance());
 	}
 }

@@ -83,7 +83,7 @@ public class OI {
         elevatorDown = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_DOWN);
         climberUp = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_UP);
         climberDown = new JoystickButton(joy1,Config.BUTTON_CLIMBER_DOWN);
-
+        elevatorAutoFull = new JoystickButton(joy1, Config.BUTTON_ELEVATOR_AUTO_FULL);
         
         //set what they do
         motorIntakeIn.whileHeld(new IntakeActivateIn());

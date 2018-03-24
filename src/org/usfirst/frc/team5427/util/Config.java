@@ -88,6 +88,7 @@ public class Config {
 	public static final int BUTTON_ELEVATOR_DOWN= 3;
 	public static final int BUTTON_CLIMBER_UP = 6;
 	public static final int BUTTON_CLIMBER_DOWN= 4;
+	public static final int BUTTON_ELEVATOR_AUTO_FULL = 7;
 	
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;
@@ -130,7 +131,7 @@ public class Config {
 	/***Increment****/
 	public static final double PID_STRAIGHT_LINEAR_INCREMENT=.01;
 	public static final double POST_INCR_SWITCH_TO_PID = .1;
-	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=1.25;
+	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=1.05;
 	
 	public static final double SWITCH_TO_PID_VELOCITY = 30.;
 
@@ -138,7 +139,7 @@ public class Config {
 	public static final double PID_STRAIGHT_COAST_P = 0.275;
 	public static final double PID_STRAIGHT_COAST_I = 0.012333;
 	public static final double PID_STRAIGHT_COAST_D = 0.0;
-	public static final double PID_STRAIGHT_TOLERANCE = 5;//.1
+	public static final double PID_STRAIGHT_TOLERANCE = 2;//.1
 //	public static final double PID_STRAIGHT_COAST_P = 1;
 //	public static final double PID_STRAIGHT_COAST_I = 1;
 //	public static final double PID_STRAIGHT_COAST_D = 1;

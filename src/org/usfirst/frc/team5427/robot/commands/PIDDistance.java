@@ -54,7 +54,7 @@ public class PIDDistance extends PIDCommand {
 		super.getPIDController().setOutputRange(-maximumSpeed, maximumSpeed);
 		super.getPIDController().setSetpoint(desiredDistance);
 		this.scgNot=scgNot;
-		this.straightMovement = straightMovement;
+		this.straightMovement = straightPID;
 		timer = new Timer();
 	}
 
@@ -139,6 +139,7 @@ public class PIDDistance extends PIDCommand {
 		scgNot.set(0);
 		super.end();
 		free();
+		System.out.println("Ending PIDDistance.");
 		straightMovement.end();
 	}
 
