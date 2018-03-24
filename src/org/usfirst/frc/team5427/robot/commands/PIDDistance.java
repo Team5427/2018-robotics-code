@@ -29,6 +29,11 @@ public class PIDDistance extends PIDCommand {
 	double desiredDistance;
 	// This is the max speed for the output range of the PID Controller.
 	double maximumSpeed;
+	
+	//PID values for 20 inches
+	public static final double p20 = 0.02;
+	public static final double i20 = 0.0;
+	public static final double d20 = 0.0;
 
 	/**
 	 * Constructor for PIDDistance
@@ -44,8 +49,8 @@ public class PIDDistance extends PIDCommand {
 	 *            i, d - These receive the P, I, and D values for the PID
 	 *            Controller.
 	 */
-	public PIDDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgNot, double maximumSpeed, double desiredDistance, double p, double i, double d) {
-		super(.02, 0, 0, Config.PID_UPDATE_PERIOD); // TODO Change back to .02
+	public PIDDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgNot, double maximumSpeed, double desiredDistance) {
+		super(p20, i20, d20, Config.PID_UPDATE_PERIOD); // TODO Change back to .02
 		this.desiredDistance = desiredDistance;
 		this.scgPIDControlled = scgPIDControlled;
 		this.maximumSpeed = maximumSpeed;

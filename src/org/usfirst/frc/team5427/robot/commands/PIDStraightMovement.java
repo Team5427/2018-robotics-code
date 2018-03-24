@@ -156,7 +156,7 @@ public class PIDStraightMovement extends PIDCommand {
 		// scgPIDControlled.pidWrite(output);
 		// }
 		if (this.power >= this.maximumSpeed && pidDistance == null) {
-			this.pidDistance = new PIDDistance(this.scgConstant, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);
+			this.pidDistance = new PIDDistance(this.scgConstant, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance);
 			pidDistance.start();
 		}
 		else if (this.power >= this.maximumSpeed) {
