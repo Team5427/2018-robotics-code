@@ -183,6 +183,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		Scheduler.getInstance().removeAll();
 		//// encRight.reset();
+		
 		encLeft.reset();
 		ahrs.reset();
 		// SmartDashboard.putNumber("encRightVal", encRight.getDistance());
@@ -271,7 +272,7 @@ public class Robot extends IterativeRobot {
 //			autoPath.start();
 		
 //		new MoveElevatorAuto(2).start();
-		new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 1, 60, .0285, 0.0001, 0.001).start();
+		new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, .3, 60, .0285, 0.0001, 0.001).start();
 
 //		autoPath=new Right_ScaleIsLeft();
 //		autoPath.start();
@@ -415,4 +416,12 @@ public class Robot extends IterativeRobot {
 		 * 
 		 */SmartDashboard.putNumber("e",encLeft.getDistance());
 	}
+//	public void testInit()
+//	{
+//		motor_pwm_rearLeft.set(.5);
+//	}
+//	public void testPeriodic()
+//	{
+//		motor_pwm_rearLeft.set(.5);
+//	}
 }
