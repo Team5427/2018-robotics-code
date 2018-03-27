@@ -83,7 +83,8 @@ public class PIDStraightMovement extends PIDCommand {
 		this.i = i;
 		this.d = d;
 //		this.getPIDController().setOutputRange(-maximumSpeed, maximumSpeed);
-		this.getPIDController().setAbsoluteTolerance(.1);
+//		this.getPIDController().setAbsoluteTolerance(.1);
+		
 		this.getPIDController().setSetpoint(0);
 //		super.setSetpoint(0);
 		setSetpoint(0);
@@ -166,6 +167,7 @@ public class PIDStraightMovement extends PIDCommand {
 			scgConstant.set(power);
 			SmartDashboard.putNumber("g", scgConstant.get());
 			SmartDashboard.putNumber("o", output);
+			SmartDashboard.putNumber("p", power);
 
 			if (this.power <= this.maximumSpeed && this.pidDistance == null) 
 				this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;

@@ -121,15 +121,15 @@ public class Config {
 	
 	public static final double PID_UPDATE_PERIOD = 0.01;
 	//for straight no d, for turn no i
-	public static final double PID_STRAIGHT_P = 0.06;//0.05;
+	public static final double PID_STRAIGHT_P = .16;//0.06;
 	//.005 started oscilating
-	public static final double PID_STRAIGHT_I = 0.0;//0.0025;
-	public static final double PID_STRAIGHT_D = 0.008;//0.00;
+	public static final double PID_STRAIGHT_I = 0.0;//0.00;
+	public static final double PID_STRAIGHT_D = 0.008;//0.006;
 	public static final double PID_STRAIGHT_POWER_SHORT = 0.35;
 	public static final double PID_STRAIGHT_POWER_LONG = 0.5;
 
 	/***Increment****/
-	public static final double PID_STRAIGHT_LINEAR_INCREMENT=.001;
+	public static final double PID_STRAIGHT_LINEAR_INCREMENT=.0005;
 	public static final double POST_INCR_SWITCH_TO_PID = .1;
 	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=1.05;
 	
