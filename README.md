@@ -1,34 +1,38 @@
 # 2018-robotics-code
 2018 Robot Code for First Power Up
 
+#######################################################################################################
 
-Important Branches & What They Are For:
+ - Important Branches & What They Are For:
 
-for-competition: Our current working branch that we use for competitions.
+    1) for-competition: Our current working branch that we use for competitions.
 
-pid-remove-kick: Our current testing branch for removing the kick from our autonomous with PIDs.
+    2) pid-remove-kick: Our current testing branch for removing the kick from our autonomous with PIDs.
 
-lone-star-central: The code used at the Lone Star Central regional.
+    3) lone-star-central: The code used at the Lone Star Central regional.
 
-master: The branch used to hold finalized code.
+    4) master: The branch used to hold finalized code.
 
+#######################################################################################################
 
-Outdated Branches & What They Were For:
+ - Outdated Branches & What They Were For:
 
-dev: Old 2018 robot mechanical code
+    1) dev: Old 2018 robot mechanical code
 
-pid-code-connected: branch to combine distance and turnign PID Commands
+    2) pid-code-connected: branch to combine distance and turnign PID Commands
 
-pid-code-sat: branch with Turning PID Command
+    3) pid-code-sat: branch with Turning PID Command
 
-pid-testing-1: Branch with distance PID Command
+    4) pid-testing-1: Branch with distance PID Command
 
-connection-testing: bare minimum code for testing connectivity errors
+    5) connection-testing: bare minimum code for testing connectivity errors
 
-encoder: branch for figuring out encoders
+    6) encoder: branch for figuring out encoders
 
-pid-testing-2: branch of PID with older ideas of Distance PID and potentially power ramping
+    7) pid-testing-2: branch of PID with older ideas of Distance PID and potentially power ramping
 
-pid-testing-encoders: Branch of PID with encoder code added
+    8) pid-testing-encoders: Branch of PID with encoder code added
 
-pid-testing-timed: branch of PID with older ideas of linking Distance and Turn PID's 
+    9) pid-testing-timed: branch of PID with older ideas of linking Distance and Turn PID's 
+    
+    ###################################################################################################
