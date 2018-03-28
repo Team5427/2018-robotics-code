@@ -123,8 +123,8 @@ public class Config {
 	//for straight no d, for turn no i
 	public static final double PID_STRAIGHT_P = .5;//0.3;
 	//.005 started oscilating
-	public static final double PID_STRAIGHT_I = 50.0;//0.00;
-	public static final double PID_STRAIGHT_D = 0.005;//0.015;
+	public static final double PID_STRAIGHT_I = .500;//0.00;
+	public static final double PID_STRAIGHT_D = 0.008;//0.015;
 	public static final double PID_STRAIGHT_POWER_SHORT = 0.35;
 	public static final double PID_STRAIGHT_POWER_LONG = 0.5;
 

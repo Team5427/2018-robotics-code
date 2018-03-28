@@ -164,7 +164,16 @@ public class PIDStraightMovement extends PIDCommand {
 //		else
 //		if (this.power >= this.maximumSpeed) {
 			scgPIDControlled.pidWrite(output);
-			scgConstant.set(power);
+			if(Robot.encLeft.getDistance()>=60)
+			{
+				if(scgConstant.get()==0)
+					SmartDashboard.putNumber("EncLeft when switch", Robot.encLeft.getDistance());
+				
+				scgConstant.set(0);
+			}
+			else
+				scgConstant.set(power);
+			
 			SmartDashboard.putNumber("g", scgConstant.get());
 			SmartDashboard.putNumber("o", output);
 			SmartDashboard.putNumber("p", power);
