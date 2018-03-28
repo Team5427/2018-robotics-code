@@ -21,20 +21,20 @@ public class MoveElevatorFull extends Command {
 	// Height = 1: Switch. Height = 2: Scale.
 
 	public static boolean up = true;
-	public MoveElevatorFull() {
-		
+	public MoveElevatorFull(boolean up) {
+		this.up=up;
 		//requires(Robot.kExampleSubsystem);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		if(this.up) {
-			up = false;
-		}
-		else {
-			up = true;
-		}
+//		if(this.up) {
+//			up = false;
+//		}
+//		else {
+//			up = true;
+//		}
 	}
 
 	// Called repeatedly when this Command is scheduled to run

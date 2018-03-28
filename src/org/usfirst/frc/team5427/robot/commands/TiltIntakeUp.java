@@ -7,10 +7,7 @@
 
 package org.usfirst.frc.team5427.robot.commands;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 //import org.usfirst.frc.team5427.util.Log;
@@ -21,56 +18,35 @@ import org.usfirst.frc.team5427.util.NextLine;
  */
 
 @NextLine
-public class MoveElevatorUp extends Command {
+public class TiltIntakeUp extends Command {
 
-	public MoveElevatorUp() {
-//		requires(Robot.driveTrain);
+	public TiltIntakeUp() {
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		x=0;
-//		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
-		this.setInterruptible(true);
+
 	}
-	int x =0;
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
-		SmartDashboard.putNumber("x", ++x);
-//		if(isFinished())
-//			SmartDashboard.putNumber("a", 1 );
-//		else
-//			SmartDashboard.putNumber("a", 0 );
-
+		Robot.motorPWM_TiltIntake.set(Config.INTAKE_TILTER_MOTOR_SPEED_UP);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
-	public boolean isFinished() {
-//		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_ELEVATOR_UP))
-//		{
-//			SmartDashboard.putNumber("x", 55);
-//			return true;
-//		}
-		if(!Robot.elevatorLimitSwitchUp.get())
-		{
-			SmartDashboard.putNumber("x", 99);	
-			return true;
+	protected boolean isFinished() {
 
-		}
-		return false;
+			return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_INTAKE_TILTER_UP);
+		
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.motorPWM_Elevator.set(0);
-//		Robot.elevatorLimitSwitchUp.free();
-//		Robot.elevatorLimitSwitchUp = new DigitalInput(Config.ELEVATOR_LIMIT_SWITCH_UP);
+		Robot.motorPWM_TiltIntake.set(0);
 	}
 
 	// Called when another command which requires one or more of the same
