@@ -97,8 +97,7 @@ public class PIDDistance extends PIDCommand {
 		SmartDashboard.putNumber("SCGconstant", scgPIDControlled.get());
 
 		// if(this.returnPIDInput()>this.desiredDistance)
-		// super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already
-		// set
+		// super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already set
 		// if(this.returnPIDInput()>(this.desiredDistance*.75))
 		// {
 		// this.maximumSpeed*=0.95;
