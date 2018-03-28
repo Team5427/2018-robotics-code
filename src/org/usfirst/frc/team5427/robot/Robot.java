@@ -34,6 +34,7 @@ import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorDown;
+import org.usfirst.frc.team5427.robot.commands.MoveElevatorFull;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorUp;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
 import org.usfirst.frc.team5427.robot.commands.PIDTurn;
@@ -74,7 +75,9 @@ public class Robot extends IterativeRobot {
 	public static SpeedController motorPWM_Intake_Right;
 	public static SpeedController motorPWM_Elevator;
 
-	public static SpeedController motorPWM_ClimberArm;
+//	public static SpeedController motorPWM_ClimberArm;
+	public static SpeedController motorPWM_TiltIntake;
+
 
 	// public static SpeedController motorPWM_Climber_Left;
 	// public static SpeedController motorPWM_Climber_Right;
@@ -97,6 +100,8 @@ public class Robot extends IterativeRobot {
 	public static DigitalInput elevatorLimitSwitchDown;
 	public static MoveElevatorUp mou = new MoveElevatorUp();
 	public static MoveElevatorDown mod = new MoveElevatorDown();
+//	public static MoveElevatorFull mofu = new MoveElevatorFull(true);
+//	public static MoveElevatorFull mofd = new MoveElevatorFull(false);
 	/**
 	 * values used for PID loops TODO move these to Config
 	 */
@@ -145,7 +150,9 @@ public class Robot extends IterativeRobot {
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
 		motorPWM_Elevator = new PWMVictorSPX(Config.ELEVATOR_MOTOR);
 
-	 motorPWM_ClimberArm = new PWMVictorSPX(Config.CLIMBER_ARM_MOTOR);
+		motorPWM_TiltIntake = new PWMVictorSPX(Config.TILT_INTAKE_MOTOR);
+		
+//		motorPWM_ClimberArm = new PWMVictorSPX(Config.CLIMBER_ARM_MOTOR);
 
 		// motorPWM_Climber_Left = new Spark(Config.CLIMBER_MOTOR_LEFT);
 		// motorPWM_Climber_Right = new Spark(Config.CLIMBER_MOTOR_RIGHT);
@@ -440,6 +447,9 @@ public class Robot extends IterativeRobot {
 		// TODO This needs to be here for limit switches to work!
 		SmartDashboard.putBoolean("a", mou.isFinished());
 		SmartDashboard.putBoolean("a", mod.isFinished());
+//		SmartDashboard.putBoolean("a", mofd.isFinished());
+//		SmartDashboard.putBoolean("a", mofu.isFinished());
+		
 		// System.out.print("E:"+elevatorLimitSwitchUp.get());
 		// 4 counts for every rev
 		/*

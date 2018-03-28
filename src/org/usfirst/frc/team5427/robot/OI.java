@@ -8,9 +8,12 @@ package org.usfirst.frc.team5427.robot;
 
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateIn;
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateOut;
-import org.usfirst.frc.team5427.robot.commands.MoveClimberArmDown;
-import org.usfirst.frc.team5427.robot.commands.MoveClimberArmUp;
+import org.usfirst.frc.team5427.robot.commands.IntakeActivateOutSlow;
+//import org.usfirst.frc.team5427.robot.commands.MoveClimberArmDown;
+//import org.usfirst.frc.team5427.robot.commands.MoveClimberArmUp;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorFull;
+import org.usfirst.frc.team5427.robot.commands.TiltIntakeDown;
+import org.usfirst.frc.team5427.robot.commands.TiltIntakeUp;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 
@@ -61,9 +64,14 @@ public class OI {
 	Button motorIntakeOut;
 	Button elevatorUp;
 	Button elevatorDown;
-	Button climberArmUp;
-	Button climberArmDown;
-	Button elevatorAutoFull;
+//	Button climberArmUp;
+//	Button climberArmDown;
+	Button intakeTilterUp;
+	Button intakeTilterDown;
+//	TODO Softer outgo
+//	Button elevatorAutoFullUp;
+//	Button elevatorAutoFullDown;
+	Button softOutGo;
 
 	SendableChooser<Integer> autoColorChooser = new SendableChooser<Integer>();
 	SendableChooser<Integer> autoPositionChooser = new SendableChooser<Integer>();
@@ -76,27 +84,36 @@ public class OI {
         motorIntakeIn = new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_IN);
         motorIntakeOut = new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_OUT);
         motorIntakeOut = new JoystickButton(joy1, Config.BUTTON_MOTOR_INTAKE_OUT_SLOW);
-//        solenoidIntake = new JoystickButton(joy1,Config.BUTTON_SOLENOD_INTAKE);
         elevatorUp = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_UP);
         elevatorDown = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_DOWN);
-        elevatorAutoFull = new JoystickButton(joy1, Config.BUTTON_ELEVATOR_FULL);
+//      elevatorAutoFull = new JoystickButton(joy1, Config.BUTTON_ELEVATOR_FULL);
+        softOutGo =  new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_OUT_SLOW);
+//        climberArmUp = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_UP);
+//        climberArmDown = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_DOWN);
         
-        climberArmUp = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_UP);
-        climberArmDown = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_DOWN);
+        intakeTilterUp = new JoystickButton(joy1,Config.BUTTON_INTAKE_TILTER_UP);
+        intakeTilterDown = new JoystickButton(joy1,Config.BUTTON_INTAKE_TILTER_DOWN);
 
         
         //set what they do
         motorIntakeIn.whileHeld(new IntakeActivateIn());
         motorIntakeOut.whileHeld(new IntakeActivateOut());
-//        
-       // solenoidIntake.whenPressed(new IntakeSolenoidSwitch());
         
         elevatorUp.whileHeld(Robot.mou);
         elevatorDown.whileHeld(Robot.mod);
-        //elevatorAutoFull.whenPressed(new MoveElevatorFull());
-//        
-        climberArmUp.whenPressed(new MoveClimberArmUp());
-        climberArmDown.whenPressed(new MoveClimberArmDown());
+        
+        elevatorUp.toggleWhenPressed(Robot.mou);
+        elevatorDown.toggleWhenPressed(Robot.mod);
+//      elevatorAutoFull.whenPressed(Robot.mofu);
+//      elevatorAutoFull.whenPressed(Robot.mofd);
+        
+        softOutGo.whenPressed(new IntakeActivateOutSlow(Config.INTAKE_MOTOR_SPEED_SLOW_OUT));
+        
+        intakeTilterUp.whenPressed(new TiltIntakeUp());
+        intakeTilterDown.whenPressed(new TiltIntakeDown());
+        
+//       climberArmUp.whenPressed(new MoveClimberArmUp());
+//       climberArmDown.whenPressed(new MoveClimberArmDown());
         
         autoPositionChooser.addDefault("CHOOSE ONE", Config.AUTO_NONE);
 		autoPositionChooser.addObject("Right", Config.RIGHT);

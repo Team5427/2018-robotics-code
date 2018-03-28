@@ -51,6 +51,8 @@ public class Config {
 	public static final int INTAKE_MOTOR_LEFT = 7;
 	public static final int INTAKE_MOTOR_RIGHT = 8;
 	public static final int ELEVATOR_MOTOR = 9;
+	
+	public static final int TILT_INTAKE_MOTOR = 7;
 
 	public static final int CLIMBER_ARM_MOTOR = 7; //this is for the climber arm
 
@@ -74,10 +76,19 @@ public class Config {
 	public static final double INTAKE_MOTOR_SPEED_IN = 0.3;
 	public static final double INTAKE_MOTOR_SPEED_OUT = -1.0;
 	public static final double INTAKE_MOTOR_SPEED_REVERSE = -1.0;
+	public static final double INTAKE_MOTOR_SPEED_SLOW_OUT= -.3;
 	public static final double ELEVATOR_MOTOR_SPEED_UP=0.8; //this speed is final
 	public static final double ELEVATOR_MOTOR_SPEED_DOWN=-.5; ///this speed is final
+	
+	public static final double CLIMBER_ARM_MOTOR_SPEED_UP=0.3;
+	public static final double CLIMBER_ARM_MOTOR_SPEED_DOWN=-0.3;
+	
 	public static final double CLIMBER_MOTOR_SPEED_UP=0.3;
 	public static final double CLIMBER_MOTOR_SPEED_DOWN=-0.3;
+	
+	public static final double INTAKE_TILTER_MOTOR_SPEED_UP=1.0;
+	public static final double INTAKE_TILTER_MOTOR_SPEED_DOWN=-1.0;
+
 	
 	public static final int ELEVATOR_LIMIT_SWITCH_UP = 5;
 	public static final int ELEVATOR_LIMIT_SWITCH_DOWN = 4;
@@ -93,6 +104,8 @@ public class Config {
 	public static final int BUTTON_ELEVATOR_FULL= 11;
 	public static final int BUTTON_CLIMBER_ARM_UP = 10;
 	public static final int BUTTON_CLIMBER_ARM_DOWN= 9;
+	public static final int BUTTON_INTAKE_TILTER_UP = 12;
+	public static final int BUTTON_INTAKE_TILTER_DOWN= 13;
 	
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;
