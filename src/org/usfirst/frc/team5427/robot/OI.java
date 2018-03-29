@@ -12,8 +12,8 @@ import org.usfirst.frc.team5427.robot.commands.IntakeActivateOutSlow;
 //import org.usfirst.frc.team5427.robot.commands.MoveClimberArmDown;
 //import org.usfirst.frc.team5427.robot.commands.MoveClimberArmUp;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorFull;
-import org.usfirst.frc.team5427.robot.commands.TiltIntakeDown;
-import org.usfirst.frc.team5427.robot.commands.TiltIntakeUp;
+import org.usfirst.frc.team5427.robot.commands.TiltIntake_TimeOut;
+import org.usfirst.frc.team5427.robot.commands.TiltIntake_TimeOut;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 
@@ -66,8 +66,7 @@ public class OI {
 	Button elevatorDown;
 //	Button climberArmUp;
 //	Button climberArmDown;
-	Button intakeTilterUp;
-	Button intakeTilterDown;
+	Button intakeTilter;
 //	TODO Softer outgo
 //	Button elevatorAutoFullUp;
 //	Button elevatorAutoFullDown;
@@ -91,8 +90,7 @@ public class OI {
 //        climberArmUp = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_UP);
 //        climberArmDown = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_DOWN);
         
-        intakeTilterUp = new JoystickButton(joy1,Config.BUTTON_INTAKE_TILTER_UP);
-        intakeTilterDown = new JoystickButton(joy1,Config.BUTTON_INTAKE_TILTER_DOWN);
+        intakeTilter = new JoystickButton(joy1,Config.BUTTON_INTAKE_TILTER);
 
         
         //set what they do
@@ -109,8 +107,8 @@ public class OI {
         
         softOutGo.whenPressed(new IntakeActivateOutSlow(Config.INTAKE_MOTOR_SPEED_SLOW_OUT));
         
-        intakeTilterUp.whileHeld(new TiltIntakeUp());
-        intakeTilterDown.whileHeld(new TiltIntakeDown());
+        intakeTilter.whenPressed(new TiltIntake_TimeOut());
+
         
 //       climberArmUp.whenPressed(new MoveClimberArmUp());
 //       climberArmDown.whenPressed(new MoveClimberArmDown());

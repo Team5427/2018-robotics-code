@@ -14,33 +14,42 @@ import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.NextLine;
 
 /**
- * @author Blake This command
+ * @author Akshat This command
  */
 
 @NextLine
-public class TiltIntakeUp extends Command {
-
-	public TiltIntakeUp() {
+public class TiltIntake_TimeOut extends Command {
+	
+	private double tilt_time_out;
+	private static boolean up = true;
+	
+	public TiltIntake_TimeOut() {
+		tilt_time_out = Config.TILT_TIMEOUT;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		
+		setTimeout(tilt_time_out);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.motorPWM_TiltIntake.set(Config.INTAKE_TILTER_MOTOR_SPEED_UP);
+		if(up) {
+			Robot.motorPWM_TiltIntake.set(Config.INTAKE_TILTER_MOTOR_SPEED_UP);
+		}
+		else {
+			Robot.motorPWM_TiltIntake.set(Config.INTAKE_TILTER_MOTOR_SPEED_DOWN);
+		}
 //		Robot.motorPWM_Intake_Left.set(Config.INTAKE_TILTER_MOTOR_SPEED_UP);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-			
-			return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_INTAKE_TILTER_UP);
+		return isTimedOut();
+//			return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_INTAKE_TILTER_UP);
 		
 	}
 
@@ -48,6 +57,7 @@ public class TiltIntakeUp extends Command {
 	@Override
 	protected void end() {
 		Robot.motorPWM_TiltIntake.set(0);
+		up=!up;
 //		Robot.motorPWM_Intake_Left.set(0);
 	}
 
