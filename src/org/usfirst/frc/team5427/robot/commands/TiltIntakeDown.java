@@ -26,7 +26,7 @@ public class TiltIntakeDown extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-
+		
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -38,7 +38,6 @@ public class TiltIntakeDown extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		System.out.print("checking fin");
 
 			return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_INTAKE_TILTER_UP);
 		

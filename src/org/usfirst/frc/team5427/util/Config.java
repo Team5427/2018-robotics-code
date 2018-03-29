@@ -44,17 +44,17 @@ public class Config {
 												// with this false
 	
 	/*----------PWM PORTS-----------*/
-	public static final int FRONT_RIGHT_MOTOR = 0; //3 3
-	public static final int REAR_RIGHT_MOTOR = 1; //2 6
-	public static final int FRONT_LEFT_MOTOR = 2; //1 1
-	public static final int REAR_LEFT_MOTOR = 3; //0 0
+	public static final int FRONT_RIGHT_MOTOR = 3; //3 3
+	public static final int REAR_RIGHT_MOTOR = 6; //2 6
+	public static final int FRONT_LEFT_MOTOR = 1; //1 1
+	public static final int REAR_LEFT_MOTOR = 0; //0 0
 	public static final int INTAKE_MOTOR_LEFT = 7;
 	public static final int INTAKE_MOTOR_RIGHT = 8;
 	public static final int ELEVATOR_MOTOR = 9;
 	
-	public static final int TILT_INTAKE_MOTOR = 7;
+	public static final int TILT_INTAKE_MOTOR = 5;
 
-	public static final int CLIMBER_ARM_MOTOR = 7; //this is for the climber arm
+	public static final int CLIMBER_ARM_MOTOR = 2; //this is for the climber arm
 
 	public static final int CLIMBER_MOTOR_LEFT = 4;
 	public static final int CLIMBER_MOTOR_RIGHT = 5; // TODO Change to actual port
@@ -95,17 +95,17 @@ public class Config {
 	
 	/* ----------Joystick Buttons---------- */
 	public static final int BUTTON_MOTOR_INTAKE_IN = 7;//NOTE: BUTTTONS 3 and 8 LAG
-	public static final int BUTTON_MOTOR_INTAKE_OUT = 1;
-	public static final int BUTTON_MOTOR_INTAKE_OUT_SLOW = 2;
+	public static final int BUTTON_MOTOR_INTAKE_OUT = 0;
+	public static final int BUTTON_MOTOR_INTAKE_OUT_SLOW = 1;
 //	
 //	public static final int BUTTON_SOLENOD_INTAKE = 2;
 	public static final int BUTTON_ELEVATOR_UP = 5;
 	public static final int BUTTON_ELEVATOR_DOWN= 3;
-	public static final int BUTTON_ELEVATOR_FULL= 11;
+	public static final int BUTTON_ELEVATOR_FULL= 2;
 	public static final int BUTTON_CLIMBER_ARM_UP = 10;
 	public static final int BUTTON_CLIMBER_ARM_DOWN= 9;
 	public static final int BUTTON_INTAKE_TILTER_UP = 12;
-	public static final int BUTTON_INTAKE_TILTER_DOWN= 13;
+	public static final int BUTTON_INTAKE_TILTER_DOWN= 11;
 	
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;

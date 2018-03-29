@@ -109,8 +109,8 @@ public class OI {
         
         softOutGo.whenPressed(new IntakeActivateOutSlow(Config.INTAKE_MOTOR_SPEED_SLOW_OUT));
         
-        intakeTilterUp.whenPressed(new TiltIntakeUp());
-        intakeTilterDown.whenPressed(new TiltIntakeDown());
+        intakeTilterUp.whileHeld(new TiltIntakeUp());
+        intakeTilterDown.whileHeld(new TiltIntakeDown());
         
 //       climberArmUp.whenPressed(new MoveClimberArmUp());
 //       climberArmDown.whenPressed(new MoveClimberArmDown());

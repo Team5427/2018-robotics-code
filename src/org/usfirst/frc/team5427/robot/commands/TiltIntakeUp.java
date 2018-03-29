@@ -26,19 +26,20 @@ public class TiltIntakeUp extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-
+		
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
 		Robot.motorPWM_TiltIntake.set(Config.INTAKE_TILTER_MOTOR_SPEED_UP);
+//		Robot.motorPWM_Intake_Left.set(Config.INTAKE_TILTER_MOTOR_SPEED_UP);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-
+			
 			return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_INTAKE_TILTER_UP);
 		
 	}
@@ -47,6 +48,7 @@ public class TiltIntakeUp extends Command {
 	@Override
 	protected void end() {
 		Robot.motorPWM_TiltIntake.set(0);
+//		Robot.motorPWM_Intake_Left.set(0);
 	}
 
 	// Called when another command which requires one or more of the same
