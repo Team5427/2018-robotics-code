@@ -21,7 +21,6 @@ import org.usfirst.frc.team5427.util.NextLine;
 public class TiltIntake_TimeOut extends Command {
 	
 	private double tilt_time_out;
-	private static boolean up = true;
 	
 	public TiltIntake_TimeOut() {
 		tilt_time_out = Config.TILT_TIMEOUT;
@@ -36,7 +35,7 @@ public class TiltIntake_TimeOut extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if(up) {
+		if(Robot.tiltUp) {
 			Robot.motorPWM_TiltIntake.set(Config.INTAKE_TILTER_MOTOR_SPEED_UP);
 		}
 		else {
@@ -57,7 +56,7 @@ public class TiltIntake_TimeOut extends Command {
 	@Override
 	protected void end() {
 		Robot.motorPWM_TiltIntake.set(0);
-		up=!up;
+		Robot.tiltUp=!Robot.tiltUp;
 //		Robot.motorPWM_Intake_Left.set(0);
 	}
 

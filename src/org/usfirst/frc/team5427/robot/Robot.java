@@ -118,6 +118,8 @@ public class Robot extends IterativeRobot {
 	public static UsbCamera usbCam;
 	public static UsbCamera usbCam1;
 	public static AxisCamera axisCam;
+	
+	public static boolean tiltUp = true;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -152,6 +154,7 @@ public class Robot extends IterativeRobot {
 
 		motorPWM_TiltIntake = new PWMVictorSPX(Config.TILT_INTAKE_MOTOR);
 		
+		tiltUp = true;
 //		motorPWM_ClimberArm = new PWMVictorSPX(Config.CLIMBER_ARM_MOTOR);
 
 		// motorPWM_Climber_Left = new Spark(Config.CLIMBER_MOTOR_LEFT);
