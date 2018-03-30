@@ -23,12 +23,20 @@ public class TiltIntake_TimeOut extends Command {
 	private double tilt_time_out;
 	
 	public TiltIntake_TimeOut() {
-		tilt_time_out = Config.TILT_TIMEOUT;
+		
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		if(Robot.tiltUp){
+			tilt_time_out = Config.TILT_TIMEOUT_UP;
+		}
+		else {
+			
+			tilt_time_out = Config.TILT_TIMEOUT_DOWN;
+		}
+		
 		setTimeout(tilt_time_out);
 	}
 
@@ -41,6 +49,7 @@ public class TiltIntake_TimeOut extends Command {
 		else {
 			Robot.motorPWM_TiltIntake.set(Config.INTAKE_TILTER_MOTOR_SPEED_DOWN);
 		}
+		
 //		Robot.motorPWM_Intake_Left.set(Config.INTAKE_TILTER_MOTOR_SPEED_UP);
 	}
 

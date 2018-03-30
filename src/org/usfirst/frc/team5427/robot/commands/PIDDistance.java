@@ -90,19 +90,19 @@ public class PIDDistance extends PIDCommand {
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber("PID Output Coasting", output);
 		
-		if(Math.abs(desiredDistance - Math.abs(Robot.encLeft.getDistance())) <= Config.PID_STRAIGHT_ACTIVATE_DISTANCE)
+//		if(Math.abs(desiredDistance - Math.abs(Robot.encLeft.getDistance())) <= Config.PID_STRAIGHT_ACTIVATE_DISTANCE)
 			this.scgPIDControlled.pidWrite(output);
-		else
-			this.scgPIDControlled.pidWrite(maximumSpeed);
-		SmartDashboard.putNumber("SCGconstant", scgPIDControlled.get());
+//		else
+//			this.scgPIDControlled.pidWrite(maximumSpeed);
+//		SmartDashboard.putNumber("SCGconstant", scgPIDControlled.get());
 
-		// if(this.returnPIDInput()>this.desiredDistance)
-		// super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already set
-		// if(this.returnPIDInput()>(this.desiredDistance*.75))
-		// {
-		// this.maximumSpeed*=0.95;
-		// super.getPIDController().setOutputRange(-this.maximumSpeed,this.maximumSpeed);
-		// }
+		 if(this.returnPIDInput()>this.desiredDistance)
+		 super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already set
+//		 if(this.returnPIDInput()>(this.desiredDistance*.75))
+//		 {
+//		 this.maximumSpeed*=0.95;
+//		 super.getPIDController().setOutputRange(-this.maximumSpeed,this.maximumSpeed);
+//		 }
 	}
 
 	/*

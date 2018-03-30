@@ -29,12 +29,12 @@ public class MoveElevatorFull extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-//		if(this.up) {
-//			up = false;
-//		}
-//		else {
-//			up = true;
-//		}
+		if(this.up) {
+			up = false;
+		}
+		else {
+			up = true;
+		}
 	}
 
 	// Called repeatedly when this Command is scheduled to run

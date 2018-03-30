@@ -66,7 +66,8 @@ public class Config {
 	
 	/*--------Timeouts------*/
 	public static final double AUTO_INTAKE_TIMEOUT = 2;
-	public static final double TILT_TIMEOUT = 2000;
+	public static final double TILT_TIMEOUT_UP = 2.2;
+	public static final double TILT_TIMEOUT_DOWN = 1.3;
 
 	
 	/*----------Pneumatic Control Module PORTS-----------*/
@@ -81,8 +82,8 @@ public class Config {
 	public static final double ELEVATOR_MOTOR_SPEED_UP=0.8; //this speed is final
 	public static final double ELEVATOR_MOTOR_SPEED_DOWN=-.5; ///this speed is final
 	
-	public static final double CLIMBER_ARM_MOTOR_SPEED_UP=0.3;
-	public static final double CLIMBER_ARM_MOTOR_SPEED_DOWN=-0.3;
+	public static final double CLIMBER_ARM_MOTOR_SPEED_UP=0.5;
+	public static final double CLIMBER_ARM_MOTOR_SPEED_DOWN=-0.1;
 	
 	public static final double CLIMBER_MOTOR_SPEED_UP=0.3;
 	public static final double CLIMBER_MOTOR_SPEED_DOWN=-0.3;
@@ -105,7 +106,9 @@ public class Config {
 	public static final int BUTTON_ELEVATOR_FULL= 2;
 	public static final int BUTTON_CLIMBER_ARM_UP = 10;
 	public static final int BUTTON_CLIMBER_ARM_DOWN= 9;
-	public static final int BUTTON_INTAKE_TILTER = 12;
+	public static final int BUTTON_INTAKE_TOGGLE_TILTER = 11;
+	public static final int BUTTON_INTAKE_TILTER_UP = 6;
+	public static final int BUTTON_INTAKE_TILTER_DOWN = 4;
 	
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;
