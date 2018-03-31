@@ -69,9 +69,9 @@ public class PIDStraightMovement extends PIDCommand {
 	 *            - This receives the maximum speed that the robot will travel at.
 	 * @param desiredDistance
 	 *            - This receives the distance that we want to travel.
-	 * @param p,
-	 *            i, d - These receive the P, I, and D values for the PID Controller
-	 *            in PIDDistance.
+	 * @param p, i, d 
+	 *            - These receive the P, I, and D values for the PID Controller
+	 *              in PIDDistance.
 	 */
 	public PIDStraightMovement(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double maximumSpeed, double desiredDistance, double p, double i, double d) {
 		super(Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, Config.PID_UPDATE_PERIOD);
@@ -82,8 +82,13 @@ public class PIDStraightMovement extends PIDCommand {
 		this.p = p;
 		this.i = i;
 		this.d = d;
-		this.power = 0.1;
-		super.setSetpoint(0);
+//		this.getPIDController().setOutputRange(-maximumSpeed, maximumSpeed);
+//		this.getPIDController().setAbsoluteTolerance(.1);
+		
+		this.getPIDController().setSetpoint(0);
+//		super.setSetpoint(0);
+		setSetpoint(0);
+		this.power = .01;
 		// scgConstant.set(0);
 		// scgPIDControlled.set(0);
 	}
@@ -105,11 +110,14 @@ public class PIDStraightMovement extends PIDCommand {
 		super.getPIDController().enable();
 		this.pidDistance = null;
 		Robot.encLeft.reset();
+		Robot.ahrs.reset();
 		// Robot.encRight.reset();
 		// if using exponential increment
-		power = .1;
-		scgConstant.set(.1);
-		scgPIDControlled.set(-.1);
+		power = .01;
+//		scgConstant.set(power);
+//		scgPIDControlled.set(-power);
+		this.pidDistance = new PIDDistance(this.scgConstant, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance);
+		pidDistance.start();
 	}
 
 	/**
@@ -130,40 +138,54 @@ public class PIDStraightMovement extends PIDCommand {
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-		SmartDashboard.putNumber("c", c++);
+		SmartDashboard.putNumber("Velocity", Robot.encLeft.getRate());
 		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
-		// SmartDashboard.putNumber("encRight", Math.abs(Robot.encRight.getDistance()));
 		SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
-		// SmartDashboard.putNumber("encRightVal",
-		// Math.abs(Robot.encRight.getDistance()));
 		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
-		if (this.power < this.maximumSpeed && this.pidDistance == null) {
-			// linear increment
-			// this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
-			this.power *= Config.PID_STRAIGHT_EXPONENTIAL_INCREMENT;
-			scgConstant.set(power);
-			if (this.power < Config.POST_INCR_SWITCH_TO_PID)
-				// TODO change this
-				scgPIDControlled.set(-power);
-			else
-				scgPIDControlled.pidWrite(output);
-			SmartDashboard.putNumber("PID output", output);
-			SmartDashboard.putNumber("SCGconstant", scgConstant.get());
-		}
-		// else
-		// {
-		// scgConstant.set(power);
-		// scgPIDControlled.pidWrite(output);
-		// }
-		if (this.power >= this.maximumSpeed && pidDistance == null) {
-			this.pidDistance = new PIDDistance(this.scgConstant, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance);
-			pidDistance.start();
-		}
-		else if (this.power >= this.maximumSpeed) {
+//		if (this.power <= this.maximumSpeed && this.pidDistance == null) {
+//			// linear increment
+//			// this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
+//			scgConstant.set(power);
+//			SmartDashboard.putNumber("g", scgConstant.get());
+//
+////			if(Robot.encLeft.getRate() < -Config.SWITCH_TO_PID_VELOCITY)
+////				// TODO change this
+////				scgPIDControlled.set(-power);
+////			else
+//				scgPIDControlled.pidWrite(output);
+////			this.power *= Config.PID_STRAIGHT_EXPONENTIAL_INCREMENT;
+//			this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
+//			System.out.println("Power: " + power);
+//			SmartDashboard.putNumber("PID output", output);
+//			SmartDashboard.putNumber("SCGconstant", scgConstant.get());
+//		}
+//		/*if (this.power >= this.maximumSpeed && pidDistance == null) {
+////			this.pidDistance = new PIDDistance(this.scgConstant, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this, this.p, this.i, this.d);
+////			pidDistance.start();
+//		}
+//		else
+//		if (this.power >= this.maximumSpeed) {
 			scgPIDControlled.pidWrite(output);
-		}
-		if (pidDistance != null && pidDistance.getDistance() > this.desiredDistance)
-			super.getPIDController().setOutputRange(-.5, .5);// TODO do not set if already set
+			if(Robot.encLeft.getDistance()>=60)
+			{
+				if(scgConstant.get()==0)
+					SmartDashboard.putNumber("EncLeft when switch", Robot.encLeft.getDistance());
+				
+				scgConstant.set(0);
+			}
+			else
+				scgConstant.set(power);
+			
+			SmartDashboard.putNumber("g", scgConstant.get());
+			SmartDashboard.putNumber("o", output);
+			SmartDashboard.putNumber("p", power);
+
+			if (this.power <= this.maximumSpeed && this.pidDistance == null) 
+				this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
+
+//		}
+//		if (pidDistance != null && pidDistance.getDistance() > this.desiredDistance)
+//			super.getPIDController().setOutputRange(-.5, .5);// TODO do not set if already set
 	}
 
 	/**
@@ -202,9 +224,9 @@ public class PIDStraightMovement extends PIDCommand {
 		// System.out.println("Ending PID Straight");
 		// pidDistance.end();//TODO put this back in?
 		SmartDashboard.putNumber("E", ++e);
-		this.scgPIDControlled.set(0);
-		this.scgConstant.set(0);
-		this.power = 0;
+//		this.scgPIDControlled.set(0);
+//		this.scgConstant.set(0);
+//		this.power = 0;
 		free();
 		super.end();
 		// System.out.println("ENDED PID STRAIGHT");
@@ -224,11 +246,4 @@ public class PIDStraightMovement extends PIDCommand {
 		super.getPIDController().reset();
 	}
 
-	public double getVelocity() {
-		startTime = System.nanoTime() / 1000000000.;
-		startDistance = Robot.encLeft.getDistance();
-		endTime = System.nanoTime() / 1000000000.;
-		endDistance = Robot.encLeft.getDistance();
-		return (endDistance - startDistance) / (endTime - startTime);
-	}
 }

@@ -135,23 +135,22 @@ public class Config {
 	public static final double ELEVATOR_TIME_SWITCH = 1.4; // TODO change to actual value (seconds)
 	public static final double ELEVATOR_TIME_SCALE = 2.8;
 	
-	
 	/*-------------PID VALUES------------------*/
 	//former p = .085, i = .008333, d = .001042
-	
+	//commented is for .35 speed
 	public static final double PID_UPDATE_PERIOD = 0.01;
 	//for straight no d, for turn no i
-	public static final double PID_STRAIGHT_P = 0.06;//0.05;
+	public static final double PID_STRAIGHT_P = .5;//0.3;
 	//.005 started oscilating
-	public static final double PID_STRAIGHT_I = 0.0;//0.0025;
-	public static final double PID_STRAIGHT_D = 0.008;//0.00;
-	public static final double PID_STRAIGHT_POWER_SHORT = 0.35;
-	public static final double PID_STRAIGHT_POWER_LONG = 0.5;
+	public static final double PID_STRAIGHT_I = .00;//0.00;
+	public static final double PID_STRAIGHT_D = 0.008;//0.015;
+	public static final double PID_STRAIGHT_POWER_SHORT = 0.7;
+	public static final double PID_STRAIGHT_POWER_LONG = 0.7;
 
 	/***Increment****/
-	public static final double PID_STRAIGHT_LINEAR_INCREMENT=.01;
+	public static final double PID_STRAIGHT_LINEAR_INCREMENT= .0055;//.001;
 	public static final double POST_INCR_SWITCH_TO_PID = .1;
-	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=1.25;
+	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=1.05;
 	
 	public static final double SWITCH_TO_PID_VELOCITY = 30.;
 
@@ -159,8 +158,7 @@ public class Config {
 	public static final double PID_STRAIGHT_COAST_P = 0.275;
 	public static final double PID_STRAIGHT_COAST_I = 0.012333;
 	public static final double PID_STRAIGHT_COAST_D = 0.0;
-	public static final double PID_STRAIGHT_TOLERANCE = 5;//.1
-	public static final double PID_STRAIGHT_ACTIVATE_DISTANCE = 20;
+	public static final double PID_STRAIGHT_TOLERANCE = 2;//.1
 //	public static final double PID_STRAIGHT_COAST_P = 1;
 //	public static final double PID_STRAIGHT_COAST_I = 1;
 //	public static final double PID_STRAIGHT_COAST_D = 1;
