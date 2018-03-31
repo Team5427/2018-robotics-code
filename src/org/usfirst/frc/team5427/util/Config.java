@@ -44,14 +44,14 @@ public class Config {
 												// with this false
 	
 	/*----------PWM PORTS-----------*/
-	public static final int FRONT_RIGHT_MOTOR = 0; //3
-	public static final int REAR_RIGHT_MOTOR = 1; //6
-	public static final int FRONT_LEFT_MOTOR = 2; //1
-	public static final int REAR_LEFT_MOTOR = 3; //0
-	public static final int INTAKE_MOTOR_LEFT = 4; //7
-	public static final int INTAKE_MOTOR_RIGHT = 5; //8
-	public static final int ELEVATOR_MOTOR = 7; //9
-	public static final int CLIMBER_MOTOR = 9; //4
+	public static final int FRONT_RIGHT_MOTOR = 3; //0
+	public static final int REAR_RIGHT_MOTOR = 6; //1
+	public static final int FRONT_LEFT_MOTOR = 1; //2
+	public static final int REAR_LEFT_MOTOR = 0; //3
+	public static final int INTAKE_MOTOR_LEFT = 7; //4
+	public static final int INTAKE_MOTOR_RIGHT = 8; //5
+	public static final int ELEVATOR_MOTOR = 9; //7
+	public static final int CLIMBER_MOTOR = 4; //9
 
 	
 	/*----------DIO PORTS-----------*/
@@ -123,7 +123,7 @@ public class Config {
 	//for straight no d, for turn no i
 	public static final double PID_STRAIGHT_P = .5;//0.3;
 	//.005 started oscilating
-	public static final double PID_STRAIGHT_I = .500;//0.00;
+	public static final double PID_STRAIGHT_I = .00;//0.00;
 	public static final double PID_STRAIGHT_D = 0.008;//0.015;
 	public static final double PID_STRAIGHT_POWER_SHORT = 0.35;
 	public static final double PID_STRAIGHT_POWER_LONG = 0.5;

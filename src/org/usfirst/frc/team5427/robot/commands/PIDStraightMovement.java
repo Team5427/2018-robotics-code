@@ -69,9 +69,9 @@ public class PIDStraightMovement extends PIDCommand {
 	 *            - This receives the maximum speed that the robot will travel at.
 	 * @param desiredDistance
 	 *            - This receives the distance that we want to travel.
-	 * @param p,
-	 *            i, d - These receive the P, I, and D values for the PID Controller
-	 *            in PIDDistance.
+	 * @param p, i, d 
+	 *            - These receive the P, I, and D values for the PID Controller
+	 *              in PIDDistance.
 	 */
 	public PIDStraightMovement(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double maximumSpeed, double desiredDistance, double p, double i, double d) {
 		super(Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, Config.PID_UPDATE_PERIOD);
