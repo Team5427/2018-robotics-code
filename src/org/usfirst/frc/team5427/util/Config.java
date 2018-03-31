@@ -68,7 +68,7 @@ public class Config {
 	public static final double AUTO_INTAKE_TIMEOUT = 2;
 	public static final double TILT_TIMEOUT_UP = 2.2;
 	public static final double TILT_TIMEOUT_DOWN = 1.3;
-
+	
 	
 	/*----------Pneumatic Control Module PORTS-----------*/
 	public static final int PCM_SOLENOID_FORWARD = 0;
