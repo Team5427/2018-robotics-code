@@ -36,7 +36,7 @@ public class Center_SwitchIsRight extends AutoPath {
 	public Center_SwitchIsRight() {
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 86, p1, i1, d1);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 16, p2, i2, d2);
+//		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 16, p2, i2, d2);
 		moveElevator = new MoveElevatorAuto(1);
 		setTimeout(13.5);
 	}
@@ -54,17 +54,21 @@ public class Center_SwitchIsRight extends AutoPath {
 
 		if(moveElevator != null)
 			moveElevator.isFinished();
-		
-		if (null != firstDistance && firstDistance.isFinished() && !(secondDistance.isRunning())) {
-			System.out.println("Part 1 Done.");
-			firstDistance.cancel();
-			firstDistance = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-//			Robot.encRight.reset();
-			secondDistance.start();
+		//starts elevator raising when we are 0.5 sec. into auto
+		if(currentTime-startTime>0.8&&!moveElevator.isRunning())
 			moveElevator.start();
-		}
+		
+		
+//		if (null != firstDistance && firstDistance.isFinished() && !(secondDistance.isRunning())) {
+//			System.out.println("Part 1 Done.");
+//			firstDistance.cancel();
+//			firstDistance = null;
+//			Robot.ahrs.reset();
+//			Robot.encLeft.reset();
+////			Robot.encRight.reset();
+//			secondDistance.start();
+//			moveElevator.start();
+//		}
 		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
 			System.out.println("Fidget Done.");
 			fidget.cancel();

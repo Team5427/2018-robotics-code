@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Left_ScaleIsLeft extends AutoPath {
 	private PIDStraightMovement firstDistance;
 	DriveForward secondDistance;
-	private PIDTurn fidgetSpinner,firstAngle;
+	private PIDTurn firstAngle;
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
 	private double startTime, currentTime;
@@ -40,7 +40,6 @@ public class Left_ScaleIsLeft extends AutoPath {
 
 	public Left_ScaleIsLeft() {
 		fidget = new Fidget();
-		fidgetSpinner = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -10);
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 250, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 50);
 		secondDistance = new DriveForward(.7);

@@ -9,6 +9,8 @@ package org.usfirst.frc.team5427.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
@@ -37,13 +39,16 @@ public class MoveElevatorAuto extends Command {
 	@Override
 	protected void initialize() {
 		maxHeightReached = false;
+		SmartDashboard.putNumber("THE HEIGHT IS", this.height);
+		SmartDashboard.putBoolean("THE TIMEOUT IS", this.isTimedOut());
 //		timer.start();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		
+		SmartDashboard.putBoolean("THE TIMEOUT IS", this.isTimedOut());
+
 		if(!Robot.elevatorLimitSwitchUp.get()) {
 			Robot.motorPWM_Elevator.set(0);
 		}

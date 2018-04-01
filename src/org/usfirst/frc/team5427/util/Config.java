@@ -66,7 +66,7 @@ public class Config {
 	
 	/*--------Timeouts------*/
 	public static final double AUTO_INTAKE_TIMEOUT = 1;
-	public static final double TILT_TIMEOUT_UP = 2.2;
+	public static final double TILT_TIMEOUT_UP = 2.4;
 	public static final double TILT_TIMEOUT_DOWN = 1.3;
 	
 	
@@ -132,7 +132,7 @@ public class Config {
 	public static final double DRIVE_SPEED_INCREMENT_VALUE=.01;
 	public static final double DRIVE_INCREMENT_WAIT_VALUE=.01;
 	
-	public static final double ELEVATOR_TIME_SWITCH = 1.4; // TODO change to actual value (seconds)
+	public static final double ELEVATOR_TIME_SWITCH = .5; // TODO change to actual value (seconds)
 	public static final double ELEVATOR_TIME_SCALE = 2.8;
 	
 	/*-------------PID VALUES------------------*/
