@@ -319,10 +319,13 @@ public class Robot extends IterativeRobot {
 					autoPath = new Left_ScaleIsLeft();
 			}
 		}
+		autoPath = new Left_ScaleIsLeft();
 		if(autoPath!=null)
 			autoPath.start();
 		
 //		new MoveElevatorAuto(2).start();
+//		 new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 60, 0, 0, 0).start();
+//		 new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 80, 0, 0, 0).start();
 //		new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 30, .02, 0, 0).start();
 
 //		autoPath=new Right_ScaleIsLeft();
