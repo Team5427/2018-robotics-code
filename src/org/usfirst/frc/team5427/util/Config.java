@@ -65,7 +65,7 @@ public class Config {
 	public static final int ENCODER_LEFT_CHANNEL_B=1;
 	
 	/*--------Timeouts------*/
-	public static final double AUTO_INTAKE_TIMEOUT = 2;
+	public static final double AUTO_INTAKE_TIMEOUT = 1;
 	public static final double TILT_TIMEOUT_UP = 2.2;
 	public static final double TILT_TIMEOUT_DOWN = 1.3;
 	
@@ -140,15 +140,15 @@ public class Config {
 	//commented is for .35 speed
 	public static final double PID_UPDATE_PERIOD = 0.01;
 	//for straight no d, for turn no i
-	public static final double PID_STRAIGHT_P = .06;//.25 //.5;//0.3;
+	public static final double PID_STRAIGHT_P = .25;//.06;//.25 //.5;//0.3;
 	//.005 started oscilating
 	public static final double PID_STRAIGHT_I = 0;//.00;//0.00;
-	public static final double PID_STRAIGHT_D = 0.008;//.04 //0.008;//0.015;
+	public static final double PID_STRAIGHT_D = .04;//0.008;//.04 //0.008;//0.015;
 	public static final double PID_STRAIGHT_POWER_SHORT = 0.5;
-	public static final double PID_STRAIGHT_POWER_LONG = 0.5;// 0.7;
+	public static final double PID_STRAIGHT_POWER_LONG = 0.7;// 0.7;
 
 	/***Increment****/
-	public static final double PID_STRAIGHT_LINEAR_INCREMENT= .01;//.004 //.001;//.0055;
+	public static final double PID_STRAIGHT_LINEAR_INCREMENT= .004;//.01;//.004 //.001;//.0055;
 	public static final double POST_INCR_SWITCH_TO_PID = .1;
 	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=1.05;
 	

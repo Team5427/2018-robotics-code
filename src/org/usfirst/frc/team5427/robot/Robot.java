@@ -119,7 +119,7 @@ public class Robot extends IterativeRobot {
 	public static UsbCamera usbCam1;
 	public static AxisCamera axisCam;
 	
-	public static boolean tiltUp = true;
+	public static boolean tiltUpNext = true;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -154,7 +154,7 @@ public class Robot extends IterativeRobot {
 
 		motorPWM_TiltIntake = new PWMVictorSPX(Config.TILT_INTAKE_MOTOR);
 		
-		tiltUp = true;
+		tiltUpNext = true;
 		motorPWM_ClimberArm = new PWMVictorSPX(Config.CLIMBER_ARM_MOTOR);
 
 		// motorPWM_Climber_Left = new Spark(Config.CLIMBER_MOTOR_LEFT);
@@ -453,7 +453,7 @@ public class Robot extends IterativeRobot {
 		// TODO This needs to be here for limit switches to work!
 		SmartDashboard.putBoolean("a", mou.isFinished());
 		SmartDashboard.putBoolean("a", mod.isFinished());
-		SmartDashboard.putBoolean("tiltUp", tiltUp);
+		SmartDashboard.putBoolean("tiltUp", tiltUpNext);
 //		SmartDashboard.putBoolean("a", mofd.isFinished());
 //		SmartDashboard.putBoolean("a", mofu.isFinished());
 		

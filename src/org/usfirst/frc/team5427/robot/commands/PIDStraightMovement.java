@@ -84,7 +84,7 @@ public class PIDStraightMovement extends PIDCommand {
 		this.d = d;
 //		this.getPIDController().setOutputRange(-maximumSpeed, maximumSpeed);
 //		this.getPIDController().setAbsoluteTolerance(.1);
-		
+		this.setInterruptible(true);
 		this.getPIDController().setSetpoint(0);
 //		super.setSetpoint(0);
 		setSetpoint(0);

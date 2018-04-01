@@ -21,6 +21,7 @@ public class MoveElevatorAuto extends Command {
 	// Height = 1: Switch. Height = 2: Scale.
 	public static int height;
 	Timer timer;
+	boolean maxHeightReached = false;
 	
 	public MoveElevatorAuto(int height) {
 		this.height = height;
@@ -35,6 +36,7 @@ public class MoveElevatorAuto extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		maxHeightReached = false;
 //		timer.start();
 	}
 
@@ -50,10 +52,22 @@ public class MoveElevatorAuto extends Command {
 		}
 	}
 	
-	public boolean maxHeightReached()
+	public boolean maxHeightReachedTime()
 	{
 		return isTimedOut();
 	}
+	
+	public boolean maxHeightReached()
+	{
+//		if(!Robot.elevatorLimitSwitchUp.get())
+//			maxHeightReached = false;
+		return !Robot.elevatorLimitSwitchUp.get();
+	}
+	
+//	public boolean maxHeightReachedLS()
+//	{
+//		return !Robot.elevatorLimitSwitchUp.get();
+//	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override

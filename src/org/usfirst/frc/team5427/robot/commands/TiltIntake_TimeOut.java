@@ -29,7 +29,7 @@ public class TiltIntake_TimeOut extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		if(Robot.tiltUp){
+		if(Robot.tiltUpNext){
 			tilt_time_out = Config.TILT_TIMEOUT_UP;
 		}
 		else {
@@ -43,7 +43,7 @@ public class TiltIntake_TimeOut extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if(Robot.tiltUp) {
+		if(Robot.tiltUpNext) {
 			Robot.motorPWM_TiltIntake.set(Config.INTAKE_TILTER_MOTOR_SPEED_UP);
 		}
 		else {
@@ -65,7 +65,7 @@ public class TiltIntake_TimeOut extends Command {
 	@Override
 	protected void end() {
 		Robot.motorPWM_TiltIntake.set(0);
-		Robot.tiltUp=!Robot.tiltUp;
+		Robot.tiltUpNext=!Robot.tiltUpNext;
 //		Robot.motorPWM_Intake_Left.set(0);
 	}
 
