@@ -132,6 +132,8 @@ public class Config {
 	
 	public static final double ELEVATOR_TIME_SWITCH = 2; // TODO change to actual value (seconds)
 	public static final double ELEVATOR_TIME_SCALE = 2.8;
+	public static final double ELEVATOR_TIME_SCALE_DOWN = 2.8; 
+	
 	
 	/*-------------PID VALUES------------------*/
 	//former p = .085, i = .008333, d = .001042
