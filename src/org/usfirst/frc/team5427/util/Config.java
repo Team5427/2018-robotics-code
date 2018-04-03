@@ -55,9 +55,7 @@ public class Config {
 	public static final int TILT_INTAKE_MOTOR = 5;
 
 	public static final int CLIMBER_ARM_MOTOR = 2; //this is for the climber arm
-
-	public static final int CLIMBER_MOTOR_LEFT = 4;
-	public static final int CLIMBER_MOTOR_RIGHT = 5; // TODO Change to actual port
+	public static final int CLIMBER_MOTOR = 4; //this is for raising the actual climber
 
 	
 	/*----------DIO PORTS-----------*/
