@@ -117,8 +117,8 @@ public class OI {
         intakeTilterDown.whenPressed(new TiltIntakeDown());
 
         
-       climberArmUp.whenPressed(new MoveClimberArmUp()); //TODO MAYBE WHILE HELD
-       climberArmDown.whenPressed(new MoveClimberArmDown());
+        climberArmUp.whileHeld(new MoveClimberArmUp());
+        climberArmDown.whileHeld(new MoveClimberArmDown());
         
         autoPositionChooser.addDefault("CHOOSE ONE", Config.AUTO_NONE);
 		autoPositionChooser.addObject("Right", Config.RIGHT);

@@ -79,8 +79,7 @@ public class Robot extends IterativeRobot {
 	public static SpeedController motorPWM_TiltIntake;
 
 
-	// public static SpeedController motorPWM_Climber_Left;
-	// public static SpeedController motorPWM_Climber_Right;
+	// public static SpeedController motorPWM_Climber;
 
 	public static Intake intakeSubsystem;
 	public static Encoder encLeft;
@@ -157,8 +156,7 @@ public class Robot extends IterativeRobot {
 		tiltUpNext = true;
 		motorPWM_ClimberArm = new PWMVictorSPX(Config.CLIMBER_ARM_MOTOR);
 
-		// motorPWM_Climber_Left = new Spark(Config.CLIMBER_MOTOR_LEFT);
-		// motorPWM_Climber_Right = new Spark(Config.CLIMBER_MOTOR_RIGHT);
+		// motorPWM_Climber = new Spark(Config.CLIMBER_MOTOR);
 
 		try {
 			ahrs = new AHRS(SPI.Port.kMXP);
