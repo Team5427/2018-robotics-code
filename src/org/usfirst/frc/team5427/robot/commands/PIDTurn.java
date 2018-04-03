@@ -22,7 +22,7 @@ public class PIDTurn extends PIDCommand {
 	double setPoint;
 	private double time;
 	private Timer timer;
-
+	private boolean hasStarted;
 	
 	public PIDTurn(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double setPoint, double time) {
 		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_UPDATE_PERIOD);
@@ -37,6 +37,7 @@ public class PIDTurn extends PIDCommand {
 		scgLeft.set(0.1);
 		this.setTimeout(time);//TODO change to TIME
 		timer = new Timer();
+		hasStarted = false;
 	}
 	
 	
@@ -53,6 +54,8 @@ public class PIDTurn extends PIDCommand {
 		scgLeft.set(0.1);
 		this.setTimeout(1.5);//TODO change to TIME
 		timer = new Timer();
+		if(Math.abs(Robot.ahrs.getYaw())>=Math.abs(this.getSetpoint())/4)
+			hasStarted=true;
 	}
 	
 	@Override
@@ -99,6 +102,10 @@ public class PIDTurn extends PIDCommand {
 			}
 		} else {
 			timer.reset();
+		}
+		if(Robot.encLeft.getStopped()&&hasStarted)//TODO moves on if enc is stopped
+		{
+			return true;
 		}
 		return this.isTimedOut();
 	}
