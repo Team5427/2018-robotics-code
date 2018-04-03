@@ -132,7 +132,7 @@ public class Left_ScaleIsLeft extends AutoPath {
 	protected void end() {
 		Robot.tiltUpNext=false;
 		moveElevator.cancel();
-		new AutoOutGo().start(); 
+		new AutoOutGo().start();
 		secondDistance.cancel();
 		new DriveBackward(1).start();
 		super.end();
