@@ -132,7 +132,7 @@ public class Config {
 	public static final double DRIVE_SPEED_INCREMENT_VALUE=.01;
 	public static final double DRIVE_INCREMENT_WAIT_VALUE=.01;
 	
-	public static final double ELEVATOR_TIME_SWITCH = .5; // TODO change to actual value (seconds)
+	public static final double ELEVATOR_TIME_SWITCH = 2; // TODO change to actual value (seconds)
 	public static final double ELEVATOR_TIME_SCALE = 2.8;
 	
 	/*-------------PID VALUES------------------*/

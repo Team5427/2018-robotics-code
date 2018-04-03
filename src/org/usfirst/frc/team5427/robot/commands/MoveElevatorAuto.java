@@ -28,8 +28,10 @@ public class MoveElevatorAuto extends Command {
 	public MoveElevatorAuto(int height) {
 		this.height = height;
 //		timer = new Timer();
-		if(1==height)
+		if(1==height) {
+			SmartDashboard.putBoolean("Switch Height", true);
 			this.setTimeout(Config.ELEVATOR_TIME_SWITCH);
+		}
 		if(2==height)
 			this.setTimeout(Config.ELEVATOR_TIME_SCALE);
 		//requires(Robot.kExampleSubsystem);
@@ -81,8 +83,8 @@ public class MoveElevatorAuto extends Command {
 //		if((height == 1 && timer.get() > Config.ELEVATOR_TIME_SWITCH) || (height == 2 && timer.get() > Config.ELEVATOR_TIME_SCALE))
 //			return true;
 //		return false;
-		if(!Robot.elevatorLimitSwitchUp.get())
-			Robot.motorPWM_Elevator.set(0);
+//		if(!Robot.elevatorLimitSwitchUp.get())
+//			Robot.motorPWM_Elevator.set(0);
 //		else {
 //			Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
 //		}

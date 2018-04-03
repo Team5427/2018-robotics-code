@@ -31,13 +31,16 @@ public class Center_SwitchIsRight extends AutoPath {
 	public static final double p2 = 0.016;
 	public static final double i2 = 0.0;
 	public static final double d2 = 0.006;
-
+	
+	public boolean elevIsDone;
 
 	public Center_SwitchIsRight() {
 		fidget = new Fidget();
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 86, p1, i1, d1);
+		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 101, p1, i1, d1); //106
 //		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 16, p2, i2, d2);
 		moveElevator = new MoveElevatorAuto(1);
+		
+		elevIsDone = false;
 		setTimeout(13.5);
 	}
 
@@ -45,6 +48,7 @@ public class Center_SwitchIsRight extends AutoPath {
 	public void initialize() {
 		startTime = System.nanoTime()/1000000000.;
 		fidget.start();
+		elevIsDone= false;
 	}
 
 	// uses the previous commands being null to check if a certain command needs to
@@ -55,8 +59,10 @@ public class Center_SwitchIsRight extends AutoPath {
 		if(moveElevator != null)
 			moveElevator.isFinished();
 		//starts elevator raising when we are 0.5 sec. into auto
-		if(currentTime-startTime>0.8&&!moveElevator.isRunning())
+		if(currentTime-startTime>0.8&&!moveElevator.isRunning()&&!moveElevator.isFinished()) {
 			moveElevator.start();
+		}
+
 		
 		
 //		if (null != firstDistance && firstDistance.isFinished() && !(secondDistance.isRunning())) {
@@ -82,7 +88,7 @@ public class Center_SwitchIsRight extends AutoPath {
 	@Override
 	public boolean isFinished() {
 		// returns if the last distance has finished and the robot has shot the box
-		if (firstDistance == null && secondDistance.isFinished())
+		if (firstDistance.isFinished())
 			return true;
 		return isTimedOut();
 	}
