@@ -39,6 +39,7 @@ public class PIDStraightMovement extends PIDCommand {
 	private PIDDistance pidDistance;
 	// This SpeedControllerGroup is the side of the robot that this command
 	// controls.
+	private boolean hasStarted;
 	private SpeedControllerGroup scgPIDControlled;
 	// This SpeedControllerGroup is the side of the robot that is controlled by a
 	// constant value and PIDDistance.
@@ -89,6 +90,7 @@ public class PIDStraightMovement extends PIDCommand {
 //		super.setSetpoint(0);
 		setSetpoint(0);
 		this.power = .01;
+		hasStarted = false;
 		// scgConstant.set(0);
 		// scgPIDControlled.set(0);
 	}
@@ -114,6 +116,7 @@ public class PIDStraightMovement extends PIDCommand {
 		// Robot.encRight.reset();
 		// if using exponential increment
 		power = .01;
+		hasStarted = false;
 //		scgConstant.set(power);
 //		scgPIDControlled.set(-power);
 //		this.pidDistance = new PIDDistance(this.scgConstant, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance);
@@ -213,6 +216,8 @@ public class PIDStraightMovement extends PIDCommand {
 			}
 			SmartDashboard.putNumber("ECLLeft", Robot.encLeft.getDistance());
 			SmartDashboard.putNumber("ECLLeftVAL", Robot.encLeft.getDistance());
+			if(power>=this.maximumSpeed/4)
+				hasStarted = true;
 
 //		}
 //		if (pidDistance != null && pidDistance.getDistance() > this.desiredDistance)
@@ -228,6 +233,13 @@ public class PIDStraightMovement extends PIDCommand {
 	public boolean isFinished() {
 		if (pidDistance != null && pidDistance.isFinished() && Math.abs(Robot.ahrs.getYaw()) < 3) {
 			pidDistance.end();// TODO check if ending works correctly
+			end();// TODO take these out
+			return true;
+		}
+		else if(Robot.encLeft.getStopped()&&hasStarted)//TODO moves on if enc is stopped
+		{
+			if(null!=pidDistance)
+				pidDistance.end();// TODO check if ending works correctly
 			end();// TODO take these out
 			return true;
 		}

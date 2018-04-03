@@ -41,7 +41,7 @@ public class Left_ScaleIsLeft extends AutoPath {
 	public Left_ScaleIsLeft() {
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 250, p1, i1, d1);
-		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 50);
+		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 47);
 		secondDistance = new DriveForward(.7);
 		moveElevator = new MoveElevatorAuto(2);
 		
