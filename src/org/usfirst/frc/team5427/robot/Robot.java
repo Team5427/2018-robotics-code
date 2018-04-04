@@ -76,6 +76,7 @@ public class Robot extends IterativeRobot {
 	public static SpeedController motorPWM_Elevator;
 
 	public static SpeedController motorPWM_ClimberArm;
+	public static SpeedController motorPWM_Climber;
 	public static SpeedController motorPWM_TiltIntake;
 
 
@@ -155,6 +156,7 @@ public class Robot extends IterativeRobot {
 		
 		tiltUpNext = true;
 		motorPWM_ClimberArm = new PWMVictorSPX(Config.CLIMBER_ARM_MOTOR);
+		motorPWM_Climber = new PWMVictorSPX(Config.CLIMBER_MOTOR);
 
 		// motorPWM_Climber = new Spark(Config.CLIMBER_MOTOR);
 
@@ -263,6 +265,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		Scheduler.getInstance().run();
+		tiltUpNext = true;
 		// encRight.reset();
 		encLeft.reset();
 		ahrs.reset();

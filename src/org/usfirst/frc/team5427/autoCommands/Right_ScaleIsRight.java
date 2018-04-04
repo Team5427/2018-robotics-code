@@ -131,6 +131,8 @@ public class Right_ScaleIsRight extends AutoPath {
 
 	@Override
 	protected void end() {
+		Robot.tiltUpNext=false;
+
 //		Robot.tiltUpNext=false;
 		moveElevator.cancel();
 		new AutoOutGo().start(); 

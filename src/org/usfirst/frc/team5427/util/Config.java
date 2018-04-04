@@ -73,18 +73,18 @@ public class Config {
 	public static final int PCM_SOLENOID_REVERSE = 1;
 
 	/*-------------Motor Speeds-------------------*/
-	public static final double INTAKE_MOTOR_SPEED_IN = 0.3;
+	public static final double INTAKE_MOTOR_SPEED_IN = 0.3;//0.3;//TODO Tune this value
 	public static final double INTAKE_MOTOR_SPEED_OUT = -1.0;
 	public static final double INTAKE_MOTOR_SPEED_REVERSE = -1.0;
-	public static final double INTAKE_MOTOR_SPEED_SLOW_OUT= -.3;
+	public static final double INTAKE_MOTOR_SPEED_SLOW_OUT= -1.0;
 	public static final double ELEVATOR_MOTOR_SPEED_UP=0.8; //this speed is final
 	public static final double ELEVATOR_MOTOR_SPEED_DOWN=-.5; ///this speed is final
 	
 	public static final double CLIMBER_ARM_MOTOR_SPEED_UP=0.5;
-	public static final double CLIMBER_ARM_MOTOR_SPEED_DOWN=-0.1;
+	public static final double CLIMBER_ARM_MOTOR_SPEED_DOWN=-0.3; //-.1
 	
-	public static final double CLIMBER_MOTOR_SPEED_UP=0.3;
-	public static final double CLIMBER_MOTOR_SPEED_DOWN=-0.3;
+	public static final double CLIMBER_MOTOR_SPEED_UP=1.0;
+	public static final double CLIMBER_MOTOR_SPEED_DOWN=-1.0;
 	
 	public static final double INTAKE_TILTER_MOTOR_SPEED_UP=1.0;
 	public static final double INTAKE_TILTER_MOTOR_SPEED_DOWN=-1.0;
@@ -95,13 +95,15 @@ public class Config {
 	
 	/* ----------Joystick Buttons---------- */
 	public static final int BUTTON_MOTOR_INTAKE_IN = 7;//NOTE: BUTTTONS 3 and 8 LAG
-	public static final int BUTTON_MOTOR_INTAKE_OUT = 0;
-	public static final int BUTTON_MOTOR_INTAKE_OUT_SLOW = 1;
+	public static final int BUTTON_MOTOR_INTAKE_OUT = 1;
+	public static final int BUTTON_MOTOR_INTAKE_OUT_SLOW = 0;
 //	
 //	public static final int BUTTON_SOLENOD_INTAKE = 2;
 	public static final int BUTTON_ELEVATOR_UP = 5;
 	public static final int BUTTON_ELEVATOR_DOWN= 3;
-	public static final int BUTTON_ELEVATOR_FULL= 2;
+//	public static final int BUTTON_ELEVATOR_FULL= 2;
+	public static final int BUTTON_CLIMBER_UP = 2;
+	public static final int BUTTON_CLIMBER_DOWN = 8;
 	public static final int BUTTON_CLIMBER_ARM_UP = 10;
 	public static final int BUTTON_CLIMBER_ARM_DOWN= 9;
 	public static final int BUTTON_INTAKE_TOGGLE_TILTER = 11;

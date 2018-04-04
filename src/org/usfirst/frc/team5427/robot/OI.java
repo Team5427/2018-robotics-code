@@ -11,6 +11,8 @@ import org.usfirst.frc.team5427.robot.commands.IntakeActivateOut;
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateOutSlow;
 import org.usfirst.frc.team5427.robot.commands.MoveClimberArmDown;
 import org.usfirst.frc.team5427.robot.commands.MoveClimberArmUp;
+import org.usfirst.frc.team5427.robot.commands.MoveClimberDown;
+import org.usfirst.frc.team5427.robot.commands.MoveClimberUp;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorFull;
 import org.usfirst.frc.team5427.robot.commands.TiltIntakeDown;
 import org.usfirst.frc.team5427.robot.commands.TiltIntakeUp;
@@ -70,10 +72,14 @@ public class OI {
 	Button intakeTilterToggle;
 	Button intakeTilterUp;
 	Button intakeTilterDown;
+	Button climberUp;
+	Button climberDown;
+	
 //	TODO Softer outgo
 //	Button elevatorAutoFullUp;
 //	Button elevatorAutoFullDown;
 	Button softOutGo;
+//	Button activateClimber;
 
 	SendableChooser<Integer> autoColorChooser = new SendableChooser<Integer>();
 	SendableChooser<Integer> autoPositionChooser = new SendableChooser<Integer>();
@@ -92,7 +98,8 @@ public class OI {
         softOutGo =  new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_OUT_SLOW);
         climberArmUp = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_UP);
         climberArmDown = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_DOWN);
-        
+        climberUp = new JoystickButton(joy1, Config.BUTTON_CLIMBER_UP);
+        climberDown = new JoystickButton(joy1, Config.BUTTON_CLIMBER_DOWN);
         intakeTilterToggle = new JoystickButton(joy1,Config.BUTTON_INTAKE_TOGGLE_TILTER);
         intakeTilterUp = new JoystickButton(joy1,Config.BUTTON_INTAKE_TILTER_UP);
         intakeTilterDown = new JoystickButton(joy1,Config.BUTTON_INTAKE_TILTER_DOWN);
@@ -119,6 +126,9 @@ public class OI {
         
         climberArmUp.whileHeld(new MoveClimberArmUp());
         climberArmDown.whileHeld(new MoveClimberArmDown());
+        
+        climberUp.whileHeld(new MoveClimberUp());
+        climberDown.whileHeld(new MoveClimberDown());
         
         autoPositionChooser.addDefault("CHOOSE ONE", Config.AUTO_NONE);
 		autoPositionChooser.addObject("Right", Config.RIGHT);
