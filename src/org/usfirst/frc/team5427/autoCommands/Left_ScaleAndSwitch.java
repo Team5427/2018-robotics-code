@@ -42,7 +42,7 @@ public class Left_ScaleAndSwitch extends AutoPath {
 		secondDistance = new DriveForward(.7);
 		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 70, 0, 0, 0); //TODO: find real value for thirdDistance
 		fourthDistance = new DriveForward(.7);
-		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 50);
+		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 47);
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
 		moveElevatorSwitch = new MoveElevatorAuto(1); // 1 for switch
 		moveElevatorScale = new MoveElevatorAuto(2); // 2 for scale

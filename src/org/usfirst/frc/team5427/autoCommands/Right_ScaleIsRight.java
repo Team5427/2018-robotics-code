@@ -33,11 +33,9 @@ public class Right_ScaleIsRight extends AutoPath {
 	public static final double p1 = 0.011;
 	public static final double i1 = 0.0;
 	public static final double d1 = 0.018;
-	
-	public static final double p2 = 0.2;
-	public static final double i2 = 0.0;
-	public static final double d2 = 0.1;
 
+	
+	
 	public Right_ScaleIsRight() {
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 250, p1, i1, d1);
