@@ -51,21 +51,21 @@ public class DriveWithJoystick extends Command {
  // Called repeatedly when this Command is scheduled to run
  protected void execute() {
 
-	 System.out.println(Robot.ahrs.getPitch());
-	 if(Math.abs(Robot.ahrs.getPitch())>=20)
-	 {
+// 	 System.out.println(Robot.ahrs.getPitch());
+// 	 if(Math.abs(Robot.ahrs.getPitch())>=20)
+// 	 {
 //		 Robot.driveTrain.drive_Left.set(0.2*Robot.ahrs.getPitch());
 //		 Robot.driveTrain.drive_Right.set(0.2*Robot.ahrs.getPitch());
-	 }
-	 else if(Math.abs(Robot.ahrs.getPitch())>=15)
-	 {
+// 	 }
+// 	 else if(Math.abs(Robot.ahrs.getPitch())>=15)
+// 	 {
 //		 Robot.driveTrain.drive_Left.set(0);
 //		 Robot.driveTrain.drive_Right.set(0);
-	 } 
-	 else
-	 {
-		 Robot.driveTrain.takeJoystickInputs(Robot.oi.getJoy()); //TODO check this
-	 }
+// 	 } 
+// 	 else
+// 	 {
+		 Robot.driveTrain.takeJoystickInputs(Robot.oi.getJoy());
+// 	 }
 
  }
 
