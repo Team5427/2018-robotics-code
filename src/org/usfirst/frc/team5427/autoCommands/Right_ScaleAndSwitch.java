@@ -14,7 +14,7 @@ import org.usfirst.frc.team5427.util.Config;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Left_ScaleAndSwitch extends AutoPath {
+public class Right_ScaleAndSwitch extends AutoPath {
 	private PIDStraightMovement firstDistance, thirdDistance;
 	private DriveForward secondDistance, fourthDistance;
 	private PIDTurn firstAngle, secondAngle;
@@ -35,14 +35,14 @@ public class Left_ScaleAndSwitch extends AutoPath {
 	//Times
 	public static final double timeOut1 = 15;
 
-	public Left_ScaleAndSwitch() {
+	public Right_ScaleAndSwitch() {
 		// Creates all of the PID Commands
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 250, p1, i1, d1);
 		secondDistance = new DriveForward(.7);
 		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 70, 0, 0, 0); //TODO: find real value for thirdDistance
 		fourthDistance = new DriveForward(.7);
-		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 47);
+		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -51);
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
 		moveElevatorSwitch = new MoveElevatorAuto(1); // 1 for switch
 		moveElevatorScale = new MoveElevatorAuto(2); // 2 for scale
