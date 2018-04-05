@@ -90,8 +90,8 @@ public class OI {
         
         //Create buttons
         motorIntakeIn = new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_IN);
-        motorIntakeOut = new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_OUT);
-        motorIntakeOut = new JoystickButton(joy1, Config.BUTTON_MOTOR_INTAKE_OUT_SLOW);
+//        motorIntakeOutSlow = new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_OUT_SLOW);
+        motorIntakeOut = new JoystickButton(joy1, Config.BUTTON_MOTOR_INTAKE_OUT);
         elevatorUp = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_UP);
         elevatorDown = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_DOWN);
 //      elevatorAutoFull = new JoystickButton(joy1, Config.BUTTON_ELEVATOR_FULL);
@@ -117,7 +117,7 @@ public class OI {
 //      elevatorAutoFull.whenPressed(Robot.mofu);
 //      elevatorAutoFull.whenPressed(Robot.mofd);
         
-        softOutGo.whenPressed(new IntakeActivateOutSlow(Config.INTAKE_MOTOR_SPEED_SLOW_OUT));
+//        softOutGo.whenPressed(new IntakeActivateOutSlow(Config.INTAKE_MOTOR_SPEED_SLOW_OUT));
         
         intakeTilterToggle.whenPressed(new TiltIntake_TimeOut());
         intakeTilterUp.whenPressed(new TiltIntakeUp());

@@ -236,7 +236,7 @@ public class PIDStraightMovement extends PIDCommand {
 			end();// TODO take these out
 			return true;
 		}
-		else if(Robot.encLeft.getStopped()&&hasStarted)//TODO moves on if enc is stopped
+		else if((Robot.encLeft.getStopped())&&hasStarted)//TODO moves on if enc is stopped
 		{
 			if(null!=pidDistance)
 				pidDistance.end();// TODO check if ending works correctly

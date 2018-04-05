@@ -29,7 +29,7 @@ public class PIDDistance extends PIDCommand {
 	double desiredDistance;
 	// This is the max speed for the output range of the PID Controller.
 	double maximumSpeed;
-	
+	private double out;
 	boolean b;
 	
 	//PID values for 20 inches
@@ -76,6 +76,9 @@ public class PIDDistance extends PIDCommand {
 		b=true;
 	}
 
+	public double getPIDOut()
+	{return out;}
+	
 	/**
 	 * Command implemented from PIDCommand This returns the value to be used by the
 	 * PID loop. We are returning the distance traveled by the robot as measured by
@@ -95,6 +98,7 @@ public class PIDDistance extends PIDCommand {
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber("PID Output Coasting", output);
 		this.scgPIDControlled.pidWrite(output);
+		this.out=output;
 //		if(Math.abs(desiredDistance - Math.abs(Robot.encLeft.getDistance())) <= Config.PID_STRAIGHT_ACTIVATE_DISTANCE) {
 //			
 ////			this.scgNot.set(output);

@@ -297,7 +297,7 @@ public class Robot extends IterativeRobot {
 				if (scaleSide == 'R')
 					autoPath = new Right_ScaleIsRight();
 				else if (scaleSide == 'L')
-					autoPath = new Right_ScaleIsLeft();
+					autoPath = new Full_Right_ScaleIsLeft();//TODO DELETE THIS LINE OF CODE//autoPath = new Right_ScaleIsLeft();
 			}
 		}
 		else if (field_position == 2) {
@@ -319,6 +319,7 @@ public class Robot extends IterativeRobot {
 				else if (scaleSide == 'L')
 					autoPath = new Left_ScaleIsLeft();
 			}
+			
 		}
 //		autoPath = new Left_ScaleIsLeft();
 		if(autoPath!=null)
@@ -403,6 +404,7 @@ public class Robot extends IterativeRobot {
 					else if (scaleSide == 'L')
 						autoPath = new Left_ScaleIsLeft();
 				}
+				
 			}
 			if(autoPath!=null&&!autoPath.isRunning())
 				autoPath.start();

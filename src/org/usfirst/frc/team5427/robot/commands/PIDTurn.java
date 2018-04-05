@@ -70,7 +70,7 @@ public class PIDTurn extends PIDCommand {
 		scgLeft.set(0.1);
 		this.setTimeout(1.5);//TODO change to TIME
 		timer = new Timer();
-		if(Math.abs(Robot.ahrs.getYaw())>=Math.abs(this.getSetpoint())/4)
+		if(Math.abs(Robot.ahrs.getYaw())>=Math.abs(this.getSetpoint())/2)
 			hasStarted=true;
 	}
 	
