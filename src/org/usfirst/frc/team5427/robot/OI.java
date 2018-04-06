@@ -9,10 +9,10 @@ package org.usfirst.frc.team5427.robot;
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateIn;
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateOut;
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateOutSlow;
-import org.usfirst.frc.team5427.robot.commands.MoveClimberArmDown;
-import org.usfirst.frc.team5427.robot.commands.MoveClimberArmUp;
-import org.usfirst.frc.team5427.robot.commands.MoveClimberDown;
-import org.usfirst.frc.team5427.robot.commands.MoveClimberUp;
+//import org.usfirst.frc.team5427.robot.commands.MoveClimberArmDown;
+//import org.usfirst.frc.team5427.robot.commands.MoveClimberArmUp;
+//import org.usfirst.frc.team5427.robot.commands.MoveClimberDown;
+//import org.usfirst.frc.team5427.robot.commands.MoveClimberUp;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorFull;
 import org.usfirst.frc.team5427.robot.commands.TiltIntakeDown;
 import org.usfirst.frc.team5427.robot.commands.TiltIntakeUp;
@@ -96,10 +96,10 @@ public class OI {
         elevatorDown = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_DOWN);
 //      elevatorAutoFull = new JoystickButton(joy1, Config.BUTTON_ELEVATOR_FULL);
         softOutGo =  new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_OUT_SLOW);
-        climberArmUp = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_UP);
-        climberArmDown = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_DOWN);
-        climberUp = new JoystickButton(joy1, Config.BUTTON_CLIMBER_UP);
-        climberDown = new JoystickButton(joy1, Config.BUTTON_CLIMBER_DOWN);
+//        climberArmUp = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_UP);
+//        climberArmDown = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_DOWN);
+//        climberUp = new JoystickButton(joy1, Config.BUTTON_CLIMBER_UP);
+//        climberDown = new JoystickButton(joy1, Config.BUTTON_CLIMBER_DOWN);
         intakeTilterToggle = new JoystickButton(joy1,Config.BUTTON_INTAKE_TOGGLE_TILTER);
         intakeTilterUp = new JoystickButton(joy1,Config.BUTTON_INTAKE_TILTER_UP);
         intakeTilterDown = new JoystickButton(joy1,Config.BUTTON_INTAKE_TILTER_DOWN);
@@ -124,11 +124,11 @@ public class OI {
         intakeTilterDown.whenPressed(new TiltIntakeDown());
 
         
-        climberArmUp.whileHeld(new MoveClimberArmUp());
-        climberArmDown.whileHeld(new MoveClimberArmDown());
-        
-        climberUp.whileHeld(new MoveClimberUp());
-        climberDown.whileHeld(new MoveClimberDown());
+//        climberArmUp.whileHeld(new MoveClimberArmUp());
+//        climberArmDown.whileHeld(new MoveClimberArmDown());
+//        
+//        climberUp.whileHeld(new MoveClimberUp());
+//        climberDown.whileHeld(new MoveClimberDown());
         
         autoPositionChooser.addDefault("CHOOSE ONE", Config.AUTO_NONE);
 		autoPositionChooser.addObject("Right", Config.RIGHT);

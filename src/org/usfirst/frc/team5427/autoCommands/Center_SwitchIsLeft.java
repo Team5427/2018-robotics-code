@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5427.autoCommands;
 
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.robot.commands.DriveForward;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
@@ -11,6 +12,7 @@ import org.usfirst.frc.team5427.util.SameLine;
 @SameLine
 public class Center_SwitchIsLeft extends AutoPath {
 	private PIDStraightMovement firstDistance, secondDistance, thirdDistance;
+//	private DriveForward firstDistance;
 	private PIDTurn firstAngle, secondAngle;
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
@@ -39,10 +41,11 @@ public class Center_SwitchIsLeft extends AutoPath {
 	public Center_SwitchIsLeft() {
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 18, p1, i1, d1);
+//		firstDistance = new DriveForward(.3);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -85);
 		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 110, p2, i2, d2);//still need to tune
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 85);
-		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 78, p3, i3, d3);
+		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG+.1, 78, p3, i3, d3);
 		moveElevator = new MoveElevatorAuto(1);
 	}
 
@@ -89,7 +92,7 @@ public class Center_SwitchIsLeft extends AutoPath {
 		
 		// If firstDistance is null and firstAngle isFinished && not null
 		// and the secondDistance Command is not running, run the secondDistance Command
-		else if (null == fidget && null == firstDistance && null != firstAngle && (firstAngle.isFinished()||Robot.encLeft.getStopped()) && !secondDistance.isRunning()) {
+		else if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !secondDistance.isRunning()) {
 			System.out.println("Part 2 Done.");
 			firstAngle.cancel();
 			firstAngle = null;
@@ -100,7 +103,7 @@ public class Center_SwitchIsLeft extends AutoPath {
 		}
 		// If firstDistance is NOT null and firstDistance isFinished
 		// and the firstAngle Command is not running, run the firstAngle Command
-		else if ((null == fidget && null != firstDistance && (firstDistance.isFinished()||Robot.encLeft.getStopped()) && !(firstAngle.isRunning())) || (currentTime - startTime) > timeOut1) {
+		else if ((null == fidget && null != firstDistance && (firstDistance.isFinished()) && !(firstAngle.isRunning())) || (currentTime - startTime) > timeOut1) {
 			System.out.println("Part 1 Done.");
 			firstDistance.cancel();
 			firstDistance = null;
@@ -130,7 +133,12 @@ public class Center_SwitchIsLeft extends AutoPath {
 	}
 	@Override
 	protected void end() {
-		thirdDistance.cancel();
-		super.end();
+//		
+		if(thirdDistance.isFinished())
+		{
+			thirdDistance.cancel();
+			super.end();
+		}
+		
 	}
 }

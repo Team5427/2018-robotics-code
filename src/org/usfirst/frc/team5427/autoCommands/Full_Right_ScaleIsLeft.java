@@ -47,7 +47,7 @@ public class Full_Right_ScaleIsLeft extends AutoPath {
 	public Full_Right_ScaleIsLeft() {
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, .8, 230, p1, i1, d1);
-		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -85);
+		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -88);
 		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, .8, 232, p1, i1, d1);
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 115);
 		thirdDistance = new DriveForward(.7);
@@ -131,8 +131,8 @@ public class Full_Right_ScaleIsLeft extends AutoPath {
 	@Override
 	public boolean isFinished() {
 		// returns if the last distance has finished and the robot has shot the box
-//		if (secondAngle==null)
-//			return true;
+		if (thirdDistance.isFinished())
+			return true;
 		return false;
 	}
 
@@ -144,7 +144,7 @@ public class Full_Right_ScaleIsLeft extends AutoPath {
 			new AutoOutGo().start();
 			new DriveBackward(2).start();
 		}
-		super.end();
+//		super.end();
 	}
 
 }
