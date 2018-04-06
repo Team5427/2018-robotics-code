@@ -86,6 +86,11 @@ public class MoveElevatorAuto extends Command {
 		return !Robot.elevatorLimitSwitchUp.get();
 	}
 	
+	public boolean minHeightReached()
+	{
+		return !Robot.elevatorLimitSwitchDown.get();
+	}
+	
 //	public boolean maxHeightReachedLS()
 //	{
 //		return !Robot.elevatorLimitSwitchUp.get();
