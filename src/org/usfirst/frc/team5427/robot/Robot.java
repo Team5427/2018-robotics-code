@@ -286,6 +286,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("CubePlacement", switch_or_scale + "");
 		
 		// Automatically determines which autonomous to run based on the game data sent to us 
+//		TODO Actual chooser
 		if (field_position == 1) {
 			if (switch_or_scale == 1) {
 				if (switchSide == 'R')
@@ -297,7 +298,7 @@ public class Robot extends IterativeRobot {
 				if (scaleSide == 'R')
 					autoPath = new Right_ScaleIsRight();
 				else if (scaleSide == 'L')
-					autoPath = new Full_Right_ScaleIsLeft();//TODO DELETE THIS LINE OF CODE//autoPath = new Right_ScaleIsLeft();
+					autoPath = new Full_Right_ScaleIsLeft();
 			}
 		}
 		else if (field_position == 2) {
@@ -321,9 +322,16 @@ public class Robot extends IterativeRobot {
 			}
 			
 		}
-//		autoPath = new Left_ScaleIsLeft();
 		if(autoPath!=null)
 			autoPath.start();
+		
+		//TODO Uncomment-118
+//		autoPath = new BaseLine_With_Delay();
+//		if(autoPath!=null)
+//			autoPath.start();
+		
+		
+		
 //		new MoveElevatorAuto(1).start();
 //		
 //		new MoveElevatorAuto(2).start();
@@ -450,7 +458,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		
+		if (elevatorLimitSwitchDown.get())
+			SmartDashboard.putNumber("DNLS", 1);
+		else
+			SmartDashboard.putNumber("DNLS", 0);
 		if (elevatorLimitSwitchUp.get())
 			SmartDashboard.putNumber("UPLS", 1);
 		else

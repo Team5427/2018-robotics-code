@@ -7,69 +7,78 @@
 
 package org.usfirst.frc.team5427.robot.commands;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.util.Config;
+//import org.usfirst.frc.team5427.util.Log;
+import org.usfirst.frc.team5427.util.NextLine;
 
 /**
- * An example command.  You can replace me with your own command.
+ * @author Blake This command
  */
-public class Fidget extends Command {
-	
-	private boolean forwardDone;
-	
-	public Fidget() {
-		// Use requires() here to declare subsystem dependencies
-		requires(Robot.driveTrain);
-		this.forwardDone = false;
-		setTimeout(0.1);
+
+@NextLine
+public class ManualMoveElevatorUp extends Command {
+
+	public ManualMoveElevatorUp() {
+//		requires(Robot.driveTrain);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		x=0;
+//		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
+		this.setInterruptible(true);
 	}
+	int x =0;
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if(!forwardDone)
-		{
-			Robot.driveTrain.drive_Left.set(0.5);
-			Robot.driveTrain.drive_Right.set(-0.5);
-		}
-		else if(forwardDone)
-		{
-			Robot.driveTrain.drive_Left.set(-0.3);
-			Robot.driveTrain.drive_Right.set(0.3);
-		}
+		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
+		SmartDashboard.putNumber("x", ++x);
+//		if(isFinished())
+//			SmartDashboard.putNumber("a", 1 );
+//		else
+//			SmartDashboard.putNumber("a", 0 );
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	public boolean isFinished() {
-		if(this.isTimedOut() && !forwardDone)
+		
+		
+//		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_ELEVATOR_UP))
+//		{
+//			SmartDashboard.putNumber("x", 55);
+//			return true;
+//		}
+		if(!Robot.elevatorLimitSwitchUp.get())
 		{
-			forwardDone = true;
-			setTimeout(0.6);
-		}
-		else if(this.isTimedOut() && forwardDone)
-		{
+			SmartDashboard.putNumber("x", 99);	
 			return true;
+
 		}
 		return false;
-//		return true;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.driveTrain.drive_Left.set(0);
-		Robot.driveTrain.drive_Right.set(0);
+		Robot.motorPWM_Elevator.set(0);
+//		Robot.elevatorLimitSwitchUp.free();
+//		Robot.elevatorLimitSwitchUp = new DigitalInput(Config.ELEVATOR_LIMIT_SWITCH_UP);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		end();
 	}
 }

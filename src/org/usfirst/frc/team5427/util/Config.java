@@ -109,6 +109,7 @@ public class Config {
 	public static final int BUTTON_INTAKE_TOGGLE_TILTER = 8;
 	public static final int BUTTON_INTAKE_TILTER_UP = 6;
 	public static final int BUTTON_INTAKE_TILTER_DOWN = 4;
+	public static final int BUTTON_ELEVATOR_DOWN_MANUAL=11;
 	
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;
@@ -206,6 +207,7 @@ public class Config {
 	public static final int SWITCH = 1;
 	public static final int SCALE = 2;
 	public static final double PID_STRAIGHT_POWER_MED = .4;
+	
 	
 	
 	

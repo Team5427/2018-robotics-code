@@ -11,7 +11,7 @@ import org.usfirst.frc.team5427.util.SameLine;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 @SameLine
-public class Center_SwitchIsRight extends AutoPath {
+public class BaseLine_With_Delay extends AutoPath {
 	private PIDStraightMovement firstDistance,secondDistance;
 	private MoveElevatorAuto moveElevator;
 	private Fidget fidget;
@@ -34,7 +34,7 @@ public class Center_SwitchIsRight extends AutoPath {
 	
 	public boolean elevIsDone;
 
-	public Center_SwitchIsRight() {
+	public BaseLine_With_Delay() {
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 110, p1, i1, d1); //106
 //		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 16, p2, i2, d2);
@@ -46,7 +46,13 @@ public class Center_SwitchIsRight extends AutoPath {
 
 	// begins the command
 	public void initialize() {
-	
+		try {
+			wait(10);
+		}
+		catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		startTime = System.nanoTime()/1000000000.;
 		fidget.start();
 		elevIsDone= false;
@@ -76,7 +82,7 @@ public class Center_SwitchIsRight extends AutoPath {
 //			secondDistance.start();
 //			moveElevator.start();
 //		}
-		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
+		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())&&currentTime-startTime>10) {
 			System.out.println("Fidget Done.");
 			fidget.cancel();
 			fidget = null;
@@ -96,6 +102,6 @@ public class Center_SwitchIsRight extends AutoPath {
 
 	@Override
 	protected void end() {
-		super.end();
+//		super.end();
 	}
 }

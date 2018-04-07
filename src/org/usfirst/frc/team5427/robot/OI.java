@@ -9,6 +9,7 @@ package org.usfirst.frc.team5427.robot;
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateIn;
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateOut;
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateOutSlow;
+import org.usfirst.frc.team5427.robot.commands.ManualMoveElevatorDown;
 //import org.usfirst.frc.team5427.robot.commands.MoveClimberArmDown;
 //import org.usfirst.frc.team5427.robot.commands.MoveClimberArmUp;
 //import org.usfirst.frc.team5427.robot.commands.MoveClimberDown;
@@ -97,7 +98,7 @@ public class OI {
 //      elevatorAutoFull = new JoystickButton(joy1, Config.BUTTON_ELEVATOR_FULL);
         softOutGo =  new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_OUT_SLOW);
 //        climberArmUp = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_UP);
-//        climberArmDown = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_DOWN);
+        climberArmDown = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_DOWN_MANUAL);
 //        climberUp = new JoystickButton(joy1, Config.BUTTON_CLIMBER_UP);
 //        climberDown = new JoystickButton(joy1, Config.BUTTON_CLIMBER_DOWN);
         intakeTilterToggle = new JoystickButton(joy1,Config.BUTTON_INTAKE_TOGGLE_TILTER);
@@ -125,7 +126,7 @@ public class OI {
 
         
 //        climberArmUp.whileHeld(new MoveClimberArmUp());
-//        climberArmDown.whileHeld(new MoveClimberArmDown());
+        climberArmDown.whileHeld(new ManualMoveElevatorDown());
 //        
 //        climberUp.whileHeld(new MoveClimberUp());
 //        climberDown.whileHeld(new MoveClimberDown());

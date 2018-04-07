@@ -45,7 +45,7 @@ public class Center_SwitchIsLeft extends AutoPath {
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -85);
 		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 110, p2, i2, d2);//still need to tune
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 85);
-		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG+.1, 78, p3, i3, d3);
+		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG+.2, 78, p3, i3, d3);
 		moveElevator = new MoveElevatorAuto(1);
 	}
 
@@ -134,11 +134,13 @@ public class Center_SwitchIsLeft extends AutoPath {
 	@Override
 	protected void end() {
 //		
-		if(thirdDistance.isFinished())
-		{
-			thirdDistance.cancel();
-			super.end();
-		}
+//		if(thirdDistance.isFinished())
+//		{
+//			thirdDistance.cancel();
+//			super.end();
+//		}
+		super.end();
+
 		
 	}
 }
