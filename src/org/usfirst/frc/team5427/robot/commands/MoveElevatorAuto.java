@@ -9,6 +9,8 @@ package org.usfirst.frc.team5427.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
@@ -21,39 +23,78 @@ public class MoveElevatorAuto extends Command {
 	// Height = 1: Switch. Height = 2: Scale.
 	public static int height;
 	Timer timer;
+	boolean maxHeightReached = false;
 	
 	public MoveElevatorAuto(int height) {
 		this.height = height;
 //		timer = new Timer();
 		if(1==height)
 			this.setTimeout(Config.ELEVATOR_TIME_SWITCH);
-		if(2==height)
+		else if(2==height)
 			this.setTimeout(Config.ELEVATOR_TIME_SCALE);
+		else if(3 == height)
+			this.setTimeout(Config.ELEVATOR_TIME_SCALE_DOWN);
+		
 		//requires(Robot.kExampleSubsystem);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		maxHeightReached = false;
+		SmartDashboard.putNumber("THE HEIGHT IS", this.height);
+		SmartDashboard.putBoolean("THE TIMEOUT IS", this.isTimedOut());
 //		timer.start();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		
-		if(!Robot.elevatorLimitSwitchUp.get()) {
-			Robot.motorPWM_Elevator.set(0);
+		SmartDashboard.putBoolean("THE TIMEOUT IS", this.isTimedOut());
+
+		if(1 == height || 2 == height)
+		{
+			if(!Robot.elevatorLimitSwitchUp.get()) {
+				Robot.motorPWM_Elevator.set(0);
+			}
+			else {
+				Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
+			}
 		}
-		else {
-			Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
+		else if(3 == height)
+		{
+			if(!Robot.elevatorLimitSwitchDown.get())
+			{
+				Robot.motorPWM_Elevator.set(0);
+			}
+			else
+			{
+				Robot.motorPWM_Elevator.set(-Config.ELEVATOR_MOTOR_SPEED_DOWN);
+			}
 		}
+	}
+	
+	public boolean maxHeightReachedTime()
+	{
+		return isTimedOut();
 	}
 	
 	public boolean maxHeightReached()
 	{
-		return isTimedOut();
+//		if(!Robot.elevatorLimitSwitchUp.get())
+//			maxHeightReached = false;
+		return !Robot.elevatorLimitSwitchUp.get();
 	}
+	
+	public boolean minHeightReached()
+	{
+		return !Robot.elevatorLimitSwitchDown.get();
+	}
+	
+//	public boolean maxHeightReachedLS()
+//	{
+//		return !Robot.elevatorLimitSwitchUp.get();
+//	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
@@ -62,8 +103,8 @@ public class MoveElevatorAuto extends Command {
 //		if((height == 1 && timer.get() > Config.ELEVATOR_TIME_SWITCH) || (height == 2 && timer.get() > Config.ELEVATOR_TIME_SCALE))
 //			return true;
 //		return false;
-		if(!Robot.elevatorLimitSwitchUp.get())
-			Robot.motorPWM_Elevator.set(0);
+//		if(!Robot.elevatorLimitSwitchUp.get())
+//			Robot.motorPWM_Elevator.set(0);
 //		else {
 //			Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
 //		}

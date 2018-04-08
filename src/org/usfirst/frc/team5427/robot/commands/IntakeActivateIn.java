@@ -13,8 +13,7 @@ import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.NextLine;
 
 /**
- * This command simply sets the speed of the intake motors to the current
- * throttle on the joystick.
+ * This command simply sets the speed of the intake motors
  * 
  * @author Blake
  */
@@ -71,7 +70,7 @@ public class IntakeActivateIn extends Command
 	protected void end() {
 		Robot.intakeSubsystem.setSpeed(0);
 	}
-
+	
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override

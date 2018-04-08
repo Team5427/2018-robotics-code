@@ -29,6 +29,13 @@ public class PIDDistance extends PIDCommand {
 	double desiredDistance;
 	// This is the max speed for the output range of the PID Controller.
 	double maximumSpeed;
+	private double out;
+	boolean b;
+	
+	//PID values for 20 inches
+	public static final double p20 = 0.02;	//.02
+	public static final double i20 = 0.00001;	//0
+	public static final double d20 = 0.002;	//0
 
 	/**
 	 * Constructor for PIDDistance
@@ -45,7 +52,7 @@ public class PIDDistance extends PIDCommand {
 	 *            Controller.
 	 */
 	public PIDDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgNot, double maximumSpeed, double desiredDistance, double p, double i, double d) {
-		super(p, i, d, Config.PID_UPDATE_PERIOD);
+		super(p, i, d, Config.PID_UPDATE_PERIOD); // TODO Change back to .02
 		this.desiredDistance = desiredDistance;
 		this.scgPIDControlled = scgPIDControlled;
 		this.maximumSpeed = maximumSpeed;
@@ -62,10 +69,16 @@ public class PIDDistance extends PIDCommand {
 	 */
 	@Override
 	protected void initialize() {
+		System.out.println("INITIALIZING PID DISTANCE");
+		
 		super.getPIDController().enable();
 		timerStarted = false;
+		b=true;
 	}
 
+	public double getPIDOut()
+	{return out;}
+	
 	/**
 	 * Command implemented from PIDCommand This returns the value to be used by the
 	 * PID loop. We are returning the distance traveled by the robot as measured by
@@ -85,16 +98,27 @@ public class PIDDistance extends PIDCommand {
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber("PID Output Coasting", output);
 		this.scgPIDControlled.pidWrite(output);
-		SmartDashboard.putNumber("SCGconstant", scgPIDControlled.get());
-
-		// if(this.returnPIDInput()>this.desiredDistance)
-		// super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already
-		// set
-		// if(this.returnPIDInput()>(this.desiredDistance*.75))
-		// {
-		// this.maximumSpeed*=0.95;
-		// super.getPIDController().setOutputRange(-this.maximumSpeed,this.maximumSpeed);
-		// }
+		this.out=output;
+//		if(Math.abs(desiredDistance - Math.abs(Robot.encLeft.getDistance())) <= Config.PID_STRAIGHT_ACTIVATE_DISTANCE) {
+//			
+////			this.scgNot.set(output);
+//			System.out.print("Doing the 2nd pid output");
+//			this.scgPIDControlled.pidWrite(output);
+//			b=false;
+//		}
+//		else if(b) {
+////			this.scgNot.set(maximumSpeed);
+//			this.scgPIDControlled.pidWrite(maximumSpeed);
+//		}
+////		SmartDashboard.putNumber("SCGconstant", scgPIDControlled.get());
+//
+//		 if(this.returnPIDInput()>this.desiredDistance)
+//			 super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already set
+////		 if(this.returnPIDInput()>(this.desiredDistance*.75))
+////		 {
+////		 this.maximumSpeed*=0.95;
+//		 super.getPIDController().setOutputRange(-this.maximumSpeed,this.maximumSpeed);
+//		 }
 	}
 
 	/*

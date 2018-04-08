@@ -9,27 +9,30 @@ package org.usfirst.frc.team5427.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
-import org.usfirst.frc.team5427.util.Config;
 
 /**
- * Makes the Intake deliver the cube 
+ * An example command.  You can replace me with your own command.
  */
-public class AutoOutGo extends Command {
-	public AutoOutGo() {
+public class DriveForward extends Command {
+	private double time;
+	
+	public DriveForward(double time) {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.intakeSubsystem);
-		this.setTimeout(Config.AUTO_INTAKE_TIMEOUT);
+		requires(Robot.driveTrain);
+		setTimeout(time);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+//		this.setTimeout(this.time);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.intakeSubsystem.setSpeed(-.5);
+		Robot.driveTrain.drive_Left.set(.3);
+		Robot.driveTrain.drive_Right.set(-.3);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -41,13 +44,14 @@ public class AutoOutGo extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.intakeSubsystem.setSpeed(0);
+		Robot.driveTrain.drive_Left.set(0);
+		Robot.driveTrain.drive_Right.set(0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.intakeSubsystem.setSpeed(0);
+		end();
 	}
 }

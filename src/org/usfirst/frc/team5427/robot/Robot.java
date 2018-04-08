@@ -14,12 +14,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
@@ -33,6 +35,7 @@ import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorDown;
+import org.usfirst.frc.team5427.robot.commands.MoveElevatorFull;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorUp;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
 import org.usfirst.frc.team5427.robot.commands.PIDTurn;
@@ -44,7 +47,6 @@ import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.Log;
 //import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
-
 import com.kauailabs.navx.frc.AHRS;
 
 /**
@@ -73,7 +75,14 @@ public class Robot extends IterativeRobot {
 	public static SpeedController motorPWM_Intake_Left;
 	public static SpeedController motorPWM_Intake_Right;
 	public static SpeedController motorPWM_Elevator;
+
+	public static SpeedController motorPWM_ClimberArm;
+	public static SpeedController motorPWM_Climber;
+	public static SpeedController motorPWM_TiltIntake;
+
+
 	// public static SpeedController motorPWM_Climber;
+
 	public static Intake intakeSubsystem;
 	public static Encoder encLeft;
 	// public static Encoder encRight;
@@ -92,6 +101,8 @@ public class Robot extends IterativeRobot {
 	public static DigitalInput elevatorLimitSwitchDown;
 	public static MoveElevatorUp mou = new MoveElevatorUp();
 	public static MoveElevatorDown mod = new MoveElevatorDown();
+//	public static MoveElevatorFull mofu = new MoveElevatorFull(true);
+//	public static MoveElevatorFull mofd = new MoveElevatorFull(false);
 	/**
 	 * values used for PID loops TODO move these to Config
 	 */
@@ -108,6 +119,8 @@ public class Robot extends IterativeRobot {
 	public static UsbCamera usbCam;
 	public static UsbCamera usbCam1;
 	public static AxisCamera axisCam;
+	
+	public static boolean tiltUpNext = true;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -115,15 +128,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		// Initialize ports
 		// driveTrain = new DriveTrain();
 		// chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		/*
-		 * COMMENTED DUE TO ERRORS TODO ADD PORTS FOR SOLENOID
-		 */
-		// Log.init("Initializing solenoid");
-		// intakeSolenoid = new DoubleSolenoid(Config.PCM_SOLENOID_FORWARD,
-		// Config.PCM_SOLENOID_REVERSE);
 		// Log.init("Initializing driveTrain: ");
 		elevatorLimitSwitchUp = new DigitalInput(Config.ELEVATOR_LIMIT_SWITCH_UP);
 		elevatorLimitSwitchUp.setSubsystem("ELSU");
@@ -144,7 +152,15 @@ public class Robot extends IterativeRobot {
 		motorPWM_Intake_Right = new PWMVictorSPX(Config.INTAKE_MOTOR_RIGHT);
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
 		motorPWM_Elevator = new PWMVictorSPX(Config.ELEVATOR_MOTOR);
-		// motorPWM_Climber = new SteelTalon(Config.CLIMBER_MOTOR);
+
+		motorPWM_TiltIntake = new PWMVictorSPX(Config.TILT_INTAKE_MOTOR);
+		
+		tiltUpNext = true;
+		motorPWM_ClimberArm = new PWMVictorSPX(Config.CLIMBER_ARM_MOTOR);
+		motorPWM_Climber = new PWMVictorSPX(Config.CLIMBER_MOTOR);
+
+		// motorPWM_Climber = new Spark(Config.CLIMBER_MOTOR);
+
 		try {
 			ahrs = new AHRS(SPI.Port.kMXP);
 		}
@@ -164,11 +180,19 @@ public class Robot extends IterativeRobot {
 		// encoderStraight = new Encoder(0, 0);
 		// encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
 		// encLeft = new Encoder(2,3,false,Encoder.EncodingType.k4X);
-		camServer = CameraServer.getInstance();
-		usbCam = new UsbCamera("USB Camera", 0);
-		usbCam.setFPS(15);
-		camServer.addCamera(usbCam);
-		camServer.startAutomaticCapture(usbCam);
+		
+		
+		//TODO: Uncomment for camera. This is the only code we need for the camera
+//		camServer = CameraServer.getInstance();
+//		usbCam = new UsbCamera("USB Camera", 0);
+//		usbCam.setFPS(8);
+//		usbCam.setResolution(216, 144);
+//		camServer.startAutomaticCapture(usbCam);
+		
+		
+//		usbCam.setVideoMode(new VideoMode(VideoMode.PixelFormat.kGray,216,144,15));
+//		camServer.addCamera(usbCam); TODO took this line out to see if it helps with disconnects
+//		camServer.
 //		usbCam1 = new UsbCamera("USB Camera", 1);
 //		usbCam1.setFPS(15);
 //		camServer.addCamera(usbCam1);
@@ -250,6 +274,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		Scheduler.getInstance().run();
+		tiltUpNext = true;
 		// encRight.reset();
 		encLeft.reset();
 		ahrs.reset();
@@ -257,6 +282,8 @@ public class Robot extends IterativeRobot {
 		// this.speedcontrollergroup_left, .3, 154, 0.0115, 0, 0.005).start();
 		// new PIDTurn(speedcontrollergroup_left, speedcontrollergroup_right,
 		// 90).start();
+		
+		// Receives the array telling us which side of the switch and scale is ours.
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		switchSide = gameData.charAt(0);
 		scaleSide = gameData.charAt(1);
@@ -266,6 +293,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("ScaleSide", scaleSide + "");
 		SmartDashboard.putString("FieldPosition", field_position + "");
 		SmartDashboard.putString("CubePlacement", switch_or_scale + "");
+		
+		// Automatically determines which autonomous to run based on the game data sent to us 
+//		TODO Actual chooser
 		if (field_position == 1) {
 			if (switch_or_scale == 1) {
 				if (switchSide == 'R')
@@ -277,7 +307,7 @@ public class Robot extends IterativeRobot {
 				if (scaleSide == 'R')
 					autoPath = new Right_ScaleIsRight();
 				else if (scaleSide == 'L')
-					autoPath = new Right_ScaleIsLeft();
+					autoPath = new Full_Right_ScaleIsLeft();
 			}
 		}
 		else if (field_position == 2) {
@@ -299,11 +329,23 @@ public class Robot extends IterativeRobot {
 				else if (scaleSide == 'L')
 					autoPath = new Left_ScaleIsLeft();
 			}
+			
 		}
 		if(autoPath!=null)
 			autoPath.start();
 		
+		//TODO Uncomment-118
+//		autoPath = new BaseLine_With_Delay();
+//		if(autoPath!=null)
+//			autoPath.start();
+		
+		
+		
+//		new MoveElevatorAuto(1).start();
+//		
 //		new MoveElevatorAuto(2).start();
+//		 new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 60, 0, 0, 0).start();
+//		 new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 80, 0, 0, 0).start();
 //		new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 30, .02, 0, 0).start();
 
 //		autoPath=new Right_ScaleIsLeft();
@@ -334,6 +376,7 @@ public class Robot extends IterativeRobot {
 		// new MoveElevatorAuto(1).start();
 		// b = true;
 		// }
+		// If we didn't pick a path in init, try again until we do. Run the auto we picked
 		if(null==autoPath)
 		{
 			gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -378,9 +421,11 @@ public class Robot extends IterativeRobot {
 					else if (scaleSide == 'L')
 						autoPath = new Left_ScaleIsLeft();
 				}
+				
 			}
-			if(autoPath!=null)
+			if(autoPath!=null&&!autoPath.isRunning())
 				autoPath.start();
+			
 		}
 	}
 
@@ -422,8 +467,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		// System.out.print("E:");
-		// Log.info("E");
+		if (elevatorLimitSwitchDown.get())
+			SmartDashboard.putNumber("DNLS", 1);
+		else
+			SmartDashboard.putNumber("DNLS", 0);
 		if (elevatorLimitSwitchUp.get())
 			SmartDashboard.putNumber("UPLS", 1);
 		else
@@ -431,8 +478,11 @@ public class Robot extends IterativeRobot {
 		// TODO This needs to be here for limit switches to work!
 		SmartDashboard.putBoolean("a", mou.isFinished());
 		SmartDashboard.putBoolean("a", mod.isFinished());
+		SmartDashboard.putBoolean("tiltUp", tiltUpNext);
+//		SmartDashboard.putBoolean("a", mofd.isFinished());
+//		SmartDashboard.putBoolean("a", mofu.isFinished());
+		
 		// System.out.print("E:"+elevatorLimitSwitchUp.get());
-		// System.out.print("EEEEE");
 		// 4 counts for every rev
 		/*
 		 * SmartDashboard.putNumber("RightCount", encRight.get());

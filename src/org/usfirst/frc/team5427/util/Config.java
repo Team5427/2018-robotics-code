@@ -44,14 +44,18 @@ public class Config {
 												// with this false
 	
 	/*----------PWM PORTS-----------*/
-	public static final int FRONT_RIGHT_MOTOR = 3; //3
-	public static final int REAR_RIGHT_MOTOR = 6; //2
-	public static final int FRONT_LEFT_MOTOR = 1; //1
-	public static final int REAR_LEFT_MOTOR = 0; //0
+	public static final int FRONT_RIGHT_MOTOR = 3; //3 3
+	public static final int REAR_RIGHT_MOTOR = 6; //2 6
+	public static final int FRONT_LEFT_MOTOR = 1; //1 1
+	public static final int REAR_LEFT_MOTOR = 0; //0 0
 	public static final int INTAKE_MOTOR_LEFT = 7;
 	public static final int INTAKE_MOTOR_RIGHT = 8;
 	public static final int ELEVATOR_MOTOR = 9;
-	public static final int CLIMBER_MOTOR = 4;
+	
+	public static final int TILT_INTAKE_MOTOR = 5;
+
+	public static final int CLIMBER_ARM_MOTOR = 2; //this is for the climber arm
+	public static final int CLIMBER_MOTOR = 4; //this is for raising the actual climber
 
 	
 	/*----------DIO PORTS-----------*/
@@ -59,21 +63,32 @@ public class Config {
 	public static final int ENCODER_LEFT_CHANNEL_B=1;
 	
 	/*--------Timeouts------*/
-	public static final double AUTO_INTAKE_TIMEOUT = 2;
-
+	public static final double AUTO_INTAKE_TIMEOUT = 1;
+	public static final double TILT_TIMEOUT_UP = 2.4;
+	public static final double TILT_TIMEOUT_DOWN = 1.7;
+	
 	
 	/*----------Pneumatic Control Module PORTS-----------*/
 	public static final int PCM_SOLENOID_FORWARD = 0;
 	public static final int PCM_SOLENOID_REVERSE = 1;
 
 	/*-------------Motor Speeds-------------------*/
-	public static final double INTAKE_MOTOR_SPEED_IN = 0.3;
+	public static final double INTAKE_MOTOR_SPEED_IN = 0.3;//0.3;//TODO Tune this value
 	public static final double INTAKE_MOTOR_SPEED_OUT = -1.0;
 	public static final double INTAKE_MOTOR_SPEED_REVERSE = -1.0;
+	public static final double INTAKE_MOTOR_SPEED_SLOW_OUT= -1.0;
 	public static final double ELEVATOR_MOTOR_SPEED_UP=0.8; //this speed is final
 	public static final double ELEVATOR_MOTOR_SPEED_DOWN=-.5; ///this speed is final
-	public static final double CLIMBER_MOTOR_SPEED_UP=0.3;
-	public static final double CLIMBER_MOTOR_SPEED_DOWN=-0.3;
+	
+	public static final double CLIMBER_ARM_MOTOR_SPEED_UP=0.5;
+	public static final double CLIMBER_ARM_MOTOR_SPEED_DOWN=-0.3; //-.1
+	
+	public static final double CLIMBER_MOTOR_SPEED_UP=1.0;
+	public static final double CLIMBER_MOTOR_SPEED_DOWN=-1.0;
+	
+	public static final double INTAKE_TILTER_MOTOR_SPEED_UP=1.0;
+	public static final double INTAKE_TILTER_MOTOR_SPEED_DOWN=-1.0;
+
 	
 	public static final int ELEVATOR_LIMIT_SWITCH_UP = 5;
 	public static final int ELEVATOR_LIMIT_SWITCH_DOWN = 4;
@@ -81,13 +96,21 @@ public class Config {
 	/* ----------Joystick Buttons---------- */
 	public static final int BUTTON_MOTOR_INTAKE_IN = 7;//NOTE: BUTTTONS 3 and 8 LAG
 	public static final int BUTTON_MOTOR_INTAKE_OUT = 1;
+	public static final int BUTTON_MOTOR_INTAKE_OUT_SLOW = 0;
 //	
 //	public static final int BUTTON_SOLENOD_INTAKE = 2;
 	public static final int BUTTON_ELEVATOR_UP = 5;
 	public static final int BUTTON_ELEVATOR_DOWN= 3;
-	public static final int BUTTON_CLIMBER_UP = 6;
-	public static final int BUTTON_CLIMBER_DOWN= 4;
-
+//	public static final int BUTTON_ELEVATOR_FULL= 2;
+//	public static final int BUTTON_CLIMBER_UP = 2;
+//	public static final int BUTTON_CLIMBER_DOWN = 8;
+//	public static final int BUTTON_CLIMBER_ARM_UP = 10;
+//	public static final int BUTTON_CLIMBER_ARM_DOWN= 9;
+	public static final int BUTTON_INTAKE_TOGGLE_TILTER = 8;
+	public static final int BUTTON_INTAKE_TILTER_UP = 6;
+	public static final int BUTTON_INTAKE_TILTER_DOWN = 4;
+	public static final int BUTTON_ELEVATOR_DOWN_MANUAL=11;
+	
 	/* ----------Controller Ports(Joystick)---------- */
 	public static final int JOYSTICK_PORT = 0;
 	public static final int ALT_JOYSTICK_PORT = 0;
@@ -110,32 +133,36 @@ public class Config {
 	public static final double DRIVE_SPEED_INCREMENT_VALUE=.01;
 	public static final double DRIVE_INCREMENT_WAIT_VALUE=.01;
 	
-	public static final double ELEVATOR_TIME_SWITCH = 1.4; // TODO change to actual value (seconds)
+	public static final double ELEVATOR_TIME_SWITCH = 2; // TODO change to actual value (seconds)
 	public static final double ELEVATOR_TIME_SCALE = 2.8;
+	public static final double ELEVATOR_TIME_SCALE_DOWN = 2.8; 
 	
 	
 	/*-------------PID VALUES------------------*/
 	//former p = .085, i = .008333, d = .001042
-	
+	//commented is for .35 speed
 	public static final double PID_UPDATE_PERIOD = 0.01;
 	//for straight no d, for turn no i
-	public static final double PID_STRAIGHT_P = 0.06;//0.05;
+	public static final double PID_STRAIGHT_P = .22;//.25//.06;//.25 //.5;//0.3;
 	//.005 started oscilating
-	public static final double PID_STRAIGHT_I = 0.0;//0.0025;
-	public static final double PID_STRAIGHT_D = 0.008;//0.00;
-	public static final double PID_STRAIGHT_POWER_SHORT = 0.35;
-	public static final double PID_STRAIGHT_POWER_LONG = 0.5;
+	public static final double PID_STRAIGHT_I = 0;//.00;//0.00;
+	public static final double PID_STRAIGHT_D = .04;//0.008;//.04 //0.008;//0.015;
+	public static final double PID_STRAIGHT_POWER_SHORT = 0.5;
+	public static final double PID_STRAIGHT_POWER_LONG = 0.7;// 0.7;
 
 	/***Increment****/
-	public static final double PID_STRAIGHT_LINEAR_INCREMENT=.01;
+	public static final double PID_STRAIGHT_LINEAR_INCREMENT= .003;//.004//.01;//.004 //.001;//.0055;
 	public static final double POST_INCR_SWITCH_TO_PID = .1;
-	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=1.25;
+	public static final double PID_STRAIGHT_EXPONENTIAL_INCREMENT=1.05;
+	
+	public static final double SWITCH_TO_PID_VELOCITY = 30.;
 
 	public static final double PID_STRAIGHT_COAST_POWER = 0.01;
 	public static final double PID_STRAIGHT_COAST_P = 0.275;
 	public static final double PID_STRAIGHT_COAST_I = 0.012333;
 	public static final double PID_STRAIGHT_COAST_D = 0.0;
 	public static final double PID_STRAIGHT_TOLERANCE = 5;//.1
+	public static final double PID_STRAIGHT_ACTIVATE_DISTANCE = 20;
 //	public static final double PID_STRAIGHT_COAST_P = 1;
 //	public static final double PID_STRAIGHT_COAST_I = 1;
 //	public static final double PID_STRAIGHT_COAST_D = 1;
@@ -180,6 +207,7 @@ public class Config {
 	public static final int SWITCH = 1;
 	public static final int SCALE = 2;
 	public static final double PID_STRAIGHT_POWER_MED = .4;
+	
 	
 	
 	

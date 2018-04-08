@@ -57,6 +57,7 @@ public class Fidget extends Command {
 			return true;
 		}
 		return false;
+//		return true;
 	}
 
 	// Called once after isFinished returns true

@@ -18,9 +18,9 @@
 // */
 //
 //@NextLine
-//public class MoveClimberDown extends Command {
+//public class MoveClimberArmUp extends Command {
 //
-//	public MoveClimberDown() {
+//	public MoveClimberArmUp() {
 //	}
 //
 //	// Called just before this Command runs the first time
@@ -33,21 +33,21 @@
 //	// Called repeatedly when this Command is scheduled to run
 //	@Override
 //	protected void execute() {
-//		Robot.motorPWM_Climber.set(Config.CLIMBER_MOTOR_SPEED_DOWN);
-//
+//		Robot.motorPWM_ClimberArm.set(Config.CLIMBER_ARM_MOTOR_SPEED_UP);
 //	}
 //
 //	// Make this return true when this Command no longer needs to run execute()
 //	@Override
 //	protected boolean isFinished() {
 //
-//		return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_CLIMBER_DOWN);
+//			return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_CLIMBER_ARM_UP);
+//		
 //	}
 //
 //	// Called once after isFinished returns true
 //	@Override
 //	protected void end() {
-//		Robot.motorPWM_Climber.set(0);
+//		Robot.motorPWM_ClimberArm.set(0);
 //	}
 //
 //	// Called when another command which requires one or more of the same
