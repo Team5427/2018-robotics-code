@@ -21,7 +21,7 @@ public class Center_SwitchIsLeft extends AutoPath {
 	//Times
 	public static final double timeOut1 = 15;
 	public static final double timeOut2 = 15;
-	public static final double timeOut3 = 13;
+	public static final double timeOut3 = 14;
 	
 	// Values for 18 inches.
 	public static final double p1 = 0.02;

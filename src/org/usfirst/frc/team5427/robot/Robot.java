@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -179,11 +180,19 @@ public class Robot extends IterativeRobot {
 		// encoderStraight = new Encoder(0, 0);
 		// encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
 		// encLeft = new Encoder(2,3,false,Encoder.EncodingType.k4X);
-		camServer = CameraServer.getInstance();
-		usbCam = new UsbCamera("USB Camera", 0);
-		usbCam.setFPS(15);
-		camServer.addCamera(usbCam);
-		camServer.startAutomaticCapture(usbCam);
+		
+		
+		//TODO: Uncomment for camera. This is the only code we need for the camera
+//		camServer = CameraServer.getInstance();
+//		usbCam = new UsbCamera("USB Camera", 0);
+//		usbCam.setFPS(8);
+//		usbCam.setResolution(216, 144);
+//		camServer.startAutomaticCapture(usbCam);
+		
+		
+//		usbCam.setVideoMode(new VideoMode(VideoMode.PixelFormat.kGray,216,144,15));
+//		camServer.addCamera(usbCam); TODO took this line out to see if it helps with disconnects
+//		camServer.
 //		usbCam1 = new UsbCamera("USB Camera", 1);
 //		usbCam1.setFPS(15);
 //		camServer.addCamera(usbCam1);
