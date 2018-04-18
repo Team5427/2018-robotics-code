@@ -10,41 +10,81 @@ import org.usfirst.frc.team5427.util.SameLine;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
+/**
+ * This class was mainly made because Team 118 wanted
+ * us to add a delay to our auto to stay out of their way.
+ * It did not work.
+ * @author Blake
+ */
 @SameLine
 public class BaseLine_With_Delay extends AutoPath {
-	private PIDStraightMovement firstDistance,secondDistance;
+	
+	/**
+	 * The first distance of this autonomous path.
+	 */
+	private PIDStraightMovement firstDistance;
+	
+	/**
+	 * The command used to move the elevator up during the
+	 * autonomous path.
+	 */
 	private MoveElevatorAuto moveElevator;
+	
+	/**
+	 * The command used to cause the arms of the intake to fall
+	 * down at the start of autonomous.
+	 */
 	private Fidget fidget;
 	
-	//the start and current time of the auto path in seconds
-	private double startTime, currentTime;
+	/**
+	 * The time taken at the start of the autonomous path.
+	 */
+	private double startTime;
 	
-	//Times TODO: test for times
-//	public static final double timeOut1 = 15;
+	/**
+	 * The time taken periodically throughout the command
+	 * to determine the amount of time passed.
+	 */
+	private double currentTime;
 	
-	// Values for 72 inches.
-	public static final double p1 = 0.025; //.06
+	/**
+	 * P value for 110 inches.
+	 */
+	public static final double p1 = 0.025;
+	
+	/**
+	 * I value for 110 inches.
+	 */
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.12;//0.06; //.05
 	
-	//Values for 16 inches.
-	public static final double p2 = 0.016;
-	public static final double i2 = 0.0;
-	public static final double d2 = 0.006;
+	/**
+	 * D value for 110 inches.
+	 */
+	public static final double d1 = 0.12;
 	
+	
+	/**
+	 * Stores whether the elevator is done moving upward.
+	 */
 	public boolean elevIsDone;
 
+	/**
+	 * Constructor used to create the fidget, firstDistance, and moveElevator.
+	 * It sets the timeOut to 13.5 seconds.
+	 */
 	public BaseLine_With_Delay() {
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 110, p1, i1, d1); //106
-//		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 16, p2, i2, d2);
 		moveElevator = new MoveElevatorAuto(1);
 		
 		elevIsDone = false;
 		setTimeout(13.5);
 	}
 
-	// begins the command
+	/**
+	 * Method called once the command is started.
+	 * We use it to wait 10 seconds then start the first step of autonomous.
+	 */
 	public void initialize() {
 		try {
 			wait(10);
