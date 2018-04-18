@@ -11,12 +11,16 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 
 /**
- * An example command.  You can replace me with your own command.
+ * A command that moves the robot forwards and then backwards. Used at the start of autonomous to
+ * hit the robot against the wall, causing the intake to fall down.
  */
 public class Fidget extends Command {
 	
 	private boolean forwardDone;
 	
+	/**
+	 * Sets the timeout to .1 seconds
+	 */
 	public Fidget() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.driveTrain);
@@ -24,12 +28,16 @@ public class Fidget extends Command {
 		setTimeout(0.1);
 	}
 
-	// Called just before this Command runs the first time
+	/**
+	 *  Called just before this Command runs the first time
+	 */
 	@Override
 	protected void initialize() {
 	}
 
-	// Called repeatedly when this Command is scheduled to run
+	/**
+	 *  Moves the robot forward at .5 speed for .1 seconds, and then backward at .3 for .6 seconds
+	 */
 	@Override
 	protected void execute() {
 		if(!forwardDone)
@@ -44,7 +52,9 @@ public class Fidget extends Command {
 		}
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
+	/**
+	 * @return true when the robot is done moving forward and back
+	 */
 	@Override
 	public boolean isFinished() {
 		if(this.isTimedOut() && !forwardDone)
@@ -60,16 +70,21 @@ public class Fidget extends Command {
 //		return true;
 	}
 
-	// Called once after isFinished returns true
+	/**
+	 * Sets the speed of both sides of the driveTrain to 0
+	 */
 	@Override
 	protected void end() {
 		Robot.driveTrain.drive_Left.set(0);
 		Robot.driveTrain.drive_Right.set(0);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+	/**
+	 * Sets the speed of both sides of the driveTrain to 0
+	 */
 	@Override
 	protected void interrupted() {
+		Robot.driveTrain.drive_Left.set(0);
+		Robot.driveTrain.drive_Right.set(0);
 	}
 }

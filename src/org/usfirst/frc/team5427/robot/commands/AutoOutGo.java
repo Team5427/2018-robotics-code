@@ -12,7 +12,7 @@ import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
 /**
- * Makes the Intake deliver the cube 
+ * This class is used to deliver cubes in autonomous by activating the intake 
  */
 public class AutoOutGo extends Command {
 	public AutoOutGo() {
@@ -21,31 +21,40 @@ public class AutoOutGo extends Command {
 		this.setTimeout(Config.AUTO_INTAKE_TIMEOUT);
 	}
 
-	// Called just before this Command runs the first time
+	/**
+	 * Called just before this Command runs the first time
+	 */
 	@Override
 	protected void initialize() {
 	}
 
-	// Called repeatedly when this Command is scheduled to run
+	/**
+	 *  Sets the intake motor speed to .5
+	 */
 	@Override
 	protected void execute() {
 		Robot.intakeSubsystem.setSpeed(-.5);
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
+	/**
+	 *  Make this return true when this Command no longer needs to run execute()
+	 */
 	@Override
 	public boolean isFinished() {
 		return this.isTimedOut();
 	}
 
-	// Called once after isFinished returns true
+	/**
+	 *  Sets the intake speed to 0
+	 */
 	@Override
 	protected void end() {
 		Robot.intakeSubsystem.setSpeed(0);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+	/** 
+	 * Sets the intake speed to 0
+	 */
 	@Override
 	protected void interrupted() {
 		Robot.intakeSubsystem.setSpeed(0);

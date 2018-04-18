@@ -11,45 +11,61 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 
 /**
- * An example command.  You can replace me with your own command.
+ * This class is used to move the robot backwards by setting the motors of each side of the driveTrain to reverse
  */
 public class DriveBackward extends Command {
 	private double time;
 	
+	/**
+	 * Sets the timeout of the command in seconds
+	 * 
+	 * @param time
+	 */
 	public DriveBackward(double time) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.driveTrain);
 		setTimeout(time);
 	}
 
-	// Called just before this Command runs the first time
+	/**
+	 *  Called just before this Command runs the first time
+	 */
 	@Override
 	protected void initialize() {
-//		this.setTimeout(this.time);
+		//this.setTimeout(this.time);
 	}
 
-	// Called repeatedly when this Command is scheduled to run
+	/**
+	 * Sets the left and right motors of the driveTrain to .3 (right is positive because it is orientated differently)
+	 */
 	@Override
 	protected void execute() {
 		Robot.driveTrain.drive_Left.set(-.3);
 		Robot.driveTrain.drive_Right.set(.3);
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
+	/**
+	 *  Make this return true when this Command no longer needs to run execute()
+	 *  
+	 *  @return true if the set time is out
+	 */
 	@Override
 	public boolean isFinished() {
 		return this.isTimedOut();
 	}
 
-	// Called once after isFinished returns true
+	/**
+	 *  Sets the right and left motors to 0
+	 */
 	@Override
 	protected void end() {
 		Robot.driveTrain.drive_Left.set(0);
 		Robot.driveTrain.drive_Right.set(0);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+	/**
+	 * Sets the right and left motors to 0
+	 */
 	@Override
 	protected void interrupted() {
 		end();

@@ -21,25 +21,34 @@ public class IntakeActivateOutSlow extends Command {
 	
 	double speed;
 	
+	/**
+	 * @param speed
+	 */
 	public IntakeActivateOutSlow(double speed) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.intakeSubsystem);
 		this.speed = speed;
 	}
 
-	// Called just before this Command runs the first time
+	/**
+	 *  Called just before this Command runs the first time
+	 */
 	@Override
 	protected void initialize() {
 		this.setInterruptible(true);
 	}
 
-	// Called repeatedly when this Command is scheduled to run
+	/**
+	 * Sets the intake motor speed to the value in the constructor
+	 */
 	@Override
 	protected void execute() {
 		Robot.intakeSubsystem.setSpeed(speed);
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
+	/**
+	 * @return true if the joystick button is released
+	 */
 	@Override
 	protected boolean isFinished() {
 		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_OUT_SLOW))
@@ -47,14 +56,17 @@ public class IntakeActivateOutSlow extends Command {
 		return false;
 	}
 
-	// Called once after isFinished returns true
+	/**
+	 * Sets the intake speed to 0
+	 */
 	@Override
 	protected void end() {
 		Robot.intakeSubsystem.setSpeed(0);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+	/**
+	 * Sets the intake speed to 0
+	 */
 	@Override
 	protected void interrupted() {
 		end();

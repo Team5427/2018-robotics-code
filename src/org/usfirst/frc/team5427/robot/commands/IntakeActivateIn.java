@@ -13,7 +13,8 @@ import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.NextLine;
 
 /**
- * This command simply sets the speed of the intake motors
+ * This command simply sets the speed of the intake motors 
+ * to the config value for speed (to pick up cubes).
  * 
  * @author Blake
  */
@@ -24,24 +25,26 @@ public class IntakeActivateIn extends Command
 	
 	public IntakeActivateIn()
 	{
-
 		// Use requires() here to declare subsystem dependencies
-//		Log.info("Intake being activated");
+		// Log.info("Intake being activated");
 		requires(Robot.intakeSubsystem);
 	}
 
-	// Called just before this Command runs the first time
+	/**
+	 *  Called just before this Command runs the first time
+	 */
 	@Override
 	protected void initialize()
 	{
-//		Log.info("Intake being initialized");
+		// Log.info("Intake being initialized");
 		this.setInterruptible(true);
 	}
 
 	
-	// Called repeatedly when this Command is scheduled to run
+	/**
+	 *  Sets the speed of the intake motor to the config value for speed
+	 */
 	@Override
-
 	protected void execute()
 	{
 //		Log.info("Intake being executed");
@@ -56,7 +59,9 @@ public class IntakeActivateIn extends Command
 //		}
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
+	/**
+	 * @return true when the intake button is released
+	 */
 	@Override
 	protected boolean isFinished()
 	{
@@ -65,14 +70,17 @@ public class IntakeActivateIn extends Command
 		return false;
 	}
 
-	// Called once after isFinished returns true
+	/**
+	 * Sets the intake motor to 0 speed
+	 */
 	@Override
 	protected void end() {
 		Robot.intakeSubsystem.setSpeed(0);
 	}
 	
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+	/**
+	 * Sets the intake motor to 0 speed
+	 */
 	@Override
 	protected void interrupted() {
 		end();
