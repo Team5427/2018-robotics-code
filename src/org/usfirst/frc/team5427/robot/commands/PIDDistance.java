@@ -31,11 +31,11 @@ public class PIDDistance extends PIDCommand {
 	double maximumSpeed;
 	private double out;
 	boolean b;
-	
-	//PID values for 20 inches
-	public static final double p20 = 0.02;	//.02
-	public static final double i20 = 0.00001;	//0
-	public static final double d20 = 0.002;	//0
+
+	// PID values for 20 inches
+	public static final double p20 = 0.02; // .02
+	public static final double i20 = 0.00001; // 0
+	public static final double d20 = 0.002; // 0
 
 	/**
 	 * Constructor for PIDDistance
@@ -51,14 +51,15 @@ public class PIDDistance extends PIDCommand {
 	 *            i, d - These receive the P, I, and D values for the PID
 	 *            Controller.
 	 */
-	public PIDDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgNot, double maximumSpeed, double desiredDistance, double p, double i, double d) {
+	public PIDDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgNot, double maximumSpeed,
+			double desiredDistance, double p, double i, double d) {
 		super(p, i, d, Config.PID_UPDATE_PERIOD); // TODO Change back to .02
 		this.desiredDistance = desiredDistance;
 		this.scgPIDControlled = scgPIDControlled;
 		this.maximumSpeed = maximumSpeed;
 		super.getPIDController().setOutputRange(-maximumSpeed, maximumSpeed);
 		super.getPIDController().setSetpoint(desiredDistance);
-		this.scgNot=scgNot;
+		this.scgNot = scgNot;
 		timer = new Timer();
 	}
 
@@ -70,15 +71,16 @@ public class PIDDistance extends PIDCommand {
 	@Override
 	protected void initialize() {
 		System.out.println("INITIALIZING PID DISTANCE");
-		
+
 		super.getPIDController().enable();
 		timerStarted = false;
-		b=true;
+		b = true;
 	}
 
-	public double getPIDOut()
-	{return out;}
-	
+	public double getPIDOut() {
+		return out;
+	}
+
 	/**
 	 * Command implemented from PIDCommand This returns the value to be used by the
 	 * PID loop. We are returning the distance traveled by the robot as measured by
@@ -93,32 +95,37 @@ public class PIDDistance extends PIDCommand {
 	 * Command implemented from PIDCommand This is sent the output from the PID loop
 	 * for us to use. We are setting the side of the robot that we control in this
 	 * PID loop to the output to travel a certain distance.
+	 * 
+	 * @param output
+	 *            - The output from the PID loop
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber("PID Output Coasting", output);
 		this.scgPIDControlled.pidWrite(output);
-		this.out=output;
-//		if(Math.abs(desiredDistance - Math.abs(Robot.encLeft.getDistance())) <= Config.PID_STRAIGHT_ACTIVATE_DISTANCE) {
-//			
-////			this.scgNot.set(output);
-//			System.out.print("Doing the 2nd pid output");
-//			this.scgPIDControlled.pidWrite(output);
-//			b=false;
-//		}
-//		else if(b) {
-////			this.scgNot.set(maximumSpeed);
-//			this.scgPIDControlled.pidWrite(maximumSpeed);
-//		}
-////		SmartDashboard.putNumber("SCGconstant", scgPIDControlled.get());
-//
-//		 if(this.returnPIDInput()>this.desiredDistance)
-//			 super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already set
-////		 if(this.returnPIDInput()>(this.desiredDistance*.75))
-////		 {
-////		 this.maximumSpeed*=0.95;
-//		 super.getPIDController().setOutputRange(-this.maximumSpeed,this.maximumSpeed);
-//		 }
+		this.out = output;
+		// if(Math.abs(desiredDistance - Math.abs(Robot.encLeft.getDistance())) <=
+		// Config.PID_STRAIGHT_ACTIVATE_DISTANCE) {
+		//
+		//// this.scgNot.set(output);
+		// System.out.print("Doing the 2nd pid output");
+		// this.scgPIDControlled.pidWrite(output);
+		// b=false;
+		// }
+		// else if(b) {
+		//// this.scgNot.set(maximumSpeed);
+		// this.scgPIDControlled.pidWrite(maximumSpeed);
+		// }
+		//// SmartDashboard.putNumber("SCGconstant", scgPIDControlled.get());
+		//
+		// if(this.returnPIDInput()>this.desiredDistance)
+		// super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already
+		// set
+		//// if(this.returnPIDInput()>(this.desiredDistance*.75))
+		//// {
+		//// this.maximumSpeed*=0.95;
+		// super.getPIDController().setOutputRange(-this.maximumSpeed,this.maximumSpeed);
+		// }
 	}
 
 	/*
@@ -136,12 +143,10 @@ public class PIDDistance extends PIDCommand {
 				timer.reset();
 				timer.start();
 				timerStarted = true;
-			}
-			else if (timer.get() > 0.5 && timerStarted) {
+			} else if (timer.get() > 0.5 && timerStarted) {
 				return true;
 			}
-		}
-		else {
+		} else {
 			timer.reset();
 			timerStarted = false;
 		}
@@ -182,6 +187,7 @@ public class PIDDistance extends PIDCommand {
 	 */
 	public double getDistance() {
 		return Math.abs(Robot.encLeft.getDistance());
-		//return (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0;
+		// return (Math.abs(Robot.encLeft.getDistance()) +
+		// Math.abs(Robot.encRight.getDistance())) / 2.0;
 	}
 }
