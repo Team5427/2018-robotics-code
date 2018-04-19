@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * 
  * NOT CURRENTLY FUNCTIONAL
  * 
- * @author Blake
+ * @author Andrew and Kipp
  */
 public class Left_ScaleAndSwitch extends AutoPath {
 	
