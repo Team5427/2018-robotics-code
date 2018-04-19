@@ -6,7 +6,7 @@ import org.usfirst.frc.team5427.util.SameLine;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * This is the base for all of our autonomous paths.
+ * This is the parent for all of our autonomous paths.
  * @author Blake
  */
 @SameLine
@@ -15,6 +15,8 @@ public class AutoPath extends Command {
 	/**
 	 * This is run periodically to check to see if
 	 * the command is finished.
+	 * 
+	 * @return false by default but can be modified in each child path.
 	 */
 	@Override
 	public boolean isFinished() {
@@ -22,8 +24,7 @@ public class AutoPath extends Command {
 	}
 
 	/**
-	 * This is run once when the command's is finished
-	 * returns true.
+	 * This is run once when the command is finished. 
 	 */
 	@Override
 	protected void end() {

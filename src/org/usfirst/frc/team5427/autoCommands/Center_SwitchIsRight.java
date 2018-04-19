@@ -10,90 +10,126 @@ import org.usfirst.frc.team5427.util.SameLine;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
+/**
+ * This is our autonomous path that starts in the center position
+ * and places one cube on the right side of the switch.
+ * 
+ * @author Blake
+ */
 @SameLine
 public class Center_SwitchIsRight extends AutoPath {
-	private PIDStraightMovement firstDistance,secondDistance;
+	
+	/**
+	 * The first distance of the path. It travels forward 110 inches at our short power.
+	 */
+	private PIDStraightMovement firstDistance;
+	
+	/**
+	 * The command that moves the elevator up to its middle position.
+	 */
 	private MoveElevatorAuto moveElevator;
+	
+	/**
+	 * The command used at the start of autonomous to drop the arms of the intake down.
+	 */
 	private Fidget fidget;
 	
-	//the start and current time of the auto path in seconds
-	private double startTime, currentTime;
+	/**
+	 * The starting time of the autonomous path.
+	 */
+	private double startTime;
 	
-	//Times TODO: test for times
-//	public static final double timeOut1 = 15;
+	/**
+	 * The current time during the autonomous path.
+	 */
+	private double currentTime;
 	
-	// Values for 72 inches.
-	public static final double p1 = 0.025; //.06
+	/**
+	 * The time, in seconds, that we manually end our autonomous path.
+	 */
+	public static final double timeOut = 13;
+	
+	/**********PID VALUES FOR 110 INCHES**********/
+	/**
+	 * P value for 110 inches.
+	 */
+	public static final double p1 = 0.025;
+	
+	/**
+	 * I value for 110 inches.
+	 */
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.12;//0.06; //.05
 	
-	//Values for 16 inches.
-	public static final double p2 = 0.016;
-	public static final double i2 = 0.0;
-	public static final double d2 = 0.006;
+	/**
+	 * D value for 110 inches.
+	 */
+	public static final double d1 = 0.12;
+	/*********************************************/
 	
+	/**
+	 * Stores whether or not the elevator has finished moving to its position.
+	 */
 	public boolean elevIsDone;
 
+	/**
+	 * Creates all of the paths involved in Center_SwitchIsRight and sets the timeout of the path.
+	 */
 	public Center_SwitchIsRight() {
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 110, p1, i1, d1); //106
-//		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 16, p2, i2, d2);
 		moveElevator = new MoveElevatorAuto(1);
-		
 		elevIsDone = false;
-		setTimeout(13.5);
+		setTimeout(timeOut);
 	}
 
-	// begins the command
+	/**
+	 * Run once when the command is started. Captures the starting time of the path, starts the first portion of it,
+	 * and states that the elevator has not finished moving to its position.
+	 */
 	public void initialize() {
-	
 		startTime = System.nanoTime()/1000000000.;
 		fidget.start();
 		elevIsDone= false;
 	}
 
-	// uses the previous commands being null to check if a certain command needs to
-	// be started or not
+	/**
+	 * Runs periodically while the command is not finished.
+	 * Used also to switch between commands at different points in our path.
+	 */
 	public void execute() {
 		currentTime = System.nanoTime()/1000000000.;
 
 		if(moveElevator != null)
 			moveElevator.isFinished();
-		//starts elevator raising when we are 0.5 sec. into auto
+		
 		if(currentTime-startTime>0.8&&!moveElevator.isRunning()&&!moveElevator.isFinished()) {
 			moveElevator.start();
 		}
 
-		
-		
-//		if (null != firstDistance && firstDistance.isFinished() && !(secondDistance.isRunning())) {
-//			System.out.println("Part 1 Done.");
-//			firstDistance.cancel();
-//			firstDistance = null;
-//			Robot.ahrs.reset();
-//			Robot.encLeft.reset();
-////			Robot.encRight.reset();
-//			secondDistance.start();
-//			moveElevator.start();
-//		}
 		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
-			System.out.println("Fidget Done.");
 			fidget.cancel();
 			fidget = null;
 			Robot.encLeft.reset();
-//			Robot.encRight.reset();
 			firstDistance.start();
 		}
 	}
 
+	/**
+	 * Runs periodically to check to see if the path can be finished.
+	 * 
+	 * @return	true when the path is finished or the path has timed out.
+	 */
 	@Override
 	public boolean isFinished() {
-		// returns if the last distance has finished and the robot has shot the box
 		if (firstDistance.isFinished())
 			return true;
 		return isTimedOut();
 	}
 
+	/**
+	 * Run once when isFinished() returns true.
+	 * Utilizes the end() of AutoPath to shoot out the box.
+	 */
 	@Override
 	protected void end() {
 		super.end();

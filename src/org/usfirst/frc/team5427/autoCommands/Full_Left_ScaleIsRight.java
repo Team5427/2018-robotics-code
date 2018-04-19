@@ -12,150 +12,214 @@ import org.usfirst.frc.team5427.util.SameLine;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
+/**
+ * This is our autonomous path that starts in the left position
+ * and places one cube on the right side of the scale.
+ * 
+ * @author Blake
+ */
 @SameLine
 public class Full_Left_ScaleIsRight extends AutoPath {
-	private PIDStraightMovement firstDistance, secondDistance, thirdDistance;//fourthDistance;
-	private PIDTurn fidgetSpinner, firstAngle, secondAngle;// thirdAngle;
+	
+	/**
+	 * The first distance of the path. It travels forward 212 inches at .7 power.
+	 */
+	private PIDStraightMovement firstDistance;
+	
+	/**
+	 * The second distance of the path. It travels forward 220 inches at .8 power.
+	 */
+	private PIDStraightMovement secondDistance;
+	
+	/**
+	 * The third distance of the path. It travels forward 25 inches at our long power.
+	 */
+	private PIDStraightMovement thirdDistance;
+	
+	/**
+	 * The turn on the path that orients the robot to the correct position in order to move straight.
+	 */
+	private PIDTurn fidgetAngle;
+	
+	/**
+	 * The first turn of the path. It turns 80 degrees clockwise.
+	 */
+	private PIDTurn firstAngle;
+	
+	/**
+	 * The second turn of the path. It turns 90 degrees counterclockwise.
+	 */
+	private PIDTurn secondAngle;
+	
+	/**
+	 * The command that moves the elevator up to its top position.
+	 */
 	private MoveElevatorAuto moveElevator;
+	
+	/**
+	 * The command used at the start of autonomous to drop the arms of the intake down.
+	 */
 	private Fidget fidget;
-	private double startTime, currentTime;
 	
-	//Times
-	public static final double timeOut1 = 20;
-	public static final double timeOut2 = 20;
-	public static final double timeOut3 = 20;
-	
-	// Values for 239 inches.
-	public static final double p1 = 0.0111;
-	public static final double i1 = 0.0;
-	public static final double d1 = 0.018;
-	
-	
-	// Values for 250 inches
-	public static final double p2 = 0.0111;
-	public static final double i2 = 0.0;
-	public static final double d2 = 0.018;
-	
-	// Values for 75 inches.
-	public static final double p3 = 0.025;
-	public static final double i3 = 0.0;
-	public static final double d3 = 0.01;
+	/**
+	 * The time, in seconds, that we manually end our autonomous path.
+	 */
+	public static final double timeOut = 15;
 
+	/**********PID VALUES FOR 212 INCHES**********/
+	/**
+	 * P value for 212 inches.
+	 */
+	public static final double p1 = 0.0111;
+	
+	/**
+	 * I value for 212 inches.
+	 */
+	public static final double i1 = 0.0;
+	
+	/**
+	 * D value for 212 inches.
+	 */
+	public static final double d1 = 0.018;
+	/*********************************************/
+	
+	/**********PID VALUES FOR 220 INCHES**********/
+	/**
+	 * P value for 220 inches.
+	 */
+	public static final double p2 = 0.0111;
+	
+	/**
+	 * I value for 220 inches.
+	 */
+	public static final double i2 = 0.0;
+	
+	/**
+	 * D value for 220 inches.
+	 */
+	public static final double d2 = 0.018;
+	/*********************************************/
+	
+	/**********PID VALUES FOR 25 INCHES**********/
+	/**
+	 * P value for 25 inches.
+	 */
+	public static final double p3 = 0.025;
+	
+	/**
+	 * I value for 25 inches.
+	 */
+	public static final double i3 = 0.0;
+	
+	/**
+	 * D value for 25 inches.
+	 */
+	public static final double d3 = 0.01;
+	/*********************************************/
+
+	/**
+	 * Creates all of the paths involved in Full_Left_ScaleIsRight.
+	 */
 	public Full_Left_ScaleIsRight() {
 		fidget = new Fidget();
-		fidgetSpinner = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -20);
+		fidgetAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -20);
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, .7, 212, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 80);
 		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, .8, 220, p2, i2, d2); // used to be 244
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90, 3);
 		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 25, p3, i3, d3);
-		//thirdAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -42);
-		//fourthDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 30, p1, i1, d1);
 		moveElevator = new MoveElevatorAuto(2);
 	}
 
-	// begins the command
+	/**
+	 * Run once when the command is started. Starts the first portion of the path and sets the timeout of the path.
+	 */
 	public void initialize() {
-		startTime = System.nanoTime()/1000000000.;
 		fidget.start();
+		setTimeout(timeOut);
 	}
 
-	// uses the previous commands being null to check if a certain command needs to
-	// be started or not
+	/**
+	 * Runs periodically while the command is not finished.
+	 * Used also to switch between commands at different points in our path.
+	 */
 	public void execute() {
-		currentTime = System.nanoTime()/1000000000;
-		// If firstDistance, first angle are all null and secondDistance isFinished &&
-		// not null
-		// and the secondAngle Command is not running, run the secondAngle Command
+		
 		if(moveElevator != null)
 			moveElevator.isFinished();
 		
-		// If firstDistance, first angle, and secondDistance are all null and
-		// SecondAngle isFinished
-		// and the thirdDistance Command is not running, run the thirdDistance Command
 		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null != secondAngle && secondAngle.isFinished() && moveElevator.maxHeightReached()&& !(thirdDistance.isRunning())) {
-			System.out.println("Part 4 Done.");
 			secondAngle.cancel();
 			secondAngle = null;
 			Robot.ahrs.reset();
 			thirdDistance.start();
-
 		}
 		
-		else if ((null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning()) || currentTime - startTime > timeOut2) {
-			System.out.println("Part 3 Done.");
+		else if ((null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning())) {
 			secondDistance.cancel();
 			secondDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-//			Robot.encRight.reset();
 			moveElevator.start();
-
 			secondAngle.start();
 		}
 		
-		// If firstDistance is null and firstAngle isFinished && not null
-		// and the secondDistance Command is not running, run the secondDistance Command
 		else if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !secondDistance.isRunning()) {
-			System.out.println("Part 2 Done.");
 			firstAngle.cancel();
 			firstAngle = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-//			Robot.encRight.reset();
-
 			secondDistance.start();
 		}
 		
-		// If firstDistance is NOT null and firstDistance isFinished
-		// and the firstAngle Command is not running, run the firstAngle Command
 		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
-			System.out.println("Part 1 Done.");
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-//			Robot.encRight.reset();
 			firstAngle.start();
 		}
-		else if(null == fidget && null != fidgetSpinner && fidgetSpinner.isFinished() && !(firstDistance.isRunning())) {
-			System.out.println("Prelim Angle Done.");
-			fidgetSpinner.cancel();
-			fidgetSpinner = null;
+		else if(null == fidget && null != fidgetAngle && fidgetAngle.isFinished() && !(firstDistance.isRunning())) {
+			fidgetAngle.cancel();
+			fidgetAngle = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-//			Robot.encRight.reset();
-//			new MoveElevatorAuto(1).start();
 			firstDistance.start();
 		}
-		else if(null != fidget && fidget.isFinished() && !(fidgetSpinner.isRunning())) {
-			System.out.println("Fidget Done.");
+		
+		else if(null != fidget && fidget.isFinished() && !(fidgetAngle.isRunning())) {
 			fidget.cancel();
 			fidget = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-//			Robot.encRight.reset();
-			fidgetSpinner.start();
+			fidgetAngle.start();
 		}
 	}
 
+	/**
+	 * Runs periodically to check to see if the path can be finished.
+	 * 
+	 * @return	true when the path is finished or the path has timed out.
+	 */
 	@Override
 	public boolean isFinished() {
-		// returns if the last distance has finished and the robot has shot the box
 		if (secondAngle == null && thirdDistance.isFinished())
 			return true;
-		return false;
+		return isTimedOut();
 	}
 
+	/**
+	 * Run once the isFinished() returns true.
+	 * Cancels the moving of the elevator, and, if the path is finished,
+	 * it shoots out the cube and backs up.
+	 */
 	@Override
 	protected void end() {
 		moveElevator.cancel();
 		if(isFinished())
 		{
-		new AutoOutGo().start();
-		new DriveBackward(2).start();
+			new AutoOutGo().start();
+			new DriveBackward(2).start();
 		}
-//		super.end();
 	}
-
 }

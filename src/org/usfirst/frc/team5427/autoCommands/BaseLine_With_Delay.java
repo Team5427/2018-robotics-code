@@ -47,6 +47,7 @@ public class BaseLine_With_Delay extends AutoPath {
 	 */
 	private double currentTime;
 	
+	/**********PID VALUES FOR 110 INCHES**********/
 	/**
 	 * P value for 110 inches.
 	 */
@@ -61,7 +62,7 @@ public class BaseLine_With_Delay extends AutoPath {
 	 * D value for 110 inches.
 	 */
 	public static final double d1 = 0.12;
-	
+	/*********************************************/
 	
 	/**
 	 * Stores whether the elevator is done moving upward.
@@ -98,50 +99,47 @@ public class BaseLine_With_Delay extends AutoPath {
 		elevIsDone= false;
 	}
 
-	// uses the previous commands being null to check if a certain command needs to
-	// be started or not
+	/**
+	 * Runs periodically while the command is not finished.
+	 * Used also to switch between commands at different points in our path.
+	 */
 	public void execute() {
 		currentTime = System.nanoTime()/1000000000.;
 
 		if(moveElevator != null)
 			moveElevator.isFinished();
-		//starts elevator raising when we are 0.5 sec. into auto
+		
 		if(currentTime-startTime>0.8&&!moveElevator.isRunning()&&!moveElevator.isFinished()) {
 			moveElevator.start();
 		}
 
-		
-		
-//		if (null != firstDistance && firstDistance.isFinished() && !(secondDistance.isRunning())) {
-//			System.out.println("Part 1 Done.");
-//			firstDistance.cancel();
-//			firstDistance = null;
-//			Robot.ahrs.reset();
-//			Robot.encLeft.reset();
-////			Robot.encRight.reset();
-//			secondDistance.start();
-//			moveElevator.start();
-//		}
 		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())&&currentTime-startTime>10) {
 			System.out.println("Fidget Done.");
 			fidget.cancel();
 			fidget = null;
 			Robot.encLeft.reset();
-//			Robot.encRight.reset();
 			firstDistance.start();
 		}
 	}
 
+	/**
+	 * Runs periodically to check to see if the path can be finished.
+	 * 
+	 * @return	true when the path is finished or the path has timed out.
+	 */
 	@Override
 	public boolean isFinished() {
-		// returns if the last distance has finished and the robot has shot the box
 		if (firstDistance.isFinished())
 			return true;
 		return isTimedOut();
 	}
 
+	/**
+	 * Run once isFinished() returns true.
+	 * Typically used in an auto path to shoot out the box at the end of it.
+	 */
 	@Override
 	protected void end() {
-//		super.end();
+		
 	}
 }
