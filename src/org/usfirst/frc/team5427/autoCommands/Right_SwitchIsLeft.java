@@ -7,57 +7,114 @@ import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
 import org.usfirst.frc.team5427.robot.commands.PIDTurn;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
-
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-
 /**
+ * This is our autonomous path that starts in the right position and places one
+ * cube on the left side of the switch.
  * 
- * Autonomous function for when the robot is on the right and the switch is on the left
- * 
- * @author Blake
+ * @author Blake Romero
  */
-
-
 @SameLine
 public class Right_SwitchIsLeft extends AutoPath {
-	private PIDStraightMovement firstDistance, secondDistance, thirdDistance;
-	private PIDTurn firstAngle, secondAngle;
-	private MoveElevatorAuto moveElevator;
-	private Fidget fidget;
-	private double startTime, currentTime;
-	
+
 	/**
-	 * Time outs
+	 * The first distance of the path. It travels 25 inches forward at our short
+	 * power.
 	 */
-	public static final double timeOut1 = 15;
-	public static final double timeOut2 = 15;
-	public static final double timeOut3 = 13;
-	
+	private PIDStraightMovement firstDistance;
+
 	/**
-	 * Values for 18 inches
+	 * The second distance of the path. It travels 171 inches forward at our long
+	 * power.
+	 */
+	private PIDStraightMovement secondDistance;
+
+	/**
+	 * The third distance of the path. It travels 75 inches forward at our short
+	 * power.
+	 */
+	private PIDStraightMovement thirdDistance;
+
+	/**
+	 * The first turn of the path. It turns 80 degrees clockwise.
+	 */
+	private PIDTurn firstAngle;
+
+	/**
+	 * The second turn of the path. It turns 80 degrees counterclockwise.
+	 */
+	private PIDTurn secondAngle;
+
+	/**
+	 * The command that moves the elevator up to its top position.
+	 */
+	private MoveElevatorAuto moveElevator;
+
+	/**
+	 * The command used at the start of autonomous to drop the arms of the intake
+	 * down.
+	 */
+	private Fidget fidget;
+
+	/**
+	 * The time, in seconds, that we manually end our autonomous path.
+	 */
+	public static final double timeOut = 15;
+
+	/********** PID VALUES FOR 18 INCHES **********/
+	/**
+	 * P value for 18 inches.
 	 */
 	public static final double p1 = 0.02;
-	public static final double i1 = 0.0;
-	public static final double d1 = 0.0;
-	
+
 	/**
-	 * Values for 118 inches
+	 * I value for 18 inches.
+	 */
+	public static final double i1 = 0.0;
+
+	/**
+	 * D value for 18 inches.
+	 */
+	public static final double d1 = 0.0;
+	/*********************************************/
+
+	/********** PID VALUES FOR 176 INCHES **********/
+	/**
+	 * P value for 176 inches.
 	 */
 	public static final double p2 = 0.031;
-	public static final double i2 = 0.0;
-	public static final double d2 = 0.08;
-	
+
 	/**
-	 * Values for 70 inches
+	 * I value for 176 inches.
+	 */
+	public static final double i2 = 0.0;
+
+	/**
+	 * D value for 176 inches.
+	 */
+	public static final double d2 = 0.08;
+	/*********************************************/
+
+	/********** PID VALUES FOR 70 INCHES **********/
+	/**
+	 * P value for 70 inches.
 	 */
 	public static final double p3 = 0.025;
-	public static final double i3 = 0.0;
-	public static final double d3 = 0.06;
 
-	
 	/**
-	 * Creates all of the PID commands
+	 * I value for 70 inches.
+	 */
+	public static final double i3 = 0.0;
+
+	/**
+	 * D value for 70.
+	 */
+	public static final double d3 = 0.06;
+	/*********************************************/
+
+	/**
+	 * Creates all of the paths involved in Right_SwitchIsLeft.
 	 */
 	public Right_SwitchIsLeft() {
 		fidget = new Fidget();
@@ -70,25 +127,23 @@ public class Right_SwitchIsLeft extends AutoPath {
 	}
 
 	/**
-	 * Begins the command
+	 * Run once when the command is started. Starts the first portion of the path
+	 * and sets the timeout of it.
 	 */
 	public void initialize() {
-		startTime = System.nanoTime()/1000000000.;
 		fidget.start();
+		setTimeout(timeOut);
 	}
 
 	/**
-	 * uses the previous commands being null to check if a certain command needs to
-	 * be started or not
+	 * Runs periodically while the command is not finished. Used also to switch
+	 * between commands at different points in our path.
 	 */
 	public void execute() {
-		currentTime = System.nanoTime()/1000000000.;
 
-		if(moveElevator != null)
-			moveElevator.isFinished();
-		
+		if (moveElevator != null) moveElevator.isFinished();
+
 		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null != secondAngle && secondAngle.isFinished() && !(thirdDistance.isRunning())) {
-			System.out.println("Part 4 Done.");
 			secondAngle.cancel();
 			secondAngle = null;
 			Robot.ahrs.reset();
@@ -96,18 +151,16 @@ public class Right_SwitchIsLeft extends AutoPath {
 			moveElevator.start();
 			thirdDistance.start();
 		}
-		
-		else if ((null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && ((secondDistance.isFinished() && !secondAngle.isRunning())) || (currentTime - startTime) > timeOut2)) {
-			System.out.println("Part 3 Done.");
+
+		else if ((null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && ((secondDistance.isFinished() && !secondAngle.isRunning())))) {
 			secondDistance.cancel();
 			secondDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			secondAngle.start();
 		}
-		
+
 		else if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !secondDistance.isRunning()) {
-			System.out.println("Part 2 Done.");
 			firstAngle.cancel();
 			firstAngle = null;
 			Robot.ahrs.reset();
@@ -115,17 +168,15 @@ public class Right_SwitchIsLeft extends AutoPath {
 			secondDistance.start();
 		}
 
-		else if ((null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) || (currentTime - startTime) > timeOut1) {
-			System.out.println("Part 1 Done.");
+		else if ((null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning()))) {
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			firstAngle.start();
 		}
-		
+
 		else if ((null != fidget && fidget.isFinished() && !(firstDistance.isRunning()))) {
-			System.out.println("Fidget Done.");
 			fidget.cancel();
 			fidget = null;
 			Robot.ahrs.reset();
@@ -135,17 +186,19 @@ public class Right_SwitchIsLeft extends AutoPath {
 	}
 
 	/**
-	 * @return whether or not the last distance has finished and the robot has launched the box
+	 * Runs periodically to check to see if the path can be finished.
+	 * 
+	 * @return true when the path is finished or the path has timed out.
 	 */
 	@Override
 	public boolean isFinished() {
-		if (secondAngle == null && (thirdDistance.isFinished() || (currentTime - startTime) > timeOut3))
-			return true;
-		return false;
+		if (secondAngle == null && (thirdDistance.isFinished())) return true;
+		return isTimedOut();
 	}
-	
+
 	/**
-	 * Ends autonomous and switches to teleop
+	 * Run once when isFinished() returns true. Utilizes the end() of AutoPath to
+	 * shoot out the box.
 	 */
 	@Override
 	protected void end() {

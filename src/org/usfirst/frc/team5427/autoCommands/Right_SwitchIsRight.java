@@ -7,98 +7,112 @@ import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
 import org.usfirst.frc.team5427.robot.commands.PIDTurn;
 import org.usfirst.frc.team5427.util.Config;
-
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-
 /**
+ * This is our autonomous path that starts in the right position and places one
+ * cube on the right side of the switch.
  * 
- * Autonomous function for when the robot is on the right and the switch is also on the right
- * 
- * @author Robotics
+ * @author Blake Romero
  */
 
 public class Right_SwitchIsRight extends AutoPath {
-	
+
 	/**
-	 * Takes the robot through its first and second distances traveled
+	 * The first distance of the path. It travels 154 inches forward at our short
+	 * power.
 	 */
-	private PIDStraightMovement firstDistance, secondDistance;
-	
+	private PIDStraightMovement firstDistance;
+
 	/**
-	 * Turns the robot in its first angle
+	 * The second distance of the path. It travels 16 inches forward at our short
+	 * power.
+	 */
+	private PIDStraightMovement secondDistance;
+
+	/**
+	 * The first turn of the path. It turns 90 degrees clockwise.
 	 */
 	private PIDTurn firstAngle;
-	
+
 	/**
-	 * Moves the elevator
+	 * The command that moves the elevator up to its top position.
 	 */
 	private MoveElevatorAuto moveElevator;
-	
+
 	/**
-	 * Fidgets the robot
+	 * The command used at the start of autonomous to drop the arms of the intake
+	 * down.
 	 */
 	private Fidget fidget;
-	
-	/**
-	 * the start and current time of the auto path in seconds
-	 */
-	private double startTime, currentTime;
-	
 
 	/**
-	 * Time outs
+	 * The time, in seconds, that we manually end our autonomous path.
 	 */
-	public static final double timeOut1 = 15;
-	public static final double timeOut2 = 15;
+	public static final double timeOut = 15;
+
+	/********** PID VALUES FOR 154 INCHES **********/
+	/**
+	 * P value for 154 inches.
+	 */
+	public static final double p1 = 0.0105;
 
 	/**
-	 * Values for 154 inches
+	 * I value for 154 inches.
 	 */
-	public static final double p1 = 0.0105; //0.0188
 	public static final double i1 = 0.0;
-	public static final double d1 = 0.008;
-	
+
 	/**
-	 * Values for 16 inches
+	 * D value for 154 inches.
 	 */
-	public static final double p2 = 0.016;
-	public static final double i2 = 0.0;
-	public static final double d2 = 0.006;
-	
-	
+	public static final double d1 = 0.008;
+	/*********************************************/
+
+	/********** PID VALUES FOR 16 INCHES **********/
 	/**
-	 * Creates all of the PID commands
+	 * P value for 16 inches.
+	 */
+	public static final double p2 = 0.013;
+
+	/**
+	 * I value for 16 inches.
+	 */
+	public static final double i2 = 0.0;
+
+	/**
+	 * D value for 16 inches.
+	 */
+	public static final double d2 = 0.006;
+	/*********************************************/
+
+	/**
+	 * Creates all of the path involved in Right_SwitchIsRight
 	 */
 	public Right_SwitchIsRight() {
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 154, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
 		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 28, p2, i2, d2);
-		moveElevator = new MoveElevatorAuto(1); // 1 for switch
+		moveElevator = new MoveElevatorAuto(1);
 	}
 
 	/**
-	 * Begins the command
+	 * Run once when the command is started. Starts the first portion of the path
+	 * and sets the timeout of it.
 	 */
 	public void initialize() {
-		startTime = System.nanoTime()/1000000000.;
-		fidget.start();		
+		fidget.start();
+		setTimeout(timeOut);
 	}
 
-	
 	/**
-	 * uses the previous commands being null to check if a certain command needs to
-	 * be started or not
+	 * Runs periodically while the command is not finished. Used also to switch
+	 * between commands at different points in our path.
 	 */
 	public void execute() {
-		currentTime = System.nanoTime()/1000000000.;
+		if (moveElevator != null) moveElevator.isFinished();
 
-		if(moveElevator != null)
-			moveElevator.isFinished();
-		
 		if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !(secondDistance.isRunning())) {
-			System.out.println("Part 2 Done.");
 			firstAngle.cancel();
 			firstAngle = null;
 			Robot.ahrs.reset();
@@ -106,18 +120,16 @@ public class Right_SwitchIsRight extends AutoPath {
 			moveElevator.start();
 			secondDistance.start();
 		}
-		
-		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning()) || currentTime - startTime > timeOut1) {
-			System.out.println("Part 1 Done.");
+
+		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			firstAngle.start();
 		}
-		
-		else if(null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
-			System.out.println("Fidget Done.");
+
+		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
 			fidget.cancel();
 			fidget = null;
 			Robot.encLeft.reset();
@@ -126,18 +138,20 @@ public class Right_SwitchIsRight extends AutoPath {
 	}
 
 	/**
-	 * @return whether or not the last distance has finished and the robot has launched the box
+	 * Runs periodically to check to see if the path can be finished.
+	 * 
+	 * @return true when the path is finished or the path has timed out.
 	 */
 	@Override
 	public boolean isFinished() {
-		if (firstAngle == null && secondDistance.isFinished() || currentTime - startTime > timeOut2)
-			return true;
+		if (firstAngle == null && secondDistance.isFinished()) return true;
 		return false;
-		
+
 	}
-	
+
 	/**
-	 * Ends autonomous and switches to teleop
+	 * Run once when isFinished() returns true. Utilizes the end() of AutoPath to
+	 * shoot out the box.
 	 */
 	@Override
 	protected void end() {

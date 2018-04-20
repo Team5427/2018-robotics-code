@@ -9,113 +9,117 @@ import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
 import org.usfirst.frc.team5427.robot.commands.PIDTurn;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
-
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
+/**
+ * This is our autonomous path that starts in the right position and moves and
+ * turns 90 degrees towards the left side of the scale.
+ * 
+ * @author Blake Romero
+ */
 @SameLine
 public class Right_ScaleIsLeft extends AutoPath {
-	private PIDStraightMovement firstDistance;//fourthDistance;
-	private PIDTurn firstAngle;// thirdAngle;
-	private Fidget fidget;
-	private double startTime, currentTime;
-	
-	//Times
-	public static final double timeOut1 = 20;
-	public static final double timeOut2 = 20;
-	public static final double timeOut3 = 20;
-	
-	// Values for 239 inches.
-	public static final double p1 = 0.0111;
-	public static final double i1 = 0.0;
-	public static final double d1 = 0.018;
-	
-	
-	// Values for 250 inches
-	public static final double p2 = 0.0111;
-	public static final double i2 = 0.0;
-	public static final double d2 = 0.018;
-	
-	// Values for 75 inches.
-	public static final double p3 = 0.025;
-	public static final double i3 = 0.0;
-	public static final double d3 = 0.01;
 
+	/**
+	 * The first distance of the path. It travels 224 inches forward at .7 power.
+	 */
+	private PIDStraightMovement firstDistance;
+
+	/**
+	 * The first turn of the path. It turns 88 degrees counterclockwise.
+	 */
+	private PIDTurn firstAngle;
+
+	/**
+	 * The command used at the start of autonomous to drop the arms of the intake
+	 * down.
+	 */
+	private Fidget fidget;
+
+	/**
+	 * The time, in seconds, that we manually end our autonomous path.
+	 */
+	public static final double timeOut = 15;
+
+	/********** PID VALUES FOR 224 INCHES **********/
+	/**
+	 * P value for 224 inches.
+	 */
+	public static final double p1 = 0.0111;
+
+	/**
+	 * I value for 224 inches.
+	 */
+	public static final double i1 = 0.0;
+
+	/**
+	 * D value for 224 inches.
+	 */
+	public static final double d1 = 0.018;
+	/*********************************************/
+
+	/**
+	 * Creates all of the paths involved in Right_ScaleIsLeft.
+	 */
 	public Right_ScaleIsLeft() {
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, .7, 224, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -88);
-		//thirdAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -42);
-		//fourthDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 30, p1, i1, d1);
 	}
 
-	// begins the command
+	/**
+	 * Run once when the command is started. Starts the first portion of the path
+	 * and sets the timeout of the path.
+	 */
 	public void initialize() {
-		startTime = System.nanoTime()/1000000000.;
 		fidget.start();
+		setTimeout(timeOut);
 	}
 
-	// uses the previous commands being null to check if a certain command needs to
-	// be started or not
+	/**
+	 * Runs periodically while the command is not finished. Used also to switch
+	 * between commands at different points in our path.
+	 */
 	public void execute() {
-		currentTime = System.nanoTime()/1000000000;
-		// If firstDistance, first angle are all null and secondDistance isFinished &&
-		// not null
-		// and the secondAngle Command is not running, run the secondAngle Command
-	
-		
-		// If firstDistance, first angle, and secondDistance are all null and
-		// SecondAngle isFinished
-		// and the thirdDistance Command is not running, run the thirdDistance Command
-		
-		// If firstDistance is null and firstAngle isFinished && not null
-		// and the secondDistance Command is not running, run the secondDistance Command
-		if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() ) {
-			System.out.println("Part 2 Done.");
+		if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished()) {
 			firstAngle.cancel();
 			firstAngle = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-//			Robot.encRight.reset();
 		}
-		// If firstDistance is NOT null and firstDistance isFinished
-		// and the firstAngle Command is not running, run the firstAngle Command
+
 		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
-			System.out.println("Part 1 Done.");
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-//			Robot.encRight.reset();
 			firstAngle.start();
 		}
-		else if(null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
-			System.out.println("Fidget Done.");
+
+		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
 			fidget.cancel();
 			fidget = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-//			Robot.encRight.reset();
 			firstDistance.start();
 		}
 	}
 
+	/**
+	 * Runs periodically to check to see if the path can be finished.
+	 * 
+	 * @return true when the path has finished or the path has timed out.
+	 */
 	@Override
 	public boolean isFinished() {
-		// returns if the last distance has finished and the robot has shot the box
-		if (firstAngle==null)
-			return true;
-		return false;
+		if (firstAngle == null) return true;
+		return isTimedOut();
 	}
 
+	/**
+	 * Run once the isFinished() returns true.
+	 */
 	@Override
-	protected void end() {
-//		firstAngle.cancel();
-//		if(isFinished())
-//		{
-//		new AutoOutGo().start();
-//		new DriveBackward(2).start();
-//		}
-//		super.end();
-	}
+	protected void end() {}
 
 }
