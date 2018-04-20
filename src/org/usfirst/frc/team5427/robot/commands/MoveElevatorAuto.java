@@ -29,11 +29,11 @@ public class MoveElevatorAuto extends Command {
 		this.height = height;
 //		timer = new Timer();
 		if(1==height)
-			this.setTimeout(Config.ELEVATOR_TIME_SWITCH);
+			this.setTimeout(Config.ELEVATOR_TIMEOUT_SWITCH);
 		else if(2==height)
-			this.setTimeout(Config.ELEVATOR_TIME_SCALE);
+			this.setTimeout(Config.ELEVATOR_TIMEOUT_SCALE);
 		else if(3 == height)
-			this.setTimeout(Config.ELEVATOR_TIME_SCALE_DOWN);
+			this.setTimeout(Config.ELEVATOR_TIMEOUT_SCALE_DOWN);
 		
 		//requires(Robot.kExampleSubsystem);
 	}

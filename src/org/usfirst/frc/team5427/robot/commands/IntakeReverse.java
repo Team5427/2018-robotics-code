@@ -32,7 +32,7 @@ public class IntakeReverse extends Command
 	protected void initialize()
 	{
 	
-		Robot.intakeSubsystem.setSpeed(Config.INTAKE_MOTOR_SPEED_REVERSE);
+		Robot.intakeSubsystem.setSpeed(Config.INTAKE_MOTOR_SPEED_OUT);
 		
 //		if(Robot.oi.joy1.getY()<0) {
 //			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getY()*Config.INTAKE_FORWARD);
