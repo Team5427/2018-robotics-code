@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * This command moves the robot forwards 224 inches.
- * Used in the Left_ScaleIsRight command.
+ * This command moves the robot forwards 16 inches.
+ * Used in the Left_SwitchIsLeft command.
  * 
  * @author Andrew Li
  */
-public class Left_ScaleIsRight_FirstDistance extends PIDCommand {
+public class Left_SwitchIsLeft_SecondDistance extends PIDCommand {
 
 	/**
 	 * PIDCommand created to control distance after we have reached the maximum
@@ -83,17 +83,17 @@ public class Left_ScaleIsRight_FirstDistance extends PIDCommand {
 	 *            the side of the robot that we will control with the PIDDistance
 	 *            command.
 	 */
-	public Left_ScaleIsRight_FirstDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant) {
+	public Left_SwitchIsLeft_SecondDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant) {
 		super(Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, Config.PID_UPDATE_PERIOD);
 
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgNot = scgConstant;
-		maximumSpeed = 0.7;
-		desiredDistance = 224;
+		maximumSpeed = Config.PID_STRAIGHT_POWER_SHORT;
+		desiredDistance = 16;
 		
-		p = 0.0111;
+		p = 0.013;
 		i = 0;
-		d = 0.018;
+		d = 0.006;
 		
 		this.setInterruptible(true);
 		this.getPIDController().setSetpoint(0);
