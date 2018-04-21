@@ -17,64 +17,76 @@ import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.NextLine;
 
 /**
- * @author Blake This command
+ * @author Blake Romero Command
+ * @author Akshat Jain Commenting
  */
 
 @NextLine
 public class MoveElevatorUp extends Command {
-
+	
+	/**
+	 * Makes MoveElevatorUp object.
+	 * 
+	 * Moves the elevator up until button has stop being pressed
+	 * Or upper limit switch is pressed.
+	 */
 	public MoveElevatorUp() {
-//		requires(Robot.driveTrain);
+
 	}
 
-	// Called just before this Command runs the first time
+	/*
+	 * Sets the elevator motor to .8 speed up.
+	 * @see edu.wpi.first.wpilibj.command.Command#initialize()
+	 */
 	@Override
 	protected void initialize() {
-		x=0;
-//		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
 		this.setInterruptible(true);
+		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
 	}
-	int x =0;
 
-	// Called repeatedly when this Command is scheduled to run
+
+	/**
+	 * Scheduler continually calls this method.
+	 * Does not do anything.
+	 * @see edu.wpi.first.wpilibj.command.Command#execute()
+	 */
 	@Override
 	protected void execute() {
-		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
-		SmartDashboard.putNumber("x", ++x);
-//		if(isFinished())
-//			SmartDashboard.putNumber("a", 1 );
-//		else
-//			SmartDashboard.putNumber("a", 0 );
-
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
+	/**
+	 * If upper limit switch is true,
+	 * the robot is at its full height.
+	 * Method returns true and calls end()
+	 * @see edu.wpi.first.wpilibj.command.Command#isFinished()
+	 */
 	@Override
 	public boolean isFinished() {
-//		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_ELEVATOR_UP))
-//		{
-//			SmartDashboard.putNumber("x", 55);
-//			return true;
-//		}
+
 		if(!Robot.elevatorLimitSwitchUp.get())
 		{
-			SmartDashboard.putNumber("x", 99);	
 			return true;
-
 		}
-		return false;
+		else {
+			return false;
+		}
 	}
-
-	// Called once after isFinished returns true
+	
+	/**
+	 * Stops the motion of the Elevator.
+	 * When isFinished returns true
+	 * Or command is interrupted.
+	 * @see edu.wpi.first.wpilibj.command.Command#end()
+	 */
 	@Override
 	protected void end() {
 		Robot.motorPWM_Elevator.set(0);
-//		Robot.elevatorLimitSwitchUp.free();
-//		Robot.elevatorLimitSwitchUp = new DigitalInput(Config.ELEVATOR_LIMIT_SWITCH_UP);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+	/**
+	 * Ends command when command is interrupted
+	 * @see edu.wpi.first.wpilibj.command.Command#interrupted()
+	 */
 	@Override
 	protected void interrupted() {
 		end();
