@@ -14,7 +14,7 @@ import org.usfirst.frc.team5427.util.Config;
 /**
  * Tilts the intake either up or down, and stops after a timeout set in config.
  * 
- * @author Akshat Jain This command
+ * @author Akshat Jain
  */
 public class TiltIntake_TimeOut extends Command {
 	

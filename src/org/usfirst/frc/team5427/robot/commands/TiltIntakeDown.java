@@ -16,7 +16,7 @@ import org.usfirst.frc.team5427.util.NextLine;
 /**
  * Manually tilts the intake down
  * 
- * @author Blake Romero This command
+ * @author Blake Romero
  */
 
 @NextLine

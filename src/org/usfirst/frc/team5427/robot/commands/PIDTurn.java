@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * This command will cause the robot to turn to an exact degree value using the
  * PID Loop TODO add a ramping function
  * 
- * @author Ethan, Varsha
+ * @author Ethan Bennikutty, Varsha Kumar
  */
 @SameLine
 public class PIDTurn extends PIDCommand {
