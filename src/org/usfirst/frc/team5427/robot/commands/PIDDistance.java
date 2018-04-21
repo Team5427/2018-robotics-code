@@ -127,7 +127,7 @@ public class PIDDistance extends PIDCommand {
 	 * certain distance, with our tolerance.
 	 */
 	@Override
-	protected boolean isFinished() {
+	public boolean isFinished() {
 		// TODO NOT untested !
 		double distFromSetpoint = Math.abs(desiredDistance - (Math.abs(Robot.encLeft.getDistance())));
 		boolean inRange = distFromSetpoint < Config.PID_STRAIGHT_TOLERANCE;

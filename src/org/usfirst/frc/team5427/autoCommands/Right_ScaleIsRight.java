@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 @SameLine
 public class Right_ScaleIsRight extends AutoPath {
-	private PIDStraightMovement firstDistance;
+	private Right_ScaleIsRight_FirstDistance firstDistance;
 	DriveForward secondDistance;
 	private PIDTurn firstAngle;
 	private MoveElevatorAuto moveElevator;
@@ -38,7 +38,7 @@ public class Right_ScaleIsRight extends AutoPath {
 	
 	public Right_ScaleIsRight() {
 		fidget = new Fidget();
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 250, p1, i1, d1);
+		firstDistance = new Right_ScaleIsRight_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -51);
 		secondDistance = new DriveForward(.7);
 		moveElevator = new MoveElevatorAuto(2);
