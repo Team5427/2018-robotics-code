@@ -15,59 +15,39 @@ import org.usfirst.frc.team5427.util.NextLine;
 
 /**
  * This command simply sets the speed of the intake motors 
- * to the config value for speed (to shoot out cubes).
+ * to the config value for speed (to shoot out cubes). Runs
+ * while the outtake button is held down.
  * 
- * @author Blake
+ * @author Blake Romero
  */
 
-@NextLine
-public class IntakeActivateOut extends Command
-{
+public class IntakeActivateOut extends Command {
 	
-	public IntakeActivateOut()
-	{
-
-		// Use requires() here to declare subsystem dependencies
-//		Log.info("Intake being activated");
+	public IntakeActivateOut() {
 		requires(Robot.intakeSubsystem);
 	}
 
-	/**
-	 *  Called just before this Command runs the first time
-	 */
+	// Called just before this Command runs the first time
 	@Override
-	protected void initialize()
-	{
-//		Log.info("Intake being initialized");
+	protected void initialize() {
 		this.setInterruptible(true);
 	}
 
 	
 	/**
-	 *  Sets the speed of the intake motor to the config value for speed (reverse direction to shoot out cubes)
+	 *  Sets the speed of the intake motor to a negative value to the 
+	 *  config value for speed (to shoot out cubes).
 	 */
 	@Override
-	protected void execute()
-	{
-//		Log.info("Intake being executed");
-//		if(Robot.motorPWM_Intake_Left.get)
+	protected void execute() {
 		Robot.intakeSubsystem.setSpeed(Config.INTAKE_MOTOR_SPEED_OUT);
-//		if(Robot.oi.joy1.getThrottle()<0) {
-//			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
-//			Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle());
-//		}
-//		else {
-//			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
-//			Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle());
-//		}
 	}
 
 	/**
-	 * @return true when the outtake button is released
+	 * @return true when the intake out button is released
 	 */
 	@Override
-	protected boolean isFinished()
-	{
+	protected boolean isFinished() {
 		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_OUT))
 			return true;
 		return false;
@@ -79,7 +59,6 @@ public class IntakeActivateOut extends Command
 	@Override
 	protected void end() {
 		Robot.intakeSubsystem.setSpeed(0);
-//		this.free();
 	}
 
 	/**
@@ -87,7 +66,6 @@ public class IntakeActivateOut extends Command
 	 */
 	@Override
 	protected void interrupted() {
-//		Log.info("END TO INTAKE INTERRUPTED");
 		end();
 	}
 }
