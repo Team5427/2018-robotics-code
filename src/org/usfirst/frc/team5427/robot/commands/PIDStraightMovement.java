@@ -83,16 +83,11 @@ public class PIDStraightMovement extends PIDCommand {
 		this.p = p;
 		this.i = i;
 		this.d = d;
-//		this.getPIDController().setOutputRange(-maximumSpeed, maximumSpeed);
-//		this.getPIDController().setAbsoluteTolerance(.1);
 		this.setInterruptible(true);
 		this.getPIDController().setSetpoint(0);
-//		super.setSetpoint(0);
 		setSetpoint(0);
 		this.power = .01;
 		hasStarted = false;
-		// scgConstant.set(0);
-		// scgPIDControlled.set(0);
 	}
 
 	/*
@@ -100,26 +95,15 @@ public class PIDStraightMovement extends PIDCommand {
 	 * constructor of the command is run. We only use this to start the
 	 * PIDController of moving straight.
 	 */
-//	int e;
-//	int c;
 
 	@Override
 	protected void initialize() {
-//		c = 0;
-//		e = 0;
-//		SmartDashboard.putNumber("c", c);
-//		SmartDashboard.putNumber("E", e);
 		super.getPIDController().enable();
 		this.pidDistance = null;
 		Robot.encLeft.reset();
 		Robot.ahrs.reset();
-		// Robot.encRight.reset();
-		// if using exponential increment
 		power = .01;
 		hasStarted = false;
-//		scgConstant.set(power);
-//		scgPIDControlled.set(-power);
-//		this.pidDistance = new PIDDistance(this.scgConstant, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance);
 		
 	}
 
@@ -145,29 +129,7 @@ public class PIDStraightMovement extends PIDCommand {
 		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
 		SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
 		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
-//		if (this.power <= this.maximumSpeed && this.pidDistance == null) {
-//			// linear increment
-//			// this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
-//			scgConstant.set(power);
-//			SmartDashboard.putNumber("g", scgConstant.get());
-//
-////			if(Robot.encLeft.getRate() < -Config.SWITCH_TO_PID_VELOCITY)
-////				// TODO change this
-////				scgPIDControlled.set(-power);
-////			else
-//				scgPIDControlled.pidWrite(output);
-////			this.power *= Config.PID_STRAIGHT_EXPONENTIAL_INCREMENT;
-//			this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
-//			System.out.println("Power: " + power);
-//			SmartDashboard.putNumber("PID output", output);
-//			SmartDashboard.putNumber("SCGconstant", scgConstant.get());
-//		}
-//		/*if (this.power >= this.maximumSpeed && pidDistance == null) {
-////			this.pidDistance = new PIDDistance(this.scgConstant, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this, this.p, this.i, this.d);
-////			pidDistance.start();
-//		}
-//		else
-//		if (this.power >= this.maximumSpeed) {
+
 			scgPIDControlled.pidWrite(output);
 			if(Robot.encLeft.getDistance()>=this.desiredDistance)
 			{
@@ -191,26 +153,11 @@ public class PIDStraightMovement extends PIDCommand {
 				this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
 
 			}
-//			else
-//			{
-//
-//				if(null==pidDistance)
-//				{
-//					pidDistance = new PIDDistance(this.scgConstant, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance);
-//					SmartDashboard.putNumber("ECLLeft when stop incrementYES", Robot.encLeft.getDistance());
-//
-//				}
-//				if(power-Config.PID_STRAIGHT_LINEAR_INCREMENT<0)
-//					power=0;
-//				this.power -= Config.PID_STRAIGHT_LINEAR_INCREMENT;
-//
-//			}
 			else if(null==pidDistance) {
 				SmartDashboard.putNumber("ECLLeft when stop increment", Robot.encLeft.getDistance());
 
 				SmartDashboard.putBoolean("AM I RUNNING?", true);
-//				this.scgConstant.set(0);
-//				this.scgPIDControlled.set(0);
+
 				pidDistance = new PIDDistance(this.scgConstant, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);
 				pidDistance.start();
 			}
@@ -219,9 +166,6 @@ public class PIDStraightMovement extends PIDCommand {
 			if(power>=this.maximumSpeed/4)
 				hasStarted = true;
 
-//		}
-//		if (pidDistance != null && pidDistance.getDistance() > this.desiredDistance)
-//			super.getPIDController().setOutputRange(-.5, .5);// TODO do not set if already set
 	}
 
 	/**
@@ -264,15 +208,8 @@ public class PIDStraightMovement extends PIDCommand {
 	 */
 	@Override
 	public void end() {
-		// System.out.println("Ending PID Straight");
-		// pidDistance.end();//TODO put this back in?
-//		SmartDashboard.putNumber("E", ++e);
-//		this.scgPIDControlled.set(0);
-//		this.scgConstant.set(0);
-//		this.power = 0;
 		free();
 		super.end();
-		// System.out.println("ENDED PID STRAIGHT");
 	}
 
 	/**
