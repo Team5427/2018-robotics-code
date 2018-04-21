@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * This command turns the robot 47 degrees clockwise.
  * Used in the Left_ScaleIsLeft command.
  * 
- * @author Andrew Li
+ * @author Andrew Li, Akshat Jain
  */
 @SameLine
 public class Center_SwitchIsLeft_SecondAngle extends PIDCommand {
