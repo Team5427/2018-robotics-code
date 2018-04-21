@@ -10,123 +10,132 @@ package org.usfirst.frc.team5427.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
 /**
- * @author Kipp
- * This command will be called in autonomous to set the elevator to the height of the switch or scale,
- * depending on which value we send it.
+ * This command will be called in autonomous to set the elevator to the height
+ * of the switch or scale, depending on which value we send it.
+ * 
+ * @author Kipp Corman
  */
 public class MoveElevatorAuto extends Command {
-	// Height = 1: Switch. Height = 2: Scale.
+
+	/**
+	 * The desired position for the elevator. 1: Middle position for placement on
+	 * the switch. 2: Top position for placement on the scale. 3: Bottom position
+	 * for resetting the elevator.
+	 */
 	public static int height;
-	Timer timer;
+
+	/**
+	 * Stores whether the elevator has reached its desired position.
+	 */
 	boolean maxHeightReached = false;
-	
+
+	/**
+	 * Sets the timeout for the command based off of the desired position of the
+	 * elevator and how long it takes to get there.
+	 * 
+	 * @param height
+	 *            the desired position for the elevator.
+	 */
 	public MoveElevatorAuto(int height) {
 		this.height = height;
-//		timer = new Timer();
-		if(1==height)
-			this.setTimeout(Config.ELEVATOR_TIME_SWITCH);
-		else if(2==height)
-			this.setTimeout(Config.ELEVATOR_TIME_SCALE);
-		else if(3 == height)
-			this.setTimeout(Config.ELEVATOR_TIME_SCALE_DOWN);
-		
-		//requires(Robot.kExampleSubsystem);
+
+		if (1 == height)
+			this.setTimeout(Config.ELEVATOR_TIMEOUT_SWITCH);
+		else if (2 == height)
+			this.setTimeout(Config.ELEVATOR_TIMEOUT_SCALE);
+		else if (3 == height)
+			this.setTimeout(Config.ELEVATOR_TIMEOUT_SCALE_DOWN);
 	}
 
-	// Called just before this Command runs the first time
+	/**
+	 * Called once when the command is started. Signifies that this iteration of the
+	 * command has not reached its desired position yet.
+	 */
 	@Override
 	protected void initialize() {
 		maxHeightReached = false;
-		SmartDashboard.putNumber("THE HEIGHT IS", this.height);
-		SmartDashboard.putBoolean("THE TIMEOUT IS", this.isTimedOut());
-//		timer.start();
 	}
 
-	// Called repeatedly when this Command is scheduled to run
+	/**
+	 * Called periodically while the command is running. Sets the speed of the
+	 * elevator in relation to the desired direction of movement unless the elevator
+	 * has run into a limit switch.
+	 */
 	@Override
 	protected void execute() {
-		SmartDashboard.putBoolean("THE TIMEOUT IS", this.isTimedOut());
-
-		if(1 == height || 2 == height)
-		{
-			if(!Robot.elevatorLimitSwitchUp.get()) {
+		if (1 == height || 2 == height) {
+			if (!Robot.elevatorLimitSwitchUp.get()) {
 				Robot.motorPWM_Elevator.set(0);
 			}
 			else {
 				Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
 			}
 		}
-		else if(3 == height)
-		{
-			if(!Robot.elevatorLimitSwitchDown.get())
-			{
+		else if (3 == height) {
+			if (!Robot.elevatorLimitSwitchDown.get()) {
 				Robot.motorPWM_Elevator.set(0);
 			}
-			else
-			{
+			else {
 				Robot.motorPWM_Elevator.set(-Config.ELEVATOR_MOTOR_SPEED_DOWN);
 			}
 		}
 	}
-	
-	public boolean maxHeightReachedTime()
-	{
+
+	/**
+	 * @return if the command has timed out.
+	 */
+	public boolean maxHeightReachedTime() {
 		return isTimedOut();
 	}
-	
-	public boolean maxHeightReached()
-	{
-//		if(!Robot.elevatorLimitSwitchUp.get())
-//			maxHeightReached = false;
+
+	/**
+	 * @return if the top limit switch has been activated.
+	 */
+	public boolean maxHeightReached() {
 		return !Robot.elevatorLimitSwitchUp.get();
 	}
-	
-	public boolean minHeightReached()
-	{
+
+	/**
+	 * @return if the bottom limit switch has been activated.
+	 */
+	public boolean minHeightReached() {
 		return !Robot.elevatorLimitSwitchDown.get();
 	}
-	
-//	public boolean maxHeightReachedLS()
-//	{
-//		return !Robot.elevatorLimitSwitchUp.get();
-//	}
 
-	// Make this return true when this Command no longer needs to run execute()
+	/**
+	 * Called periodically while the command is running to check when it is
+	 * finished.
+	 * 
+	 * @return if the command has timed out, unless it is going to its highest
+	 *         position.
+	 */
 	@Override
 	public boolean isFinished() {
-		// TODO change Config values for time
-//		if((height == 1 && timer.get() > Config.ELEVATOR_TIME_SWITCH) || (height == 2 && timer.get() > Config.ELEVATOR_TIME_SCALE))
-//			return true;
-//		return false;
-//		if(!Robot.elevatorLimitSwitchUp.get())
-//			Robot.motorPWM_Elevator.set(0);
-//		else {
-//			Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
-//		}
-		if(2==height)
+		if (2 == height)
 			return false;
 		return isTimedOut();
 	}
 
-	// Called once after isFinished returns true
+	/**
+	 * Called once when the isFinished method returns true. Sets the elevator motor
+	 * to 0 power in order to stop it from moving.
+	 */
 	@Override
 	protected void end() {
 		Robot.motorPWM_Elevator.set(0);
-//		timer.reset();
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+	/**
+	 * Called once when the command is interrupted. Calls the end method in order to
+	 * stop the elevator motor from moving.
+	 */
 	@Override
 	protected void interrupted() {
-//		Robot.motorPWM_Elevator.disable();
 		Robot.motorPWM_Elevator.set(0);
 		end();
-//		timer.reset();
 	}
 }

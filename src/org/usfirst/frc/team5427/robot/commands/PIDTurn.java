@@ -3,7 +3,6 @@ package org.usfirst.frc.team5427.robot.commands;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
-
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.PIDCommand;
@@ -13,144 +12,209 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * This command will cause the robot to turn to an exact degree value using the
  * PID Loop TODO add a ramping function
  * 
- * @author Ethan, Varsha
+ * @author Ethan Bennikutty, Varsha Kumar
  */
 @SameLine
 public class PIDTurn extends PIDCommand {
-	// two SpeedControllerGroup objects to be controlled by this PID Loop
+	/**
+	 * Two SpeedControllerGroup objects to be controlled by this PID Loop
+	 */
 	private SpeedControllerGroup scgRight, scgLeft;
+
+	/**
+	 * The setpoint in degrees the PID loops wants to turn to
+	 */
 	double setPoint;
-	private double time;
+
+	/**
+	 * Times the command for the isFinished method
+	 */
 	private Timer timer;
+
+	/**
+	 * Whether or not the turn has started
+	 */
 	private boolean hasStarted;
-	
+
+	/**
+	 * Creates a PID loop that turns a specified amount of degrees This constructor
+	 * uses the PID turn values in config Sets the starting speed to 0.1 for the
+	 * speed ramp-up
+	 * 
+	 * @param scgRight
+	 * @param scgLeft
+	 * @param setPoint
+	 * @param time
+	 */
 	public PIDTurn(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double setPoint, double time) {
 		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_UPDATE_PERIOD);
 		this.scgRight = scgRight;
 		this.scgLeft = scgLeft;
 		this.setPoint = setPoint;
-		// lets the PID Loop the range of the input (ahrs)
+
 		super.setInputRange(-180, 180);
 		super.setSetpoint(setPoint);
-	
+
 		scgRight.set(0.1);
 		scgLeft.set(0.1);
-		this.setTimeout(time);//TODO change to TIME
+
+		this.setTimeout(time);
 		timer = new Timer();
 		hasStarted = false;
 	}
-	
+
+	/**
+	 * Creates a PID loop that turns a specified amount of degrees Sets the starting
+	 * speed to 0.1 for the speed ramp-up
+	 * 
+	 * @param scgRight
+	 *            the speed controller group on the right side of the robot
+	 * @param scgLeft
+	 *            the speed controller group on the left side of the robot
+	 * @param setPoint
+	 *            the setpoint of the PID loop in degrees
+	 * @param time
+	 *            the amount of time until the command times out
+	 * @param p
+	 *            the p value to be used in the PID loop.
+	 * @param i
+	 *            the i value to be used in the PID loop.
+	 * @param d
+	 *            the d value to be used in the PID loop.
+	 */
 	public PIDTurn(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double setPoint, double time, double p, double i, double d) {
 		super(p, i, d, Config.PID_UPDATE_PERIOD);
 		this.scgRight = scgRight;
 		this.scgLeft = scgLeft;
 		this.setPoint = setPoint;
-		// lets the PID Loop the range of the input (ahrs)
+
 		super.setInputRange(-180, 180);
 		super.setSetpoint(setPoint);
-	
+
 		scgRight.set(0.1);
 		scgLeft.set(0.1);
-		this.setTimeout(time);//TODO change to TIME
+
+		this.setTimeout(time);
 		timer = new Timer();
 		hasStarted = false;
 	}
-	
-	
+
+	/**
+	 * Creates a PID loop that turns a specified amount of degrees This constructor
+	 * uses the PID turn values in config The timeout is set to 1.5 Sets the
+	 * starting speed to 0.1 for the speed ramp-up
+	 * 
+	 * @param scgRight
+	 *            the speed controller group on the right side of the robot
+	 * @param scgLeft
+	 *            the speed controller group on the left side of the robot
+	 * @param setPoint
+	 *            the setpoint of the PID loop in degrees
+	 */
 	public PIDTurn(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft, double setPoint) {
 		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_UPDATE_PERIOD);
 		this.scgRight = scgRight;
 		this.scgLeft = scgLeft;
 		this.setPoint = setPoint;
-		// lets the PID Loop the range of the input (ahrs)
+
 		super.setInputRange(-180, 180);
 		super.setSetpoint(setPoint);
-	
+
 		scgRight.set(0.1);
 		scgLeft.set(0.1);
-		this.setTimeout(1.5);//TODO change to TIME
+
+		this.setTimeout(1.5);
 		timer = new Timer();
-		if(Math.abs(Robot.ahrs.getYaw())>=Math.abs(this.getSetpoint())/2)
-			hasStarted=true;
-	}
-	
-	@Override
-	protected void execute() {
-		
+
+		if (Math.abs(Robot.ahrs.getYaw()) >= Math.abs(this.getSetpoint()) / 2)
+			hasStarted = true;
 	}
 
-	// begins the PID loop (enables)
+	/**
+	 * Resets the ahrs and enables the PID loop
+	 */
 	public void initialize() {
 		Robot.ahrs.reset();
-		time = 0;
 		super.getPIDController().enable();
 	}
 
-	// Ends (disables) the PID loop and stops the motors of the
-	// SpeedControllerGroups
+	/**
+	 * Sets the left and right motors to 0 and ends the PID loop
+	 */
 	public void end() {
 		super.free();
-		// super.getPIDController().disable();
-		// super.getPIDController().free();
 		scgRight.set(0);
 		scgLeft.set(0);
 		super.end();
 	}
 
-	// Code to run when this command is interrupted
+	/**
+	 * Ends the command when this command is interrupted
+	 */
 	public void interrupted() {
 		end();
 	}
 
-	// judge range by what the angle is right now, ex: 91 instead of 90, we want to
-	// see if it flatlines
+	/**
+	 * Stops the PID loop when it no longer needs to run
+	 * 
+	 * @return true if the robot has been within the setpoint for at least half a
+	 *         second, if the timeout is reached, or if the encoder has stopped
+	 */
 	@Override
 	public boolean isFinished() {
 		double tolerance = Math.abs(Math.abs(getCurrentAngle()) - Math.abs(super.getSetpoint()));
 		boolean inRange = tolerance < Config.PID_TURN_TOLERANCE;
 		if (inRange) {
-//			System.out.println("In Range.");
 			if (timer.get() == 0) {
 				timer.start();
 			}
-			if (timer.get() > .5) {
-				return true;
-			}
-		} else {
+			if (timer.get() > .5) { return true; }
+		}
+		else {
 			timer.reset();
 		}
-		if(Robot.encLeft.getStopped()&&hasStarted)//TODO moves on if enc is stopped
-		{
-			return true;
-		}
+		if (Robot.encLeft.getStopped() && hasStarted) { return true; }
 		return this.isTimedOut();
 	}
 
+	/**
+	 * Returns the current angle measured by the ahrs
+	 * 
+	 * @return the angle measured by the ahrs in degrees
+	 */
 	public double getCurrentAngle() {
 		return Robot.ahrs.getYaw();
 	}
 
-	// return what the PID loop is supposed to read from (feedback value)
+	/**
+	 * Returns what the PID loop is supposed to read
+	 * 
+	 * @return the input from the PID loop
+	 */
 	@Override
 	protected double returnPIDInput() {
 		return Robot.ahrs.getYaw();
 	}
 
-	// set motor values with "output"
+	/**
+	 * Sets the motor values to the output from the PID loop
+	 * 
+	 * @param output
+	 *            the output from the PID loop to be used in the motors
+	 */
 	@Override
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber("Yaw", getCurrentAngle());
 		SmartDashboard.putNumber("Raw Yaw", getCurrentAngle());
 		SmartDashboard.putNumber("PID Output", output);
-		
-//		System.out.println("Turn Command Running.");
+
 		scgRight.pidWrite(output);
-		
 		scgLeft.pidWrite(output);
-		
-		SmartDashboard.putNumber("fl", Robot.motor_pwm_frontLeft.get());
-		SmartDashboard.putNumber("rl", Robot.motor_pwm_rearLeft.get());
-		SmartDashboard.putNumber("fr", Robot.motor_pwm_frontRight.get());
-		SmartDashboard.putNumber("rr", Robot.motor_pwm_rearRight.get());
+
+		SmartDashboard.putNumber("Front Left", Robot.motor_pwm_frontLeft.get());
+		SmartDashboard.putNumber("Rear Left", Robot.motor_pwm_rearLeft.get());
+		SmartDashboard.putNumber("Front Right", Robot.motor_pwm_frontRight.get());
+		SmartDashboard.putNumber("Rear Right", Robot.motor_pwm_rearRight.get());
 	}
 }

@@ -7,22 +7,14 @@
 package org.usfirst.frc.team5427.robot.commands;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
-
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
-
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.RobotState;
-import edu.wpi.first.wpilibj.Sendable;
+import org.usfirst.frc.team5427.util.SameLine;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * This class is adapted from the WPILib PIDCommand Class. This Class is made to
+ * This class is adapted from the WPILib PIDCommand Class. This class is made to
  * make the robot drive straight after ramping up power to a desired power. It
  * works by setting one side of the drive train to the desired power and varying
  * the speed of the other side of the drive train to maintain the robot driving
@@ -31,61 +23,102 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * In theory, this class can be used in any case where two SpeedControllerGroup
  * objects work together to accomplish the same task.
  * 
- * @author Blake
+ * @author Blake Romero
  */
+@SameLine
 public class PIDStraightMovement extends PIDCommand {
-	// This command is created once we have reached the maximum power to control the
-	// distance that we travel.
-	private PIDDistance pidDistance;
-	// This SpeedControllerGroup is the side of the robot that this command
-	// controls.
-	private boolean hasStarted;
-	private SpeedControllerGroup scgPIDControlled;
-	// This SpeedControllerGroup is the side of the robot that is controlled by a
-	// constant value and PIDDistance.
-	private SpeedControllerGroup scgConstant;
-	// This is the maximum speed that the robot will travel at.
-	private double maximumSpeed;
-	// This is the distance that we want to travel.
-	private double desiredDistance;
-	// This is the power that scgPIDControlled is set to.
-	private double power;
-	// These are the p, i, and d values for the PID Controller in PIDDistance.
-	private double p, i, d;
-	private double startTime;
-	private double endTime;
-	private double startDistance;
-	private double endDistance;
 
 	/**
-	 * Constructor for PIDStraightMovement
+	 * PIDCommand created to control distance after we have reached the maximum
+	 * power in this controller.
+	 */
+	private PIDDistance pidDistance;
+
+	/**
+	 * Stores whether the PIDController has started acting on the robot.
+	 */
+	private boolean hasStarted;
+
+	/**
+	 * The SpeedControllers that contain the motors that are controlled by the
+	 * PIDController within this command.
+	 */
+	private SpeedControllerGroup scgPIDControlled;
+
+	/**
+	 * The SpeedControllers that contain the motors that are not controlled by the
+	 * PIDController within this command.
+	 */
+	private SpeedControllerGroup scgNot;
+
+	/**
+	 * The distance we want the robot to travel
+	 */
+	double desiredDistance;
+
+	/**
+	 * The maximum speed the PIDController can output to the motors on the robot.
+	 */
+	double maximumSpeed;
+
+	/**
+	 * The current speed of the SpeedControllerGroups when the PIDController have
+	 * not been activated.
+	 */
+	private double power;
+
+	/**
+	 * The P value for the PIDController in PIDDistance.
+	 */
+	private double p;
+
+	/**
+	 * The I value for the PIDController in PIDDistance.
+	 */
+	private double i;
+
+	/**
+	 * The D value for the PIDController in PIDDistance.
+	 */
+	private double d;
+
+	/**
+	 * Creates the PIDController for this command using config PID values and sets
+	 * the parameters of its control.
 	 * 
 	 * @param scgPIDControlled
-	 *            - This receives the side of the robot that we are controlling with
-	 *            this PIDCommand.
+	 *            the side of the robot that we are controlling with this
+	 *            PIDCommand.
 	 * @param scgConstant
-	 *            - This receives the side of the robot that we will control with
-	 *            the PIDDistance command.
+	 *            the side of the robot that we will control with the PIDDistance
+	 *            command.
 	 * @param maximumSpeed
-	 *            - This receives the maximum speed that the robot will travel at.
+	 *            the maximum speed that the robot will travel at.
 	 * @param desiredDistance
-	 *            - This receives the distance that we want to travel.
-	 * @param p, i, d 
-	 *            - These receive the P, I, and D values for the PID Controller
-	 *              in PIDDistance.
+	 *            the distance that we want to travel.
+	 * @param p
+	 *            the P value for the PIDController in PIDDistance.
+	 * @param i
+	 *            the I value for the PIDController in PIDDistance.
+	 * @param d
+	 *            the D value for the PIDController in PIDDistance.
 	 */
 	public PIDStraightMovement(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant, double maximumSpeed, double desiredDistance, double p, double i, double d) {
 		super(Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, Config.PID_UPDATE_PERIOD);
+
 		this.scgPIDControlled = scgPIDControlled;
-		this.scgConstant = scgConstant;
+		this.scgNot = scgConstant;
 		this.maximumSpeed = maximumSpeed;
 		this.desiredDistance = desiredDistance;
 		this.p = p;
 		this.i = i;
 		this.d = d;
+
+
 		this.setInterruptible(true);
 		this.getPIDController().setSetpoint(0);
 		setSetpoint(0);
+
 		this.power = .01;
 		hasStarted = false;
 	}
@@ -95,7 +128,6 @@ public class PIDStraightMovement extends PIDCommand {
 	 * constructor of the command is run. We only use this to start the
 	 * PIDController of moving straight.
 	 */
-
 	@Override
 	protected void initialize() {
 		super.getPIDController().enable();
@@ -104,7 +136,6 @@ public class PIDStraightMovement extends PIDCommand {
 		Robot.ahrs.reset();
 		power = .01;
 		hasStarted = false;
-		
 	}
 
 	/**
@@ -122,6 +153,10 @@ public class PIDStraightMovement extends PIDCommand {
 	 * PID loop to the output to maintain the angle of 0 to go straight. After we
 	 * reach maximum power, we activate the PIDDistance command in order to finish
 	 * traveling a certain distance.
+	 * 
+	 * @param output
+	 *            the output of the PIDController within PIDStraightMovement when
+	 *            given our current Yaw.
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
@@ -130,61 +165,47 @@ public class PIDStraightMovement extends PIDCommand {
 		SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
 		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
 
-			scgPIDControlled.pidWrite(output);
-			if(Robot.encLeft.getDistance()>=this.desiredDistance)
-			{
-				if(scgConstant.get()==0)
-					SmartDashboard.putNumber("EncLeft when switch", Robot.encLeft.getDistance());
-				
-				scgConstant.set(0);
-			}
-			else if(null==pidDistance)
-				scgConstant.set(power);
-			
-			SmartDashboard.putNumber("g", scgConstant.get());
-			SmartDashboard.putNumber("o", output);
-			SmartDashboard.putNumber("p", power);
+		scgPIDControlled.pidWrite(output);
+		if (Robot.encLeft.getDistance() >= this.desiredDistance) {
+			if (scgNot.get() == 0)
+				scgNot.set(0);
+		}
+		else if (null == pidDistance)
+			scgNot.set(power);
 
-			if (this.power < this.maximumSpeed&&null==pidDistance) //TODO change to boolean
-			{
-				
-				SmartDashboard.putBoolean("Incrememtning", true);
+		SmartDashboard.putNumber("g", scgNot.get());
+		SmartDashboard.putNumber("o", output);
+		SmartDashboard.putNumber("p", power);
 
-				this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
-
-			}
-			else if(null==pidDistance) {
-				SmartDashboard.putNumber("ECLLeft when stop increment", Robot.encLeft.getDistance());
-
-				SmartDashboard.putBoolean("AM I RUNNING?", true);
-
-				pidDistance = new PIDDistance(this.scgConstant, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);
-				pidDistance.start();
-			}
-			SmartDashboard.putNumber("ECLLeft", Robot.encLeft.getDistance());
-			SmartDashboard.putNumber("ECLLeftVAL", Robot.encLeft.getDistance());
-			if(power>=this.maximumSpeed/4)
-				hasStarted = true;
-
+		if (this.power < this.maximumSpeed && null == pidDistance) {
+			this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
+		}
+		else if (null == pidDistance) {
+			pidDistance = new PIDDistance(this.scgNot, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);
+			pidDistance.start();
+		}
+		if (power >= this.maximumSpeed / 4)
+			hasStarted = true;
 	}
 
 	/**
 	 * Command implemented from PIDCommand. When this returns true, the command runs
 	 * end() Our method returns true if the robot has traveled close enough to the
 	 * certain distance, with our tolerance.
+	 * 
+	 * @return if the PIDDistance command has finished.
 	 */
 	@Override
 	public boolean isFinished() {
 		if (pidDistance != null && pidDistance.isFinished() && Math.abs(Robot.ahrs.getYaw()) < 3) {
-			pidDistance.end();// TODO check if ending works correctly
-			end();// TODO take these out
+			pidDistance.end();
+			end();
 			return true;
 		}
-		else if((Robot.encLeft.getStopped())&&hasStarted)//TODO moves on if enc is stopped
-		{
-			if(null!=pidDistance)
-				pidDistance.end();// TODO check if ending works correctly
-			end();// TODO take these out
+		else if ((Robot.encLeft.getStopped()) && hasStarted) {
+			if (null != pidDistance)
+				pidDistance.end();
+			end();
 			return true;
 		}
 		return false;
@@ -220,7 +241,6 @@ public class PIDStraightMovement extends PIDCommand {
 	 */
 	@Override
 	public void free() {
-		// System.out.println("Free in PIDStraight");
 		super.free();
 		super.getPIDController().disable();
 		super.getPIDController().reset();

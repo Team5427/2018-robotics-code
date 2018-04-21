@@ -10,49 +10,68 @@ package org.usfirst.frc.team5427.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
-//import org.usfirst.frc.team5427.util.Log;
-import org.usfirst.frc.team5427.util.NextLine;
+import org.usfirst.frc.team5427.util.SameLine;
 
 /**
- * @author Blake This command
+ * This command activates the motor of the elevator in order to move it down and
+ * bypasses any restrictions of the limit switch present at the bottom of its
+ * path. Meant to be used when the limit switch is not functioning properly in
+ * order to continue to use the elevator.
+ * 
+ * @author Akshat Jain
  */
-
-@NextLine
+@SameLine
 public class ManualMoveElevatorDown extends Command {
 
-	public ManualMoveElevatorDown() {
-	}
+	/**
+	 * The command, ManualMoveElevatorDown, does not require a subsystem.
+	 */
+	public ManualMoveElevatorDown() {}
 
-	// Called just before this Command runs the first time
+	/**
+	 * Called once when the command is started. Signifies that this command is able
+	 * to be interrupted by others.
+	 */
 	@Override
 	protected void initialize() {
 		this.setInterruptible(true);
 	}
 
-	// Called repeatedly when this Command is scheduled to run
+	/**
+	 * Called periodically while the command is running. Sets the speed of the
+	 * elevator to the config value for its downward speed and is not restricted by
+	 * the limit switches.
+	 */
 	@Override
 	protected void execute() {
 		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_DOWN);
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
+	/**
+	 * Called periodically while the command is running.
+	 * 
+	 * @return if the button is released
+	 */
 	@Override
 	public boolean isFinished() {
-		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_ELEVATOR_DOWN_MANUAL))
+		if (Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_ELEVATOR_DOWN_MANUAL))
 			return true;
-//		if(!Robot.elevatorLimitSwitchDown.get())
-//			return true;
 		return false;
 	}
 
-	// Called once after isFinished returns true
+	/**
+	 * Called once when the isFinished method returns true. Sets the elevator motor
+	 * to 0 power in order to stop it from moving.
+	 */
 	@Override
 	protected void end() {
 		Robot.motorPWM_Elevator.set(0);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+	/**
+	 * Called once when the command is interrupted. Calls the end method in order to
+	 * stop the elevator motor from moving.
+	 */
 	@Override
 	protected void interrupted() {
 		end();

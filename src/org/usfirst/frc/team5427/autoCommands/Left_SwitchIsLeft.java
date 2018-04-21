@@ -6,105 +6,156 @@ import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
 import org.usfirst.frc.team5427.robot.commands.PIDTurn;
 import org.usfirst.frc.team5427.util.Config;
-
+import org.usfirst.frc.team5427.util.SameLine;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
+/**
+ * This is our autonomous path that starts in the left position and places one
+ * cube on the left side of the switch.
+ * 
+ * @author Blake Romero
+ */
+@SameLine
 public class Left_SwitchIsLeft extends AutoPath {
-	private PIDStraightMovement firstDistance, secondDistance;
-	private PIDTurn firstAngle;
-	private MoveElevatorAuto moveElevator;
-	private Fidget fidget;
-	private double startTime, currentTime;
 
-	//Times
-	public static final double timeOut1 = 15;
-	
-	//Values for 154 inches.
-	public static final double p1 = 0.0105;//0.0188
+	/**
+	 * The first distance of the path. It travels 154 inches forward at our short
+	 * power.
+	 */
+	private PIDStraightMovement firstDistance;
+
+	/**
+	 * The second distance of the path. It travels 16 inches forward at our short
+	 * power.
+	 */
+	private PIDStraightMovement secondDistance;
+
+	/**
+	 * The first turn of the path. It turns 90 degrees clockwise.
+	 */
+	private PIDTurn firstAngle;
+
+	/**
+	 * The command that moves the elevator up to its top position.
+	 */
+	private MoveElevatorAuto moveElevator;
+
+	/**
+	 * The command used at the start of autonomous to drop the arms of the intake
+	 * down.
+	 */
+	private Fidget fidget;
+
+	/**
+	 * The time, in seconds, that we manually end our autonomous path.
+	 */
+	public static final double timeOut = 15;
+
+	/********** PID VALUES FOR 154 INCHES **********/
+	/**
+	 * P value for 154 inches.
+	 */
+	public static final double p1 = 0.0105;
+
+	/**
+	 * I value for 154 inches.
+	 */
 	public static final double i1 = 0.0;
+
+	/**
+	 * D value for 154 inches.
+	 */
 	public static final double d1 = 0.008;
-	
-	//Values for 16 inches.
+	/*********************************************/
+
+	/********** PID VALUES FOR 16 INCHES **********/
+	/**
+	 * P value for 16 inches.
+	 */
 	public static final double p2 = 0.013;
+
+	/**
+	 * I value for 16 inches.
+	 */
 	public static final double i2 = 0.0;
+
+	/**
+	 * D value for 16 inches.
+	 */
 	public static final double d2 = 0.006;
 
+	/*********************************************/
+
+	/**
+	 * Creates all of the paths involved in Left_SwitchIsLeft.
+	 */
 	public Left_SwitchIsLeft() {
-		// creates all of the PID Commands
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 154, p1, i1, d1);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
 		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 16, p2, i2, d2);
-		moveElevator = new MoveElevatorAuto(1); // 1 for switch
+		moveElevator = new MoveElevatorAuto(1);
 	}
 
-	// begins the command
+	/**
+	 * Run once when the command is started. Starts the first portion of the path
+	 * and sets the timeout of it.
+	 */
 	public void initialize() {
-		startTime = System.nanoTime()/1000000000.;
-		fidget.start();		
+		fidget.start();
+		setTimeout(timeOut);
 	}
 
-	// uses the previous commands being null to check if a certain command needs to
-	// be started or not
+	/**
+	 * Runs periodically while the command is not finished. Used also to switch
+	 * between commands at different points in our path.
+	 */
 	public void execute() {
-		currentTime = System.nanoTime()/1000000000.;
 
-		if(moveElevator != null)
+		if (moveElevator != null)
 			moveElevator.isFinished();
-		
-		// If firstDistance is null and firstAngle isFinished && not null
-		// and the secondDistance Command is not running, run the secondDistance Command
+
 		if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !secondDistance.isRunning()) {
-			System.out.println("Part 2 Done.");
 			firstAngle.cancel();
 			firstAngle = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-//			Robot.encRight.reset();
 			moveElevator.start();
 			secondDistance.start();
 		}
-		
-		// If firstDistance is NOT null and firstDistance isFinished
-		// and the firstAngle Command is not running, run the firstAngle Command
-		else if ((null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) || currentTime - startTime > timeOut1) {
-			System.out.println("Part 1 Done.");
+
+		else if ((null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning()))) {
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-//			Robot.encRight.reset();
 			firstAngle.start();
 		}
-		
-		else if(null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
-			System.out.println("Fidget Done.");
+
+		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
 			fidget.cancel();
 			fidget = null;
 			Robot.encLeft.reset();
-//			Robot.encRight.reset();
 			firstDistance.start();
 		}
 	}
 
+	/**
+	 * Runs periodically to check to see if the path can be finished.
+	 * 
+	 * @return true when the path is finished or the path has timed out.
+	 */
 	@Override
 	public boolean isFinished() {
-		// returns if the last distance has finished and the robot has shot the box
 		if (firstAngle == null && secondDistance.isFinished())
 			return true;
-		return false; 
-		
-//		if (firstDistance != null)
-//			return firstDistance.isFinished();
-//		return false;
+		return isTimedOut();
 	}
-	
-	// @Override
-	// protected void end() {
-	// firstAngle.free();
-	// firstDisance
-	// }
-	
+
+	/**
+	 * Run once when isFinished() returns true. Utilizes the end() of AutoPath to
+	 * shoot out the box.
+	 */
 	@Override
 	protected void end() {
 		super.end();

@@ -10,42 +10,63 @@ package org.usfirst.frc.team5427.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
+import org.usfirst.frc.team5427.util.SameLine;
 
 /**
- * Makes the Intake deliver the cube 
+ * This is our command that shoots a cube out of the robot automatically.
+ * 
+ * @author Blake Romero
  */
+@SameLine
 public class AutoOutGo extends Command {
+
+	/**
+	 * AutoOutGo requires the intake subsystem and its timeout is set via Config.
+	 */
 	public AutoOutGo() {
-		// Use requires() here to declare subsystem dependencies
 		requires(Robot.intakeSubsystem);
 		this.setTimeout(Config.AUTO_INTAKE_TIMEOUT);
 	}
 
-	// Called just before this Command runs the first time
+	/**
+	 * Called once when the command is started but is not currently being used.
+	 */
 	@Override
-	protected void initialize() {
-	}
+	protected void initialize() {}
 
-	// Called repeatedly when this Command is scheduled to run
+	/**
+	 * Called periodically while the command is running to set the speed of the
+	 * intake to -.5 power.
+	 */
 	@Override
 	protected void execute() {
 		Robot.intakeSubsystem.setSpeed(-.5);
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
+	/**
+	 * Called periodically while the command is running to check when it is
+	 * finished.
+	 * 
+	 * @return true when the command times out.
+	 */
 	@Override
 	public boolean isFinished() {
 		return this.isTimedOut();
 	}
 
-	// Called once after isFinished returns true
+	/**
+	 * Called once when isFinished() returns true. Sets the speed of the intake to 0
+	 * power.
+	 */
 	@Override
 	protected void end() {
 		Robot.intakeSubsystem.setSpeed(0);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+	/**
+	 * Called once if the command is interrupted. Sets the speed of the intake to 0
+	 * power.
+	 */
 	@Override
 	protected void interrupted() {
 		Robot.intakeSubsystem.setSpeed(0);

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team5427.robot.commands;
+package org.usfirst.frc.team5427.autoCommands;
 
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
@@ -19,12 +19,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Right_ScaleIsRight_FirstAngle extends PIDCommand {
 	// two SpeedControllerGroup objects to be controlled by this PID Loop
 	private SpeedControllerGroup scgRight, scgLeft;
-	double setPoint;
 	private double time;
 	private Timer timer;
 	private boolean hasStarted;
 	
-	private int setPoint = -51;
+	private double setPoint = -51;
 	
 	public Right_ScaleIsRight_FirstAngle(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft) {
 		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_UPDATE_PERIOD);

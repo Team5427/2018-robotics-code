@@ -11,49 +11,46 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 //import org.usfirst.frc.team5427.util.Log;
-import org.usfirst.frc.team5427.util.NextLine;
+import org.usfirst.frc.team5427.util.SameLine;
 
 /**
- * @author Blake This command
+ * Manually tilts the intake arms upward.
+ * 
+ * @author Akshat Jain
  */
-
-@NextLine
+@SameLine
 public class TiltIntakeUp extends Command {
 
-	public TiltIntakeUp() {
-
-	}
-
-	// Called just before this Command runs the first time
-	@Override
-	protected void initialize() {
-		
-	}
-
-	// Called repeatedly when this Command is scheduled to run
+	/**
+	 * Sets the motor speed to the tilt up speed in config.
+	 */
 	@Override
 	protected void execute() {
 		Robot.motorPWM_TiltIntake.set(Config.INTAKE_TILTER_MOTOR_SPEED_UP);
-//		Robot.motorPWM_Intake_Left.set(Config.INTAKE_TILTER_MOTOR_SPEED_UP);
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
+	/**
+	 * Returns true when the intake tilt up button is released.
+	 * 
+	 * @return true if the intake tilt up button is released.
+	 */
 	@Override
 	protected boolean isFinished() {
-			
-			return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_INTAKE_TILTER_UP);
-		
+		return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_INTAKE_TILTER_UP);
 	}
 
-	// Called once after isFinished returns true
+	/**
+	 * Sets the speed of the intake tilt motor to 0.
+	 */
 	@Override
 	protected void end() {
 		Robot.motorPWM_TiltIntake.set(0);
-//		Robot.motorPWM_Intake_Left.set(0);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+	/**
+	 * Called when another command which requires one or more of the same subsystems
+	 * is scheduled to run.
+	 */
 	@Override
 	protected void interrupted() {
 		end();
