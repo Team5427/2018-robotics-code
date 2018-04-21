@@ -29,17 +29,17 @@ public class Left_ScaleIsLeft extends AutoPath {
 	 * The first distance of the path. It travels 250 inches forward at our long
 	 * power.
 	 */
-	private PIDStraightMovement firstDistance;
+	private Left_ScaleIsLeft_FirstDistance firstDistance;
 
 	/**
 	 * The second distance of the path. It travels forward for .7 seconds.
 	 */
-	DriveForward secondDistance;
+	private Left_ScaleIsLeft_SecondDistance secondDistance;
 
 	/**
 	 * The first turn of the path. It turns 47 degrees clockwise.
 	 */
-	private PIDTurn firstAngle;
+	private Left_ScaleIsLeft_FirstAngle firstAngle;
 
 	/**
 	 * The command used at the start of autonomous to drop the arms of the intake
@@ -55,7 +55,7 @@ public class Left_ScaleIsLeft extends AutoPath {
 	/**
 	 * The command that moves the elevator up to its middle position.
 	 */
-	private MoveElevatorAuto moveElevator;
+	private Left_ScaleIsLeft_MoveElevator moveElevator;
 
 	/**
 	 * The starting time of the autonomous path.
@@ -67,33 +67,15 @@ public class Left_ScaleIsLeft extends AutoPath {
 	 */
 	private double currentTime;
 
-	/********** PID VALUES FOR 250 INCHES **********/
-	/**
-	 * P value for 250 inches.
-	 */
-	public static final double p1 = 0.011;
-
-	/**
-	 * I value for 250 inches.
-	 */
-	public static final double i1 = 0.0;
-
-	/**
-	 * D value for 250 inches.
-	 */
-	public static final double d1 = 0.018;
-
-	/*********************************************/
-
 	/**
 	 * Creates all of the paths involved in Left_ScaleIsLeft.
 	 */
 	public Left_ScaleIsLeft() {
 		fidget = new Fidget();
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 250, p1, i1, d1);
-		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 47);
-		secondDistance = new DriveForward(.7);
-		moveElevator = new MoveElevatorAuto(2);
+		firstDistance = new Left_ScaleIsLeft_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		firstAngle = new Left_ScaleIsLeft_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		secondDistance = new Left_ScaleIsLeft_SecondDistance();
+		moveElevator = new Left_ScaleIsLeft_MoveElevator();
 	}
 
 	/**
