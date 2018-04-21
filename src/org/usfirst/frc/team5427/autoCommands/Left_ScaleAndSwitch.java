@@ -10,179 +10,268 @@ import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
 import org.usfirst.frc.team5427.robot.commands.PIDTurn;
 import org.usfirst.frc.team5427.robot.commands.TiltIntake_TimeOut;
 import org.usfirst.frc.team5427.util.Config;
-
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * This is our autonomous path that starts in the left position and places one
+ * cube on the left side of the scale and the switch.
+ * 
+ * @author Andrew Li, Kipp Corman
+ */
 public class Left_ScaleAndSwitch extends AutoPath {
-	private PIDStraightMovement firstDistance, thirdDistance;
-	private DriveForward secondDistance, fourthDistance;
-	private PIDTurn firstAngle, secondAngle;
-	private MoveElevatorAuto moveElevatorScale, elevatorReset, moveElevatorSwitch;
-	private AutoOutGo shootScale, shootSwitch;
-	private IntakeActivateIn intake;
-	private Fidget fidget;
-	private double startTime, currentTime;
-	
-	public static final double p1 = 0.011;
-	public static final double i1 = 0.0;
-	public static final double d1 = 0.018;
-	
-	public static final double p2 = 0.011; //TODO: These vaues are NOT correct. Needs to be tuned for third distance(currently 70 inches)
-	public static final double i2 = 0.0;
-	public static final double d2 = 0.018;
-	
-	//Times
-	public static final double timeOut1 = 15;
 
+	/**
+	 * The first distance of the path. It travels 250 inches forward at our long
+	 * power.
+	 */
+	private PIDStraightMovement firstDistance;
+
+	/**
+	 * The second distance of the path. It travels forward for .7 seconds.
+	 */
+	private DriveForward secondDistance;
+
+	/**
+	 * The third distance of the path. It travels 70 inches forward at our long
+	 * power.
+	 */
+	private PIDStraightMovement thirdDistance;
+
+	/**
+	 * The fourth distance of the path. It travels forward for .7 seconds.
+	 */
+	private DriveForward fourthDistance;
+
+	/**
+	 * The first turn of the path. It turns 47 degrees clockwise.
+	 */
+	private PIDTurn firstAngle;
+
+	/**
+	 * The second turn of the path. It turns 90 degrees clockwise.
+	 */
+	private PIDTurn secondAngle;
+
+	/**
+	 * The command used to move the elevator up to the top of its path.
+	 */
+	private MoveElevatorAuto moveElevatorScale;
+
+	/**
+	 * The command used to reset the elevator back to its default position.
+	 */
+	private MoveElevatorAuto elevatorReset;
+
+	/**
+	 * The command used to move the elevator up to the middle of its path.
+	 */
+	private MoveElevatorAuto moveElevatorSwitch;
+
+	/**
+	 * The command used to shoot the cube onto the scale.
+	 */
+	private AutoOutGo shootScale;
+
+	/**
+	 * The command used to shoot the cube onto the switch.
+	 */
+	private AutoOutGo shootSwitch;
+
+	/**
+	 * The command used to intake a cube into the robot.
+	 */
+	private IntakeActivateIn intake;
+
+	/**
+	 * The command used at the start of autonomous to drop the arms of the intake
+	 * down.
+	 */
+	private Fidget fidget;
+
+	/**
+	 * The time, in seconds, that we manually end our autonomous path.
+	 */
+	public static final double timeOut = 15;
+
+	/********** PID VALUES FOR 250 INCHES **********/
+	/**
+	 * P value for 250 inches.
+	 */
+	public static final double p1 = 0.0111;
+
+	/**
+	 * I value for 250 inches.
+	 */
+	public static final double i1 = 0.0;
+
+	/**
+	 * D value for 250 inches.
+	 */
+	public static final double d1 = 0.018;
+	/*********************************************/
+
+	/********** PID VALUES FOR 70 INCHES **********/
+	/**
+	 * P value for 70 inches.
+	 */
+	public static final double p2 = 0.011;
+
+	/**
+	 * I value for 70 inches.
+	 */
+	public static final double i2 = 0.0;
+
+	/**
+	 * D value for 70 inches.
+	 */
+	public static final double d2 = 0.018;
+
+	/*********************************************/
+
+	/**
+	 * Creates all of the paths involved in Left_ScaleAndSwitch.
+	 */
 	public Left_ScaleAndSwitch() {
-		// Creates all of the PID Commands
 		fidget = new Fidget();
 		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 250, p1, i1, d1);
 		secondDistance = new DriveForward(.7);
-		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 70, 0, 0, 0); //TODO: find real value for thirdDistance
+		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 70, 0, 0, 0); // TODO: find real value for thirdDistance
 		fourthDistance = new DriveForward(.7);
 		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 47);
 		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
-		moveElevatorSwitch = new MoveElevatorAuto(1); // 1 for switch
-		moveElevatorScale = new MoveElevatorAuto(2); // 2 for scale
-		elevatorReset = new MoveElevatorAuto(3); // 3 to go back down
+		moveElevatorSwitch = new MoveElevatorAuto(1);
+		moveElevatorScale = new MoveElevatorAuto(2);
+		elevatorReset = new MoveElevatorAuto(3);
 		intake = new IntakeActivateIn();
 		shootScale = new AutoOutGo();
 		shootSwitch = new AutoOutGo();
 	}
 
-	// Begins the command
+	/**
+	 * Run once when the command is started. Starts the first portion of the path
+	 * and sets the timeout of the path.
+	 */
 	public void initialize() {
-		startTime = System.nanoTime()/1000000000.;
-		fidget.start();		
+		fidget.start();
+		setTimeout(timeOut);
 	}
 
-	// Uses the previous commands being null to check if a certain command needs to be started or not. Starts from the bottom of the method
+	/**
+	 * Runs periodically while the command is not finished. Used also to switch
+	 * between commands at different points in our path.
+	 */
 	public void execute() {
-		currentTime = System.nanoTime()/1000000000.;
 
-		
-		if(null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == shootScale && null == secondAngle && null == thirdDistance && null == intake && null == moveElevatorSwitch)
-		{
+		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == shootScale && null == secondAngle && null == thirdDistance && null == intake && null == moveElevatorSwitch) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			
 			fourthDistance.cancel();
 			fourthDistance = null;
-
 			new AutoOutGo();
 		}
-		
-		if(null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == shootScale && null == secondAngle && null == thirdDistance && null == intake && null != moveElevatorSwitch && moveElevatorSwitch.isFinished())
-		{
+
+		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == shootScale && null == secondAngle && null == thirdDistance && null == intake && null != moveElevatorSwitch && moveElevatorSwitch.isFinished()) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-
 			moveElevatorSwitch.cancel();
 			moveElevatorSwitch = null;
-			
 			fourthDistance.start();
 		}
-		
-		if(null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == shootScale && null == secondAngle && null != thirdDistance && thirdDistance.isFinished() && null != intake)
-		{
+
+		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == shootScale && null == secondAngle && null != thirdDistance && thirdDistance.isFinished() && null != intake) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			
 			thirdDistance.cancel();
 			thirdDistance = null;
-			
 			intake.cancel();
 			intake = null;
-
 			moveElevatorSwitch.start();
 		}
-		
-		// If all previous commands are null and secondDistance isFinished && not null, run the thirdDistance Command
-		if(null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == shootScale && null != secondAngle && secondAngle.isFinished())
-		{
+
+		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == shootScale && null != secondAngle && secondAngle.isFinished()) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			
 			secondAngle.cancel();
 			secondAngle = null;
-			
 			thirdDistance.start();
 			intake.start();
 		}
-		if(null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null != shootScale && shootScale.isFinished())
-		{
+
+		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null != shootScale && shootScale.isFinished()) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			
 			shootScale.cancel();
 			shootScale = null;
-			
 			secondAngle.start();
 			elevatorReset.start();
 			new TiltIntake_TimeOut().start();
 		}
-		if(null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && moveElevatorScale.maxHeightReachedTime())
-		{
+
+		if (null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && moveElevatorScale.maxHeightReachedTime()) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			
 			secondDistance.cancel();
 			secondDistance = null;
-			
 			shootScale.start();
 		}
+
 		if (null == fidget && null == firstDistance && null == firstAngle && moveElevatorScale.maxHeightReachedTime() && (!secondDistance.isRunning())) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			secondDistance.start();
 		}
-		if (null == fidget && null == firstDistance && firstAngle != null && firstAngle.isFinished() ) {
+
+		if (null == fidget && null == firstDistance && firstAngle != null && firstAngle.isFinished()) {
 			firstAngle.cancel();
 			firstAngle = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 		}
-		if(moveElevatorScale != null)
-		{
+
+		if (moveElevatorScale != null) {
 			moveElevatorScale.isFinished();
 		}
-		if(moveElevatorScale.maxHeightReachedTime()&&Robot.tiltUpNext)
-		{
-			new TiltIntake_TimeOut().start(); //TODO make var
+
+		if (moveElevatorScale.maxHeightReachedTime() && Robot.tiltUpNext) {
+			new TiltIntake_TimeOut().start();
 		}
-		if(currentTime-startTime>2.5&&!moveElevatorScale.isRunning())
-		{
+
+		if (moveElevatorScale != null && !moveElevatorScale.isRunning()) {
 			moveElevatorScale.start();
 		}
-		else if (null == fidget && null != firstDistance && firstDistance.isFinished()) {
+
+		if (null == fidget && null != firstDistance && firstDistance.isFinished()) {
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			
 			firstAngle.start();
 		}
-		else if(null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
+
+		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
 			fidget.cancel();
 			fidget = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			
 			firstDistance.start();
 		}
 	}
 
+	/**
+	 * Runs periodically to check to see if the path can be finished.
+	 * 
+	 * @return true when the path has timed out.
+	 */
 	@Override
 	public boolean isFinished() {
 		return isTimedOut();
-		
-//		if (firstDistance != null)
-//			return firstDistance.isFinished();
-//		return false;
 	}
-	
+
+	/**
+	 * Run once the isFinished() returns true. Utilizes the default ending of
+	 * AutoPath to shoot out any cubes in the robot.
+	 */
 	@Override
 	protected void end() {
 		super.end();

@@ -26,9 +26,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
-
 import org.usfirst.frc.team5427.robot.OI;
-import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import org.usfirst.frc.team5427.autoCommands.*;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
@@ -50,97 +48,191 @@ import org.usfirst.frc.team5427.util.SameLine;
 import com.kauailabs.navx.frc.AHRS;
 
 /**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.properties file in the
- * project.
+ * Robot is used as the core of the robot's code, and it contains all of the
+ * subsystems of the robot and their core functions.
  */
 @SameLine
 public class Robot extends IterativeRobot {
-	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
+	/**
+	 * OI contains all of the controls that are used on the robot & the commands and
+	 * command groups that are linked to them.
+	 */
 	public static OI oi;
+
+	/**
+	 * DriveTrain contains the SpeedControllers that control the left and right
+	 * sides of the drive train on the robot in order to move.
+	 */
 	public static DriveTrain driveTrain;
+
+	/**
+	 * The SpeedController that controls the front left motor of the drivetrain.
+	 */
 	public static SpeedController motor_pwm_frontLeft;
+
+	/**
+	 * The SpeedController that controls the rear left motor of the drivetrain.
+	 */
 	public static SpeedController motor_pwm_rearLeft;
+
+	/**
+	 * The SpeedControllerGroup that includes the left side of the drivetrain.
+	 */
 	SpeedControllerGroup speedcontrollergroup_left;
+
+	/**
+	 * The SpeedController that controls the front right motor of the drive train.
+	 */
 	public static SpeedController motor_pwm_frontRight;
+
+	/**
+	 * The SpeedController that controls the rear right motor of the drive train.
+	 */
 	public static SpeedController motor_pwm_rearRight;
+
+	/**
+	 * The SpeedControllerGroup that includes the right side of the drive train.
+	 */
 	SpeedControllerGroup speedcontrollergroup_right;
+
+	/**
+	 * The command that controls the drive train and its movement.
+	 */
 	DifferentialDrive drive;
+
+	/**
+	 * The command that uses joystick inputs to manipulate the drive train and other
+	 * subsystems.
+	 */
 	DriveWithJoystick dwj;
-	// Command m_autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
-	public static DoubleSolenoid intakeSolenoid;
+
+	/**
+	 * The SpeedController that controls the left wheel of the intake.
+	 */
 	public static SpeedController motorPWM_Intake_Left;
+
+	/**
+	 * The SpeedController that controls the right wheel of the intake.
+	 */
 	public static SpeedController motorPWM_Intake_Right;
+
+	/**
+	 * The SpeedController that controls the elevator.
+	 */
 	public static SpeedController motorPWM_Elevator;
 
+	/**
+	 * The SpeedController that controls the arm of the climber.
+	 */
 	public static SpeedController motorPWM_ClimberArm;
+
+	/**
+	 * The SpeedController that controls the motor of the climber.
+	 */
 	public static SpeedController motorPWM_Climber;
+
+	/**
+	 * The SpeedController that controls the tilting of the intake.
+	 */
 	public static SpeedController motorPWM_TiltIntake;
 
-
-	// public static SpeedController motorPWM_Climber;
-
-	public static Intake intakeSubsystem;
-	public static Encoder encLeft;
-	// public static Encoder encRight;
-	private String gameData;
-	private int color;
-	private int field_position;
-	private int switch_or_scale;
-	private char switchSide;
-	private char scaleSide;
-	public AutoPath autoPath;
-	public PIDTurn turnToAngle;
-	public PIDStraightMovement moveToDistance;
-	public PIDStraightMovement pi;
-	public static AHRS ahrs;
-	public static DigitalInput elevatorLimitSwitchUp;
-	public static DigitalInput elevatorLimitSwitchDown;
-	public static MoveElevatorUp mou = new MoveElevatorUp();
-	public static MoveElevatorDown mod = new MoveElevatorDown();
-//	public static MoveElevatorFull mofu = new MoveElevatorFull(true);
-//	public static MoveElevatorFull mofd = new MoveElevatorFull(false);
 	/**
-	 * values used for PID loops TODO move these to Config
+	 * The subsystem containing the intake SpeedControllers that controls the
+	 * movement of the intake.
 	 */
-	public double pidRightP = .085000;
-	public double pidRightI = .008333;
-	public double pidRightD = .001042;
-	public double pidLeftP;
-	public double pidLeftI;
-	public double pidLeftD;
-	double rotateToAngleRate = 0;
-	double rightMotorSpeed = 0;
-	double leftMotorSpeed = 0;
+	public static Intake intakeSubsystem;
+
+	/**
+	 * The encoder that is attached to the left side of the drivetrain used to track
+	 * the distance the robot travels.
+	 */
+	public static Encoder encLeft;
+
+	/**
+	 * The String that includes the data sent to us from the FMS before autonomous.
+	 */
+	private String gameData;
+
+	/**
+	 * The field position we select on the SmartDashboard.
+	 */
+	private int field_position;
+
+	/**
+	 * The desired placement of the cube we select on the SmartDashboard.
+	 */
+	private int switch_or_scale;
+
+	/**
+	 * The side of our switch we can control.
+	 */
+	private char switchSide;
+
+	/**
+	 * The side of the scale we can control.
+	 */
+	private char scaleSide;
+
+	/**
+	 * The path that we choose to follow in autonomous, selected based off of our
+	 * selections from the SmartDashboard and the gameData sent via the FMS.
+	 */
+	public AutoPath autoPath;
+
+	/**
+	 * The class representing the NavX on the Robot that reads our current angular
+	 * placement.
+	 */
+	public static AHRS ahrs;
+
+	/**
+	 * The Limit Switch that detects when the Elevator has reached the top of its
+	 * path.
+	 */
+	public static DigitalInput elevatorLimitSwitchUp;
+
+	/**
+	 * The Limit Switch that detects when the Elevator has reached the bottom of its
+	 * path.
+	 */
+	public static DigitalInput elevatorLimitSwitchDown;
+
+	/**
+	 * The command that moves the Elevator up.
+	 */
+	public static MoveElevatorUp mou = new MoveElevatorUp();
+
+	/**
+	 * The command that moves the Elevator down.
+	 */
+	public static MoveElevatorDown mod = new MoveElevatorDown();
+
+	/**
+	 * The server used to send camera data from the RoboRio to the driver station.
+	 */
 	public static CameraServer camServer;
+
+	/**
+	 * The USB Camera attached to the robot for visibility.
+	 */
 	public static UsbCamera usbCam;
-	public static UsbCamera usbCam1;
-	public static AxisCamera axisCam;
-	
+
+	/**
+	 * Used to determine if we need to tilt the intake up next or not.
+	 */
 	public static boolean tiltUpNext = true;
 
 	/**
-	 * This function is run when the robot is first started up and should be used
-	 * for any initialization code.
+	 * Initializes all of the SpeedControllers, Subsystems, and other Objects within
+	 * the core of the code.
 	 */
 	@Override
 	public void robotInit() {
-		// Initialize ports
-		// driveTrain = new DriveTrain();
-		// chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		// Log.init("Initializing driveTrain: ");
 		elevatorLimitSwitchUp = new DigitalInput(Config.ELEVATOR_LIMIT_SWITCH_UP);
 		elevatorLimitSwitchUp.setSubsystem("ELSU");
 		elevatorLimitSwitchDown = new DigitalInput(Config.ELEVATOR_LIMIT_SWITCH_DOWN);
-		// elevatorLimitSwitchUp.free();
-		// elevatorLimitSwitchDown.
 		motor_pwm_frontLeft = new PWMVictorSPX(Config.FRONT_LEFT_MOTOR);
 		motor_pwm_rearLeft = new PWMVictorSPX(Config.REAR_LEFT_MOTOR);
-		// motor_pwm_rearLeft
 		speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
 		motor_pwm_frontRight = new PWMVictorSPX(Config.FRONT_RIGHT_MOTOR);
 		motor_pwm_rearRight = new PWMVictorSPX(Config.REAR_RIGHT_MOTOR);
@@ -152,84 +244,23 @@ public class Robot extends IterativeRobot {
 		motorPWM_Intake_Right = new PWMVictorSPX(Config.INTAKE_MOTOR_RIGHT);
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
 		motorPWM_Elevator = new PWMVictorSPX(Config.ELEVATOR_MOTOR);
-
 		motorPWM_TiltIntake = new PWMVictorSPX(Config.TILT_INTAKE_MOTOR);
-		
 		tiltUpNext = true;
 		motorPWM_ClimberArm = new PWMVictorSPX(Config.CLIMBER_ARM_MOTOR);
 		motorPWM_Climber = new PWMVictorSPX(Config.CLIMBER_MOTOR);
-
-		// motorPWM_Climber = new Spark(Config.CLIMBER_MOTOR);
-
 		try {
 			ahrs = new AHRS(SPI.Port.kMXP);
-		}
-		catch (RuntimeException ex) {
+		} catch (RuntimeException ex) {
 			DriverStation.reportError("Error instantiating navX-MXP: " + ex.getMessage(), true);
 		}
 		encLeft = new Encoder(Config.ENCODER_LEFT_CHANNEL_A, Config.ENCODER_LEFT_CHANNEL_B, false, Encoder.EncodingType.k4X);
-		// encRight = new Encoder(Config.FRONT_RIGHT_MOTOR, Config.REAR_RIGHT_MOTOR,
-		// false, Encoder.EncodingType.k4X);
-		// // Set the Encoder to diameter*pi/360 inches per pulse (each pulse is a
-		// degree)
-		// encRight.setDistancePerPulse((6 * Math.PI / 360));
 		encLeft.setDistancePerPulse((6 * Math.PI / 360));
-		//
-		// need info of ports
-		// Log.init("Initializing Encoders: ");
-		// encoderStraight = new Encoder(0, 0);
-		// encRight = new Encoder(0,1,false,Encoder.EncodingType.k4X);
-		// encLeft = new Encoder(2,3,false,Encoder.EncodingType.k4X);
-		
-		
-		//TODO: Uncomment for camera. This is the only code we need for the camera
-//		camServer = CameraServer.getInstance();
-//		usbCam = new UsbCamera("USB Camera", 0);
-//		usbCam.setFPS(8);
-//		usbCam.setResolution(216, 144);
-//		camServer.startAutomaticCapture(usbCam);
-		
-		
-//		usbCam.setVideoMode(new VideoMode(VideoMode.PixelFormat.kGray,216,144,15));
-//		camServer.addCamera(usbCam); TODO took this line out to see if it helps with disconnects
-//		camServer.
-//		usbCam1 = new UsbCamera("USB Camera", 1);
-//		usbCam1.setFPS(15);
-//		camServer.addCamera(usbCam1);
-//		camServer.startAutomaticCapture(usbCam1);
-		//// axisCam = new AxisCamera("Axis Camera", "10.54.27.11");
-		//// axisCam.setFPS(15);
-		//// camServer.addAxisCamera("Axis Camera", "10.54.27.11");
-		////
-		//// camServer.startAutomaticCapture(axisCam);
-		//
-		// camServer.addServer("USB Camera Server");
-		// camServer.putVideo("USB Camera",100,100);
-		// Log.info("E");
-		//
-		// Log.info("E");
-		//
-		// Log.info("E");
 
-//		axisCam = new AxisCamera("Axis Camera", "10.54.27.62");
-//		axisCam.setFPS(15);
-//		camServer.addAxisCamera("Axis Camera", "10.54.27.62");
-//
-//		camServer.startAutomaticCapture(axisCam);
-//		
-		
-		// TODO DON'T UNCOMMENT THIS!
-//		camServer.addServer("USB Camera Server");
-//		 camServer.putVideo("USB Camera",100,100);
-		
-		
-//		Log.info("E");
-//
-//		Log.info("E");
-//
-//		Log.info("E");
-
-		//
+		camServer = CameraServer.getInstance();
+		usbCam = new UsbCamera("USB Camera", 0);
+		usbCam.setFPS(15);
+		camServer.addCamera(usbCam);
+		camServer.startAutomaticCapture(usbCam);
 		oi = new OI();
 	}
 
@@ -241,49 +272,38 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		Scheduler.getInstance().removeAll();
-		//// encRight.reset();
 		encLeft.reset();
 		ahrs.reset();
-		// SmartDashboard.putNumber("encRightVal", encRight.getDistance());
 		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
-		// SmartDashboard.putNumber("encRight", encRight.getDistance());
-		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
-	}
-
-	@Override
-	public void disabledPeriodic() {
-		// Scheduler.getInstance().run();
-		// SmartDashboard.putNumber("encRightVal", encRight.getDistance());
-		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
-		// SmartDashboard.putNumber("encRight", encRight.getDistance());
 		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 	}
 
 	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable chooser
-	 * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
-	 * remove all of the chooser code and uncomment the getString code to get the
-	 * auto name from the text box below the Gyro
-	 *
-	 * <p>
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons to
-	 * the switch structure below with additional strings & commands.
+	 * This function is called periodically while the robot is in Disabled mode. You
+	 * can use it to maintain zero points of any subsystem information while the
+	 * robot is disabled.
+	 */
+	@Override
+	public void disabledPeriodic() {
+		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
+		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
+	}
+
+	/**
+	 * This function is called once at the beginning of the autonomous period. We
+	 * use it to reset any values immediately before the start of movement and
+	 * obtain the gameData from the FMS. After this, we select and start our
+	 * autonomous based on the gameData and selected values from the SmartDashboard.
+	 * 
+	 * Values: - field_position: - 1 = Right - 2 = Center - 3 = Left -
+	 * switch_or_scale - 1 = Switch - 2 = Scale
 	 */
 	@Override
 	public void autonomousInit() {
 		Scheduler.getInstance().run();
 		tiltUpNext = true;
-		// encRight.reset();
 		encLeft.reset();
 		ahrs.reset();
-		// new PIDStraightMovement(this.speedcontrollergroup_right,
-		// this.speedcontrollergroup_left, .3, 154, 0.0115, 0, 0.005).start();
-		// new PIDTurn(speedcontrollergroup_left, speedcontrollergroup_right,
-		// 90).start();
-		
-		// Receives the array telling us which side of the switch and scale is ours.
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		switchSide = gameData.charAt(0);
 		scaleSide = gameData.charAt(1);
@@ -293,9 +313,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("ScaleSide", scaleSide + "");
 		SmartDashboard.putString("FieldPosition", field_position + "");
 		SmartDashboard.putString("CubePlacement", switch_or_scale + "");
-		
-		// Automatically determines which autonomous to run based on the game data sent to us 
-//		TODO Actual chooser
 		if (field_position == 1) {
 			if (switch_or_scale == 1) {
 				if (switchSide == 'R')
@@ -329,56 +346,19 @@ public class Robot extends IterativeRobot {
 				else if (scaleSide == 'L')
 					autoPath = new Left_ScaleIsLeft();
 			}
-			
 		}
-		if(autoPath!=null)
+		if (autoPath != null)
 			autoPath.start();
-		
-		//TODO Uncomment-118
-//		autoPath = new BaseLine_With_Delay();
-//		if(autoPath!=null)
-//			autoPath.start();
-		
-		
-		
-//		new MoveElevatorAuto(1).start();
-//		
-//		new MoveElevatorAuto(2).start();
-//		 new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 60, 0, 0, 0).start();
-//		 new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 80, 0, 0, 0).start();
-//		new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 30, .02, 0, 0).start();
-
-//		autoPath=new Right_ScaleIsLeft();
-//		autoPath.start();
-		// f = new Fidget();
-		// f.start();
-		// b = false;
-		// Tested and fully functional (within 15 seconds):
-		// Center_SwitchIsLeft, Center_SwitchIsRight, Left_SwitchIsLeft,
-		// Not fully functional:
-		// Left_SwitchIsRight- Takes too long
-		//
-//		autoPath = new Right_ScaleIsRight();
-//		autoPath.start();
 	}
-	// boolean b = false;
-	// Fidget f;
 
 	/**
-	 * This function is called periodically during autonomous.
+	 * This function is called periodically during autonomous. We also use it to
+	 * re-select autonomous if it initially failed during autonomousInit.
 	 */
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		// this.speedcontrollergroup_left.set(.3);
-		// this.speedcontrollergroup_right.set(-.3);
-		// if (f.isFinished() && !b) {
-		// new MoveElevatorAuto(1).start();
-		// b = true;
-		// }
-		// If we didn't pick a path in init, try again until we do. Run the auto we picked
-		if(null==autoPath)
-		{
+		if (null == autoPath) {
 			gameData = DriverStation.getInstance().getGameSpecificMessage();
 			switchSide = gameData.charAt(0);
 			scaleSide = gameData.charAt(1);
@@ -421,75 +401,34 @@ public class Robot extends IterativeRobot {
 					else if (scaleSide == 'L')
 						autoPath = new Left_ScaleIsLeft();
 				}
-				
 			}
-			if(autoPath!=null&&!autoPath.isRunning())
+			if (autoPath != null && !autoPath.isRunning())
 				autoPath.start();
-			
 		}
 	}
 
+	/**
+	 * This function is called once at the beginning of the teleoperated period of
+	 * the match. We use it to cancel our autonomous.
+	 */
 	@Override
 	public void teleopInit() {
-		// SmartDashboard.putBoolean("UPLS", elevatorLimitSwitchUp.get());
-		// SmartDashboard.putBoolean("DLS", elevatorLimitSwitchDown.get());
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
 		if (autoPath != null) {
 			autoPath.cancel();
 		}
-		// encRight.reset();
-		// encLeft.reset();
-		// dwj = new DriveWithJoystick();
-		// dwj.start();
-		/*
-		 * encRight.reset(); encLeft.reset();
-		 * 
-		 * encRight.setDistancePerPulse((6*Math.PI)/360);
-		 * encLeft.setDistancePerPulse((6*Math.PI)/360);
-		 */
-		// 360 cycles per WPILIB REvolution
-		// Even though AndyMark SAYS:
-		// 1440 pulses per revolution
-		// 360 cycles per revolution
-		// 4 pulses per cycle
-		// Log.info();
-		// dwj = new DriveWithJoystick();
-		// x=0;
 	}
 
-	// int x =0;
 	/**
-	 * This function is called periodically during operator control.
+	 * This function is called periodically during the teleoperated period of the
+	 * match. We use it to check the elevator's limit switches periodically.
 	 */
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		if (elevatorLimitSwitchDown.get())
-			SmartDashboard.putNumber("DNLS", 1);
-		else
-			SmartDashboard.putNumber("DNLS", 0);
-		if (elevatorLimitSwitchUp.get())
-			SmartDashboard.putNumber("UPLS", 1);
-		else
-			SmartDashboard.putNumber("UPLS", 0);
-		// TODO This needs to be here for limit switches to work!
-		SmartDashboard.putBoolean("a", mou.isFinished());
-		SmartDashboard.putBoolean("a", mod.isFinished());
-		SmartDashboard.putBoolean("tiltUp", tiltUpNext);
-//		SmartDashboard.putBoolean("a", mofd.isFinished());
-//		SmartDashboard.putBoolean("a", mofu.isFinished());
-		
-		// System.out.print("E:"+elevatorLimitSwitchUp.get());
-		// 4 counts for every rev
-		/*
-		 * SmartDashboard.putNumber("RightCount", encRight.get());
-		 * SmartDashboard.putNumber("LeftCount", encLeft.get());
-		 * 
-		 * SmartDashboard.putNumber("RightDist",encRight.getDistance());
-		 * SmartDashboard.putNumber("LeftDist",encLeft.getDistance());
-		 */
+		// This needs to be here for limit switches to work!
+		elevatorLimitSwitchDown.get();
+		elevatorLimitSwitchUp.get();
+		mou.isFinished();
+		mod.isFinished();
 	}
 }

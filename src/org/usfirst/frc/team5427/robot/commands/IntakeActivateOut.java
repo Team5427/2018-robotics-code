@@ -10,76 +10,69 @@ package org.usfirst.frc.team5427.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
-//import org.usfirst.frc.team5427.util.Log;
-import org.usfirst.frc.team5427.util.NextLine;
+import org.usfirst.frc.team5427.util.SameLine;
 
 /**
- * This command simply sets the speed of the intake motors to the current
- * throttle on the joystick.
+ * This command sets the speed of the intake motors to the config value for
+ * speed (to shoot out cubes). Runs while the outtake button is held down.
  * 
- * @author Blake
+ * @author Blake Romero
  */
+@SameLine
+public class IntakeActivateOut extends Command {
 
-@NextLine
-public class IntakeActivateOut extends Command
-{
-	
-	public IntakeActivateOut()
-	{
-
-		// Use requires() here to declare subsystem dependencies
-//		Log.info("Intake being activated");
+	/**
+	 * The command, IntakeActivateOut, requires the intake subsystem for its use.
+	 */
+	public IntakeActivateOut() {
 		requires(Robot.intakeSubsystem);
 	}
 
-	// Called just before this Command runs the first time
+	/**
+	 * Called once when the command is started. Signifies that this command is able
+	 * to be interrupted by others.
+	 */
 	@Override
-	protected void initialize()
-	{
-//		Log.info("Intake being initialized");
+	protected void initialize() {
 		this.setInterruptible(true);
 	}
 
-	
-	// Called repeatedly when this Command is scheduled to run
+	/**
+	 * Called periodically while the command is running. Sets the speed of the
+	 * intake motors to the config value for speed.
+	 */
 	@Override
-
-	protected void execute()
-	{
-//		Log.info("Intake being executed");
-//		if(Robot.motorPWM_Intake_Left.get)
+	protected void execute() {
 		Robot.intakeSubsystem.setSpeed(Config.INTAKE_MOTOR_SPEED_OUT);
-//		if(Robot.oi.joy1.getThrottle()<0) {
-//			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
-//			Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle());
-//		}
-//		else {
-//			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
-//			Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle());
-//		}
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
+	/**
+	 * Called periodically while the command is running.
+	 * 
+	 * @return if the intake button is released
+	 */
 	@Override
-	protected boolean isFinished()
-	{
-		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_OUT))
+	protected boolean isFinished() {
+		if (Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_OUT))
 			return true;
 		return false;
 	}
 
-	// Called once after isFinished returns true
+	/**
+	 * Called once when the isFinished method returns true. Sets the intake motors
+	 * to 0 power in order to stop them from moving.
+	 */
 	@Override
 	protected void end() {
 		Robot.intakeSubsystem.setSpeed(0);
-//		this.free();
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+	/**
+	 * Called once when the command is interrupted. Calls the end method in order to
+	 * stop the intake motors from moving.
+	 */
 	@Override
 	protected void interrupted() {
-//		Log.info("END TO INTAKE INTERRUPTED");
 		end();
 	}
 }

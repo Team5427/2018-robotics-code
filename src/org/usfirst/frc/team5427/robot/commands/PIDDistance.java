@@ -15,50 +15,73 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * allowing it smoothly reach the desired distance. The other side of the drive
  * train is continually controlled by the PID loop in PIDStraightMovement.
  * 
- * @author Blake
+ * @author Blake Romero
  */
 @SameLine
 public class PIDDistance extends PIDCommand {
-	// This SpeedControllerGroup is the side of the robot that this command
-	// controls.
+	/**
+	 * The SpeedControllers that contain the motors that are controlled by the
+	 * PIDController within this command.
+	 */
 	private SpeedControllerGroup scgPIDControlled;
-	private SpeedControllerGroup scgNot;
-	private Timer timer;
-	boolean timerStarted;
-	// This is the distance we want to travel.
-	double desiredDistance;
-	// This is the max speed for the output range of the PID Controller.
-	double maximumSpeed;
-	private double out;
-	boolean b;
-	
-	//PID values for 20 inches
-	public static final double p20 = 0.02;	//.02
-	public static final double i20 = 0.00001;	//0
-	public static final double d20 = 0.002;	//0
 
 	/**
-	 * Constructor for PIDDistance
+	 * The SpeedControllers that contain the motors that are not controlled by the
+	 * PIDController within this command.
+	 */
+	private SpeedControllerGroup scgNot;
+
+	/**
+	 * The timer that determines when the robot has been within a certain range of
+	 * distance for half of a second.
+	 */
+	private Timer timer;
+
+	/**
+	 * The value that determines if the timer has started.
+	 */
+	boolean timerStarted;
+
+	/**
+	 * The distance we want the robot to travel
+	 */
+	double desiredDistance;
+
+	/**
+	 * The maximum speed the PIDController can output to the motors on the robot.
+	 */
+	double maximumSpeed;
+
+	/**
+	 * Creates the PIDController for this command using received PID values and sets
+	 * the parameters of its control.
 	 * 
 	 * @param scgPIDControlled
-	 *            - This receives the side of the robot that we are controlling with
-	 *            this PIDCommand.
+	 *            the side of the robot that we are controlling with this
+	 *            PIDCommand.
 	 * @param maximumSpeed
-	 *            - This receives the maximum speed that the robot will travel at.
+	 *            the maximum speed that the robot will travel at.
 	 * @param desiredDistance
-	 *            - This receives the distance that we want to travel.
-	 * @param p,
-	 *            i, d - These receive the P, I, and D values for the PID
-	 *            Controller.
+	 *            the distance that we want to travel.
+	 * @param p
+	 *            the P value for this PIDController.
+	 * @param i
+	 *            the I value for this PIDController.
+	 * @param d
+	 *            the D value for this PIDController
 	 */
 	public PIDDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgNot, double maximumSpeed, double desiredDistance, double p, double i, double d) {
-		super(p, i, d, Config.PID_UPDATE_PERIOD); // TODO Change back to .02
+		super(p, i, d, Config.PID_UPDATE_PERIOD);
+
 		this.desiredDistance = desiredDistance;
 		this.scgPIDControlled = scgPIDControlled;
 		this.maximumSpeed = maximumSpeed;
+
 		super.getPIDController().setOutputRange(-maximumSpeed, maximumSpeed);
 		super.getPIDController().setSetpoint(desiredDistance);
-		this.scgNot=scgNot;
+
+		this.scgNot = scgNot;
+
 		timer = new Timer();
 	}
 
@@ -69,16 +92,10 @@ public class PIDDistance extends PIDCommand {
 	 */
 	@Override
 	protected void initialize() {
-		System.out.println("INITIALIZING PID DISTANCE");
-		
 		super.getPIDController().enable();
 		timerStarted = false;
-		b=true;
 	}
 
-	public double getPIDOut()
-	{return out;}
-	
 	/**
 	 * Command implemented from PIDCommand This returns the value to be used by the
 	 * PID loop. We are returning the distance traveled by the robot as measured by
@@ -93,53 +110,37 @@ public class PIDDistance extends PIDCommand {
 	 * Command implemented from PIDCommand This is sent the output from the PID loop
 	 * for us to use. We are setting the side of the robot that we control in this
 	 * PID loop to the output to travel a certain distance.
+	 * 
+	 * @param output
+	 *            The output from the PID loop
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber("PID Output Coasting", output);
 		this.scgPIDControlled.pidWrite(output);
-		this.out=output;
-//		if(Math.abs(desiredDistance - Math.abs(Robot.encLeft.getDistance())) <= Config.PID_STRAIGHT_ACTIVATE_DISTANCE) {
-//			
-////			this.scgNot.set(output);
-//			System.out.print("Doing the 2nd pid output");
-//			this.scgPIDControlled.pidWrite(output);
-//			b=false;
-//		}
-//		else if(b) {
-////			this.scgNot.set(maximumSpeed);
-//			this.scgPIDControlled.pidWrite(maximumSpeed);
-//		}
-////		SmartDashboard.putNumber("SCGconstant", scgPIDControlled.get());
-//
-//		 if(this.returnPIDInput()>this.desiredDistance)
-//			 super.getPIDController().setOutputRange(-.2, .2);//TODO do not set if already set
-////		 if(this.returnPIDInput()>(this.desiredDistance*.75))
-////		 {
-////		 this.maximumSpeed*=0.95;
-//		 super.getPIDController().setOutputRange(-this.maximumSpeed,this.maximumSpeed);
-//		 }
 	}
 
-	/*
+	/**
 	 * Command implemented from PIDCommand. When this returns true, the command runs
 	 * end() Our method returns true if the robot has traveled close enough to the
 	 * certain distance, with our tolerance.
+	 * 
+	 * @return if the robot has been within a range of inches for half of a second.
 	 */
 	@Override
 	protected boolean isFinished() {
-		// TODO NOT untested !
 		double distFromSetpoint = Math.abs(desiredDistance - (Math.abs(Robot.encLeft.getDistance())));
 		boolean inRange = distFromSetpoint < Config.PID_STRAIGHT_TOLERANCE;
+
 		if (inRange && Math.abs(Robot.ahrs.getYaw()) < 3) {
+
 			if (!timerStarted) {
 				timer.reset();
 				timer.start();
 				timerStarted = true;
 			}
-			else if (timer.get() > 0.5 && timerStarted) {
-				return true;
-			}
+
+			else if (timer.get() > 0.5 && timerStarted) { return true; }
 		}
 		else {
 			timer.reset();
@@ -158,6 +159,7 @@ public class PIDDistance extends PIDCommand {
 	public void end() {
 		scgPIDControlled.set(0);
 		scgNot.set(0);
+
 		super.end();
 		free();
 	}
@@ -173,6 +175,7 @@ public class PIDDistance extends PIDCommand {
 		super.free();
 		super.getPIDController().disable();
 		super.getPIDController().reset();
+
 		scgPIDControlled.set(0);
 	}
 
@@ -182,6 +185,5 @@ public class PIDDistance extends PIDCommand {
 	 */
 	public double getDistance() {
 		return Math.abs(Robot.encLeft.getDistance());
-		//return (Math.abs(Robot.encLeft.getDistance()) + Math.abs(Robot.encRight.getDistance())) / 2.0;
 	}
 }
