@@ -11,32 +11,38 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 
 /**
- * This class is used to move the robot backwards by setting the motors of each side of the driveTrain to reverse
+ * This command is used to move the robot backwards for a specified amount of time.
+ * 
+ * @author Kipp Corman
  */
 public class DriveBackward extends Command {
+	
+	/**
+	 * The time that the robot will drive backwards for.
+	 */
 	private double time;
 	
 	/**
-	 * Sets the timeout of the command in seconds
+	 * Receives the time the robot should drive backwards for and sets the timeout to that.
+	 * Requires the drive train subsystem.
 	 * 
-	 * @param time
+	 * @param time - the time the robot should drive backwards for.
 	 */
 	public DriveBackward(double time) {
-		// Use requires() here to declare subsystem dependencies
 		requires(Robot.driveTrain);
 		setTimeout(time);
 	}
 
 	/**
-	 *  Called just before this Command runs the first time
+	 * Called once when the command is started but is not used for anything.
 	 */
 	@Override
 	protected void initialize() {
-		//this.setTimeout(this.time);
 	}
 
 	/**
-	 * Sets the left and right motors of the driveTrain to .3 (right is positive because it is orientated differently)
+	 * Called periodically while the command is running.
+	 * Sets the velocity of the drive train to .3 power backwards.
 	 */
 	@Override
 	protected void execute() {
@@ -45,9 +51,9 @@ public class DriveBackward extends Command {
 	}
 
 	/**
-	 *  Make this return true when this Command no longer needs to run execute()
-	 *  
-	 *  @return true if the set time is out
+	 * Called periodically while the command is running to check when the command is finished.
+	 * 
+	 * @return true when the command times out. 
 	 */
 	@Override
 	public boolean isFinished() {
@@ -55,7 +61,8 @@ public class DriveBackward extends Command {
 	}
 
 	/**
-	 *  Sets the right and left motors to 0
+	 * Called once when the command is finished.
+	 * Sets the velocity of the drive train to 0 power.
 	 */
 	@Override
 	protected void end() {
@@ -64,7 +71,8 @@ public class DriveBackward extends Command {
 	}
 
 	/**
-	 * Sets the right and left motors to 0
+	 * Called once if the command is interrupted.
+	 * Calls the end method in response.	 
 	 */
 	@Override
 	protected void interrupted() {

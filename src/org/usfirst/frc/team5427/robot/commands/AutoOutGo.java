@@ -10,26 +10,33 @@ package org.usfirst.frc.team5427.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
+import org.usfirst.frc.team5427.util.SameLine;
 
 /**
- * This class is used to deliver cubes in autonomous by activating the intake 
+ * This is our command that shoots a cube out of the robot automatically.
+ * 
+ * @author Blake Romero
  */
+@SameLine
 public class AutoOutGo extends Command {
+	
+	/**
+	 * AutoOutGo requires the intake subsystem and its timeout is set via Config.
+	 */
 	public AutoOutGo() {
-		// Use requires() here to declare subsystem dependencies
 		requires(Robot.intakeSubsystem);
 		this.setTimeout(Config.AUTO_INTAKE_TIMEOUT);
 	}
 
 	/**
-	 * Called just before this Command runs the first time
+	 * Called once when the command is started but is not currently being used.
 	 */
 	@Override
 	protected void initialize() {
 	}
 
 	/**
-	 *  Sets the intake motor speed to .5
+	 * Called periodically while the command is running to set the speed of the intake to -.5 power.
 	 */
 	@Override
 	protected void execute() {
@@ -37,7 +44,9 @@ public class AutoOutGo extends Command {
 	}
 
 	/**
-	 *  Make this return true when this Command no longer needs to run execute()
+	 * Called periodically while the command is running to check when it is finished.
+	 * 
+	 * @return true when the command times out.
 	 */
 	@Override
 	public boolean isFinished() {
@@ -45,7 +54,8 @@ public class AutoOutGo extends Command {
 	}
 
 	/**
-	 *  Sets the intake speed to 0
+	 * Called once when isFinished() returns true.
+	 * Sets the speed of the intake to 0 power.
 	 */
 	@Override
 	protected void end() {
@@ -53,7 +63,8 @@ public class AutoOutGo extends Command {
 	}
 
 	/** 
-	 * Sets the intake speed to 0
+	 * Called once if the command is interrupted.
+	 * Sets the speed of the intake to 0 power.
 	 */
 	@Override
 	protected void interrupted() {
