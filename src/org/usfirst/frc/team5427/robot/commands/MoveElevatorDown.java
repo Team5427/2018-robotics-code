@@ -14,45 +14,71 @@ import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.NextLine;
 
 /**
- * @author Blake This command
+ * @author Blake Romero Command
+ * @author Akshat Jain Commenting
  */
 
 @NextLine
 public class MoveElevatorDown extends Command {
-
+	/**
+	 * Makes MoveElevatorDown object.
+	 * 
+	 * Moves the elevator down until button has stop being pressed
+	 * Or lower limit switch is pressed.
+	 */
 	public MoveElevatorDown() {
 	}
 
-	// Called just before this Command runs the first time
+	/*
+	 * Sets the elevator motor to .5 speed down.
+	 * @see edu.wpi.first.wpilibj.command.Command#initialize()
+	 */
 	@Override
 	protected void initialize() {
 		this.setInterruptible(true);
-	}
-
-	// Called repeatedly when this Command is scheduled to run
-	@Override
-	protected void execute() {
 		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_DOWN);
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
+	/**
+	 * Scheduler continually calls this method.
+	 * Does not do anything.
+	 * @see edu.wpi.first.wpilibj.command.Command#execute()
+	 */
 	@Override
-	public boolean isFinished() {
-//		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_ELEVATOR_DOWN))
-//			return true;
-		if(!Robot.elevatorLimitSwitchDown.get())
-			return true;
-		return false;
+	protected void execute() {
 	}
 
-	// Called once after isFinished returns true
+	/**
+	 * If lower limit switch is true,
+	 * the robot is at its lowest height.
+	 * Method returns true and calls end()
+	 * @see edu.wpi.first.wpilibj.command.Command#isFinished()
+	 */
+	@Override
+	public boolean isFinished() {
+		if(!Robot.elevatorLimitSwitchDown.get()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Stops the motion of the Elevator.
+	 * When isFinished returns true
+	 * Or command is interrupted.
+	 * @see edu.wpi.first.wpilibj.command.Command#end()
+	 */
 	@Override
 	protected void end() {
 		Robot.motorPWM_Elevator.set(0);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+	/**
+	 * Ends command when command is interrupted
+	 * @see edu.wpi.first.wpilibj.command.Command#interrupted()
+	 */
 	@Override
 	protected void interrupted() {
 		end();

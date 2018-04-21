@@ -13,50 +13,32 @@ import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.NextLine;
 
 /**
- * This command simply sets the speed of the intake motors 
- * to the config value for speed (to pick up cubes).
+ * This command simply sets the speed of the intake motors
+ * to the config value for speed (to pick up cubes). Runs 
+ * while the intake button is held down.
  * 
- * @author Blake
+ * @author Blake Romero
  */
 
-@NextLine
-public class IntakeActivateIn extends Command
-{
+public class IntakeActivateIn extends Command {
 	
-	public IntakeActivateIn()
-	{
-		// Use requires() here to declare subsystem dependencies
-		// Log.info("Intake being activated");
+	public IntakeActivateIn() {
 		requires(Robot.intakeSubsystem);
 	}
 
-	/**
-	 *  Called just before this Command runs the first time
-	 */
+	// Called just before this Command runs the first time
 	@Override
-	protected void initialize()
-	{
-		// Log.info("Intake being initialized");
+	protected void initialize() {
 		this.setInterruptible(true);
 	}
 
 	
 	/**
-	 *  Sets the speed of the intake motor to the config value for speed
+	 *  Sets the speed of the intake motors to the config value for speed.
 	 */
 	@Override
-	protected void execute()
-	{
-//		Log.info("Intake being executed");
+	protected void execute() {
 		Robot.intakeSubsystem.setSpeed(Config.INTAKE_MOTOR_SPEED_IN);
-//		if(Robot.oi.joy1.getThrottle()<0) {
-//			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
-//			Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle());
-//		}
-//		else {
-//			Robot.intakeSubsystem.setSpeed(Robot.oi.joy1.getThrottle());
-//			Log.info("Throttle Value: "+Robot.oi.joy1.getThrottle());
-//		}
 	}
 
 	/**

@@ -13,20 +13,17 @@ import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
 /**
- * @author Akshat
+ * @author Akshat Jain Command
+ * @author Akshat Jain Commenting
  * This command will be called in autonomous to set the elevator to the height of the switch or scale,
  * depending on which value we send it.
  */
 public class MoveElevatorFull extends Command {
-	// Height = 1: Switch. Height = 2: Scale.
-
 	public static boolean up = true;
 	public MoveElevatorFull(boolean up) {
 		this.up=up;
-		//requires(Robot.kExampleSubsystem);
 	}
 
-	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
 		if(this.up) {
@@ -37,7 +34,6 @@ public class MoveElevatorFull extends Command {
 		}
 	}
 
-	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
 		if(this.up) {
@@ -52,13 +48,8 @@ public class MoveElevatorFull extends Command {
 		return isTimedOut();
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	public boolean isFinished() {
-		// TODO change Config values for time
-//		if((height == 1 && timer.get() > Config.ELEVATOR_TIME_SWITCH) || (height == 2 && timer.get() > Config.ELEVATOR_TIME_SCALE))
-//			return true;
-//		return false;
 		if(this.up) {
 			if(!Robot.elevatorLimitSwitchUp.get()) {
 				Robot.motorPWM_Elevator.set(0);
@@ -71,26 +62,19 @@ public class MoveElevatorFull extends Command {
 				return true;
 			return false;
 		}
-//		else {
-//			Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
-//		}
+
 		
 	}
 
-	// Called once after isFinished returns true
 	@Override
 	protected void end() {
 		Robot.motorPWM_Elevator.set(0);
-//		timer.reset();
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+
 	@Override
 	protected void interrupted() {
-//		Robot.motorPWM_Elevator.disable();
 		Robot.motorPWM_Elevator.set(0);
 		end();
-//		timer.reset();
 	}
 }
