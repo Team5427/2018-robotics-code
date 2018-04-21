@@ -68,6 +68,7 @@ public class OI {
 	Button motorIntakeOut;
 	Button elevatorUp;
 	Button elevatorDown;
+	Button elevatorDownFull;
 	Button climberArmUp;
 	Button climberArmDown;
 	Button intakeTilterToggle;
@@ -95,6 +96,7 @@ public class OI {
         motorIntakeOut = new JoystickButton(joy1, Config.BUTTON_MOTOR_INTAKE_OUT);
         elevatorUp = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_UP);
         elevatorDown = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_DOWN);
+        elevatorDownFull = new JoystickButton(joy1, Config.BUTTON_ELEVATOR_DOWN_FULL);
 //      elevatorAutoFull = new JoystickButton(joy1, Config.BUTTON_ELEVATOR_FULL);
         softOutGo =  new JoystickButton(joy1,Config.BUTTON_MOTOR_INTAKE_OUT_SLOW);
 //        climberArmUp = new JoystickButton(joy1,Config.BUTTON_CLIMBER_ARM_UP);
@@ -112,6 +114,7 @@ public class OI {
         
         elevatorUp.whileHeld(Robot.mou);
         elevatorDown.whileHeld(Robot.mod);
+        elevatorDownFull.whileHeld(Robot.modf);
         
         elevatorUp.toggleWhenPressed(Robot.mou);
         elevatorDown.toggleWhenPressed(Robot.mod);

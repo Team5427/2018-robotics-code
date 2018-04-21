@@ -35,6 +35,7 @@ import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorDown;
+import org.usfirst.frc.team5427.robot.commands.MoveElevatorDownFull;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorFull;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorUp;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
@@ -101,6 +102,7 @@ public class Robot extends IterativeRobot {
 	public static DigitalInput elevatorLimitSwitchDown;
 	public static MoveElevatorUp mou = new MoveElevatorUp();
 	public static MoveElevatorDown mod = new MoveElevatorDown();
+	public static MoveElevatorDownFull modf = new MoveElevatorDownFull();
 //	public static MoveElevatorFull mofu = new MoveElevatorFull(true);
 //	public static MoveElevatorFull mofd = new MoveElevatorFull(false);
 	/**

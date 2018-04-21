@@ -79,6 +79,7 @@ public class Config {
 	public static final double INTAKE_MOTOR_SPEED_SLOW_OUT= -1.0;
 	public static final double ELEVATOR_MOTOR_SPEED_UP=0.8; //this speed is final
 	public static final double ELEVATOR_MOTOR_SPEED_DOWN=-.5; ///this speed is final
+	public static final double ELEVATOR_MOTOR_SPEED_DOWN_FULL=-1; 
 	
 	public static final double CLIMBER_ARM_MOTOR_SPEED_UP=0.5;
 	public static final double CLIMBER_ARM_MOTOR_SPEED_DOWN=-0.3; //-.1
@@ -101,6 +102,7 @@ public class Config {
 //	public static final int BUTTON_SOLENOD_INTAKE = 2;
 	public static final int BUTTON_ELEVATOR_UP = 5;
 	public static final int BUTTON_ELEVATOR_DOWN= 3;
+	public static final int BUTTON_ELEVATOR_DOWN_FULL= 9;
 //	public static final int BUTTON_ELEVATOR_FULL= 2;
 //	public static final int BUTTON_CLIMBER_UP = 2;
 //	public static final int BUTTON_CLIMBER_DOWN = 8;

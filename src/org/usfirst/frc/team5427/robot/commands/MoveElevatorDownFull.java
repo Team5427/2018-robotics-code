@@ -18,9 +18,9 @@ import org.usfirst.frc.team5427.util.NextLine;
  */
 
 @NextLine
-public class MoveElevatorDown extends Command {
+public class MoveElevatorDownFull extends Command {
 	
-	public MoveElevatorDown() {
+	public MoveElevatorDownFull() {
 	}
 
 	// Called just before this Command runs the first time
@@ -32,7 +32,7 @@ public class MoveElevatorDown extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_DOWN);
+		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_DOWN_FULL);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
