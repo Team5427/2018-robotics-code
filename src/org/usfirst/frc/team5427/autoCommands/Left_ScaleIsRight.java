@@ -23,12 +23,12 @@ public class Left_ScaleIsRight extends AutoPath {
 	/**
 	 * The first distance of the path. It travels 224 inches forward at .7 power.
 	 */
-	private PIDStraightMovement firstDistance;
+	private Left_ScaleIsRight_FirstDistance firstDistance;
 
 	/**
 	 * The first turn of the path. It turns 85 degrees clockwise.
 	 */
-	private PIDTurn firstAngle;
+	private Left_ScaleIsRight_FirstAngle firstAngle;
 
 	/**
 	 * The command used at the start of autonomous to drop the arms of the intake
@@ -64,8 +64,8 @@ public class Left_ScaleIsRight extends AutoPath {
 	 */
 	public Left_ScaleIsRight() {
 		fidget = new Fidget();
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, .7, 224, p1, i1, d1);
-		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 85);
+		firstDistance = new Left_ScaleIsRight_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		firstAngle = new Left_ScaleIsRight_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 	}
 
 	/**
