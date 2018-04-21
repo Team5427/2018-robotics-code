@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Ethan Bennikutty, Varsha Kumar
  */
 @SameLine
-public class Right_ScaleIsRight_FirstAngle extends PIDCommand {
+public class Right_ScaleIsLeft_FirstAngle extends PIDCommand {
 	/**
 	 * Two SpeedControllerGroup objects to be controlled by this PID Loop
 	 */
@@ -24,7 +24,7 @@ public class Right_ScaleIsRight_FirstAngle extends PIDCommand {
 	/**
 	 * The setpoint in degrees the PID loops wants to turn to
 	 */
-	double setPoint = -51;
+	double setPoint = -88;
 
 	/**
 	 * Times the command for the isFinished method
@@ -48,7 +48,7 @@ public class Right_ScaleIsRight_FirstAngle extends PIDCommand {
 	 * @param scgLeft
 	 *            the speed controller group on the left side of the robot
 	 */
-	public Right_ScaleIsRight_FirstAngle(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft) {
+	public Right_ScaleIsLeft_FirstAngle(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft) {
 		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_UPDATE_PERIOD);
 		this.scgRight = scgRight;
 		this.scgLeft = scgLeft;
