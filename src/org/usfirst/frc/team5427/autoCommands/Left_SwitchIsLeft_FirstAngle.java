@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * This command turns the robot 85 degrees clockwise.
- * Used in the Left_ScaleIsRight command.
+ * This command turns the robot 90 degrees clockwise.
+ * Used in the Left_SwitchIsLeft command.
  * 
  * @author Andrew Li
  */
 @SameLine
-public class Left_ScaleIsRight_FirstAngle extends PIDCommand {
+public class Left_SwitchIsLeft_FirstAngle extends PIDCommand {
 	/**
 	 * Two SpeedControllerGroup objects to be controlled by this PID Loop
 	 */
@@ -46,11 +46,11 @@ public class Left_ScaleIsRight_FirstAngle extends PIDCommand {
 	 * @param scgLeft
 	 *            the speed controller group on the left side of the robot
 	 */
-	public Left_ScaleIsRight_FirstAngle(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft) {
+	public Left_SwitchIsLeft_FirstAngle(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft) {
 		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_UPDATE_PERIOD);
 		this.scgRight = scgRight;
 		this.scgLeft = scgLeft;
-		setPoint = 47;
+		setPoint = 90;
 
 		super.setInputRange(-180, 180);
 		super.setSetpoint(setPoint);

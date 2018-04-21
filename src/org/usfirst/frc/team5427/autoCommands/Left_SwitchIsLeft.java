@@ -22,23 +22,23 @@ public class Left_SwitchIsLeft extends AutoPath {
 	 * The first distance of the path. It travels 154 inches forward at our short
 	 * power.
 	 */
-	private PIDStraightMovement firstDistance;
+	private Left_SwitchIsLeft_FirstDistance firstDistance;
 
 	/**
 	 * The second distance of the path. It travels 16 inches forward at our short
 	 * power.
 	 */
-	private PIDStraightMovement secondDistance;
+	private Left_SwitchIsLeft_SecondDistance secondDistance;
 
 	/**
 	 * The first turn of the path. It turns 90 degrees clockwise.
 	 */
-	private PIDTurn firstAngle;
+	private Left_SwitchIsLeft_FirstAngle firstAngle;
 
 	/**
 	 * The command that moves the elevator up to its top position.
 	 */
-	private MoveElevatorAuto moveElevator;
+	private Left_SwitchIsLeft_MoveElevator moveElevator;
 
 	/**
 	 * The command used at the start of autonomous to drop the arms of the intake
@@ -91,10 +91,10 @@ public class Left_SwitchIsLeft extends AutoPath {
 	 */
 	public Left_SwitchIsLeft() {
 		fidget = new Fidget();
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 154, p1, i1, d1);
-		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 90);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 16, p2, i2, d2);
-		moveElevator = new MoveElevatorAuto(1);
+		firstDistance = new Left_SwitchIsLeft_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		firstAngle = new Left_SwitchIsLeft_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		secondDistance = new Left_SwitchIsLeft_SecondDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		moveElevator = new Left_SwitchIsLeft_MoveElevator();
 	}
 
 	/**
