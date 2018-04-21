@@ -83,6 +83,7 @@ public class Right_SwitchIsRight extends AutoPath {
 	 * D value for 16 inches.
 	 */
 	public static final double d2 = 0.006;
+
 	/*********************************************/
 
 	/**
@@ -110,7 +111,8 @@ public class Right_SwitchIsRight extends AutoPath {
 	 * between commands at different points in our path.
 	 */
 	public void execute() {
-		if (moveElevator != null) moveElevator.isFinished();
+		if (moveElevator != null)
+			moveElevator.isFinished();
 
 		if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !(secondDistance.isRunning())) {
 			firstAngle.cancel();
@@ -144,7 +146,8 @@ public class Right_SwitchIsRight extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (firstAngle == null && secondDistance.isFinished()) return true;
+		if (firstAngle == null && secondDistance.isFinished())
+			return true;
 		return false;
 
 	}

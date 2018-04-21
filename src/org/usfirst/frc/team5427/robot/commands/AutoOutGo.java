@@ -19,7 +19,7 @@ import org.usfirst.frc.team5427.util.SameLine;
  */
 @SameLine
 public class AutoOutGo extends Command {
-	
+
 	/**
 	 * AutoOutGo requires the intake subsystem and its timeout is set via Config.
 	 */
@@ -32,11 +32,11 @@ public class AutoOutGo extends Command {
 	 * Called once when the command is started but is not currently being used.
 	 */
 	@Override
-	protected void initialize() {
-	}
+	protected void initialize() {}
 
 	/**
-	 * Called periodically while the command is running to set the speed of the intake to -.5 power.
+	 * Called periodically while the command is running to set the speed of the
+	 * intake to -.5 power.
 	 */
 	@Override
 	protected void execute() {
@@ -44,7 +44,8 @@ public class AutoOutGo extends Command {
 	}
 
 	/**
-	 * Called periodically while the command is running to check when it is finished.
+	 * Called periodically while the command is running to check when it is
+	 * finished.
 	 * 
 	 * @return true when the command times out.
 	 */
@@ -54,17 +55,17 @@ public class AutoOutGo extends Command {
 	}
 
 	/**
-	 * Called once when isFinished() returns true.
-	 * Sets the speed of the intake to 0 power.
+	 * Called once when isFinished() returns true. Sets the speed of the intake to 0
+	 * power.
 	 */
 	@Override
 	protected void end() {
 		Robot.intakeSubsystem.setSpeed(0);
 	}
 
-	/** 
-	 * Called once if the command is interrupted.
-	 * Sets the speed of the intake to 0 power.
+	/**
+	 * Called once if the command is interrupted. Sets the speed of the intake to 0
+	 * power.
 	 */
 	@Override
 	protected void interrupted() {

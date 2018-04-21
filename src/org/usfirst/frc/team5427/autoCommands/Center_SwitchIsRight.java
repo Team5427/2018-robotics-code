@@ -102,7 +102,8 @@ public class Center_SwitchIsRight extends AutoPath {
 	public void execute() {
 		currentTime = System.nanoTime() / 1000000000.;
 
-		if (moveElevator != null) moveElevator.isFinished();
+		if (moveElevator != null)
+			moveElevator.isFinished();
 
 		if (currentTime - startTime > 0.8 && !moveElevator.isRunning() && !moveElevator.isFinished()) {
 			moveElevator.start();
@@ -123,7 +124,8 @@ public class Center_SwitchIsRight extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (firstDistance.isFinished()) return true;
+		if (firstDistance.isFinished())
+			return true;
 		return isTimedOut();
 	}
 

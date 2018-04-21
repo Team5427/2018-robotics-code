@@ -8,7 +8,7 @@ package org.usfirst.frc.team5427.util;
  * @author Andrew Kennedy, Bo Corman
  *
  */
-@SuppressWarnings(value = { "all" })
+@SuppressWarnings(value = {"all"})
 
 public class Log {
 	private static String s = "";
@@ -38,8 +38,7 @@ public class Log {
 	 * @param text
 	 */
 	public static void log(String logLevel, String text) {
-		if (Config.LOGGING || logLevel == "[ERROR]" || logLevel == "[FATAL]")
-			System.out.println(Config.PROGRAM_NAME + " " + logLevel + " " + text);
+		if (Config.LOGGING || logLevel == "[ERROR]" || logLevel == "[FATAL]") System.out.println(Config.PROGRAM_NAME + " " + logLevel + " " + text);
 	}
 
 	/**
@@ -67,8 +66,7 @@ public class Log {
 	 * @param text
 	 */
 	public static void debug(String text) {
-		if (Config.DEBUG_MODE)
-			log("[DEBUG]", text);
+		if (Config.DEBUG_MODE) log("[DEBUG]", text);
 	}
 
 	/**
@@ -87,7 +85,7 @@ public class Log {
 	 * @param text
 	 */
 	public static void info(String text) {
-//		log("[INFO]", text);
+		// log("[INFO]", text);
 	}
 
 	/**

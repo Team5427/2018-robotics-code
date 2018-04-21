@@ -83,6 +83,7 @@ public class Left_SwitchIsLeft extends AutoPath {
 	 * D value for 16 inches.
 	 */
 	public static final double d2 = 0.006;
+
 	/*********************************************/
 
 	/**
@@ -111,7 +112,8 @@ public class Left_SwitchIsLeft extends AutoPath {
 	 */
 	public void execute() {
 
-		if (moveElevator != null) moveElevator.isFinished();
+		if (moveElevator != null)
+			moveElevator.isFinished();
 
 		if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !secondDistance.isRunning()) {
 			firstAngle.cancel();
@@ -145,7 +147,8 @@ public class Left_SwitchIsLeft extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (firstAngle == null && secondDistance.isFinished()) return true;
+		if (firstAngle == null && secondDistance.isFinished())
+			return true;
 		return isTimedOut();
 	}
 

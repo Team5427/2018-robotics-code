@@ -10,27 +10,26 @@ package org.usfirst.frc.team5427.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
-//import org.usfirst.frc.team5427.util.Log;
-import org.usfirst.frc.team5427.util.NextLine;
+import org.usfirst.frc.team5427.util.SameLine;
 
 /**
+ * This command moves the elevator downwards along its path and stops whenever the lower limit switch is activated.
  * @author Blake Romero Command
- * @author Akshat Jain Commenting
  */
 
-@NextLine
+@SameLine
 public class MoveElevatorDown extends Command {
 	/**
 	 * Makes MoveElevatorDown object.
 	 * 
-	 * Moves the elevator down until button has stop being pressed
-	 * Or lower limit switch is pressed.
+	 * Moves the elevator down until button has stop being pressed Or lower limit
+	 * switch is pressed.
 	 */
-	public MoveElevatorDown() {
-	}
+	public MoveElevatorDown() {}
 
 	/*
 	 * Sets the elevator motor to .5 speed down.
+	 * 
 	 * @see edu.wpi.first.wpilibj.command.Command#initialize()
 	 */
 	@Override
@@ -40,23 +39,22 @@ public class MoveElevatorDown extends Command {
 	}
 
 	/**
-	 * Scheduler continually calls this method.
-	 * Does not do anything.
+	 * Scheduler continually calls this method. Does not do anything.
+	 * 
 	 * @see edu.wpi.first.wpilibj.command.Command#execute()
 	 */
 	@Override
-	protected void execute() {
-	}
+	protected void execute() {}
 
 	/**
-	 * If lower limit switch is true,
-	 * the robot is at its lowest height.
-	 * Method returns true and calls end()
+	 * If lower limit switch is true, the robot is at its lowest height. Method
+	 * returns true and calls end()
+	 * 
 	 * @see edu.wpi.first.wpilibj.command.Command#isFinished()
 	 */
 	@Override
 	public boolean isFinished() {
-		if(!Robot.elevatorLimitSwitchDown.get()) {
+		if (!Robot.elevatorLimitSwitchDown.get()) {
 			return true;
 		}
 		else {
@@ -65,9 +63,9 @@ public class MoveElevatorDown extends Command {
 	}
 
 	/**
-	 * Stops the motion of the Elevator.
-	 * When isFinished returns true
-	 * Or command is interrupted.
+	 * Stops the motion of the Elevator. When isFinished returns true Or command is
+	 * interrupted.
+	 * 
 	 * @see edu.wpi.first.wpilibj.command.Command#end()
 	 */
 	@Override
@@ -77,6 +75,7 @@ public class MoveElevatorDown extends Command {
 
 	/**
 	 * Ends command when command is interrupted
+	 * 
 	 * @see edu.wpi.first.wpilibj.command.Command#interrupted()
 	 */
 	@Override

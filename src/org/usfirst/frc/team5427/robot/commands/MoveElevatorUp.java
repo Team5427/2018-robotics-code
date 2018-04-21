@@ -10,25 +10,24 @@ package org.usfirst.frc.team5427.robot.commands;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 //import org.usfirst.frc.team5427.util.Log;
-import org.usfirst.frc.team5427.util.NextLine;
+import org.usfirst.frc.team5427.util.SameLine;
 
 /**
- * @author Blake Romero Command
- * @author Akshat Jain Commenting
+ * This command moves the elevator upwards along its path and stops whenever the upper limit switch is activated.
+ * 
+ * @author Blake Romero 
  */
-
-@NextLine
+@SameLine
 public class MoveElevatorUp extends Command {
-	
+
 	/**
 	 * Makes MoveElevatorUp object.
 	 * 
-	 * Moves the elevator up until button has stop being pressed
-	 * Or upper limit switch is pressed.
+	 * Moves the elevator up until button has stop being pressed Or upper limit
+	 * switch is pressed.
 	 */
 	public MoveElevatorUp() {
 
@@ -36,6 +35,7 @@ public class MoveElevatorUp extends Command {
 
 	/*
 	 * Sets the elevator motor to .8 speed up.
+	 * 
 	 * @see edu.wpi.first.wpilibj.command.Command#initialize()
 	 */
 	@Override
@@ -44,38 +44,35 @@ public class MoveElevatorUp extends Command {
 		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
 	}
 
-
 	/**
-	 * Scheduler continually calls this method.
-	 * Does not do anything.
+	 * Scheduler continually calls this method. Does not do anything.
+	 * 
 	 * @see edu.wpi.first.wpilibj.command.Command#execute()
 	 */
 	@Override
-	protected void execute() {
-	}
+	protected void execute() {}
 
 	/**
-	 * If upper limit switch is true,
-	 * the robot is at its full height.
-	 * Method returns true and calls end()
+	 * If upper limit switch is true, the robot is at its full height. Method
+	 * returns true and calls end()
+	 * 
 	 * @see edu.wpi.first.wpilibj.command.Command#isFinished()
 	 */
 	@Override
 	public boolean isFinished() {
 
-		if(!Robot.elevatorLimitSwitchUp.get())
-		{
+		if (!Robot.elevatorLimitSwitchUp.get()) {
 			return true;
 		}
 		else {
 			return false;
 		}
 	}
-	
+
 	/**
-	 * Stops the motion of the Elevator.
-	 * When isFinished returns true
-	 * Or command is interrupted.
+	 * Stops the motion of the Elevator. When isFinished returns true Or command is
+	 * interrupted.
+	 * 
 	 * @see edu.wpi.first.wpilibj.command.Command#end()
 	 */
 	@Override
@@ -85,6 +82,7 @@ public class MoveElevatorUp extends Command {
 
 	/**
 	 * Ends command when command is interrupted
+	 * 
 	 * @see edu.wpi.first.wpilibj.command.Command#interrupted()
 	 */
 	@Override

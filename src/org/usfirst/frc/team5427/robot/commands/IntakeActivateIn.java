@@ -10,31 +10,36 @@ package org.usfirst.frc.team5427.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
-import org.usfirst.frc.team5427.util.NextLine;
+import org.usfirst.frc.team5427.util.SameLine;
 
 /**
- * This command simply sets the speed of the intake motors
- * to the config value for speed (to pick up cubes). Runs 
- * while the intake button is held down.
+ * This command sets the speed of the intake motors to the config value for
+ * speed (to pick up cubes). Runs while the intake button is held down.
  * 
  * @author Blake Romero
  */
-
+@SameLine
 public class IntakeActivateIn extends Command {
-	
+
+	/**
+	 * The command, IntakeActivateIn, requires the intake subsystem for its use.
+	 */
 	public IntakeActivateIn() {
 		requires(Robot.intakeSubsystem);
 	}
 
-	// Called just before this Command runs the first time
+	/**
+	 * Called once when the command is started. Signifies that this command is able
+	 * to be interrupted by others.
+	 */
 	@Override
 	protected void initialize() {
 		this.setInterruptible(true);
 	}
 
-	
 	/**
-	 *  Sets the speed of the intake motors to the config value for speed.
+	 * Called periodically while the command is running. Sets the speed of the
+	 * intake motors to the config value for speed.
 	 */
 	@Override
 	protected void execute() {
@@ -42,26 +47,27 @@ public class IntakeActivateIn extends Command {
 	}
 
 	/**
-	 * @return true when the intake button is released
+	 * Called periodically while the command is running.
+	 * 
+	 * @return if the intake button is released
 	 */
 	@Override
-	protected boolean isFinished()
-	{
-		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_IN))
-			return true;
-		return false;
+	protected boolean isFinished() {
+		return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_IN);
 	}
 
 	/**
-	 * Sets the intake motor to 0 speed
+	 * Called once when the isFinished method returns true. Sets the intake motors
+	 * to 0 power in order to stop them from moving.
 	 */
 	@Override
 	protected void end() {
 		Robot.intakeSubsystem.setSpeed(0);
 	}
-	
+
 	/**
-	 * Sets the intake motor to 0 speed
+	 * Called once when the command is interrupted. Calls the end method in order to
+	 * stop the intake motors from moving.
 	 */
 	@Override
 	protected void interrupted() {

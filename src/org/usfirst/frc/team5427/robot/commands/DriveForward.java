@@ -11,7 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 
 /**
- * This command is used to move the robot backwards for a specified amount of time.
+ * This command is used to move the robot backwards for a specified amount of
+ * time.
  * 
  * @author Andrew Li
  */
@@ -20,12 +21,13 @@ public class DriveForward extends Command {
 	 * The time that the robot will drive backwards for.
 	 */
 	private double time;
-	
+
 	/**
-	 * Receives the time the robot should drive backwards for and sets the timeout to that.
-	 * Requires the drive train subsystem.
+	 * Receives the time the robot should drive backwards for and sets the timeout
+	 * to that. Requires the drive train subsystem.
 	 * 
-	 * @param time - the time the robot should drive backwards for.
+	 * @param time
+	 *            the time the robot should drive backwards for.
 	 */
 	public DriveForward(double time) {
 		requires(Robot.driveTrain);
@@ -36,12 +38,11 @@ public class DriveForward extends Command {
 	 * Called once when the command is started but is not used for anything.
 	 */
 	@Override
-	protected void initialize() {
-	}
+	protected void initialize() {}
 
 	/**
-	 * Called periodically while the command is running.
-	 * Sets the velocity of the drive train to .3 power backwards.
+	 * Called periodically while the command is running. Sets the velocity of the
+	 * drive train to .3 power backwards.
 	 */
 	@Override
 	protected void execute() {
@@ -50,9 +51,10 @@ public class DriveForward extends Command {
 	}
 
 	/**
-	 * Called periodically while the command is running to check when the command is finished.
+	 * Called periodically while the command is running to check when the command is
+	 * finished.
 	 * 
-	 * @return true when the command times out. 
+	 * @return true when the command times out.
 	 */
 	@Override
 	public boolean isFinished() {
@@ -60,8 +62,8 @@ public class DriveForward extends Command {
 	}
 
 	/**
-	 * Called once when the command is finished.
-	 * Sets the velocity of the drive train to 0 power.
+	 * Called once when the command is finished. Sets the velocity of the drive
+	 * train to 0 power.
 	 */
 	@Override
 	protected void end() {
@@ -70,8 +72,7 @@ public class DriveForward extends Command {
 	}
 
 	/**
-	 * Called once if the command is interrupted.
-	 * Calls the end method in response.	 
+	 * Called once if the command is interrupted. Calls the end method in response.
 	 */
 	@Override
 	protected void interrupted() {

@@ -82,6 +82,7 @@ public class Left_ScaleIsLeft extends AutoPath {
 	 * D value for 250 inches.
 	 */
 	public static final double d1 = 0.018;
+
 	/*********************************************/
 
 	/**
@@ -112,13 +113,15 @@ public class Left_ScaleIsLeft extends AutoPath {
 	public void execute() {
 		currentTime = System.nanoTime() / 1000000000.;
 
-		if (moveElevator != null) moveElevator.isFinished();
+		if (moveElevator != null)
+			moveElevator.isFinished();
 
 		if (moveElevator.maxHeightReachedTime() && Robot.tiltUpNext) {
 			new TiltIntake_TimeOut().start();
 		}
 
-		if (currentTime - startTime > 2.5 && !moveElevator.isRunning()) moveElevator.start();
+		if (currentTime - startTime > 2.5 && !moveElevator.isRunning())
+			moveElevator.start();
 
 		if (null == fidget && null == firstDistance && firstAngle == null && moveElevator.maxHeightReachedTime() && (!secondDistance.isRunning())) {
 			Robot.ahrs.reset();
@@ -156,7 +159,8 @@ public class Left_ScaleIsLeft extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (firstAngle == null && secondDistance.isFinished()) return true;
+		if (firstAngle == null && secondDistance.isFinished())
+			return true;
 		return isTimedOut() && this.moveElevator.maxHeightReached();
 	}
 

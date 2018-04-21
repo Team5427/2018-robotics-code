@@ -105,6 +105,7 @@ public class Full_Right_ScaleIsLeft extends AutoPath {
 	 * D value for 232 inches.
 	 */
 	public static final double d2 = 0.018;
+
 	/*********************************************/
 
 	/**
@@ -135,7 +136,8 @@ public class Full_Right_ScaleIsLeft extends AutoPath {
 	 */
 	public void execute() {
 
-		if (moveElevator != null) moveElevator.isFinished();
+		if (moveElevator != null)
+			moveElevator.isFinished();
 
 		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null != secondAngle && secondAngle.isFinished() && moveElevator.maxHeightReachedTime()) {
 			secondAngle.cancel();
@@ -186,7 +188,8 @@ public class Full_Right_ScaleIsLeft extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (secondAngle == null && thirdDistance.isFinished()) return true;
+		if (secondAngle == null && thirdDistance.isFinished())
+			return true;
 		return isTimedOut();
 	}
 

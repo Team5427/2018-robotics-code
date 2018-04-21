@@ -285,7 +285,8 @@ public class Right_ScaleAndSwitch extends AutoPath {
 			new TiltIntake_TimeOut().start();
 		}
 
-		if (currentTime - startTime > 2.5 && null != moveElevatorScale && !moveElevatorScale.isRunning()) moveElevatorScale.start();
+		if (currentTime - startTime > 2.5 && null != moveElevatorScale && !moveElevatorScale.isRunning())
+			moveElevatorScale.start();
 	}
 
 	/**

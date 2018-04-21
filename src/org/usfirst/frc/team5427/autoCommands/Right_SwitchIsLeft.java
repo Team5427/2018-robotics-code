@@ -111,6 +111,7 @@ public class Right_SwitchIsLeft extends AutoPath {
 	 * D value for 70.
 	 */
 	public static final double d3 = 0.06;
+
 	/*********************************************/
 
 	/**
@@ -141,7 +142,8 @@ public class Right_SwitchIsLeft extends AutoPath {
 	 */
 	public void execute() {
 
-		if (moveElevator != null) moveElevator.isFinished();
+		if (moveElevator != null)
+			moveElevator.isFinished();
 
 		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null != secondAngle && secondAngle.isFinished() && !(thirdDistance.isRunning())) {
 			secondAngle.cancel();
@@ -192,7 +194,8 @@ public class Right_SwitchIsLeft extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (secondAngle == null && (thirdDistance.isFinished())) return true;
+		if (secondAngle == null && (thirdDistance.isFinished()))
+			return true;
 		return isTimedOut();
 	}
 

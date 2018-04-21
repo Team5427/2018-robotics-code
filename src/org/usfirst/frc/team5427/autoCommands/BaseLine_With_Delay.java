@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 /**
  * This class was mainly made because Team 118 wanted us to add a delay to our
- * auto to stay out of their way. It did not work.
+ * auto to stay out of their robot's way. It did not work.
  * 
  * @author Blake Romero
  */
@@ -102,7 +102,8 @@ public class BaseLine_With_Delay extends AutoPath {
 	public void execute() {
 		currentTime = System.nanoTime() / 1000000000.;
 
-		if (moveElevator != null) moveElevator.isFinished();
+		if (moveElevator != null)
+			moveElevator.isFinished();
 
 		if (currentTime - startTime > 0.8 && !moveElevator.isRunning() && !moveElevator.isFinished()) {
 			moveElevator.start();
@@ -123,7 +124,8 @@ public class BaseLine_With_Delay extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (firstDistance.isFinished()) return true;
+		if (firstDistance.isFinished())
+			return true;
 		return isTimedOut();
 	}
 

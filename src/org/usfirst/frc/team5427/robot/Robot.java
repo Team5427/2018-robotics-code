@@ -25,9 +25,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
-
 import org.usfirst.frc.team5427.robot.OI;
-import org.usfirst.frc.team5427.robot.OurClasses.SteelTalon;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import org.usfirst.frc.team5427.autoCommands.*;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
@@ -49,69 +47,69 @@ import org.usfirst.frc.team5427.util.SameLine;
 import com.kauailabs.navx.frc.AHRS;
 
 /**
- * Robot is used as the core of the robot's code, and it contains all
- * of the subsystems of the robot and their core functions.
+ * Robot is used as the core of the robot's code, and it contains all of the
+ * subsystems of the robot and their core functions.
  */
 @SameLine
 public class Robot extends IterativeRobot {
 	/**
-	 * OI contains all of the controls that are used on the robot & the commands and command
-	 * groups that are linked to them.
+	 * OI contains all of the controls that are used on the robot & the commands and
+	 * command groups that are linked to them.
 	 */
 	public static OI oi;
-	
+
 	/**
-	 * DriveTrain contains the SpeedControllers that control the left and right sides of the
-	 * drivetrain on the robot in order to move.
+	 * DriveTrain contains the SpeedControllers that control the left and right
+	 * sides of the drive train on the robot in order to move.
 	 */
 	public static DriveTrain driveTrain;
-	
+
 	/**
-	 * The SpeedController that controlls the front left motor of the drivetrain.
+	 * The SpeedController that controls the front left motor of the drivetrain.
 	 */
 	public static SpeedController motor_pwm_frontLeft;
-	
+
 	/**
 	 * The SpeedController that controls the rear left motor of the drivetrain.
 	 */
 	public static SpeedController motor_pwm_rearLeft;
-	
+
 	/**
 	 * The SpeedControllerGroup that includes the left side of the drivetrain.
 	 */
 	SpeedControllerGroup speedcontrollergroup_left;
-	
+
 	/**
-	 * The SpeedController that controls the front right motor of the drivetrain.
+	 * The SpeedController that controls the front right motor of the drive train.
 	 */
 	public static SpeedController motor_pwm_frontRight;
-	
+
 	/**
-	 * The SpeedController that controls the rear right motor of the drivetrain.
+	 * The SpeedController that controls the rear right motor of the drive train.
 	 */
 	public static SpeedController motor_pwm_rearRight;
-	
+
 	/**
-	 * The SpeedControllerGroup that includes the right side of the drivetrain.
+	 * The SpeedControllerGroup that includes the right side of the drive train.
 	 */
 	SpeedControllerGroup speedcontrollergroup_right;
-	
+
 	/**
-	 * The command that controls the drivetrain and its movement.
+	 * The command that controls the drive train and its movement.
 	 */
 	DifferentialDrive drive;
-	
+
 	/**
-	 * The command that uses joystick inputs to manipulate the drivetrain and
-	 * other subsystems.
+	 * The command that uses joystick inputs to manipulate the drive train and other
+	 * subsystems.
 	 */
 	DriveWithJoystick dwj;
-	
+
 	/**
 	 * The SpeedController that controls the left wheel of the intake.
 	 */
 	public static SpeedController motorPWM_Intake_Left;
-	
+
 	/**
 	 * The SpeedController that controls the right wheel of the intake.
 	 */
@@ -121,109 +119,111 @@ public class Robot extends IterativeRobot {
 	 * The SpeedController that controls the elevator.
 	 */
 	public static SpeedController motorPWM_Elevator;
-	
+
 	/**
 	 * The SpeedController that controls the arm of the climber.
 	 */
 	public static SpeedController motorPWM_ClimberArm;
-	
+
 	/**
 	 * The SpeedController that controls the motor of the climber.
 	 */
 	public static SpeedController motorPWM_Climber;
-	
+
 	/**
 	 * The SpeedController that controls the tilting of the intake.
 	 */
 	public static SpeedController motorPWM_TiltIntake;
-	
+
 	/**
-	 * The subsystem containing the intake SpeedControllers that controls the movement
-	 * of the intake.
+	 * The subsystem containing the intake SpeedControllers that controls the
+	 * movement of the intake.
 	 */
 	public static Intake intakeSubsystem;
-	
+
 	/**
-	 * The encoder that is attached to the left side of the drivetrain used
-	 * to track the distance the robot travels.
+	 * The encoder that is attached to the left side of the drivetrain used to track
+	 * the distance the robot travels.
 	 */
 	public static Encoder encLeft;
-	
+
 	/**
 	 * The String that includes the data sent to us from the FMS before autonomous.
 	 */
 	private String gameData;
-	
+
 	/**
 	 * The field position we select on the SmartDashboard.
 	 */
 	private int field_position;
-	
+
 	/**
 	 * The desired placement of the cube we select on the SmartDashboard.
 	 */
 	private int switch_or_scale;
-	
+
 	/**
 	 * The side of our switch we can control.
 	 */
 	private char switchSide;
-	
+
 	/**
 	 * The side of the scale we can control.
 	 */
 	private char scaleSide;
-	
+
 	/**
-	 * The path that we choose to follow in autonomous, selected based off of our selections from the
-	 * SmartDashboard and the gameData sent via the FMS.
+	 * The path that we choose to follow in autonomous, selected based off of our
+	 * selections from the SmartDashboard and the gameData sent via the FMS.
 	 */
 	public AutoPath autoPath;
-	
+
 	/**
 	 * The class representing the NavX on the Robot that reads our current angular
 	 * placement.
 	 */
 	public static AHRS ahrs;
-	
+
 	/**
-	 * The Limit Switch that detects when the Elevator has reached the top of its path.
+	 * The Limit Switch that detects when the Elevator has reached the top of its
+	 * path.
 	 */
 	public static DigitalInput elevatorLimitSwitchUp;
-	
+
 	/**
-	 * The Limit Switch that detects when the Elevator has reached the bottom of its path.
+	 * The Limit Switch that detects when the Elevator has reached the bottom of its
+	 * path.
 	 */
 	public static DigitalInput elevatorLimitSwitchDown;
-	
+
 	/**
 	 * The command that moves the Elevator up.
 	 */
 	public static MoveElevatorUp mou = new MoveElevatorUp();
-	
+
 	/**
 	 * The command that moves the Elevator down.
 	 */
 	public static MoveElevatorDown mod = new MoveElevatorDown();
-	
+
 	/**
 	 * The server used to send camera data from the RoboRio to the driver station.
 	 */
 	public static CameraServer camServer;
-	
+
 	/**
-	 * The USB Camera attached to the robot for visability.
+	 * The USB Camera attached to the robot for visibility.
 	 */
 	public static UsbCamera usbCam;
-	
+
 	/**
 	 * Used to determine if we need to tilt the intake up next or not.
 	 */
 	public static boolean tiltUpNext = true;
 
 	/**
-	 * Initializes all of the SpeedControllers, Subsystems, and other Objects
-	 * within the core of the code.
+	 * Initializes all of the SpeedControllers, Subsystems, and other Objects within
+	 * the core of the code.
 	 */
 	@Override
 	public void robotInit() {
@@ -249,8 +249,7 @@ public class Robot extends IterativeRobot {
 		motorPWM_Climber = new PWMVictorSPX(Config.CLIMBER_MOTOR);
 		try {
 			ahrs = new AHRS(SPI.Port.kMXP);
-		}
-		catch (RuntimeException ex) {
+		} catch (RuntimeException ex) {
 			DriverStation.reportError("Error instantiating navX-MXP: " + ex.getMessage(), true);
 		}
 		encLeft = new Encoder(Config.ENCODER_LEFT_CHANNEL_A, Config.ENCODER_LEFT_CHANNEL_B, false, Encoder.EncodingType.k4X);
@@ -279,8 +278,8 @@ public class Robot extends IterativeRobot {
 
 	/**
 	 * This function is called periodically while the robot is in Disabled mode. You
-	 * can use it to maintain zero points of any subsystem information while the robot
-	 * is disabled.
+	 * can use it to maintain zero points of any subsystem information while the
+	 * robot is disabled.
 	 */
 	@Override
 	public void disabledPeriodic() {
@@ -289,20 +288,13 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * This function is called once at the beginning of the autonomous
-	 * period. We use it to reset any values immediately before the start
-	 * of movement and obtain the gameData from the FMS. After this, we 
-	 * select and start our autonomous based on the gameData and selected
-	 * values from the SmartDashboard.
+	 * This function is called once at the beginning of the autonomous period. We
+	 * use it to reset any values immediately before the start of movement and
+	 * obtain the gameData from the FMS. After this, we select and start our
+	 * autonomous based on the gameData and selected values from the SmartDashboard.
 	 * 
-	 * Values:
-	 *  - field_position:
-	 *    - 1 = Right
-	 *    - 2 = Center
-	 *    - 3 = Left
-	 *  - switch_or_scale
-	 *    - 1 = Switch
-	 *    - 2 = Scale
+	 * Values: - field_position: - 1 = Right - 2 = Center - 3 = Left -
+	 * switch_or_scale - 1 = Switch - 2 = Scale
 	 */
 	@Override
 	public void autonomousInit() {
@@ -358,9 +350,8 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * This function is called periodically during autonomous. We
-	 * also use it to re-select autonomous if it initially failed
-	 * during autonomousInit.
+	 * This function is called periodically during autonomous. We also use it to
+	 * re-select autonomous if it initially failed during autonomousInit.
 	 */
 	@Override
 	public void autonomousPeriodic() {
@@ -415,8 +406,8 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * This function is called once at the beginning of the teleoperated
-	 * period of the match. We use it to cancel our autonomous.
+	 * This function is called once at the beginning of the teleoperated period of
+	 * the match. We use it to cancel our autonomous.
 	 */
 	@Override
 	public void teleopInit() {
@@ -426,9 +417,8 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * This function is called periodically during the teleoperated
-	 * period of the match. We use it to check the elevator's limit
-	 * switches periodically.
+	 * This function is called periodically during the teleoperated period of the
+	 * match. We use it to check the elevator's limit switches periodically.
 	 */
 	@Override
 	public void teleopPeriodic() {

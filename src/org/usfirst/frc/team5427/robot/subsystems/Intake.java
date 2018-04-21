@@ -8,96 +8,113 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
 import org.usfirst.frc.team5427.util.SameLine;
-
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * @author Varsha 
+ * The subsystem that controlls the two motors of the intake.
  * 
- * Subsystem for the two flywheels that turn in opposite
- * directions
+ * @author Varsha Kumar
  */
 
 @SameLine
-public class Intake extends Subsystem
-{
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
-	private SpeedController leftFlywheel, rightFlywheel;
-
+public class Intake extends Subsystem {
 	/**
-	 * The motor biases of each flywheel in both directions
+	 * The SpeedController that controls the left motor of the intake.
 	 */
-	public static final double LEFT_FLYWHEEL_BIAS_FORWARD = 1;
-	public static final double LEFT_FLYWHEEL_BIAS_BACKWARD = 1;
-	public static final double RIGHT_FLYWHEEL_BIAS_FORWARD = 1;
-	public static final double RIGHT_FLYWHEEL_BIAS_BACKWARD = 1;
+	private SpeedController leftFlywheel;
 	
 	/**
-	 * The motor offsets of each flywheel in both directions
+	 * The SpeedController that controls the right motor of the intake.
+	 */
+	private SpeedController rightFlywheel;
+
+	/**
+	 * The motor bias for the left motor of the intake in the forward direction.
+	 */
+	public static final double LEFT_FLYWHEEL_BIAS_FORWARD = 1;
+	
+	/**
+	 * The motor bias for the left motor of the intake in the backward direction.
+	 */
+	public static final double LEFT_FLYWHEEL_BIAS_BACKWARD = 1;
+	
+	/**
+	 * The motor bias for the right motor of the intake in the forward direction.
+	 */
+	public static final double RIGHT_FLYWHEEL_BIAS_FORWARD = 1;
+	
+	/**
+	 * The motor bias for the right motor of the intake in the backwardss direction.
+	 */
+	public static final double RIGHT_FLYWHEEL_BIAS_BACKWARD = 1;
+
+	/**
+	 * The motor offset for the left motor of the intake in the forward direction.
 	 */
 	public static final double LEFT_FLYWHEEL_OFFSET_FORWARD = 0;
+	
+	/**
+	 * The motor offset for the left motor of the intake in the backward direction.
+	 */
 	public static final double LEFT_FLYWHEEL_OFFSET_BACKWARD = 0;
+	
+	/**
+	 * The motor offset for the right motor of the intake in the forward direction.
+	 */
 	public static final double RIGHT_FLYWHEEL_OFFSET_FORWARD = 0;
+	
+	/**
+	 * The motor offset for the right motor of the intake in the backwardss direction.
+	 */
 	public static final double RIGHT_FLYWHEEL_OFFSET_BACKWARD = 0;
 
 	/**
-	 * Constructor for the Intake subsystem
+	 * Assigns each SpeedController to its received motor.
 	 * 
 	 * @param leftFlywheel
-	 *            the SpeedController of the leftFlywheel
+	 *            the SpeedController of the left motor of the intake.
 	 * @param rightFlywheel
-	 *            the SpeedController of the rightFlywheel
+	 *            the SpeedController of the right motor of the intake.
 	 */
-	public Intake(SpeedController leftFlywheel, SpeedController rightFlywheel)
-	{
+	public Intake(SpeedController leftFlywheel, SpeedController rightFlywheel) {
 		this.leftFlywheel = leftFlywheel;
 		this.rightFlywheel = rightFlywheel;
 	}
 
 	/**
-	 * Sets the speed of each flywheel to whatever the received speed parameter is
+	 * Sets the speed of each SpeedController to whatever the received speed parameter is.
+	 * 
 	 * @param speed
-	 * 				how fast the flywheels will go
+	 *            the desired power to set the intake to.
 	 */
-	public void setSpeed(double speed)
-	{
-		if (speed < 0)
-		{
+	public void setSpeed(double speed) {
+		if (speed < 0) {
 			leftFlywheel.set(speed * LEFT_FLYWHEEL_BIAS_BACKWARD + LEFT_FLYWHEEL_OFFSET_BACKWARD);
 			rightFlywheel.set(speed * RIGHT_FLYWHEEL_BIAS_FORWARD + RIGHT_FLYWHEEL_OFFSET_FORWARD);
-
 		}
-		else if(speed>0)
-		{
+		else if (speed > 0) {
 			leftFlywheel.set(speed * LEFT_FLYWHEEL_BIAS_FORWARD + LEFT_FLYWHEEL_OFFSET_FORWARD);
 			rightFlywheel.set(speed * RIGHT_FLYWHEEL_BIAS_BACKWARD + RIGHT_FLYWHEEL_OFFSET_BACKWARD);
 		}
-		else
-		{
+		else {
 			leftFlywheel.set(0);
 			rightFlywheel.set(0);
 		}
-
 	}
-	
+
 	/**
 	 * Unused method but required by extending SubSystem class
 	 */
-	public void initDefaultCommand() 
-	{
-		// Initializes default command
+	public void initDefaultCommand() {
 	}
-	
-	
+
 	/**
-	 * Stops the flywheels
+	 * Stops the motors of the intake.
 	 */
-	public void stop()
-	{
+	public void stop() {
 		setSpeed(0);
 	}
-	
+
 }

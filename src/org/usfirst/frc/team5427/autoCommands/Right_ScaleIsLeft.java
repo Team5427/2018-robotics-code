@@ -56,6 +56,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 * D value for 224 inches.
 	 */
 	public static final double d1 = 0.018;
+
 	/*********************************************/
 
 	/**
@@ -112,7 +113,8 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (firstAngle == null) return true;
+		if (firstAngle == null)
+			return true;
 		return isTimedOut();
 	}
 

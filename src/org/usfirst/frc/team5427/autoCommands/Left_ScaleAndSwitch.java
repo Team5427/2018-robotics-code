@@ -126,6 +126,7 @@ public class Left_ScaleAndSwitch extends AutoPath {
 	 * D value for 70 inches.
 	 */
 	public static final double d2 = 0.018;
+
 	/*********************************************/
 
 	/**

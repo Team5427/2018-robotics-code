@@ -12,26 +12,35 @@ import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
 /**
- * This command sets the speed of the intake motors to the received parameter.
+ * This command sets the speed of the intake motors to the received value,
+ * typically used to shoot out boxes at a different speed than listed in Config.
+ * Runs while the intake button is held down.
  * 
  * @author Aditi
  */
 
 public class IntakeActivateOutSlow extends Command {
-	
-	double speed;
-	
+
 	/**
+	 * The intended speed for the intake motors.
+	 */
+	double speed;
+
+	/**
+	 * The command, IntakeActivateOutSlow, requires the intake subsystem for its
+	 * use.
+	 * 
 	 * @param speed
+	 *            the speed to set the intake motors to.
 	 */
 	public IntakeActivateOutSlow(double speed) {
-		// Use requires() here to declare subsystem dependencies
 		requires(Robot.intakeSubsystem);
 		this.speed = speed;
 	}
 
 	/**
-	 *  Called just before this Command runs the first time
+	 * Called once when the command is started. Signifies that this command is able
+	 * to be interrupted by others.
 	 */
 	@Override
 	protected void initialize() {
@@ -39,7 +48,8 @@ public class IntakeActivateOutSlow extends Command {
 	}
 
 	/**
-	 * Sets the intake motor speed to the value in the constructor
+	 * Called periodically while the command is running. Sets the speed of the
+	 * intake motors to the received value for speed.
 	 */
 	@Override
 	protected void execute() {
@@ -47,17 +57,20 @@ public class IntakeActivateOutSlow extends Command {
 	}
 
 	/**
-	 * @return true if the joystick button is released
+	 * Called periodically while the command is running.
+	 * 
+	 * @return if the intake button is released
 	 */
 	@Override
 	protected boolean isFinished() {
-		if(Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_OUT_SLOW))
+		if (Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_OUT_SLOW))
 			return true;
 		return false;
 	}
 
 	/**
-	 * Sets the intake speed to 0
+	 * Called once when the isFinished method returns true. Sets the intake motors
+	 * to 0 power in order to stop them from moving.
 	 */
 	@Override
 	protected void end() {
@@ -65,7 +78,8 @@ public class IntakeActivateOutSlow extends Command {
 	}
 
 	/**
-	 * Sets the intake speed to 0
+	 * Called once when the command is interrupted. Calls the end method in order to
+	 * stop the intake motors from moving.
 	 */
 	@Override
 	protected void interrupted() {

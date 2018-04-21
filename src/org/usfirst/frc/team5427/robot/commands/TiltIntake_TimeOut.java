@@ -17,26 +17,26 @@ import org.usfirst.frc.team5427.util.Config;
  * @author Akshat Jain
  */
 public class TiltIntake_TimeOut extends Command {
-	
+
 	/**
-	 * How long it takes for the intake to tilt up or down.
-	 * This variable is initialized in initialize() using config values.
+	 * How long it takes for the intake to tilt up or down. This variable is
+	 * initialized in initialize() using config values.
 	 */
 	private double tilt_time_out;
 
 	/**
-	 * Sets the timeout to values from config, depending on whether the intake
-	 * needs to tilt up or down next.
+	 * Sets the timeout to values from config, depending on whether the intake needs
+	 * to tilt up or down next.
 	 */
 	@Override
 	protected void initialize() {
-		if(Robot.tiltUpNext){
+		if (Robot.tiltUpNext) {
 			tilt_time_out = Config.TILT_TIMEOUT_UP;
 		}
 		else {
 			tilt_time_out = Config.TILT_TIMEOUT_DOWN;
 		}
-		
+
 		setTimeout(tilt_time_out);
 	}
 
@@ -45,7 +45,7 @@ public class TiltIntake_TimeOut extends Command {
 	 */
 	@Override
 	protected void execute() {
-		if(Robot.tiltUpNext) {
+		if (Robot.tiltUpNext) {
 			Robot.motorPWM_TiltIntake.set(Config.INTAKE_TILTER_MOTOR_SPEED_UP);
 		}
 		else {
@@ -64,18 +64,18 @@ public class TiltIntake_TimeOut extends Command {
 	}
 
 	/**
-	 * Sets the tilt motor speed to 0
-	 * Changes whether the intake should tilt up or down next
+	 * Sets the tilt motor speed to 0 Changes whether the intake should tilt up or
+	 * down next
 	 */
 	@Override
 	protected void end() {
 		Robot.motorPWM_TiltIntake.set(0);
-		Robot.tiltUpNext=!Robot.tiltUpNext;
+		Robot.tiltUpNext = !Robot.tiltUpNext;
 	}
 
 	/**
-	 * Called when another command which requires one or more of the same
-	 * subsystems is scheduled to run
+	 * Called when another command which requires one or more of the same subsystems
+	 * is scheduled to run
 	 */
 	@Override
 	protected void interrupted() {

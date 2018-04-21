@@ -13,20 +13,21 @@ import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
 /**
- * @author Akshat Jain Command
- * @author Akshat Jain Commenting
- * This command will be called in autonomous to set the elevator to the height of the switch or scale,
- * depending on which value we send it.
+ * This command will be called in autonomous to set the elevator to the height
+ * of the switch or scale, depending on which value we send it.
+ * 
+ * @author Akshat Jain 
  */
 public class MoveElevatorFull extends Command {
 	public static boolean up = true;
+
 	public MoveElevatorFull(boolean up) {
-		this.up=up;
+		this.up = up;
 	}
 
 	@Override
 	protected void initialize() {
-		if(this.up) {
+		if (this.up) {
 			up = false;
 		}
 		else {
@@ -36,41 +37,39 @@ public class MoveElevatorFull extends Command {
 
 	@Override
 	protected void execute() {
-		if(this.up) {
-		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
-		} else {
-		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_DOWN);
+		if (this.up) {
+			Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
+		}
+		else {
+			Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_DOWN);
 		}
 	}
-	
-	public boolean maxHeightReached()
-	{
+
+	public boolean maxHeightReached() {
 		return isTimedOut();
 	}
 
 	@Override
 	public boolean isFinished() {
-		if(this.up) {
-			if(!Robot.elevatorLimitSwitchUp.get()) {
+		if (this.up) {
+			if (!Robot.elevatorLimitSwitchUp.get()) {
 				Robot.motorPWM_Elevator.set(0);
-				return true;	
+				return true;
 			}
 			return false;
 		}
 		else {
-			if(!Robot.elevatorLimitSwitchDown.get())
+			if (!Robot.elevatorLimitSwitchDown.get())
 				return true;
 			return false;
 		}
 
-		
 	}
 
 	@Override
 	protected void end() {
 		Robot.motorPWM_Elevator.set(0);
 	}
-
 
 	@Override
 	protected void interrupted() {

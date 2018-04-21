@@ -11,15 +11,14 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 //import org.usfirst.frc.team5427.util.Log;
-import org.usfirst.frc.team5427.util.NextLine;
+import org.usfirst.frc.team5427.util.SameLine;
 
 /**
- * Manually tilts the intake down
+ * Manually tilts the intake arms downward.
  * 
- * @author Blake Romero
+ * @author Akshat Jain
  */
-
-@NextLine
+@SameLine
 public class TiltIntakeDown extends Command {
 
 	/**
@@ -49,8 +48,8 @@ public class TiltIntakeDown extends Command {
 	}
 
 	/**
-	 * Called when another command which requires one or more of the same
-	 * subsystems is scheduled to run
+	 * Called when another command which requires one or more of the same subsystems
+	 * is scheduled to run
 	 */
 	@Override
 	protected void interrupted() {
