@@ -31,11 +31,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * In theory, this class can be used in any case where two SpeedControllerGroup
  * objects work together to accomplish the same task.
  * 
- * @author Blake
+ * @author Blake Romero
  */
+
 public class PIDStraightMovement extends PIDCommand {
-	// This command is created once we have reached the maximum power to control the
-	// distance that we travel.
+	// This command is created once we have reached the maximum power to control the distance that we travel.
+	/**
+	 * PID loop created to control distance after we have reached the maximum power
+	 */
 	private PIDDistance pidDistance;
 	// This SpeedControllerGroup is the side of the robot that this command
 	// controls.
