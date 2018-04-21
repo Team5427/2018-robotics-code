@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * The subsystem that controlls the two motors of the intake.
+ * The subsystem that controls the two motors of the intake.
  * 
  * @author Varsha Kumar
  */
@@ -46,7 +46,7 @@ public class Intake extends Subsystem {
 	public static final double RIGHT_FLYWHEEL_BIAS_FORWARD = 1;
 	
 	/**
-	 * The motor bias for the right motor of the intake in the backwardss direction.
+	 * The motor bias for the right motor of the intake in the backwards direction.
 	 */
 	public static final double RIGHT_FLYWHEEL_BIAS_BACKWARD = 1;
 
@@ -66,7 +66,7 @@ public class Intake extends Subsystem {
 	public static final double RIGHT_FLYWHEEL_OFFSET_FORWARD = 0;
 	
 	/**
-	 * The motor offset for the right motor of the intake in the backwardss direction.
+	 * The motor offset for the right motor of the intake in the backwards direction.
 	 */
 	public static final double RIGHT_FLYWHEEL_OFFSET_BACKWARD = 0;
 
