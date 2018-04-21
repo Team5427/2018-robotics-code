@@ -17,12 +17,12 @@ import org.usfirst.frc.team5427.util.Config;
  * 
  * @author Andrew Li
  */
-public class Left_SwitchIsLeft_MoveElevator extends Command {
+public class Left_SwitchIsLeft_MoveElevatorAuto extends Command {
 
 	/**
 	 * Sets the timeout for the command to the switch timeout in config
 	 */
-	public Left_SwitchIsLeft_MoveElevator() {
+	public Left_SwitchIsLeft_MoveElevatorAuto() {
 		this.setTimeout(Config.ELEVATOR_TIMEOUT_SWITCH);
 	}
 

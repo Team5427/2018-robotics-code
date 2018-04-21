@@ -12,18 +12,18 @@ import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
 /**
- * This command will move the elevator up for the scale.
- * Used in the Left_ScaleIsLeft.
+ * This command will move the elevator up for the switch.
+ * Used in the Left_SwitchIsLeft.
  * 
- * @author Andrew Li
+ * @author Akshat Jain
  */
-public class Left_ScaleIsLeft_MoveElevator extends Command {
+public class Right_SwitchIsRight_MoveElevatorAuto extends Command {
 
 	/**
-	 * Sets the timeout for the command to the scale timeout in config
+	 * Sets the timeout for the command to the switch timeout in config
 	 */
-	public Left_ScaleIsLeft_MoveElevator() {
-		this.setTimeout(Config.ELEVATOR_TIMEOUT_SCALE);
+	public Right_SwitchIsRight_MoveElevatorAuto() {
+		this.setTimeout(Config.ELEVATOR_TIMEOUT_SWITCH);
 	}
 
 	/**
@@ -40,12 +40,7 @@ public class Left_ScaleIsLeft_MoveElevator extends Command {
 	 */
 	@Override
 	protected void execute() {
-		if (!Robot.elevatorLimitSwitchUp.get()) {
-			Robot.motorPWM_Elevator.set(0);
-		}
-		else {
-			Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
-		}
+		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
 	}
 
 	/**
@@ -56,19 +51,12 @@ public class Left_ScaleIsLeft_MoveElevator extends Command {
 	}
 
 	/**
-	 * @return if the top limit switch has been activated.
-	 */
-	public boolean maxHeightReached() {
-		return !Robot.elevatorLimitSwitchUp.get();
-	}
-
-	/**
 	 * Called periodically while the command is running to check when it is
 	 * finished.
 	 */
 	@Override
 	public boolean isFinished() {
-		return false;
+		return isTimedOut();
 	}
 
 	/**

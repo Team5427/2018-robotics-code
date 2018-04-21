@@ -38,7 +38,7 @@ public class Right_SwitchIsRight extends AutoPath {
 	/**
 	 * The command that moves the elevator up to its top position.
 	 */
-	private Right_SwitchIsRight_MoveElevator moveElevator;
+	private Right_SwitchIsRight_MoveElevatorAuto moveElevator;
 
 	/**
 	 * The command used at the start of autonomous to drop the arms of the intake
@@ -63,7 +63,7 @@ public class Right_SwitchIsRight extends AutoPath {
 		firstDistance = new Right_SwitchIsRight_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		firstAngle = new Right_SwitchIsRight_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		secondDistance = new Right_SwitchIsRight_SecondDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		moveElevator = new Right_SwitchIsRight_MoveElevator();
+		moveElevator = new Right_SwitchIsRight_MoveElevatorAuto();
 	}
 
 	/**

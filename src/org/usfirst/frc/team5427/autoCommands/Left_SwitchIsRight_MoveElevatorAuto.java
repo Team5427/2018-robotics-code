@@ -13,16 +13,16 @@ import org.usfirst.frc.team5427.util.Config;
 
 /**
  * This command will move the elevator up for the switch.
- * Used in the Left_SwitchIsLeft.
+ * Used in the Left_SwitchIsRight command.
  * 
- * @author Akshat Jain
+ * @author Andrew Li
  */
-public class Right_SwitchIsRight_MoveElevator extends Command {
+public class Left_SwitchIsRight_MoveElevatorAuto extends Command {
 
 	/**
-	 * Sets the timeout for the command to the switch timeout in config
+	 * Sets the timeout for the command to the scale timeout in config
 	 */
-	public Right_SwitchIsRight_MoveElevator() {
+	public Left_SwitchIsRight_MoveElevatorAuto() {
 		this.setTimeout(Config.ELEVATOR_TIMEOUT_SWITCH);
 	}
 
@@ -56,7 +56,7 @@ public class Right_SwitchIsRight_MoveElevator extends Command {
 	 */
 	@Override
 	public boolean isFinished() {
-		return isTimedOut();
+		return false;
 	}
 
 	/**

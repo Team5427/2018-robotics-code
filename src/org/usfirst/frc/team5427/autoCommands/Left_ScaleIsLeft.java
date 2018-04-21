@@ -55,7 +55,7 @@ public class Left_ScaleIsLeft extends AutoPath {
 	/**
 	 * The command that moves the elevator up to its middle position.
 	 */
-	private Left_ScaleIsLeft_MoveElevator moveElevator;
+	private Left_ScaleIsLeft_MoveElevatorAuto moveElevator;
 
 	/**
 	 * The starting time of the autonomous path.
@@ -75,7 +75,7 @@ public class Left_ScaleIsLeft extends AutoPath {
 		firstDistance = new Left_ScaleIsLeft_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		firstAngle = new Left_ScaleIsLeft_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		secondDistance = new Left_ScaleIsLeft_SecondDistance();
-		moveElevator = new Left_ScaleIsLeft_MoveElevator();
+		moveElevator = new Left_ScaleIsLeft_MoveElevatorAuto();
 	}
 
 	/**
