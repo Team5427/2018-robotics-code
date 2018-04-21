@@ -10,38 +10,39 @@ package org.usfirst.frc.team5427.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
-//import org.usfirst.frc.team5427.util.Log;
-import org.usfirst.frc.team5427.util.NextLine;
 
 /**
- * @author Akshat This command
+ * Tilts the intake either up or down, and stops after a timeout set in config.
  * 
+ * @author Akshat Jain This command
  */
-
-@NextLine
 public class TiltIntake_TimeOut extends Command {
 	
+	/**
+	 * How long it takes for the intake to tilt up or down.
+	 * This variable is initialized in initialize() using config values.
+	 */
 	private double tilt_time_out;
-	
-	public TiltIntake_TimeOut() {
-		
-	}
 
-	// Called just before this Command runs the first time
+	/**
+	 * Sets the timeout to values from config, depending on whether the intake
+	 * needs to tilt up or down next.
+	 */
 	@Override
 	protected void initialize() {
 		if(Robot.tiltUpNext){
 			tilt_time_out = Config.TILT_TIMEOUT_UP;
 		}
 		else {
-			
 			tilt_time_out = Config.TILT_TIMEOUT_DOWN;
 		}
 		
 		setTimeout(tilt_time_out);
 	}
 
-	// Called repeatedly when this Command is scheduled to run
+	/**
+	 * Sets the speed of the tilt intake using speeds from config.
+	 */
 	@Override
 	protected void execute() {
 		if(Robot.tiltUpNext) {
@@ -50,28 +51,32 @@ public class TiltIntake_TimeOut extends Command {
 		else {
 			Robot.motorPWM_TiltIntake.set(Config.INTAKE_TILTER_MOTOR_SPEED_DOWN);
 		}
-		
-//		Robot.motorPWM_Intake_Left.set(Config.INTAKE_TILTER_MOTOR_SPEED_UP);
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
+	/**
+	 * Returns true after the command is timed out
+	 * 
+	 * @return true if the command is timed out
+	 */
 	@Override
 	protected boolean isFinished() {
 		return isTimedOut();
-//			return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_INTAKE_TILTER_UP);
-		
 	}
 
-	// Called once after isFinished returns true
+	/**
+	 * Sets the tilt motor speed to 0
+	 * Changes whether the intake should tilt up or down next
+	 */
 	@Override
 	protected void end() {
 		Robot.motorPWM_TiltIntake.set(0);
 		Robot.tiltUpNext=!Robot.tiltUpNext;
-//		Robot.motorPWM_Intake_Left.set(0);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+	/**
+	 * Called when another command which requires one or more of the same
+	 * subsystems is scheduled to run
+	 */
 	@Override
 	protected void interrupted() {
 		end();
