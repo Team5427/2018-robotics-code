@@ -22,12 +22,12 @@ public class Center_SwitchIsRight extends AutoPath {
 	 * The first distance of the path. It travels forward 110 inches at our short
 	 * power.
 	 */
-	private PIDStraightMovement firstDistance;
+	private Center_SwitchIsRight_FirstDistance firstDistance;
 
 	/**
 	 * The command that moves the elevator up to its middle position.
 	 */
-	private MoveElevatorAuto moveElevator;
+	private Center_SwitchIsRight_MoveElevatorAuto moveElevator;
 
 	/**
 	 * The command used at the start of autonomous to drop the arms of the intake
@@ -50,27 +50,6 @@ public class Center_SwitchIsRight extends AutoPath {
 	 */
 	public static final double timeOut = 13;
 
-	/********** PID VALUES FOR 110 INCHES **********/
-	/**
-	 * P value for 110 inches.
-	 */
-	public static final double p1 = 0.025;
-
-	/**
-	 * I value for 110 inches.
-	 */
-	public static final double i1 = 0.0;
-
-	/**
-	 * D value for 110 inches.
-	 */
-	public static final double d1 = 0.12;
-	/*********************************************/
-
-	/**
-	 * Stores whether or not the elevator has finished moving to its position.
-	 */
-	public boolean elevIsDone;
 
 	/**
 	 * Creates all of the paths involved in Center_SwitchIsRight and sets the
@@ -78,9 +57,8 @@ public class Center_SwitchIsRight extends AutoPath {
 	 */
 	public Center_SwitchIsRight() {
 		fidget = new Fidget();
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 110, p1, i1, d1); // 106
-		moveElevator = new MoveElevatorAuto(1);
-		elevIsDone = false;
+		firstDistance = new Center_SwitchIsRight_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left); // 106
+		moveElevator = new Center_SwitchIsRight_MoveElevatorAuto();
 		setTimeout(timeOut);
 	}
 
@@ -92,7 +70,6 @@ public class Center_SwitchIsRight extends AutoPath {
 	public void initialize() {
 		startTime = System.nanoTime() / 1000000000.;
 		fidget.start();
-		elevIsDone = false;
 	}
 
 	/**
