@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
  * This is our autonomous path that starts in the left position, moves towards
  * the scale, and turns 90 degrees.
  * 
- * @author Blake Romero
+ * @author Blake Romero, Andrew Li
  */
 @SameLine
 public class Left_ScaleIsRight extends AutoPath {

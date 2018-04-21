@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
  * This is our autonomous path that starts in the left position and places one
  * cube on the right side of the switch.
  * 
- * @author Blake Romero
+ * @author Blake Romero, Andrew Li
  */
 @SameLine
 public class Left_SwitchIsRight extends AutoPath {
@@ -22,34 +22,34 @@ public class Left_SwitchIsRight extends AutoPath {
 	 * The first distance of the path. It travels 25 inches forward at our short
 	 * power.
 	 */
-	private PIDStraightMovement firstDistance;
+	private Left_SwitchIsRight_FirstDistance firstDistance;
 
 	/**
 	 * The second distance of the path. It travels 171 inches forward at our long
 	 * power.
 	 */
-	private PIDStraightMovement secondDistance;
+	private Left_SwitchIsRight_SecondDistance secondDistance;
 
 	/**
 	 * The third distance of the path. It travels 75 inches forward at our short
 	 * power.
 	 */
-	private PIDStraightMovement thirdDistance;
+	private Left_SwitchIsRight_ThirdDistance thirdDistance;
 
 	/**
 	 * The first turn of the path. It turns 80 degrees clockwise.
 	 */
-	private PIDTurn firstAngle;
+	private Left_SwitchIsRight_FirstAngle firstAngle;
 
 	/**
 	 * The second turn of the path. It turns 80 degrees counterclockwise.
 	 */
-	private PIDTurn secondAngle;
+	private Left_SwitchIsRight_SecondAngle secondAngle;
 
 	/**
-	 * The command that moves the elevator up to its top position.
+	 * The command that moves the elevator up to its switch position.
 	 */
-	private MoveElevatorAuto moveElevator;
+	private Left_SwitchIsRight_MoveElevator moveElevator;
 
 	/**
 	 * The command used at the start of autonomous to drop the arms of the intake
@@ -119,12 +119,12 @@ public class Left_SwitchIsRight extends AutoPath {
 	 */
 	public Left_SwitchIsRight() {
 		fidget = new Fidget();
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 25, p1, i1, d1);
-		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 80);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 171, p2, i2, d2);
-		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -80);
-		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 75, p3, i3, d3);
-		moveElevator = new MoveElevatorAuto(1);
+		firstDistance = new Left_SwitchIsRight_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		firstAngle = new Left_SwitchIsRight_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		secondDistance = new Left_SwitchIsRight_SecondDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		secondAngle = new Left_SwitchIsRight_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		thirdDistance = new Left_SwitchIsRight_ThirdDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		moveElevator = new Left_SwitchIsRight_MoveElevator();
 	}
 
 	/**

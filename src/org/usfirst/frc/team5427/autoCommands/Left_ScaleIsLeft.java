@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * This is our autonomous path that starts in the left position and places one
  * cube on the left side of the scale.
  * 
- * @author Blake Romero
+ * @author Blake Romero, Andrew Li
  */
 @SameLine
 public class Left_ScaleIsLeft extends AutoPath {
