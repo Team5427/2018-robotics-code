@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team5427.robot.commands;
+package org.usfirst.frc.team5427.autoCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
@@ -16,11 +16,11 @@ import org.usfirst.frc.team5427.robot.Robot;
  * 
  * @author Andrew Li
  */
-public class DriveForward extends Command {
+public class Right_ScaleIsRight_DriveForward extends Command {
 	/**
 	 * The time that the robot will drive forwards for.
 	 */
-	private double time;
+	private double time = 0.7;
 
 	/**
 	 * Receives the time the robot should drive forwards for and sets the timeout
@@ -29,7 +29,7 @@ public class DriveForward extends Command {
 	 * @param time
 	 *            the time the robot should drive forwards for.
 	 */
-	public DriveForward(double time) {
+	public Right_ScaleIsRight_DriveForward() {
 		requires(Robot.driveTrain);
 		setTimeout(time);
 	}
