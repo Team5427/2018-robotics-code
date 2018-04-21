@@ -13,7 +13,7 @@ import org.usfirst.frc.team5427.util.SameLine;
  * This is our autonomous path that starts in the center position and places one
  * cube on the left side of the switch.
  * 
- * @author Blake Romero
+ * @author Akshat Jain
  */
 @SameLine
 public class Center_SwitchIsLeft extends AutoPath {
@@ -22,34 +22,34 @@ public class Center_SwitchIsLeft extends AutoPath {
 	 * The first distance of the path. It travels forward 18 inches at our short
 	 * power.
 	 */
-	private PIDStraightMovement firstDistance;
+	private Center_SwitchIsLeft_FirstDistance firstDistance;
 
 	/**
 	 * The second distance of the path. It travels forward 110 inches at our long
 	 * power.
 	 */
-	private PIDStraightMovement secondDistance;
+	private Center_SwitchIsLeft_SecondDistance secondDistance;
 
 	/**
 	 * The third distance of the path. It travels forward 78 inches at .2 power
 	 * higher than our long power.
 	 */
-	private PIDStraightMovement thirdDistance;
+	private Center_SwitchIsLeft_ThirdDistance thirdDistance;
 
 	/**
 	 * The first turn of the path. It turns 85 degrees counterclockwise.
 	 */
-	private PIDTurn firstAngle;
+	private Center_SwitchIsLeft_FirstAngle firstAngle;
 
 	/**
 	 * The second turn of the path. It turns 85 degrees clockwise.
 	 */
-	private PIDTurn secondAngle;
+	private Center_SwitchIsLeft_SecondAngle secondAngle;
 
 	/**
 	 * The command that moves the elevator up to its middle position.
 	 */
-	private MoveElevatorAuto moveElevator;
+	private Center_SwitchIsLeft_MoveElevatorAuto moveElevator;
 
 	/**
 	 * The command used at the start of autonomous to drop the arms of the intake
@@ -62,39 +62,8 @@ public class Center_SwitchIsLeft extends AutoPath {
 	 */
 	public static final double timeOut = 13;
 
-	/********** PID VALUES FOR 18 INCHES **********/
-	/**
-	 * P value for 18 inches.
-	 */
-	public static final double p1 = 0.02;
 
-	/**
-	 * I value for 18 inches.
-	 */
-	public static final double i1 = 0.0;
 
-	/**
-	 * D value for 18 inches.
-	 */
-	public static final double d1 = 0.0;
-	/*********************************************/
-
-	/********** PID VALUES FOR 110 INCHES **********/
-	/**
-	 * P value for 110 inches.
-	 */
-	public static final double p2 = 0.042;
-
-	/**
-	 * I value for 110 inches.
-	 */
-	public static final double i2 = 0.0;
-
-	/**
-	 * D value for 110 inches.
-	 */
-	public static final double d2 = 0.08;
-	/*********************************************/
 
 	/********** PID VALUES FOR 78 INCHES **********/
 	/**
@@ -119,12 +88,12 @@ public class Center_SwitchIsLeft extends AutoPath {
 	 */
 	public Center_SwitchIsLeft() {
 		fidget = new Fidget();
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_SHORT, 18, p1, i1, d1);
-		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -85);
-		secondDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 110, p2, i2, d2);
-		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, 85);
-		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG + .2, 78, p3, i3, d3);
-		moveElevator = new MoveElevatorAuto(1);
+		firstDistance = new Center_SwitchIsLeft_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		firstAngle = new Center_SwitchIsLeft_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		secondDistance = new Center_SwitchIsLeft_SecondDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		secondAngle = new Center_SwitchIsLeft_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		thirdDistance = new Center_SwitchIsLeft_ThirdDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		moveElevator = new Center_SwitchIsLeft_MoveElevatorAuto();
 	}
 
 	/**
