@@ -31,6 +31,7 @@ public class PIDDistance extends PIDCommand {
 	 */
 	private SpeedControllerGroup scgNot;
 
+	
 	/**
 	 * The timer that determines when the robot has been within a certain range of
 	 * distance for half of a second.
