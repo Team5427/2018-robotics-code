@@ -50,7 +50,7 @@ public class Left_ScaleIsLeft_FirstAngle extends PIDCommand {
 		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_UPDATE_PERIOD);
 		this.scgRight = scgRight;
 		this.scgLeft = scgLeft;
-		setPoint = 85;
+		setPoint = 47;
 
 		super.setInputRange(-180, 180);
 		super.setSetpoint(setPoint);

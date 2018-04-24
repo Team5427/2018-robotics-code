@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team5427.robot.commands;
+package org.usfirst.frc.team5427.autoCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
@@ -16,7 +16,7 @@ import org.usfirst.frc.team5427.robot.Robot;
  * 
  * @author Kipp Corman
  */
-public class DriveBackward extends Command {
+public class Left_ScaleIsLeft_Wait extends Command {
 
 	/**
 	 * The time that the robot will drive backwards for.
@@ -30,7 +30,7 @@ public class DriveBackward extends Command {
 	 * @param time
 	 *            - the time the robot should drive backwards for.
 	 */
-	public DriveBackward(double time) {
+	public Left_ScaleIsLeft_Wait(double time) {
 		requires(Robot.driveTrain);
 		setTimeout(time);
 	}
@@ -49,8 +49,6 @@ public class DriveBackward extends Command {
 	 */
 	@Override
 	protected void execute() {
-		Robot.driveTrain.drive_Left.set(-.2);
-		Robot.driveTrain.drive_Right.set(.2);
 	}
 
 	/**

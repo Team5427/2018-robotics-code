@@ -59,7 +59,7 @@ public class TiltIntake_TimeOut extends Command {
 	 * @return true if the command is timed out
 	 */
 	@Override
-	protected boolean isFinished() {
+	public boolean isFinished() {
 		return isTimedOut();
 	}
 

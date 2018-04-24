@@ -256,11 +256,11 @@ public class Robot extends IterativeRobot {
 		encLeft = new Encoder(Config.ENCODER_LEFT_CHANNEL_A, Config.ENCODER_LEFT_CHANNEL_B, false, Encoder.EncodingType.k4X);
 		encLeft.setDistancePerPulse((6 * Math.PI / 360));
 
-		camServer = CameraServer.getInstance();
-		usbCam = new UsbCamera("USB Camera", 0);
-		usbCam.setFPS(15);
-		camServer.addCamera(usbCam);
-		camServer.startAutomaticCapture(usbCam);
+//		camServer = CameraServer.getInstance();
+//		usbCam = new UsbCamera("USB Camera", 0);
+//		usbCam.setFPS(15);
+//		camServer.addCamera(usbCam);
+//		camServer.startAutomaticCapture(usbCam);
 		oi = new OI();
 	}
 
