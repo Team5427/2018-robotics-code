@@ -22,7 +22,7 @@ public class Center_SwitchIsLeft extends AutoPath {
 	 * The first distance of the path. It travels forward 18 inches at our short
 	 * power.
 	 */
-	private Center_SwitchIsLeft_FirstDistance firstDistance;
+	private Center_SwitchIsLeft_FirstDistanceEncoder firstDistance;
 
 	/**
 	 * The second distance of the path. It travels forward 110 inches at our long
@@ -88,7 +88,7 @@ public class Center_SwitchIsLeft extends AutoPath {
 	 */
 	public Center_SwitchIsLeft() {
 		fidget = new Fidget();
-		firstDistance = new Center_SwitchIsLeft_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		firstDistance = new Center_SwitchIsLeft_FirstDistanceEncoder(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		firstAngle = new Center_SwitchIsLeft_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		secondDistance = new Center_SwitchIsLeft_SecondDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		secondAngle = new Center_SwitchIsLeft_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);

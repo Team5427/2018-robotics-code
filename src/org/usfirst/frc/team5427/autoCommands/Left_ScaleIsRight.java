@@ -7,9 +7,11 @@ import org.usfirst.frc.team5427.robot.commands.Fidget;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
 import org.usfirst.frc.team5427.robot.commands.PIDTurn;
+import org.usfirst.frc.team5427.robot.commands.TiltIntake_TimeOut;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This is our autonomous path that starts in the left position, moves towards
@@ -34,7 +36,7 @@ public class Left_ScaleIsRight extends AutoPath {
 	
 	private Left_ScaleIsRight_SecondAngle secondAngle;
 	
-	private Left_ScaleIsRight_ThirdDistance thirdDistance;
+	private Left_ScaleIsRight_ThirdDistanceEncoder thirdDistance;
 	
 	private Left_ScaleIsRight_MoveElevatorAuto moveElevator;
 
@@ -76,7 +78,7 @@ public class Left_ScaleIsRight extends AutoPath {
 		firstAngle = new Left_ScaleIsRight_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		secondDistance = new Left_ScaleIsRight_SecondDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		secondAngle = new Left_ScaleIsRight_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		thirdDistance = new Left_ScaleIsRight_ThirdDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		thirdDistance = new Left_ScaleIsRight_ThirdDistanceEncoder(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		moveElevator = new Left_ScaleIsRight_MoveElevatorAuto();
 	}
 
@@ -85,7 +87,9 @@ public class Left_ScaleIsRight extends AutoPath {
 	 * and sets the timeout of the path.
 	 */
 	public void initialize() {
-		fidget.start();
+		fidget = null;
+		
+		firstDistance.start();
 		setTimeout(timeOut);
 	}
 
@@ -94,14 +98,18 @@ public class Left_ScaleIsRight extends AutoPath {
 	 * between commands at different points in our path.
 	 */
 	public void execute() {
+		SmartDashboard.putNumber("Motor Value", Robot.driveTrain.drive_Right.get());
+		
 		if (moveElevator != null)
 			moveElevator.isFinished();
 
-		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null != secondAngle && secondAngle.isFinished() && moveElevator.maxHeightReached() && !(thirdDistance.isRunning())) {
+		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null != secondAngle && secondAngle.isFinished() && !(thirdDistance.isRunning())) {
 			secondAngle.cancel();
 			secondAngle = null;
 			Robot.ahrs.reset();
+			Robot.encLeft.reset();
 			thirdDistance.start();
+			
 		}
 
 		else if ((null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning())) {
@@ -111,6 +119,7 @@ public class Left_ScaleIsRight extends AutoPath {
 			Robot.encLeft.reset();
 			moveElevator.start();
 			secondAngle.start();
+			new TiltIntake_TimeOut().start();
 		}
 
 		else if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !secondDistance.isRunning()) {

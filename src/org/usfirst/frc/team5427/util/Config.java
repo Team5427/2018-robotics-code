@@ -154,6 +154,11 @@ public class Config {
 	 * The motor speed that correlates to moving the elevator up.
 	 */
 	public static final double ELEVATOR_MOTOR_SPEED_UP = 0.8;
+	
+	/**
+	 * The motor speed that correlates to moving the elevator up auto.
+	 */
+	public static final double ELEVATOR_MOTOR_SPEED_UP_AUTO = 1;
 
 	/**
 	 * The motor speed that correlates to moving the elevator down.
@@ -368,7 +373,7 @@ public class Config {
 	/**
 	 * The linear increment used in PIDControllers.
 	 */
-	public static final double PID_STRAIGHT_LINEAR_INCREMENT = .003;
+	public static final double PID_STRAIGHT_LINEAR_INCREMENT = .004;
 
 	/**
 	 * The exponential increment used in PIDControllers.

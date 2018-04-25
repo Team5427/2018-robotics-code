@@ -114,7 +114,7 @@ public class Center_SwitchIsLeft_FirstDistance extends PIDCommand {
 		this.pidDistance = null;
 		Robot.encLeft.reset();
 		Robot.ahrs.reset();
-		power = .01;
+		power = .2;
 		hasStarted = false;
 	}
 

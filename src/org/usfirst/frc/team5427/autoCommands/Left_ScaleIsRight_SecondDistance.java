@@ -88,7 +88,7 @@ public class Left_ScaleIsRight_SecondDistance extends PIDCommand {
 
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgNot = scgConstant;
-		maximumSpeed = 0.8;
+		maximumSpeed = 1;
 		desiredDistance = 220;
 		
 		p = 0.0111;
@@ -99,7 +99,7 @@ public class Left_ScaleIsRight_SecondDistance extends PIDCommand {
 		this.getPIDController().setSetpoint(0);
 		setSetpoint(0);
 
-		this.power = .01;
+		this.power = .25;
 		hasStarted = false;
 	}
 
@@ -114,7 +114,7 @@ public class Left_ScaleIsRight_SecondDistance extends PIDCommand {
 		this.pidDistance = null;
 		Robot.encLeft.reset();
 		Robot.ahrs.reset();
-		power = .01;
+		power = .2;
 		hasStarted = false;
 	}
 

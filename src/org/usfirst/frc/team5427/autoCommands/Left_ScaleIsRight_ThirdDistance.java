@@ -88,12 +88,12 @@ public class Left_ScaleIsRight_ThirdDistance extends PIDCommand {
 
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgNot = scgConstant;
-		maximumSpeed = 0.7;
-		desiredDistance = 25;
+		maximumSpeed = 0.5;
+		desiredDistance = 33;
 		
-		p = 0.0111;
+		p = 0.025;
 		i = 0;
-		d = 0.018;
+		d = 0.01;
 		
 		this.setInterruptible(true);
 		this.getPIDController().setSetpoint(0);

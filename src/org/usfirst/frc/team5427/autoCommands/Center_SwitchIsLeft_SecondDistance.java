@@ -88,8 +88,8 @@ public class Center_SwitchIsLeft_SecondDistance extends PIDCommand {
 
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgNot = scgConstant;
-		maximumSpeed = Config.PID_STRAIGHT_POWER_LONG;
-		desiredDistance = 110;
+		maximumSpeed = .5;
+		desiredDistance = 88;
 		
 		p = 0.042;
 		i = 0;
@@ -158,7 +158,7 @@ public class Center_SwitchIsLeft_SecondDistance extends PIDCommand {
 		SmartDashboard.putNumber("p", power);
 
 		if (this.power < this.maximumSpeed && null == pidDistance) {
-			this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
+			this.power += (Config.PID_STRAIGHT_LINEAR_INCREMENT);
 		}
 		else if (null == pidDistance) {
 			pidDistance = new PIDDistance(this.scgNot, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);

@@ -142,7 +142,7 @@ public class PIDDistance extends PIDCommand {
 				timerStarted = true;
 			}
 
-			else if (timer.get() > 0.5 && timerStarted) { return true; }
+			else if (timer.get() > 0.1 && timerStarted) { return true; }
 		}
 		else {
 			timer.reset();

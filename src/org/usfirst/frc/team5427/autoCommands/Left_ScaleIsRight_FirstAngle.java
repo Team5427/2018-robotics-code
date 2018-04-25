@@ -50,7 +50,7 @@ public class Left_ScaleIsRight_FirstAngle extends PIDCommand {
 		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_UPDATE_PERIOD);
 		this.scgRight = scgRight;
 		this.scgLeft = scgLeft;
-		setPoint = 90;
+		setPoint = 87.5;
 
 		super.setInputRange(-180, 180);
 		super.setSetpoint(setPoint);
@@ -99,7 +99,7 @@ public class Left_ScaleIsRight_FirstAngle extends PIDCommand {
 	@Override
 	public boolean isFinished() {
 		double tolerance = Math.abs(Math.abs(getCurrentAngle()) - Math.abs(super.getSetpoint()));
-		boolean inRange = tolerance < Config.PID_TURN_TOLERANCE;
+		boolean inRange = tolerance < Config.PID_TURN_TOLERANCE-.0;
 		if (inRange) {
 			if (timer.get() == 0) {
 				timer.start();

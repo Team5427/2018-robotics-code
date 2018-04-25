@@ -88,8 +88,8 @@ public class Center_SwitchIsLeft_ThirdDistance extends PIDCommand {
 
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgNot = scgConstant;
-		maximumSpeed = .9;
-		desiredDistance = 78;
+		maximumSpeed = Config.PID_STRAIGHT_POWER_SHORT;
+		desiredDistance = 64;
 		
 		p = 0.025;
 		i = 0;
@@ -99,7 +99,7 @@ public class Center_SwitchIsLeft_ThirdDistance extends PIDCommand {
 		this.getPIDController().setSetpoint(0);
 		setSetpoint(0);
 
-		this.power = .01;
+		this.power = .2;
 		hasStarted = false;
 	}
 
@@ -146,7 +146,7 @@ public class Center_SwitchIsLeft_ThirdDistance extends PIDCommand {
 		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
 
 		scgPIDControlled.pidWrite(output);
-		if (Robot.encLeft.getDistance() >= this.desiredDistance) {
+		if (Math.abs(Robot.encLeft.getDistance()) >= this.desiredDistance) {
 			if (scgNot.get() == 0)
 				scgNot.set(0);
 		}
@@ -158,7 +158,7 @@ public class Center_SwitchIsLeft_ThirdDistance extends PIDCommand {
 		SmartDashboard.putNumber("p", power);
 
 		if (this.power < this.maximumSpeed && null == pidDistance) {
-			this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
+			this.power += .003;
 		}
 		else if (null == pidDistance) {
 			pidDistance = new PIDDistance(this.scgNot, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);
