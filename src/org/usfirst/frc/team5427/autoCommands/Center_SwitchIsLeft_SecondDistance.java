@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * 
  * @author Akshat Jain
  */
+//
 public class Center_SwitchIsLeft_SecondDistance extends PIDCommand {
 
 	/**
@@ -89,7 +90,7 @@ public class Center_SwitchIsLeft_SecondDistance extends PIDCommand {
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgNot = scgConstant;
 		maximumSpeed = .5;
-		desiredDistance = 88;
+		desiredDistance = 105;
 		
 		p = 0.042;
 		i = 0;
@@ -102,7 +103,7 @@ public class Center_SwitchIsLeft_SecondDistance extends PIDCommand {
 		this.power = .01;
 		hasStarted = false;
 	}
-
+	// 
 	/*
 	 * Command implemented from PIDCommand This is called automatically after the
 	 * constructor of the command is run. We only use this to start the

@@ -306,7 +306,7 @@ public class Config {
 	/**
 	 * The tolerance, in degrees, used while moving straight.
 	 */
-	public static final double PID_STRAIGHT_TOLERANCE = 5;
+	public static final double PID_STRAIGHT_TOLERANCE = 3;
 
 	/**
 	 * The starting power used while turning to an angle.
@@ -326,7 +326,7 @@ public class Config {
 	/**
 	 * The P value used for moving straight.
 	 */
-	public static final double PID_STRAIGHT_P = .22;
+	public static final double PID_STRAIGHT_P = .135;//.22
 
 	/**
 	 * The I value used for moving straight.
@@ -336,7 +336,7 @@ public class Config {
 	/**
 	 * The D value used for moving straight.
 	 */
-	public static final double PID_STRAIGHT_D = .04;
+	public static final double PID_STRAIGHT_D = .037;//.04
 
 	/**
 	 * The P value used for coasting .

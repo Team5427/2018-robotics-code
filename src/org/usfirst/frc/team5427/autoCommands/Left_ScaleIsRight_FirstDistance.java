@@ -103,7 +103,7 @@ public class Left_ScaleIsRight_FirstDistance extends PIDCommand {
 		hasStarted = false;
 	}
 
-	/*
+	/**
 	 * Command implemented from PIDCommand This is called automatically after the
 	 * constructor of the command is run. We only use this to start the
 	 * PIDController of moving straight.

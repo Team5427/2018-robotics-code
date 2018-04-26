@@ -23,7 +23,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *Drive straight in the Right Scale when robot is right.
+ * Drive straight in the Right Scale when robot is right.
+ * 
+ * TODO Document class correctly.
  * 
  * @author Akshat Jain
  */
@@ -78,7 +80,7 @@ public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
 		hasStarted = false;
 	}
 
-	/*
+	/**
 	 * Command implemented from PIDCommand This is called automatically after the
 	 * constructor of the command is run. We only use this to start the
 	 * PIDController of moving straight.

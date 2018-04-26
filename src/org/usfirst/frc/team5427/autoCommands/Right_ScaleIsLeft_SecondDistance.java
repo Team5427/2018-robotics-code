@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * This command moves the robot forwards 250 inches.
- * Used in the Left_ScaleIsLeft command.
+ * This command moves the robot forwards 224 inches.
+ * Used in the Left_ScaleIsRight command.
  * 
- * @author Akshat Jain
+ * @author Andrew Li
  */
-public class Center_SwitchIsRight_FirstDistance extends PIDCommand {
+public class Right_ScaleIsLeft_SecondDistance extends PIDCommand {
 
 	/**
 	 * PIDCommand created to control distance after we have reached the maximum
@@ -83,23 +83,23 @@ public class Center_SwitchIsRight_FirstDistance extends PIDCommand {
 	 *            the side of the robot that we will control with the PIDDistance
 	 *            command.
 	 */
-	public Center_SwitchIsRight_FirstDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant) {
+	public Right_ScaleIsLeft_SecondDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant) {
 		super(Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, Config.PID_UPDATE_PERIOD);
 
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgNot = scgConstant;
-		maximumSpeed = Config.PID_STRAIGHT_POWER_SHORT;
-		desiredDistance = 100;
+		maximumSpeed = 1;
+		desiredDistance = 220;
 		
-		p = 0.025;
+		p = 0.0111;
 		i = 0;
-		d = 0.12;
+		d = 0.018;
 		
 		this.setInterruptible(true);
 		this.getPIDController().setSetpoint(0);
 		setSetpoint(0);
 
-		this.power = .01;
+		this.power = .25;
 		hasStarted = false;
 	}
 
@@ -114,7 +114,7 @@ public class Center_SwitchIsRight_FirstDistance extends PIDCommand {
 		this.pidDistance = null;
 		Robot.encLeft.reset();
 		Robot.ahrs.reset();
-		power = .01;
+		power = .2;
 		hasStarted = false;
 	}
 
@@ -158,7 +158,7 @@ public class Center_SwitchIsRight_FirstDistance extends PIDCommand {
 		SmartDashboard.putNumber("p", power);
 
 		if (this.power < this.maximumSpeed && null == pidDistance) {
-			this.power += (Config.PID_STRAIGHT_LINEAR_INCREMENT-.001);
+			this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
 		}
 		else if (null == pidDistance) {
 			pidDistance = new PIDDistance(this.scgNot, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);

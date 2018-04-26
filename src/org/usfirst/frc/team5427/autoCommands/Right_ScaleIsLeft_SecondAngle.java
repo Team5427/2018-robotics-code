@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Andrew Li
  */
 @SameLine
-public class Right_ScaleIsLeft_FirstAngle extends PIDCommand {
+public class Right_ScaleIsLeft_SecondAngle extends PIDCommand {
 	/**
 	 * Two SpeedControllerGroup objects to be controlled by this PID Loop
 	 */
@@ -46,11 +46,11 @@ public class Right_ScaleIsLeft_FirstAngle extends PIDCommand {
 	 * @param scgLeft
 	 *            the speed controller group on the left side of the robot
 	 */
-	public Right_ScaleIsLeft_FirstAngle(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft) {
+	public Right_ScaleIsLeft_SecondAngle(SpeedControllerGroup scgRight, SpeedControllerGroup scgLeft) {
 		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_UPDATE_PERIOD);
 		this.scgRight = scgRight;
 		this.scgLeft = scgLeft;
-		setPoint = -87.5;
+		setPoint = 138;
 
 		super.setInputRange(-180, 180);
 		super.setSetpoint(setPoint);
@@ -99,12 +99,12 @@ public class Right_ScaleIsLeft_FirstAngle extends PIDCommand {
 	@Override
 	public boolean isFinished() {
 		double tolerance = Math.abs(Math.abs(getCurrentAngle()) - Math.abs(super.getSetpoint()));
-		boolean inRange = tolerance < Config.PID_TURN_TOLERANCE-.0;
+		boolean inRange = tolerance < Config.PID_TURN_TOLERANCE;
 		if (inRange) {
 			if (timer.get() == 0) {
 				timer.start();
 			}
-			if (timer.get() > .5) { return true; }
+			if (timer.get() > .1) { return true; }
 		}
 		else {
 			timer.reset();

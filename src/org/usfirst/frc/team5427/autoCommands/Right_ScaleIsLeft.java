@@ -7,9 +7,11 @@ import org.usfirst.frc.team5427.robot.commands.Fidget;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
 import org.usfirst.frc.team5427.robot.commands.PIDTurn;
+import org.usfirst.frc.team5427.robot.commands.TiltIntake_TimeOut;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This is our autonomous path that starts in the right position and moves and
@@ -23,12 +25,20 @@ public class Right_ScaleIsLeft extends AutoPath {
 	/**
 	 * The first distance of the path. It travels 224 inches forward at .7 power.
 	 */
-	private Right_ScaleIsRight_FirstDistance firstDistance;
+	private Right_ScaleIsLeft_FirstDistance firstDistance;
 
 	/**
 	 * The first turn of the path. It turns 88 degrees counterclockwise.
 	 */
-	private Right_ScaleIsRight_FirstAngle firstAngle;
+	private Right_ScaleIsLeft_FirstAngle firstAngle;
+	
+	private Right_ScaleIsLeft_SecondDistance secondDistance;
+	
+	private Right_ScaleIsLeft_SecondAngle secondAngle;
+	
+	private Right_ScaleIsLeft_ThirdDistanceEncoder thirdDistance;
+	
+	private Right_ScaleIsLeft_MoveElevatorAuto moveElevator;
 
 	/**
 	 * The command used at the start of autonomous to drop the arms of the intake
@@ -47,8 +57,12 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 */
 	public Right_ScaleIsLeft() {
 		fidget = new Fidget();
-		firstDistance = new Right_ScaleIsRight_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		firstAngle = new Right_ScaleIsRight_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		firstDistance = new Right_ScaleIsLeft_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		firstAngle = new Right_ScaleIsLeft_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		secondDistance = new Right_ScaleIsLeft_SecondDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		secondAngle = new Right_ScaleIsLeft_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		thirdDistance = new Right_ScaleIsLeft_ThirdDistanceEncoder(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		moveElevator = new Right_ScaleIsLeft_MoveElevatorAuto();
 	}
 
 	/**
@@ -65,13 +79,38 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 * between commands at different points in our path.
 	 */
 	public void execute() {
-		if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished()) {
+		SmartDashboard.putNumber("Motor Value", Robot.driveTrain.drive_Right.get());
+		
+		if (moveElevator != null)
+			moveElevator.isFinished();
+
+		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null != secondAngle && secondAngle.isFinished() && !(thirdDistance.isRunning())) {
+			secondAngle.cancel();
+			secondAngle = null;
+			Robot.ahrs.reset();
+			Robot.encLeft.reset();
+			thirdDistance.start();
+			
+		}
+
+		else if ((null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning())) {
+			secondDistance.cancel();
+			secondDistance = null;
+			Robot.ahrs.reset();
+			Robot.encLeft.reset();
+			moveElevator.start();
+			secondAngle.start();
+			new TiltIntake_TimeOut().start();
+		}
+
+		else if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !secondDistance.isRunning()) {
 			firstAngle.cancel();
 			firstAngle = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
+			secondDistance.start();
 		}
-
+		
 		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
 			firstDistance.cancel();
 			firstDistance = null;
@@ -79,7 +118,6 @@ public class Right_ScaleIsLeft extends AutoPath {
 			Robot.encLeft.reset();
 			firstAngle.start();
 		}
-
 		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
 			fidget.cancel();
 			fidget = null;
