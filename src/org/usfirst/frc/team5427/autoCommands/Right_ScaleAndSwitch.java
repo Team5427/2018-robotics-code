@@ -21,73 +21,58 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Andrew Li, Kipp Corman
  */
 public class Right_ScaleAndSwitch extends AutoPath {
-
+	
 	/**
 	 * The first distance of the path. It travels 250 inches forward at our long
 	 * power.
 	 */
-	private PIDStraightMovement firstDistance;
-
-	/**
-	 * The third distance of the path. It travels 70 inches forward at our long
-	 * power.
-	 */
-	private PIDStraightMovement thirdDistance;
+	private Right_ScaleAndSwitch_FirstDistance firstDistance;
 
 	/**
 	 * The second distance of the path. It travels forward for .7 seconds.
 	 */
-	private DriveForward secondDistance;
-
+	private Right_ScaleAndSwitch_DriveForward secondDistance;
+	
+	/**
+	 * The first distance of the path. It travels 70 inches forward at our long
+	 * power.
+	 */
+	private Right_ScaleAndSwitch_ThirdDistance thirdDistance;
+	
 	/**
 	 * The fourth distance of the path. It travels forward for .7 seconds.
 	 */
-	private DriveForward fourthDistance;
-
+	private Right_ScaleAndSwitch_DriveForward2 fourthDistance;
+	
 	/**
-	 * Command that moves the robot backward. It travels backward for .5 seconds.
+	 * The fifth distance of the path. It moves backwards for .5 seconds.
 	 */
-	private DriveBackward moveBack;
-
+	private Right_ScaleAndSwitch_DriveBackward moveBack;
+	
 	/**
 	 * The first turn of the path. It turns 51 degrees counterclockwise.
 	 */
-	private PIDTurn firstAngle;
-
+	private Right_ScaleAndSwitch_FirstAngle firstAngle;	
+	
 	/**
-	 * The second turn of the path. It turns 90 degrees counterclockwise.
+	 * The first turn of the path. It turns 90 degrees counterclockwise.
 	 */
-	private PIDTurn secondAngle;
-
+	private Right_ScaleAndSwitch_SecondAngle secondAngle;
+	
 	/**
 	 * The command used to move the elevator up to the top of its path.
 	 */
-	private MoveElevatorAuto moveElevatorScale;
+	private Right_ScaleAndSwitch_MoveElevatorAuto moveElevatorScale;
 
 	/**
 	 * The command used to reset the elevator back to its default position.
 	 */
-	private MoveElevatorAuto elevatorReset;
+	private Right_ScaleAndSwitch_MoveElevatorAuto elevatorReset;
 
 	/**
 	 * The command used to move the elevator up to the middle of its path.
 	 */
-	private MoveElevatorAuto moveElevatorSwitch;
-
-	/**
-	 * The command used to shoot the cube onto the scale.
-	 */
-	private AutoOutGo shootScale;
-
-	/**
-	 * The command used to shoot the cube onto the switch.
-	 */
-	private AutoOutGo shootSwitch;
-
-	/**
-	 * The command used to intake a cube into the robot.
-	 */
-	private IntakeActivateIn intake;
+	private Right_ScaleAndSwitch_MoveElevatorAuto moveElevatorSwitch;
 
 	/**
 	 * The command used at the start of autonomous to drop the arms of the intake
@@ -109,6 +94,23 @@ public class Right_ScaleAndSwitch extends AutoPath {
 	 * The time, in seconds, that we manually end our autonomous path.
 	 */
 	public static final double timeOut = 15;
+	
+	
+	
+	/**
+	 * The command used to shoot the cube onto the scale.
+	 */
+	private AutoOutGo shootScale;
+
+	/**
+	 * The command used to shoot the cube onto the switch.
+	 */
+	private AutoOutGo shootSwitch;
+
+	/**
+	 * The command used to intake a cube into the robot.
+	 */
+	private IntakeActivateIn intake;
 
 	/********** PID VALUES FOR 250 INCHES **********/
 	/**
@@ -150,16 +152,19 @@ public class Right_ScaleAndSwitch extends AutoPath {
 	 */
 	public Right_ScaleAndSwitch() {
 		fidget = new Fidget();
-		firstDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 250, p1, i1, d1);
-		secondDistance = new DriveForward(.7);
-		thirdDistance = new PIDStraightMovement(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, Config.PID_STRAIGHT_POWER_LONG, 70, 0, 0, 0); // TODO: find real value for thirdDistance
-		fourthDistance = new DriveForward(.7);
-		moveBack = new DriveBackward(.5);
-		firstAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -51);
-		secondAngle = new PIDTurn(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left, -90);
-		moveElevatorSwitch = new MoveElevatorAuto(1);
-		moveElevatorScale = new MoveElevatorAuto(2);
-		elevatorReset = new MoveElevatorAuto(3);
+		firstDistance = new Right_ScaleAndSwitch_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		firstAngle = new Right_ScaleAndSwitch_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		secondDistance = new Right_ScaleAndSwitch_DriveForward();
+		moveBack = new Right_ScaleAndSwitch_DriveBackward();
+		secondAngle = new Right_ScaleAndSwitch_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		thirdDistance = new Right_ScaleAndSwitch_ThirdDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		fourthDistance = new Right_ScaleAndSwitch_DriveForward2();
+		moveElevatorSwitch = new Right_ScaleAndSwitch_MoveElevatorAuto(1);
+		moveElevatorScale = new Right_ScaleAndSwitch_MoveElevatorAuto(2);
+		elevatorReset = new Right_ScaleAndSwitch_MoveElevatorAuto(3);
+		
+		
+		// TODO haven't finished below this
 		intake = new IntakeActivateIn();
 		shootScale = new AutoOutGo();
 		shootSwitch = new AutoOutGo();
