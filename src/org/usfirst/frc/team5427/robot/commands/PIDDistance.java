@@ -132,7 +132,7 @@ public class PIDDistance extends PIDCommand {
 		// TODO NOT untested !
 
 		double distFromSetpoint = Math.abs(desiredDistance - (Math.abs(Robot.encLeft.getDistance())));
-		boolean inRange = distFromSetpoint < Config.PID_STRAIGHT_TOLERANCE;
+		boolean inRange = distFromSetpoint < Config.PID_DISTANCE_TOLERANCE;
 
 		if (inRange && Math.abs(Robot.ahrs.getYaw()) < 3) {
 

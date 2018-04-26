@@ -89,7 +89,7 @@ public class Right_SwitchIsRight_SecondDistance extends PIDCommand {
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgNot = scgConstant;
 		maximumSpeed = Config.PID_STRAIGHT_POWER_SHORT;
-		desiredDistance = 16;
+		desiredDistance = 20;
 		
 		p = 0.013;
 		i = 0;

@@ -104,7 +104,7 @@ public class Right_SwitchIsRight_FirstAngle extends PIDCommand {
 			if (timer.get() == 0) {
 				timer.start();
 			}
-			if (timer.get() > .5) { return true; }
+			if (timer.get() > .1) { return true; }
 		}
 		else {
 			timer.reset();

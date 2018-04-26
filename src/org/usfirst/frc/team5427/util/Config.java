@@ -307,6 +307,11 @@ public class Config {
 	 * The tolerance, in degrees, used while moving straight.
 	 */
 	public static final double PID_STRAIGHT_TOLERANCE = 3;
+	
+	/**
+	 * The tolerance, in inches, used when moving to a distance.
+	 */
+	public static final double PID_DISTANCE_TOLERANCE = 5;
 
 	/**
 	 * The starting power used while turning to an angle.
