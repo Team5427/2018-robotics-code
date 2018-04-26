@@ -51,10 +51,6 @@ public class Right_SwitchIsRight extends AutoPath {
 	 */
 	public static final double timeOut = 15;
 
-
-
-
-
 	/**
 	 * Creates all of the path involved in Right_SwitchIsRight
 	 */
