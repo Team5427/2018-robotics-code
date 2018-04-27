@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5427.autoCommands;
 
+import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.util.SameLine;
 import edu.wpi.first.wpilibj.command.Command;
@@ -40,12 +41,14 @@ public class SplineSwitch extends AutoPath{
 	public SplineSwitch()
 	{
 		speed = 0.3;
-		firstRotationValue = -0.1;
-		secondRotationValue = 0.1;
+		firstRotationValue = -0.53;
+		secondRotationValue = 0.53;
+		hasReachedMiddle = false;
 	}
 	@Override
 	public void initialize()
 	{
+		System.out.println("center switch is left");
 		Robot.ahrs.reset();
 	}
 	
@@ -53,17 +56,21 @@ public class SplineSwitch extends AutoPath{
 	@Override
 	public void execute()
 	{
-		if(!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 90)
+		if(!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 88)
 		{
 			hasReachedMiddle = true;
 		}
 		if(!hasReachedMiddle)
 		{
-			Robot.drive.arcadeDrive(this.speed, this.firstRotationValue);
+			System.out.println("trying to drive first rotation");
+			Robot.driveTrain.drive_Left.set(.5);
+			Robot.driveTrain.drive.curvatureDrive(this.speed, this.firstRotationValue,false);
+			
 		}
 		else
 		{
-			Robot.drive.arcadeDrive(this.speed, this.secondRotationValue);
+			//arcade drive turns in place
+			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
 		}
 	}
 	/**
@@ -73,7 +80,7 @@ public class SplineSwitch extends AutoPath{
 	 */
 	@Override
 	public boolean isFinished() {
-		return (hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) < 3);
+		return (hasReachedMiddle && Robot.ahrs.getYaw() < -2);
 	}
 
 	/**
@@ -81,6 +88,7 @@ public class SplineSwitch extends AutoPath{
 	 */
 	@Override
 	protected void end() {
+		Robot.driveTrain.drive.stopMotor();
 		super.end();
 	}
 }
