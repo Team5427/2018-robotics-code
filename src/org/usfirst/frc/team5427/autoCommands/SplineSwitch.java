@@ -59,11 +59,11 @@ public class SplineSwitch extends AutoPath{
 		}
 		if(!hasReachedMiddle)
 		{
-			Robot.drivetrain.arcadeDrive(this.speed, this.firstRotationValue);
+			Robot.drive.arcadeDrive(this.speed, this.firstRotationValue);
 		}
 		else
 		{
-			Robot.drivetrain.arcadeDrive(this.speed, this.secondRotationValue);
+			Robot.drive.arcadeDrive(this.speed, this.secondRotationValue);
 		}
 	}
 	/**
