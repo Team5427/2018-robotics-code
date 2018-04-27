@@ -27,11 +27,26 @@ public class Right_ScaleAndSwitch extends AutoPath {
 	 * power.
 	 */
 	private Right_ScaleAndSwitch_FirstDistance firstDistance;
+	
+	/**
+	 * The first turn of the path. It turns 51 degrees counterclockwise.
+	 */
+	private Right_ScaleAndSwitch_FirstAngle firstAngle;	
 
 	/**
 	 * The second distance of the path. It travels forward for .7 seconds.
 	 */
 	private Right_ScaleAndSwitch_DriveForward secondDistance;
+	
+	/**
+	 * The fifth distance of the path. It moves backwards for .5 seconds.
+	 */
+	private Right_ScaleAndSwitch_DriveBackward moveBack;
+	
+	/**
+	 * The first turn of the path. It turns 90 degrees counterclockwise.
+	 */
+	private Right_ScaleAndSwitch_SecondAngle secondAngle;
 	
 	/**
 	 * The first distance of the path. It travels 70 inches forward at our long
@@ -43,21 +58,6 @@ public class Right_ScaleAndSwitch extends AutoPath {
 	 * The fourth distance of the path. It travels forward for .7 seconds.
 	 */
 	private Right_ScaleAndSwitch_DriveForward2 fourthDistance;
-	
-	/**
-	 * The fifth distance of the path. It moves backwards for .5 seconds.
-	 */
-	private Right_ScaleAndSwitch_DriveBackward moveBack;
-	
-	/**
-	 * The first turn of the path. It turns 51 degrees counterclockwise.
-	 */
-	private Right_ScaleAndSwitch_FirstAngle firstAngle;	
-	
-	/**
-	 * The first turn of the path. It turns 90 degrees counterclockwise.
-	 */
-	private Right_ScaleAndSwitch_SecondAngle secondAngle;
 	
 	/**
 	 * The command used to move the elevator up to the top of its path.
@@ -79,23 +79,6 @@ public class Right_ScaleAndSwitch extends AutoPath {
 	 * down.
 	 */
 	private Fidget fidget;
-
-	/**
-	 * The starting time of the autonomous path.
-	 */
-	private double startTime;
-
-	/**
-	 * The current time during the autonomous path.
-	 */
-	private double currentTime;
-
-	/**
-	 * The time, in seconds, that we manually end our autonomous path.
-	 */
-	public static final double timeOut = 15;
-	
-	
 	
 	/**
 	 * The command used to shoot the cube onto the scale.
@@ -112,38 +95,20 @@ public class Right_ScaleAndSwitch extends AutoPath {
 	 */
 	private IntakeActivateIn intake;
 
-	/********** PID VALUES FOR 250 INCHES **********/
 	/**
-	 * P value for 250 inches.
+	 * The starting time of the autonomous path.
 	 */
-	public static final double p1 = 0.011;
+	private double startTime;
 
 	/**
-	 * I value for 250 inches.
+	 * The current time during the autonomous path.
 	 */
-	public static final double i1 = 0.0;
+	private double currentTime;
 
 	/**
-	 * D value for 250 inches.
+	 * The time, in seconds, that we manually end our autonomous path.
 	 */
-	public static final double d1 = 0.018;
-	/*********************************************/
-
-	/********** PID VALUES FOR 70 INCHES **********/
-	/**
-	 * P value for 70 inches.
-	 */
-	public static final double p2 = 0.011;
-
-	/**
-	 * I value for 70 inches.
-	 */
-	public static final double i2 = 0.0;
-
-	/**
-	 * D value for 70 inches.
-	 */
-	public static final double d2 = 0.018;
+	public static final double timeOut = 15;
 
 	/*********************************************/
 
@@ -159,12 +124,10 @@ public class Right_ScaleAndSwitch extends AutoPath {
 		secondAngle = new Right_ScaleAndSwitch_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		thirdDistance = new Right_ScaleAndSwitch_ThirdDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		fourthDistance = new Right_ScaleAndSwitch_DriveForward2();
+		
 		moveElevatorSwitch = new Right_ScaleAndSwitch_MoveElevatorAuto(1);
 		moveElevatorScale = new Right_ScaleAndSwitch_MoveElevatorAuto(2);
 		elevatorReset = new Right_ScaleAndSwitch_MoveElevatorAuto(3);
-		
-		
-		// TODO haven't finished below this
 		intake = new IntakeActivateIn();
 		shootScale = new AutoOutGo();
 		shootSwitch = new AutoOutGo();

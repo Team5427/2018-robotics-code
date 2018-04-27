@@ -5,33 +5,66 @@ import org.usfirst.frc.team5427.util.SameLine;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * This is the class to navigate to the left switch utilizing arcs
+ * This is the class to navigate to the left switch from the center position utilizing arcs.
  * 
- * @author V
+ * @author Varsha Kumar, Blake Romero
  */
 @SameLine
 public class SplineSwitch extends AutoPath{
-
-	//use the command for DifferentialDrive
-	/*public void arcadeDrive(double xSpeed,
-            double zRotation)
-	Arcade drive method for differential drive platform. The calculated values will be squared to decrease sensitivity at low speeds.
-	Parameters:
-	xSpeed - The robot's speed along the X axis [-1.0..1.0]. Forward is positive.
-	zRotation - The robot's rotation rate around the Z axis [-1.0..1.0]. Clockwise is positive.*/
+	/**
+	* The desired speed for the robot to travel at along the x axis.
+	* Range from -1.0 to 1.0.
+	*/
+	public double speed;
 	
+	/**
+	* The value to input into the DifferentialDrive method arcadeDrive in order to determine how much the robot should curve during the first segment of its path.
+	* Range from -1.0 to 1.0.
+	*/
+	public double firstRotationValue;
 	
+	/**
+	* The value to input into the DifferentialDrive method arcadeDrive in order to determine how much the robot should curve during the second segment of its path.
+	* Range from -1.0 to 1.0.
+	*/
+	public double secondRotationValue;
+	
+	/**
+	* Stores if the robot has reached the middle of its path.
+	*/
+	public boolean hasReachedMiddle;
+	
+	/**
+	* TODO Add speed and rotationValue to config and change to real values.
+	*/
+	public SplineSwitch()
+	{
+		speed = 0.3;
+		firstRotationValue = -0.1;
+		secondRotationValue = 0.1;
+	}
 	@Override
 	public void initialize()
 	{
-		
+		Robot.ahrs.reset();
 	}
 	
 	
 	@Override
 	public void execute()
 	{
-		
+		if(!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 90)
+		{
+			hasReachedMiddle = true;
+		}
+		if(!hasReachedMiddle)
+		{
+			Robot.drive.arcadeDrive(this.speed, this.firstRotationValue);
+		}
+		else
+		{
+			Robot.drive.arcadeDrive(this.speed, this.secondRotationValue);
+		}
 	}
 	/**
 	 * This is run periodically to check to see if the command is finished.
@@ -40,7 +73,7 @@ public class SplineSwitch extends AutoPath{
 	 */
 	@Override
 	public boolean isFinished() {
-		return false;
+		return (hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) < 3);
 	}
 
 	/**
@@ -48,7 +81,6 @@ public class SplineSwitch extends AutoPath{
 	 */
 	@Override
 	protected void end() {
-//		new AutoOutGo().start();
 		super.end();
 	}
 }
