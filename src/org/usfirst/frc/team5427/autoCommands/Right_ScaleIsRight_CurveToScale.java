@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class Right_ScaleIsRight_CurveToScale extends Command {
 	
-	public static final double MAX_SPEED = .3;
+	public static final double MIN_SPEED = .3;
 	
 	private double speed;
 	
@@ -16,7 +16,7 @@ public class Right_ScaleIsRight_CurveToScale extends Command {
 	
 	public Right_ScaleIsRight_CurveToScale() {
 		
-		speed = .2;
+		speed = Config.PID_STRAIGHT_POWER_LONG;
 		rotationValue = .4;
 		angle = 40;
 		
@@ -27,8 +27,8 @@ public class Right_ScaleIsRight_CurveToScale extends Command {
 	}
 	
 	public void execute() {
-		if(speed < MAX_SPEED)
-			this.speed*=1.035;
+		if(speed > MIN_SPEED)
+			this.speed/=1.03;
 		
 		Robot.driveTrain.drive.curvatureDrive(this.speed, this.rotationValue, false);
 	}
