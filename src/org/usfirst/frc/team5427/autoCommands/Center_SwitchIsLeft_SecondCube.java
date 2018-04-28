@@ -47,12 +47,12 @@ public class Center_SwitchIsLeft_SecondCube extends AutoPath {
 
 	public Center_SwitchIsLeft_SecondCube() {
 		backOff = new DriveBackward(1);
-		moveForward = new DriveForward(1);
-		intakeCube = new AutoInGo();
 		elevatorDown = new MoveElevatorAuto(4);
-		elevatorUp = new MoveElevatorAuto(1);
 		curveToCube = new Center_SwitchIsLeft_CurveToCube();
+		intakeCube = new AutoInGo();
 		curveBack = new Center_SwitchIsLeft_CurveAwayFromCube();
+		moveForward = new DriveForward(1);
+		elevatorUp = new MoveElevatorAuto(1);
 	}
 
 	@Override

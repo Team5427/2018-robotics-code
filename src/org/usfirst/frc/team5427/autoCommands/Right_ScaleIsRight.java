@@ -47,6 +47,8 @@ public class Right_ScaleIsRight extends AutoPath {
 	 * The command used to move the elevator up to the top of its path.
 	 */
 	private Right_ScaleIsRight_MoveElevatorAuto moveElevator;
+	
+	private Right_ScaleIsRight_CurveToScale curve;
 
 	/**
 	 * The command used at the start of autonomous to drop the arms of the intake
@@ -78,8 +80,9 @@ public class Right_ScaleIsRight extends AutoPath {
 	public Right_ScaleIsRight() {
 		fidget = new Fidget();
 		firstDistance = new Right_ScaleIsRight_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		firstAngle = new Right_ScaleIsRight_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		secondDistance = new Right_ScaleIsRight_DriveForward();
+		curve = new Right_ScaleIsRight_CurveToScale();
+//		firstAngle = new Right_ScaleIsRight_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+//		secondDistance = new Right_ScaleIsRight_DriveForward();
 		moveElevator = new Right_ScaleIsRight_MoveElevatorAuto();
 	}
 
@@ -89,7 +92,7 @@ public class Right_ScaleIsRight extends AutoPath {
 	 */
 	public void initialize() {
 		startTime = System.nanoTime() / 1000000000.;
-		fidget.start();
+		firstDistance.start();
 		setTimeout(timeOut);
 	}
 
@@ -110,33 +113,41 @@ public class Right_ScaleIsRight extends AutoPath {
 		if (currentTime - startTime > 2.5 && !moveElevator.isRunning())
 			moveElevator.start();
 
-		if (null == fidget && null == firstDistance && firstAngle == null && moveElevator.maxHeightReachedTime() && (!secondDistance.isRunning())) {
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			secondDistance.start();
-		}
+//		if (null == fidget && null == firstDistance && firstAngle == null && moveElevator.maxHeightReachedTime() && (!secondDistance.isRunning())) {
+//			Robot.ahrs.reset();
+//			Robot.encLeft.reset();
+//			secondDistance.start();
+//		}
+//
+//		if (null == fidget && null == firstDistance && firstAngle != null && firstAngle.isFinished()) {
+//			firstAngle.cancel();
+//			firstAngle = null;
+//			Robot.ahrs.reset();
+//			Robot.encLeft.reset();
+//		}
+//
+//		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+//			firstDistance.cancel();
+//			firstDistance = null;
+//			Robot.ahrs.reset();
+//			Robot.encLeft.reset();
+//			firstAngle.start();
+//		}
 
-		if (null == fidget && null == firstDistance && firstAngle != null && firstAngle.isFinished()) {
-			firstAngle.cancel();
-			firstAngle = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-		}
-
-		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+//		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
+//			fidget.cancel();
+//			fidget = null;
+//			Robot.ahrs.reset();
+//			Robot.encLeft.reset();
+//			firstDistance.start();
+//		}
+		
+		if(null!=firstDistance && firstDistance.isFinished() && !(curve.isRunning())) {
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			firstAngle.start();
-		}
-
-		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
-			fidget.cancel();
-			fidget = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			firstDistance.start();
+			curve.start();
 		}
 	}
 
@@ -147,7 +158,9 @@ public class Right_ScaleIsRight extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (firstAngle == null && secondDistance.isFinished())
+//		if (firstAngle == null && secondDistance.isFinished())
+//			return true;
+		if (curve.isFinished())
 			return true;
 		return isTimedOut() && this.moveElevator.maxHeightReached();
 	}
@@ -161,7 +174,8 @@ public class Right_ScaleIsRight extends AutoPath {
 		Robot.tiltUpNext = false;
 		moveElevator.cancel();
 		new AutoOutGo().start();
-		secondDistance.cancel();
+//		secondDistance.cancel();
+		curve.cancel();
 		new DriveBackward(1).start();
 		super.end();
 	}

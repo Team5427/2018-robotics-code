@@ -43,7 +43,7 @@ public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
 	// This is the maximum speed that the robot will travel at.
 	private double maximumSpeed = Config.PID_STRAIGHT_POWER_LONG;
 	// This is the distance that we want to travel.
-	private double desiredDistance = 250;
+	private double desiredDistance;
 	// This is the power that scgPIDControlled is set to.
 	private double power;
 	// These are the p, i, and d values for the PID Controller in PIDDistance.
@@ -72,11 +72,11 @@ public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
 		super(Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, Config.PID_UPDATE_PERIOD);
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgConstant = scgConstant;
-	
+		desiredDistance = 250;
 		this.setInterruptible(true);
 		this.getPIDController().setSetpoint(0);
 		setSetpoint(0);
-		this.power = .01;
+		this.power = .2;
 		hasStarted = false;
 	}
 
@@ -92,7 +92,7 @@ public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
 		this.pidDistance = null;
 		Robot.encLeft.reset();
 		Robot.ahrs.reset();
-		power = .01;
+		power = .2;
 		hasStarted = false;
 		
 	}
