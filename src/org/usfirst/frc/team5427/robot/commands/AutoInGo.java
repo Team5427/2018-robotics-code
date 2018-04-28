@@ -18,14 +18,14 @@ import org.usfirst.frc.team5427.util.SameLine;
  * @author Blake Romero
  */
 @SameLine
-public class AutoOutGo extends Command {
+public class AutoInGo extends Command {
 
 	/**
 	 * AutoOutGo requires the intake subsystem and its timeout is set via Config.
 	 */
-	public AutoOutGo() {
+	public AutoInGo() {
 		requires(Robot.intakeSubsystem);
-		this.setTimeout(Config.AUTO_OUTTAKE_TIMEOUT);
+		this.setTimeout(Config.AUTO_INTAKE_TIMEOUT);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class AutoOutGo extends Command {
 	 */
 	@Override
 	protected void execute() {
-		Robot.intakeSubsystem.setSpeed(-.5);
+		Robot.intakeSubsystem.setSpeed(.5);
 	}
 
 	/**

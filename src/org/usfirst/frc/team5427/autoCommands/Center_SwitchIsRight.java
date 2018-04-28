@@ -113,5 +113,6 @@ public class Center_SwitchIsRight extends AutoPath {
 	@Override
 	protected void end() {
 		super.end();
+		new Center_SwitchIsRight_SecondCube().start();
 	}
 }

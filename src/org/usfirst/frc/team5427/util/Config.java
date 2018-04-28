@@ -104,9 +104,14 @@ public class Config {
 
 	/******************** TIMEOUTS *******************/
 	/**
-	 * The timeout used in moving the intake during autonomous.
+	 * The timeout used in shooting the intake out during autonomous.
 	 */
-	public static final double AUTO_INTAKE_TIMEOUT = 1;
+	public static final double AUTO_OUTTAKE_TIMEOUT = 1;
+	
+	/**
+	 * The timeout used in picking up a cube during autonomous.
+	 */
+	public static final double AUTO_INTAKE_TIMEOUT = 3;
 
 	/**
 	 * The timeout used in tilting the intake up.
@@ -132,6 +137,11 @@ public class Config {
 	 * The timeout used in moving the elevator back to default from the scale.
 	 */
 	public static final double ELEVATOR_TIMEOUT_SCALE_DOWN = 2.8;
+	
+	/**
+	 * The timeout used in moving the elevator back to default from the switch.
+	 */
+	public static final double ELEVATOR_TIMEOUT_SWITCH_DOWN = 1.8;
 	/*************************************************/
 
 	/******************** MOTOR SPEEDS *******************/

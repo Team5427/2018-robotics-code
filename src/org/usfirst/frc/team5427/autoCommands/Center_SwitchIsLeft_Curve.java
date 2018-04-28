@@ -70,21 +70,14 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 		{
 			hasReachedMiddle = true;
 		}
+		if(speed < MAX_SPEED)
+			this.speed*=1.035;
 		if(!hasReachedMiddle)
 		{
-			
-			if(speed < MAX_SPEED)
-				this.speed*=1.035;
-			SmartDashboard.putNumber("Speed", this.speed);
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.firstRotationValue,false);
-			
 		}
 		else
 		{
-			//arcade drive turns in place
-			if(speed < MAX_SPEED)
-				this.speed*=1.035;
-			SmartDashboard.putNumber("Speed", this.speed);
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
 		}
 	}
@@ -103,8 +96,11 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 	 */
 	@Override
 	protected void end() {
-//		new DriveForward(.2);
+		System.out.println("Ending Main Curve");
 		Robot.driveTrain.drive.stopMotor();
+		Robot.ahrs.reset();
+		Robot.encLeft.reset();
 		super.end();
+		new Center_SwitchIsLeft_SecondCube().start();
 	}
 }
