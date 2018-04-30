@@ -42,6 +42,8 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 	*/
 	public boolean hasReachedMiddle;
 	
+	public Center_SwitchIsLeft_CoastToSwitch coasting;
+	
 	/**
 	* TODO Add speed and rotationValue to config and change to real values.
 	*/
@@ -51,6 +53,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 		firstRotationValue = -0.4;
 		secondRotationValue = 0.45;
 		hasReachedMiddle = false;
+		coasting = new Center_SwitchIsLeft_CoastToSwitch();
 	}
 	@Override
 	public void initialize()
@@ -66,6 +69,11 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
 		SmartDashboard.putNumber("Speed", this.speed);
 
+		if(hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) < 17) 
+		{
+			Robot.driveTrain.drive.stopMotor();
+			coasting.start();
+		}
 		if(!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 86)
 		{
 			new Center_SwitchIsLeft_MoveElevatorAuto().start();
@@ -82,6 +90,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
 		}
 	}
+	
 	/**
 	 * This is run periodically to check to see if the command is finished.
 	 * 
@@ -89,7 +98,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 	 */
 	@Override
 	public boolean isFinished() {
-		return (hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) < 17);
+		return (coasting.isRunning() && coasting.isFinished());
 	}
 
 	/**

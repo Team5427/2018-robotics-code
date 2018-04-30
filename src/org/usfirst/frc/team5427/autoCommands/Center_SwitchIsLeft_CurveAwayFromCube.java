@@ -24,21 +24,19 @@ public class Center_SwitchIsLeft_CurveAwayFromCube extends Command{
 	public double rotationValue;
 	
 	public Center_SwitchIsLeft_CurveAwayFromCube() {
-		speed = -0.1;
+		speed = -0.3;
 		rotationValue = -0.4;
 	}
 	
 	@Override
 	public void initialize() {
 		Robot.ahrs.reset();
+		Robot.driveTrain.drive.curvatureDrive(this.speed, this.rotationValue,false);
 	}
 
 	@Override
 	public void execute() {
-		if(speed > MAX_SPEED)
-			this.speed*=1.035;
 		System.out.println("Curving Away From Cube");
-		Robot.driveTrain.drive.curvatureDrive(this.speed, this.rotationValue,false);
 	}
 	
 	@Override

@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5427.autoCommands;
 
 import org.usfirst.frc.team5427.robot.Robot;
-
+import org.usfirst.frc.team5427.util.Config;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Right_ScaleIsRight_CurveToScale extends Command {

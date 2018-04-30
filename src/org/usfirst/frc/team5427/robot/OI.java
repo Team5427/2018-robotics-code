@@ -44,73 +44,73 @@ public class OI {
 	/**
 	 * Button used to pull cubes into the robot.
 	 */
-	Button motorIntakeIn;
+	public Button motorIntakeIn;
 
 	/**
 	 * Button used to shoot cubes out of the robot.
 	 */
-	Button motorIntakeOut;
+	public Button motorIntakeOut;
 
 	/**
 	 * Button used to move the elevator upwards.
 	 */
-	Button elevatorUp;
+	public Button elevatorUp;
 
 	/**
 	 * Button used to move the elevator downwards.
 	 */
-	Button elevatorDown;
+	public Button elevatorDown;
 
 	/**
 	 * Button used to move the climber arm upwards.
 	 */
-	Button climberArmUp;
+	public Button climberArmUp;
 
 	/**
 	 * Button used to move the climber arm downwards.
 	 */
-	Button climberArmDown;
+	public Button climberArmDown;
 
 	/**
 	 * Button used to switch the tilted position of the intake.
 	 */
-	Button intakeTilterToggle;
+	public Button intakeTilterToggle;
 
 	/**
 	 * Button used to manually tilt the intake upwards.
 	 */
-	Button intakeTilterUp;
+	public Button intakeTilterUp;
 
 	/**
 	 * Button used to manually tilt the intake downwards.
 	 */
-	Button intakeTilterDown;
+	public Button intakeTilterDown;
 
 	/**
 	 * Button used to climb upwards.
 	 */
-	Button climberUp;
+	public Button climberUp;
 
 	/**
 	 * Button used to climb downwards.
 	 */
-	Button climberDown;
+	public Button climberDown;
 
 	/**
 	 * Button used to shoot cubes out of the robot slowly.
 	 */
-	Button softOutGo;
+	public Button softOutGo;
 	/*************************************************/
 
 	/**
 	 * Chooser used to select the robot's autonomous position.
 	 */
-	SendableChooser<Integer> autoPositionChooser = new SendableChooser<Integer>();
+	public SendableChooser<Integer> autoPositionChooser = new SendableChooser<Integer>();
 
 	/**
 	 * Chooser used to select the robot's desired cube placement.
 	 */
-	SendableChooser<Integer> autoCubeChooser = new SendableChooser<Integer>();
+	public SendableChooser<Integer> autoCubeChooser = new SendableChooser<Integer>();
 
 	/**
 	 * Constructor of OI used to initalize all of the buttons to their joystick

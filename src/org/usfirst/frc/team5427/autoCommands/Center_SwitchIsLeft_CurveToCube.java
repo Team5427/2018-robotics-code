@@ -31,14 +31,12 @@ public class Center_SwitchIsLeft_CurveToCube extends Command{
 	@Override
 	public void initialize() {
 		Robot.ahrs.reset();
+		Robot.driveTrain.drive.curvatureDrive(this.speed, this.rotationValue,false);
 	}
 
 	@Override
 	public void execute() {
-//		if(speed < MAX_SPEED)
-//			this.speed*=1.035;
 		System.out.println("Curving To Cube");
-		Robot.driveTrain.drive.curvatureDrive(this.speed, this.rotationValue,false);
 	}
 	
 	@Override

@@ -24,29 +24,29 @@ public class Center_SwitchIsRight_CurveToCube extends Command{
 	public double rotationValue;
 	
 	public Center_SwitchIsRight_CurveToCube() {
-		speed = 0.1;
-		rotationValue = -0.7;
+		speed = 0.3;
+		rotationValue = -0.4;
 	}
 	
 	@Override
 	public void initialize() {
 		Robot.ahrs.reset();
+		Robot.driveTrain.drive.curvatureDrive(this.speed, this.rotationValue,false);
 	}
 
 	@Override
 	public void execute() {
-		if(speed < MAX_SPEED)
-			this.speed*=1.035;
-		Robot.driveTrain.drive.curvatureDrive(this.speed, this.rotationValue,false);
+		System.out.println("Curving to cube.");
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		return Robot.ahrs.getYaw()>40;
+		return Robot.ahrs.getYaw()<-40;
 	}
 	
 	@Override
 	public void end() {
+		System.out.println("Ending curve to cube.");
 		Robot.driveTrain.drive.stopMotor();
 	}
 }
