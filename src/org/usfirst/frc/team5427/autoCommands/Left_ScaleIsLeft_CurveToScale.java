@@ -5,7 +5,7 @@ import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Right_ScaleIsRight_CurveToScale extends Command {
+public class Left_ScaleIsLeft_CurveToScale extends Command {
 	
 	public static final double MIN_SPEED = .3;
 	
@@ -15,11 +15,11 @@ public class Right_ScaleIsRight_CurveToScale extends Command {
 	
 	private double angle;
 	
-	public Right_ScaleIsRight_CurveToScale() {
+	public Left_ScaleIsLeft_CurveToScale() {
 		
 		speed = Config.PID_STRAIGHT_POWER_LONG;
-		rotationValue = -.4;
-		angle = 40;
+		rotationValue = .4;
+		angle = 20;
 		System.out.println("CURVING");
 		
 	}
@@ -30,7 +30,7 @@ public class Right_ScaleIsRight_CurveToScale extends Command {
 	
 	public void execute() {
 		if(speed > MIN_SPEED)
-			this.speed/=1.03;
+			this.speed/=1.07;
 		
 		Robot.driveTrain.drive.curvatureDrive(this.speed, this.rotationValue, false);
 	}

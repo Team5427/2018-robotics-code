@@ -17,13 +17,14 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * This is our autonomous path that starts in the left position and places one
- * cube on the left side of the scale.
+ * This is our autonomous path that starts in the Left position and places one
+ * cube on the Left side of the scale.
  * 
- * @author Blake Romero, Andrew Li
+ * @author Akshat Jain
  */
 @SameLine
 public class Left_ScaleIsLeft extends AutoPath {
+
 
 	/**
 	 * The first distance of the path. It travels 250 inches forward at our long
@@ -34,28 +35,26 @@ public class Left_ScaleIsLeft extends AutoPath {
 	/**
 	 * The second distance of the path. It travels forward for .7 seconds.
 	 */
-	private Left_ScaleIsLeft_SecondDistance secondDistance;
+
+//	private Left_ScaleIsLeft_DriveForward secondDistance;
 
 	/**
-	 * The first turn of the path. It turns 47 degrees clockwise.
+	 * The first turn of the path. It turns 51 degrees counterclockwise.
 	 */
 	private Left_ScaleIsLeft_FirstAngle firstAngle;
+
+	/**
+	 * The command used to move the elevator up to the top of its path.
+	 */
+	private Left_ScaleIsLeft_MoveElevatorAuto moveElevator;
+	
+	private Left_ScaleIsLeft_CurveToScale curve;
 
 	/**
 	 * The command used at the start of autonomous to drop the arms of the intake
 	 * down.
 	 */
 	private Fidget fidget;
-
-	/**
-	 * The time, in seconds, that we manually end our autonomous path.
-	 */
-	public static final double timeOut = 13;
-
-	/**
-	 * The command that moves the elevator up to its middle position.
-	 */
-	private Left_ScaleIsLeft_MoveElevatorAuto moveElevator;
 
 	/**
 	 * The starting time of the autonomous path.
@@ -68,24 +67,33 @@ public class Left_ScaleIsLeft extends AutoPath {
 	private double currentTime;
 
 	/**
+	 * The time, in seconds, that we manually end our autonomous path.
+	 */
+	public static final double timeOut = 15;
+
+
+	/*********************************************/
+
+	/**
 	 * Creates all of the paths involved in Left_ScaleIsLeft.
 	 */
 	public Left_ScaleIsLeft() {
 		fidget = new Fidget();
 		firstDistance = new Left_ScaleIsLeft_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		firstAngle = new Left_ScaleIsLeft_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		secondDistance = new Left_ScaleIsLeft_SecondDistance();
-		moveElevator = new Left_ScaleIsLeft_MoveElevatorAuto();
+		curve = new Left_ScaleIsLeft_CurveToScale();
+//		firstAngle = new Left_ScaleIsLeft_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+//		secondDistance = new Left_ScaleIsLeft_DriveForward();
+//		moveElevator = new Left_ScaleIsLeft_MoveElevatorAuto();
 	}
 
 	/**
 	 * Run once when the command is started. Captures the start time of the path,
-	 * starts the first portion of the path and sets the timeout of it.
+	 * starts the first portion of the path and sets the timeout of the path.
 	 */
 	public void initialize() {
 		startTime = System.nanoTime() / 1000000000.;
-		fidget.start();
-		setTimeout(13.75);
+		firstDistance.start();
+		setTimeout(timeOut);
 	}
 
 	/**
@@ -94,69 +102,81 @@ public class Left_ScaleIsLeft extends AutoPath {
 	 */
 	public void execute() {
 		currentTime = System.nanoTime() / 1000000000.;
+//
+//		if (moveElevator != null)
+//			moveElevator.isFinished();
+//
+//		if (moveElevator.maxHeightReachedTime() && Robot.tiltUpNext) {
+//			new TiltIntake_TimeOut().start();
+//		}
+//
+//		if (currentTime - startTime > 2.5 && !moveElevator.isRunning())
+//			moveElevator.start();
 
-		if (moveElevator != null)
-			moveElevator.isFinished();
+//		if (null == fidget && null == firstDistance && firstAngle == null && moveElevator.maxHeightReachedTime() && (!secondDistance.isRunning())) {
+//			Robot.ahrs.reset();
+//			Robot.encLeft.reset();
+//			secondDistance.start();
+//		}
+//
+//		if (null == fidget && null == firstDistance && firstAngle != null && firstAngle.isFinished()) {
+//			firstAngle.cancel();
+//			firstAngle = null;
+//			Robot.ahrs.reset();
+//			Robot.encLeft.reset();
+//		}
+//
+//		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+//			firstDistance.cancel();
+//			firstDistance = null;
+//			Robot.ahrs.reset();
+//			Robot.encLeft.reset();
+//			firstAngle.start();
+//		}
 
-		if (moveElevator.maxHeightReachedTime() && Robot.tiltUpNext) {
-			new TiltIntake_TimeOut().start();
-		}
-
-		if (currentTime - startTime > 2.5 && !moveElevator.isRunning())
-			moveElevator.start();
-
-		if (null == fidget && null == firstDistance && firstAngle == null && moveElevator.maxHeightReachedTime() && (!secondDistance.isRunning())) {
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			secondDistance.start();
-		}
-		if (null == fidget && null == firstDistance && firstAngle != null && firstAngle.isFinished()) {
-			firstAngle.cancel();
-			firstAngle = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-		}
-
-		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+//		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
+//			fidget.cancel();
+//			fidget = null;
+//			Robot.ahrs.reset();
+//			Robot.encLeft.reset();
+//			firstDistance.start();
+//		}
+		
+		if(null!=firstDistance && firstDistance.isFinished() && !(curve.isRunning())) {
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			firstAngle.start();
-		}
-		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
-			fidget.cancel();
-			fidget = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			firstDistance.start();
+			curve.start();
 		}
 	}
 
 	/**
 	 * Runs periodically to check to see if the path can be finished.
 	 * 
-	 * @return true when the path is finished or the path has timed out and the
-	 *         elevator has reached maximum height.
+	 * @return true when the path has finished or the path has timed out.
 	 */
 	@Override
 	public boolean isFinished() {
-		if (firstAngle == null && secondDistance.isFinished())
+//		if (firstAngle == null && secondDistance.isFinished())
+//			return true;
+		if (curve.isFinished())
 			return true;
 		return isTimedOut() && this.moveElevator.maxHeightReached();
 	}
 
 	/**
-	 * Run once when isFinished() returns true. Resets values and shoots out the
-	 * cube, moving backward at the same time.
+	 * Run once the isFinished() returns true. Resets values and shoots out any cube
+	 * contained in the robot. Drives backwards afterwards.
 	 */
 	@Override
 	protected void end() {
 		Robot.tiltUpNext = false;
-		moveElevator.cancel();
-		new AutoOutGo().start();
-		secondDistance.cancel();
-		new DriveBackward(1).start();
+//		moveElevator.cancel();
+//		new AutoOutGo().start();
+//		secondDistance.cancel();
+		curve.cancel();
+//		new DriveBackward(5).start();
 		super.end();
 	}
 }

@@ -89,7 +89,7 @@ public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgNot = scgConstant;
 		maximumSpeed = Config.PID_STRAIGHT_POWER_LONG;
-		desiredDistance = 250;
+		desiredDistance = 210;
 		
 		p = 0.011;
 		i = 0;
@@ -98,6 +98,8 @@ public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
 		this.setInterruptible(true);
 		this.getPIDController().setSetpoint(0);
 		setSetpoint(0);
+		
+		
 
 		hasStarted = false;
 	}
@@ -113,7 +115,7 @@ public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
 		this.pidDistance = null;
 		Robot.encLeft.reset();
 		Robot.ahrs.reset();
-		power = .2;
+		power = .01;
 		hasStarted = false;
 	}
 
@@ -181,7 +183,7 @@ public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
 //			end();
 //			return true;
 //		}
-		if(Robot.encLeft.getDistance() >= this.desiredDistance) {
+		if(Math.abs(Robot.encLeft.getDistance()) >= this.desiredDistance) {
 			end();
 			return true;
 		}
