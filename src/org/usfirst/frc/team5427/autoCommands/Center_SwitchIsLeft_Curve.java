@@ -53,13 +53,14 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 		firstRotationValue = -0.4;
 		secondRotationValue = 0.45;
 		hasReachedMiddle = false;
-		coasting = new Center_SwitchIsLeft_CoastToSwitch();
+//		coasting = new Center_SwitchIsLeft_CoastToSwitch();
 	}
 	@Override
 	public void initialize()
 	{
 		System.out.println("center switch is left");
 		Robot.ahrs.reset();
+		this.setTimeout(7);
 	}
 	
 	
@@ -72,11 +73,11 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 		if(hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) < 17) 
 		{
 			Robot.driveTrain.drive.stopMotor();
-			coasting.start();
 		}
+		else {
 		if(!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 86)
 		{
-			new Center_SwitchIsLeft_MoveElevatorAuto().start();
+//			new Center_SwitchIsLeft_MoveElevatorAuto().start();
 			hasReachedMiddle = true;
 		}
 		if(speed < MAX_SPEED)
@@ -89,6 +90,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 		{
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
 		}
+		}
 	}
 	
 	/**
@@ -98,19 +100,28 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 	 */
 	@Override
 	public boolean isFinished() {
-		return (coasting.isRunning() && coasting.isFinished());
+		return false; //(this.isTimedOut());
 	}
 
 	/**
 	 * This is run once when the command is finished.
 	 */
 	@Override
-	protected void end() {
+	public void end() {
 		System.out.println("Ending Main Curve");
+		System.out.println("CE: Auto Path Exists: "+ (Robot.autoPath != null));
+		System.out.println("CE: Auto Path is Running: " + (Robot.autoPath.isRunning()));
+		System.out.println("CE: Auto Path is Finished: " + (Robot.autoPath.isFinished()));
+		System.out.println("CE: Auto Path 2 Exists: " + (Robot.autoPath2 != null));
+		System.out.println("CE: Auto Path 2 is Not Running: " + (!Robot.autoPath2.isRunning()) + "\n");
 		Robot.driveTrain.drive.stopMotor();
 		Robot.ahrs.reset();
 		Robot.encLeft.reset();
 		super.end();
-		new Center_SwitchIsLeft_SecondCube().start();
+		System.out.println("CEF: Auto Path Exists: "+ (Robot.autoPath != null));
+		System.out.println("CEF: Auto Path is Running: " + (Robot.autoPath.isRunning()));
+		System.out.println("CEF: Auto Path is Finished: " + (Robot.autoPath.isFinished()));
+		System.out.println("CEF: Auto Path 2 Exists: " + (Robot.autoPath2 != null));
+		System.out.println("CEF: Auto Path 2 is Not Running: " + (!Robot.autoPath2.isRunning()) + "\n");
 	}
 }

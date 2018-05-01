@@ -151,7 +151,7 @@ public class Left_ScaleIsLeft extends AutoPath {
 	 * cube, moving backward at the same time.
 	 */
 	@Override
-	protected void end() {
+	public void end() {
 		Robot.tiltUpNext = false;
 		moveElevator.cancel();
 		new AutoOutGo().start();

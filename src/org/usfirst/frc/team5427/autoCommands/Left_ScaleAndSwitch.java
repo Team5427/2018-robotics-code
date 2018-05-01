@@ -273,7 +273,7 @@ public class Left_ScaleAndSwitch extends AutoPath {
 	 * AutoPath to shoot out any cubes in the robot.
 	 */
 	@Override
-	protected void end() {
+	public void end() {
 		super.end();
 	}
 }

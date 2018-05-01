@@ -7,7 +7,7 @@ public class Center_SwitchIsLeft_CoastToSwitch extends Command{
 	/**
 	 * The time that the robot is allowed to coast towards the switch.
 	 */
-	public double timeout = 2;
+	public double timeout = 1.5;
 	
 	@Override
 	public void initialize()

@@ -172,7 +172,7 @@ public class Center_SwitchIsLeft extends AutoPath {
 	 * shoot out the box.
 	 */
 	@Override
-	protected void end() {
+	public void end() {
 		super.end();
 	}
 }

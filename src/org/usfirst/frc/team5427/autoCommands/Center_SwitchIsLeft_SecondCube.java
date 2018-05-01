@@ -88,7 +88,6 @@ public class Center_SwitchIsLeft_SecondCube extends AutoPath {
 			curveToCube.start();
 //			intakeCube.start();
 		}
-		
 	}
 
 	@Override

@@ -163,7 +163,7 @@ public class Left_ScaleIsRight extends AutoPath {
 	 * shoot out the box.
 	 */
 	@Override
-	protected void end() {
+	public void end() {
 		moveElevator.cancel();
 		new AutoOutGo().start();
 		new DriveBackward(2).start();

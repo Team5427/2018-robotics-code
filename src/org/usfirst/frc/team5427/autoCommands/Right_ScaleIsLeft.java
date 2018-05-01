@@ -143,6 +143,6 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 * Run once the isFinished() returns true.
 	 */
 	@Override
-	protected void end() {}
+	public void end() {}
 
 }

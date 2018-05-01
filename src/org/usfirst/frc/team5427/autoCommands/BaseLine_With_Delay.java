@@ -134,5 +134,5 @@ public class BaseLine_With_Delay extends AutoPath {
 	 * out the box at the end of it.
 	 */
 	@Override
-	protected void end() {}
+	public void end() {}
 }

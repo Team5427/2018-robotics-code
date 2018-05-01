@@ -218,7 +218,7 @@ public class Full_Left_ScaleIsRight extends AutoPath {
 	 * and, if the path is finished, it shoots out the cube and backs up.
 	 */
 	@Override
-	protected void end() {
+	public void end() {
 		moveElevator.cancel();
 		if (isFinished()) {
 			new AutoOutGo().start();

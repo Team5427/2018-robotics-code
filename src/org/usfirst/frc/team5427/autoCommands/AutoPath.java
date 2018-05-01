@@ -26,7 +26,7 @@ public class AutoPath extends Command {
 	 * This is run once when the command is finished.
 	 */
 	@Override
-	protected void end() {
+	public void end() {
 //		new AutoOutGo().start();
 		super.end();
 	}

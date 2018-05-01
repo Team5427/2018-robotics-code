@@ -177,7 +177,12 @@ public class Robot extends IterativeRobot {
 	 * The path that we choose to follow in autonomous, selected based off of our
 	 * selections from the SmartDashboard and the gameData sent via the FMS.
 	 */
-	public AutoPath autoPath;
+	public static AutoPath autoPath;
+	
+	/**
+	 * second cube path/
+	 */
+	public static AutoPath autoPath2;
 
 	/**
 	 * The class representing the NavX on the Robot that reads our current angular
@@ -330,8 +335,10 @@ public class Robot extends IterativeRobot {
 		else if (field_position == 2) {
 			if (switchSide == 'R')
 				autoPath = new Center_SwitchIsRight();
-			else if (switchSide == 'L')
+			else if (switchSide == 'L') {
 				autoPath = new Center_SwitchIsLeft_Curve();
+				autoPath2 = new Center_SwitchIsLeft_SecondCube();
+			}
 		}
 		else if (field_position == 3) {
 			if (switch_or_scale == 1) {
@@ -358,52 +365,59 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		if (null == autoPath) {
-			gameData = DriverStation.getInstance().getGameSpecificMessage();
-			switchSide = gameData.charAt(0);
-			scaleSide = gameData.charAt(1);
-			field_position = oi.autoPositionChooser.getSelected();
-			switch_or_scale = oi.autoCubeChooser.getSelected();
-			SmartDashboard.putString("SwitchSide", switchSide + "");
-			SmartDashboard.putString("ScaleSide", scaleSide + "");
-			SmartDashboard.putString("FieldPosition", field_position + "");
-			SmartDashboard.putString("CubePlacement", switch_or_scale + "");
-			if (field_position == 1) {
-				if (switch_or_scale == 1) {
-					if (switchSide == 'R')
-						autoPath = new Right_SwitchIsRight();
-					else if (switchSide == 'L')
-						autoPath = new Right_SwitchIsLeft();
-				}
-				else if (switch_or_scale == 2) {
-					if (scaleSide == 'R')
-						autoPath = new Right_ScaleIsRight();
-					else if (scaleSide == 'L')
-						autoPath = new Right_ScaleIsLeft();
-				}
-			}
-			else if (field_position == 2) {
-				if (switchSide == 'R')
-					autoPath = new Center_SwitchIsRight();
-				else if (switchSide == 'L')
-					autoPath = new Center_SwitchIsLeft();
-			}
-			else if (field_position == 3) {
-				if (switch_or_scale == 1) {
-					if (switchSide == 'R')
-						autoPath = new Left_SwitchIsRight();
-					else if (switchSide == 'L')
-						autoPath = new Left_SwitchIsLeft();
-				}
-				else if (switch_or_scale == 2) {
-					if (scaleSide == 'R')
-						autoPath = new Left_ScaleIsRight();
-					else if (scaleSide == 'L')
-						autoPath = new Left_ScaleIsLeft();
-				}
-			}
-			if (autoPath != null && !autoPath.isRunning())
-				autoPath.start();
+//		if (null == autoPath) {
+//			gameData = DriverStation.getInstance().getGameSpecificMessage();
+//			switchSide = gameData.charAt(0);
+//			scaleSide = gameData.charAt(1);
+//			field_position = oi.autoPositionChooser.getSelected();
+//			switch_or_scale = oi.autoCubeChooser.getSelected();
+//			SmartDashboard.putString("SwitchSide", switchSide + "");
+//			SmartDashboard.putString("ScaleSide", scaleSide + "");
+//			SmartDashboard.putString("FieldPosition", field_position + "");
+//			SmartDashboard.putString("CubePlacement", switch_or_scale + "");
+//			if (field_position == 1) {
+//				if (switch_or_scale == 1) {
+//					if (switchSide == 'R')
+//						autoPath = new Right_SwitchIsRight();
+//					else if (switchSide == 'L')
+//						autoPath = new Right_SwitchIsLeft();
+//				}
+//				else if (switch_or_scale == 2) {
+//					if (scaleSide == 'R')
+//						autoPath = new Right_ScaleIsRight();
+//					else if (scaleSide == 'L')
+//						autoPath = new Right_ScaleIsLeft();
+//				}
+//			}
+//			else if (field_position == 2) {
+//				if (switchSide == 'R')
+//					autoPath = new Center_SwitchIsRight();
+//				else if (switchSide == 'L')
+//					autoPath = new Center_SwitchIsLeft();
+//			}
+//			else if (field_position == 3) {
+//				if (switch_or_scale == 1) {
+//					if (switchSide == 'R')
+//						autoPath = new Left_SwitchIsRight();
+//					else if (switchSide == 'L')
+//						autoPath = new Left_SwitchIsLeft();
+//				}
+//				else if (switch_or_scale == 2) {
+//					if (scaleSide == 'R')
+//						autoPath = new Left_ScaleIsRight();
+//					else if (scaleSide == 'L')
+//						autoPath = new Left_ScaleIsLeft();
+//				}
+//			}
+//			if (autoPath != null && !autoPath.isRunning())
+//				autoPath.start();
+//		}
+		
+		if(autoPath != null && autoPath.isRunning() && autoPath.isFinished() && autoPath2 != null && !autoPath2.isRunning()) {
+			System.out.println("Changing paths.");
+			autoPath.end();
+			autoPath.cancel();
+			autoPath2.start();
 		}
 	}
 

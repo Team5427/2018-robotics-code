@@ -111,7 +111,7 @@ public class Center_SwitchIsRight extends AutoPath {
 	 * shoot out the box.
 	 */
 	@Override
-	protected void end() {
+	public void end() {
 		super.end();
 		new Center_SwitchIsRight_SecondCube().start();
 	}
