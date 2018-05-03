@@ -43,6 +43,11 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 	public boolean hasReachedMiddle;
 	
 	/**
+	* Stores if the robot is coasting.
+	*/
+	public boolean isCoasting;
+	
+	/**
 	* TODO Add speed and rotationValue to config and change to real values.
 	*/
 	public Center_SwitchIsLeft_Curve()
@@ -51,7 +56,9 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 		firstRotationValue = -0.4;
 		secondRotationValue = 0.45;
 		hasReachedMiddle = false;
+		isCoasting = false;
 	}
+	
 	@Override
 	public void initialize()
 	{
@@ -69,33 +76,44 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 	{
 		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
 		SmartDashboard.putNumber("Speed", this.speed);
-
+		
+		
+		
+		// switch curves
 		if(!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 86)
 		{
 			new Center_SwitchIsLeft_MoveElevatorAuto().start();
 			hasReachedMiddle = true;
 		}
+		//first curve
 		if(!hasReachedMiddle)
 		{
 			if(speed < MAX_SPEED)
 				this.speed*=1.035;
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.firstRotationValue,false);
 		}
+		//second curve
 		else if(Math.abs(Robot.ahrs.getYaw()) > 17)
 		{
 			if(speed < MAX_SPEED)
-				this.speed/=1.04;
+				this.speed*=1.035;
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
+		}
+		//slow down towards switch
+		else {
+			isCoasting = true;
+			this.speed/=1.2;
+			Robot.driveTrain.drive.tankDrive(this.speed, this.speed);
 		}
 	}
 	/**
 	 * This is run periodically to check to see if the command is finished.
 	 * 
-	 * @return true if robot is on its second curve and within 17 degrees of straight.
+	 * @return true if robot is done with second curve and speed is low
 	 */
 	@Override
 	public boolean isFinished() {
-		return (hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) < 17);
+		return (isCoasting && speed < 0.05);
 	}
 
 	/**
