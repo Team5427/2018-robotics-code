@@ -150,7 +150,7 @@ public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
 		SmartDashboard.putNumber("o", output);
 		SmartDashboard.putNumber("p", power);
 
-		if (this.power < this.maximumSpeed && null == pidDistance) {
+		if (this.power < this.maximumSpeed) {
 			this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
 		}
 

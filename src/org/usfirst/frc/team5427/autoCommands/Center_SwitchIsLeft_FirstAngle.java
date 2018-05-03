@@ -50,7 +50,7 @@ public class Center_SwitchIsLeft_FirstAngle extends PIDCommand {
 		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_UPDATE_PERIOD);
 		this.scgRight = scgRight;
 		this.scgLeft = scgLeft;
-		setPoint = -85;
+		setPoint = 40;
 
 		super.setInputRange(-180, 180);
 		super.setSetpoint(setPoint);
@@ -104,7 +104,7 @@ public class Center_SwitchIsLeft_FirstAngle extends PIDCommand {
 			if (timer.get() == 0) {
 				timer.start();
 			}
-			if (timer.get() > .5) { return true; }
+			if (timer.get() > .1) { return true; }
 		}
 		else {
 			timer.reset();

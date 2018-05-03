@@ -24,6 +24,7 @@ public class Center_SwitchIsLeft_CurveToCube extends Command{
 	public double rotationValue;
 	
 	public Center_SwitchIsLeft_CurveToCube() {	
+		System.out.println("STARTING CURVE TO THE CUBE");
 		speed = 0.3;
 		rotationValue = 0.4;
 	}
@@ -35,10 +36,9 @@ public class Center_SwitchIsLeft_CurveToCube extends Command{
 
 	@Override
 	public void execute() {
-//		if(speed < MAX_SPEED)
-//			this.speed*=1.035;
-		System.out.println("Curving To Cube");
-		Robot.driveTrain.drive.curvatureDrive(this.speed, this.rotationValue,false);
+		if(speed < MAX_SPEED)
+			this.speed*=1.035;
+		Robot.driveTrain.drive.curvatureDrive(this.speed, this.rotationValue,true);
 	}
 	
 	@Override
@@ -48,7 +48,7 @@ public class Center_SwitchIsLeft_CurveToCube extends Command{
 	
 	@Override
 	public void end() {
-		System.out.println("Ending Curve To Cube");
+		System.out.println("Ending CURVE TO THE CUBE");
 		Robot.driveTrain.drive.stopMotor();
 	}
 }

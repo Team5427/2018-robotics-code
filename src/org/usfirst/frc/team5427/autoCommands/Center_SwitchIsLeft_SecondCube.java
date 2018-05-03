@@ -19,7 +19,7 @@ public class Center_SwitchIsLeft_SecondCube extends AutoPath {
 	/**
 	 * Moves the robot backwards from the switch while moving the elevator down.
 	 */
-	public DriveBackward backOff;
+	public Center_SwitchIsLeft_DriveBackward backOff;
 	/**
 	 * Moves the robot forwards towards the switch while moving the elevator up.
 	 */
@@ -39,18 +39,18 @@ public class Center_SwitchIsLeft_SecondCube extends AutoPath {
 	/**
 	 * Curves the robot towards the cube it intends to pick up.
 	 */
-	public Center_SwitchIsLeft_CurveToCube curveToCube;
+	public Center_SwitchIsLeft_FirstAngle curveToCube;
 	/**
 	 * Curves the robot away from the cube it intends to pick up.
 	 */
-	public Center_SwitchIsLeft_CurveAwayFromCube curveBack;
+	public Center_SwitchIsLeft_SecondAngle curveBack;
 
 	public Center_SwitchIsLeft_SecondCube() {
-		backOff = new DriveBackward(1);
+		backOff = new Center_SwitchIsLeft_DriveBackward();
 		elevatorDown = new MoveElevatorAuto(4);
-		curveToCube = new Center_SwitchIsLeft_CurveToCube();
+		curveToCube = new Center_SwitchIsLeft_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		intakeCube = new AutoInGo();
-		curveBack = new Center_SwitchIsLeft_CurveAwayFromCube();
+		curveBack = new Center_SwitchIsLeft_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		moveForward = new DriveForward(1);
 		elevatorUp = new MoveElevatorAuto(1);
 	}
