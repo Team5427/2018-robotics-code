@@ -2,6 +2,7 @@ package org.usfirst.frc.team5427.autoCommands;
 
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.AutoInGo;
+import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.robot.commands.DriveBackward;
 import org.usfirst.frc.team5427.robot.commands.DriveForward;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
@@ -72,7 +73,7 @@ public class Center_SwitchIsLeft_SecondCube extends AutoPath {
 	@Override
 	public void initialize() {
 		backOffFromSwitch.start();
-//		elevatorDown.start();
+		elevatorDown.start();
 	}
 
 	@Override
@@ -83,7 +84,7 @@ public class Center_SwitchIsLeft_SecondCube extends AutoPath {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			moveForwardToSwitch.start();
-//			elevatorUp.start();
+			
 		}
 		else if(null == backOffFromSwitch && null == angleToCube && null== moveForwardToCube && null!= backOffFromCube && backOffFromCube.isFinished()) {
 			backOffFromCube.cancel();
@@ -92,6 +93,7 @@ public class Center_SwitchIsLeft_SecondCube extends AutoPath {
 			Robot.encLeft.reset();
 			backOffFromCube.start();
 			angleToSwitch.start();
+			elevatorUp.start();
 		}
 		else if(null == backOffFromSwitch && null == angleToCube && null!= moveForwardToCube && moveForwardToCube.isFinished()) {
 			moveForwardToCube.cancel();
@@ -99,12 +101,12 @@ public class Center_SwitchIsLeft_SecondCube extends AutoPath {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			backOffFromCube.start();
+			intakeCube.cancel();
 		}
 		else if(null == backOffFromSwitch && null != angleToCube && angleToCube.isFinished()){
 			angleToCube.cancel();
 			angleToCube = null;
-//			intakeCube.cancel();
-//			intakeCube = null;
+			intakeCube.start();
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			moveForwardToCube.start();
@@ -115,7 +117,6 @@ public class Center_SwitchIsLeft_SecondCube extends AutoPath {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			angleToCube.start();
-//			intakeCube.start();
 		}
 		
 	}
@@ -127,6 +128,7 @@ public class Center_SwitchIsLeft_SecondCube extends AutoPath {
 	
 	@Override
 	public void end() {
+		new AutoOutGo().start();
 		super.end();
 	}
 }

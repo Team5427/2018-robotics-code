@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * This is the class to navigate to the left switch from the center position utilizing arcs.
  * 
- * @author Varsha Kumar, Blake Romero, Akshat Jain
+ * @author Akshat Jain, Varsha Kumar, Blake Romero
  */
 @SameLine
 public class Center_SwitchIsLeft_Curve extends AutoPath{
@@ -125,6 +125,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 		Robot.ahrs.reset();
 		Robot.encLeft.reset();
 		super.end();
+		new AutoOutGo().start();
 		new Center_SwitchIsLeft_SecondCube().start();
 	}
 }
