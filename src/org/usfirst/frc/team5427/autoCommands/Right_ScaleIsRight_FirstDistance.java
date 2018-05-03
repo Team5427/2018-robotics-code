@@ -10,18 +10,12 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * This command moves the robot forwards 250 inches.
+ * This command moves the robot forwards 210 inches.
  * Used in the Right_ScaleIsRight command.
  * 
  * @author Akshat Jain
  */
 public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
-
-	/**
-	 * PIDCommand created to control distance after we have reached the maximum
-	 * power in this controller.
-	 */
-	private PIDDistance pidDistance;
 
 	/**
 	 * Stores whether the PIDController has started acting on the robot.
@@ -112,7 +106,6 @@ public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
 	@Override
 	protected void initialize() {
 		super.getPIDController().enable();
-		this.pidDistance = null;
 		Robot.encLeft.reset();
 		Robot.ahrs.reset();
 		power = .01;
@@ -151,8 +144,7 @@ public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
 			if (scgNot.get() == 0)
 				scgNot.set(0);
 		}
-		else if (null == pidDistance)
-			scgNot.set(power);
+		scgNot.set(power);
 
 		SmartDashboard.putNumber("g", scgNot.get());
 		SmartDashboard.putNumber("o", output);
@@ -161,10 +153,7 @@ public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
 		if (this.power < this.maximumSpeed && null == pidDistance) {
 			this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
 		}
-		else if (null == pidDistance) {
-//			pidDistance = new PIDDistance(this.scgNot, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);
-//			pidDistance.start();
-		}
+
 		if (power >= this.maximumSpeed / 4)
 			hasStarted = true;
 	}
@@ -174,22 +163,17 @@ public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
 	 * end() Our method returns true if the robot has traveled close enough to the
 	 * certain distance, with our tolerance.
 	 * 
-	 * @return if the PIDDistance command has finished.
+	 * @return if distance is more than desired.
 	 */
 	@Override
 	public boolean isFinished() {
-//		if (pidDistance != null && pidDistance.isFinished() && Math.abs(Robot.ahrs.getYaw()) < 3) {
-//			pidDistance.end();
-//			end();
-//			return true;
-//		}
+
 		if(Math.abs(Robot.encLeft.getDistance()) >= this.desiredDistance) {
 			end();
 			return true;
 		}
 		else if ((Robot.encLeft.getStopped()) && hasStarted) {
-			if (null != pidDistance)
-				pidDistance.end();
+	
 			end();
 			return true;
 		}

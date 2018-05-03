@@ -27,27 +27,19 @@ public class Right_ScaleIsRight extends AutoPath {
 
 
 	/**
-	 * The first distance of the path. It travels 250 inches forward at our long
+	 * The first distance of the path. It travels 210 inches forward at our long
 	 * power.
 	 */
 	private Right_ScaleIsRight_FirstDistance firstDistance;
-
-	/**
-	 * The second distance of the path. It travels forward for .7 seconds.
-	 */
-
-	private Right_ScaleIsRight_DriveForward secondDistance;
-
-	/**
-	 * The first turn of the path. It turns 51 degrees counterclockwise.
-	 */
-	private Right_ScaleIsRight_FirstAngle firstAngle;
 
 	/**
 	 * The command used to move the elevator up to the top of its path.
 	 */
 	private Right_ScaleIsRight_MoveElevatorAuto moveElevator;
 	
+	/*
+	 * The command used to curve the robot to scale.
+	 */
 	private Right_ScaleIsRight_CurveToScale curve;
 
 	/**
@@ -81,9 +73,7 @@ public class Right_ScaleIsRight extends AutoPath {
 		fidget = new Fidget();
 		firstDistance = new Right_ScaleIsRight_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		curve = new Right_ScaleIsRight_CurveToScale();
-//		firstAngle = new Right_ScaleIsRight_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-//		secondDistance = new Right_ScaleIsRight_DriveForward();
-//		moveElevator = new Right_ScaleIsRight_MoveElevatorAuto();
+		moveElevator = new Right_ScaleIsRight_MoveElevatorAuto();
 	}
 
 	/**
@@ -98,49 +88,21 @@ public class Right_ScaleIsRight extends AutoPath {
 
 	/**
 	 * Runs periodically while the command is not finished. Used also to switch
-	 * between commands at different points in our path.
+	 * between commands at different points in our path. Curves when first distance is finished,
+	 * moves elevator 2.5 seconds into auto and tilts when elevator is at max height.
 	 */
 	public void execute() {
 		currentTime = System.nanoTime() / 1000000000.;
-//
-//		if (moveElevator != null)
-//			moveElevator.isFinished();
-//
-//		if (moveElevator.maxHeightReachedTime() && Robot.tiltUpNext) {
-//			new TiltIntake_TimeOut().start();
-//		}
-//
-//		if (currentTime - startTime > 2.5 && !moveElevator.isRunning())
-//			moveElevator.start();
 
-//		if (null == fidget && null == firstDistance && firstAngle == null && moveElevator.maxHeightReachedTime() && (!secondDistance.isRunning())) {
-//			Robot.ahrs.reset();
-//			Robot.encLeft.reset();
-//			secondDistance.start();
-//		}
-//
-//		if (null == fidget && null == firstDistance && firstAngle != null && firstAngle.isFinished()) {
-//			firstAngle.cancel();
-//			firstAngle = null;
-//			Robot.ahrs.reset();
-//			Robot.encLeft.reset();
-//		}
-//
-//		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
-//			firstDistance.cancel();
-//			firstDistance = null;
-//			Robot.ahrs.reset();
-//			Robot.encLeft.reset();
-//			firstAngle.start();
-//		}
+		if (moveElevator != null)
+			moveElevator.isFinished();
 
-//		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
-//			fidget.cancel();
-//			fidget = null;
-//			Robot.ahrs.reset();
-//			Robot.encLeft.reset();
-//			firstDistance.start();
-//		}
+		if (moveElevator.maxHeightReachedTime() && Robot.tiltUpNext) {
+			new TiltIntake_TimeOut().start();
+		}
+
+		if (currentTime - startTime > 2.5 && !moveElevator.isRunning())
+			moveElevator.start();
 		
 		if(null!=firstDistance && firstDistance.isFinished() && !(curve.isRunning())) {
 			firstDistance.cancel();
@@ -154,12 +116,10 @@ public class Right_ScaleIsRight extends AutoPath {
 	/**
 	 * Runs periodically to check to see if the path can be finished.
 	 * 
-	 * @return true when the path has finished or the path has timed out.
+	 * @return true when the curve has finished or the path has timed out.
 	 */
 	@Override
 	public boolean isFinished() {
-//		if (firstAngle == null && secondDistance.isFinished())
-//			return true;
 		if (curve.isFinished())
 			return true;
 		return isTimedOut() && this.moveElevator.maxHeightReached();
@@ -172,9 +132,8 @@ public class Right_ScaleIsRight extends AutoPath {
 	@Override
 	protected void end() {
 		Robot.tiltUpNext = false;
-//		moveElevator.cancel();
-//		new AutoOutGo().start();
-//		secondDistance.cancel();
+		moveElevator.cancel();
+		new AutoOutGo().start();
 		curve.cancel();
 		new DriveBackward(1).start();
 		super.end();
