@@ -58,7 +58,7 @@ public class Center_SwitchIsLeft_SecondAngle extends PIDCommand {
 		scgRight.set(0.1);
 		scgLeft.set(0.1);
 
-		this.setTimeout(1.5);
+		this.setTimeout(1.5); 
 		timer = new Timer();
 
 		if (Math.abs(Robot.ahrs.getYaw()) >= Math.abs(this.getSetpoint()) / 2)

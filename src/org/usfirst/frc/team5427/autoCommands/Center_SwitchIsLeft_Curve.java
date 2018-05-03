@@ -75,14 +75,16 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 			new Center_SwitchIsLeft_MoveElevatorAuto().start();
 			hasReachedMiddle = true;
 		}
-		if(speed < MAX_SPEED)
-			this.speed*=1.035;
 		if(!hasReachedMiddle)
 		{
+			if(speed < MAX_SPEED)
+				this.speed*=1.035;
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.firstRotationValue,false);
 		}
-		else
+		else if(Math.abs(Robot.ahrs.getYaw()) > 17)
 		{
+			if(speed < MAX_SPEED)
+				this.speed/=1.04;
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
 		}
 	}
