@@ -117,9 +117,19 @@ public class Robot extends IterativeRobot {
 	public static SpeedController motorPWM_Intake_Right;
 
 	/**
-	 * The SpeedController that controls the elevator.
+	 * The SpeedController that controls the left motor of the elevator.
 	 */
-	public static SpeedController motorPWM_Elevator;
+	public static SpeedController motorPWM_Elevator_Left;
+	
+	/**
+	 * The SpeedController that controls the right motor of the elevator.
+	 */
+	public static SpeedController motorPWM_Elevator_Right;
+	
+	/**
+	 * The SpeedControllerGroup that includes the motors of the elevator.
+	 */
+	public static SpeedControllerGroup elevator_SpeedControllerGroup;
 
 	/**
 	 * The SpeedController that controls the arm of the climber.
@@ -243,7 +253,9 @@ public class Robot extends IterativeRobot {
 		motorPWM_Intake_Left = new PWMVictorSPX(Config.INTAKE_MOTOR_LEFT);
 		motorPWM_Intake_Right = new PWMVictorSPX(Config.INTAKE_MOTOR_RIGHT);
 		intakeSubsystem = new Intake(motorPWM_Intake_Left, motorPWM_Intake_Right);
-		motorPWM_Elevator = new PWMVictorSPX(Config.ELEVATOR_MOTOR);
+		motorPWM_Elevator_Left = new PWMVictorSPX(Config.ELEVATOR_MOTOR_LEFT);
+		motorPWM_Elevator_Right = new PWMVictorSPX(Config.ELEVATOR_MOTOR_RIGHT);
+		elevator_SpeedControllerGroup = new SpeedControllerGroup(motorPWM_Elevator_Left, motorPWM_Elevator_Right);
 		motorPWM_TiltIntake = new PWMVictorSPX(Config.TILT_INTAKE_MOTOR);
 		tiltUpNext = true;
 		motorPWM_ClimberArm = new PWMVictorSPX(Config.CLIMBER_ARM_MOTOR);
