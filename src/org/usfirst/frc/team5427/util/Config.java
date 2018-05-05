@@ -64,22 +64,12 @@ public class Config {
 	/**
 	 * The PWM value for the right motor of the elevator.
 	 */
-	public static final int ELEVATOR_MOTOR_RIGHT = 10;
+	public static final int ELEVATOR_MOTOR_RIGHT = 4;
 
 	/**
 	 * The PWM value for the motor of the intake tilt.
 	 */
 	public static final int TILT_INTAKE_MOTOR = 5;
-
-	/**
-	 * The PWM value for the motor of the climber arm.
-	 */
-	public static final int CLIMBER_ARM_MOTOR = 2;
-
-	/**
-	 * The PWM value for the motor of the climber.
-	 */
-	public static final int CLIMBER_MOTOR = 4;
 	/*************************************************/
 
 	/******************** DIO PORTS *******************/
