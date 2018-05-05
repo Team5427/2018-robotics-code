@@ -258,8 +258,8 @@ public class Robot extends IterativeRobot {
 		elevator_SpeedControllerGroup = new SpeedControllerGroup(motorPWM_Elevator_Left, motorPWM_Elevator_Right);
 		motorPWM_TiltIntake = new PWMVictorSPX(Config.TILT_INTAKE_MOTOR);
 		tiltUpNext = true;
-		motorPWM_ClimberArm = new PWMVictorSPX(Config.CLIMBER_ARM_MOTOR);
-		motorPWM_Climber = new PWMVictorSPX(Config.CLIMBER_MOTOR);
+//		motorPWM_ClimberArm = new PWMVictorSPX(Config.CLIMBER_ARM_MOTOR);
+//		motorPWM_Climber = new PWMVictorSPX(Config.CLIMBER_MOTOR);
 		try {
 			ahrs = new AHRS(SPI.Port.kMXP);
 		} catch (RuntimeException ex) {

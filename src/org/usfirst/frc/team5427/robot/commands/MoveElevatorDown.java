@@ -35,7 +35,8 @@ public class MoveElevatorDown extends Command {
 	@Override
 	protected void initialize() {
 		this.setInterruptible(true);
-		Robot.elevator_SpeedControllerGroup.set(Config.ELEVATOR_MOTOR_SPEED_DOWN);
+		Robot.motorPWM_Elevator_Right.set(Config.ELEVATOR_MOTOR_SPEED_DOWN);
+		Robot.motorPWM_Elevator_Left.set(-Config.ELEVATOR_MOTOR_SPEED_DOWN);
 	}
 
 	/**
@@ -70,7 +71,8 @@ public class MoveElevatorDown extends Command {
 	 */
 	@Override
 	protected void end() {
-		Robot.elevator_SpeedControllerGroup.set(0);
+		Robot.motorPWM_Elevator_Right.set(0);
+		Robot.motorPWM_Elevator_Left.set(0);
 	}
 
 	/**

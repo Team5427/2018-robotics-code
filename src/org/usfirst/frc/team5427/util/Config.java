@@ -59,12 +59,12 @@ public class Config {
 	/**
 	 * The PWM value for the left motor of the elevator.
 	 */
-	public static final int ELEVATOR_MOTOR_LEFT = 9;
+	public static final int ELEVATOR_MOTOR_LEFT = 4;
 	
 	/**
 	 * The PWM value for the right motor of the elevator.
 	 */
-	public static final int ELEVATOR_MOTOR_RIGHT = 4;
+	public static final int ELEVATOR_MOTOR_RIGHT = 9;
 
 	/**
 	 * The PWM value for the motor of the intake tilt.
