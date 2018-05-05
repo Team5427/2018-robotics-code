@@ -347,6 +347,7 @@ public class Robot extends IterativeRobot {
 					autoPath = new Left_ScaleIsLeft();
 			}
 		}
+		autoPath = new Right_ScaleAndSwitch();
 		if (autoPath != null)
 			autoPath.start();
 	}

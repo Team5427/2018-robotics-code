@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Picks up the second cube and places it for Center_SwitchIsLeft.
  * 
- * @author Akshat Jain, Blake Romero, Andrew Li
+ * @author Blake Romero, Andrew Li, Akshat Jain
  */
 @SameLine
 public class Center_SwitchIsLeft_SecondCube extends AutoPath {
