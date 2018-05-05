@@ -26,6 +26,11 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 * The first distance of the path. It travels 224 inches forward at .7 power.
 	 */
 	private Right_ScaleIsLeft_FirstDistance firstDistance;
+	
+	/**
+	 * The first distance of the path. It travels 224 inches forward at .7 power.
+	 */
+	private Right_ScaleIsLeft_Curve curve;
 
 	/**
 	 * The first turn of the path. It turns 88 degrees counterclockwise.
@@ -63,6 +68,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 		secondAngle = new Right_ScaleIsLeft_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		thirdDistance = new Right_ScaleIsLeft_ThirdDistanceEncoder(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		moveElevator = new Right_ScaleIsLeft_MoveElevatorAuto();
+		curve = new Right_ScaleIsLeft_Curve();
 	}
 
 	/**
