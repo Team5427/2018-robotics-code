@@ -32,17 +32,6 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 */
 	private Right_ScaleIsLeft_Curve curve;
 
-	/**
-	 * The first turn of the path. It turns 88 degrees counterclockwise.
-	 */
-	private Right_ScaleIsLeft_FirstAngle firstAngle;
-	
-	private Right_ScaleIsLeft_SecondDistance secondDistance;
-	
-	private Right_ScaleIsLeft_SecondAngle secondAngle;
-	
-	private Right_ScaleIsLeft_ThirdDistanceEncoder thirdDistance;
-	
 	private Right_ScaleIsLeft_MoveElevatorAuto moveElevator;
 
 	/**
@@ -54,7 +43,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 	/**
 	 * The time, in seconds, that we manually end our autonomous path.
 	 */
-	public static final double timeOut = 15;
+	public static final double elevatorTimeout = 6;
 
 
 	/**
@@ -63,8 +52,6 @@ public class Right_ScaleIsLeft extends AutoPath {
 	public Right_ScaleIsLeft() {
 		fidget = new Fidget();
 		firstDistance = new Right_ScaleIsLeft_FirstDistance_Curve(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		secondAngle = new Right_ScaleIsLeft_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		thirdDistance = new Right_ScaleIsLeft_ThirdDistanceEncoder(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		moveElevator = new Right_ScaleIsLeft_MoveElevatorAuto();
 		curve = new Right_ScaleIsLeft_Curve();
 	}
@@ -76,7 +63,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 	public void initialize() {
 		Robot.encLeft.reset();
 		firstDistance.start();
-		setTimeout(timeOut);
+		setTimeout(elevatorTimeout);
 	}
 
 	/**
@@ -86,7 +73,12 @@ public class Right_ScaleIsLeft extends AutoPath {
 	public void execute() {
 		SmartDashboard.putNumber("Motor Value", Robot.driveTrain.drive_Right.get());
 		
-		
+		if(this.isTimedOut() && !moveElevator.isRunning()) {
+			moveElevator.start();
+		}
+		if(moveElevator.maxHeightReachedTime() && Robot.tiltUpNext) {
+			new TiltIntake_TimeOut().start();
+		}
 		if ( null != firstDistance && firstDistance.isFinished()) {
 			System.out.print("Curve starting");
 			firstDistance.cancel();
@@ -104,15 +96,19 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (curve.isFinished())
-			return true;
-		return isTimedOut();
+		return curve.isFinished();
 	}
 
 	/**
 	 * Run once the isFinished() returns true.
 	 */
 	@Override
-	protected void end() {}
+	protected void end() {
+		Robot.tiltUpNext = false;
+		moveElevator.cancel();
+		new AutoOutGo().start();
+		curve.cancel();
+		
+	}
 
 }
