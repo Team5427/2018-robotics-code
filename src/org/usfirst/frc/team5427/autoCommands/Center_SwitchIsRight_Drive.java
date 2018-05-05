@@ -16,12 +16,13 @@ import org.usfirst.frc.team5427.robot.Robot;
  * 
  * @author Akshat Jain
  */
-public class Center_SwitchIsLeft_DriveBackward extends Command {
+public class Center_SwitchIsRight_Drive extends Command {
 
 	/**
 	 * The time that the robot will drive backwards for.
 	 */
 	private double time;
+	private double speed;
 
 	/**
 	 * Receives the time the robot should drive backwards for and sets the timeout
@@ -30,9 +31,10 @@ public class Center_SwitchIsLeft_DriveBackward extends Command {
 	 * @param time
 	 *            - the time the robot should drive backwards for.
 	 */
-	public Center_SwitchIsLeft_DriveBackward() {
+	public Center_SwitchIsRight_Drive(double time,  double speed) {
 		requires(Robot.driveTrain);
-		time = 1;
+		this.time = time;
+		this.speed = speed;
 	}
 
 	/**
@@ -49,8 +51,8 @@ public class Center_SwitchIsLeft_DriveBackward extends Command {
 	 */
 	@Override
 	protected void execute() {
-		Robot.driveTrain.drive_Left.set(-.2);
-		Robot.driveTrain.drive_Right.set(.2);
+		Robot.driveTrain.drive_Left.set(-speed);
+		Robot.driveTrain.drive_Right.set(speed);
 	}
 
 	/**

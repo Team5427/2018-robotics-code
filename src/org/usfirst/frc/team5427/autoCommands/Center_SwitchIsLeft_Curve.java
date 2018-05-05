@@ -53,7 +53,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 	public Center_SwitchIsLeft_Curve()
 	{
 		speed = 0.1;
-		firstRotationValue = -0.4;
+		firstRotationValue = -0.30;
 		secondRotationValue = 0.45;
 		hasReachedMiddle = false;
 		isCoasting = false;
@@ -82,7 +82,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 		// switch curves
 		if(!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 86)
 		{
-			new Center_SwitchIsLeft_MoveElevatorAuto().start();
+//			new Center_SwitchIsLeft_MoveElevatorAuto().start();
 			hasReachedMiddle = true;
 		}
 		//first curve
@@ -96,13 +96,13 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 		else if(Math.abs(Robot.ahrs.getYaw()) > 17)
 		{
 			if(speed < MAX_SPEED)
-				this.speed*=1.035;
+				this.speed/=1.035;
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
 		}
 		//slow down towards switch
 		else {
 			isCoasting = true;
-			this.speed/=1.2;
+			this.speed/=1.128;
 			Robot.driveTrain.drive.tankDrive(this.speed, this.speed);
 		}
 	}
@@ -113,7 +113,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 	 */
 	@Override
 	public boolean isFinished() {
-		return (isCoasting && speed < 0.05);
+		return (isCoasting && speed < 0.001);
 	}
 
 	/**

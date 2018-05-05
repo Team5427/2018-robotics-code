@@ -386,7 +386,7 @@ public class Robot extends IterativeRobot {
 				if (switchSide == 'R')
 					autoPath = new Center_SwitchIsRight();
 				else if (switchSide == 'L')
-					autoPath = new Center_SwitchIsLeft();
+					autoPath = new Center_SwitchIsLeft_Curve();
 			}
 			else if (field_position == 3) {
 				if (switch_or_scale == 1) {
