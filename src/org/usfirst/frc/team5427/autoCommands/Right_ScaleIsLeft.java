@@ -25,7 +25,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 	/**
 	 * The first distance of the path. It travels 224 inches forward at .7 power.
 	 */
-	private Right_ScaleIsLeft_FirstDistance firstDistance;
+	private Right_ScaleIsLeft_FirstDistance_Curve firstDistance;
 	
 	/**
 	 * The first distance of the path. It travels 224 inches forward at .7 power.
@@ -62,9 +62,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 */
 	public Right_ScaleIsLeft() {
 		fidget = new Fidget();
-		firstDistance = new Right_ScaleIsLeft_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		firstAngle = new Right_ScaleIsLeft_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		secondDistance = new Right_ScaleIsLeft_SecondDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		firstDistance = new Right_ScaleIsLeft_FirstDistance_Curve(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		secondAngle = new Right_ScaleIsLeft_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		thirdDistance = new Right_ScaleIsLeft_ThirdDistanceEncoder(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		moveElevator = new Right_ScaleIsLeft_MoveElevatorAuto();
@@ -76,7 +74,8 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 * and sets the timeout of the path.
 	 */
 	public void initialize() {
-		fidget.start();
+		Robot.encLeft.reset();
+		firstDistance.start();
 		setTimeout(timeOut);
 	}
 
@@ -87,49 +86,14 @@ public class Right_ScaleIsLeft extends AutoPath {
 	public void execute() {
 		SmartDashboard.putNumber("Motor Value", Robot.driveTrain.drive_Right.get());
 		
-		if (moveElevator != null)
-			moveElevator.isFinished();
-
-		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null != secondAngle && secondAngle.isFinished() && !(thirdDistance.isRunning())) {
-			secondAngle.cancel();
-			secondAngle = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			thirdDistance.start();
-			
-		}
-
-		else if ((null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning())) {
-			secondDistance.cancel();
-			secondDistance = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			moveElevator.start();
-			secondAngle.start();
-			new TiltIntake_TimeOut().start();
-		}
-
-		else if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !secondDistance.isRunning()) {
-			firstAngle.cancel();
-			firstAngle = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			secondDistance.start();
-		}
 		
-		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+		if ( null != firstDistance && firstDistance.isFinished()) {
+			System.out.print("Curve starting");
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			firstAngle.start();
-		}
-		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
-			fidget.cancel();
-			fidget = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			firstDistance.start();
+			curve.start(); 
 		}
 	}
 
@@ -140,7 +104,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (firstAngle == null)
+		if (curve.isFinished())
 			return true;
 		return isTimedOut();
 	}

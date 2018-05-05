@@ -2,6 +2,7 @@ package org.usfirst.frc.team5427.autoCommands;
 
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
+import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -52,9 +53,9 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 	*/
 	public Right_ScaleIsLeft_Curve()
 	{
-		speed = 0.1;
-		firstRotationValue = -0.05;
-		secondRotationValue = 0.20;
+		speed = Config.PID_STRAIGHT_POWER_LONG;
+		firstRotationValue = -0.30;
+		secondRotationValue = 0.15;
 		hasReachedMiddle = false;
 		isCoasting = false;
 	}
@@ -88,23 +89,21 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 		//first curve
 		if(!hasReachedMiddle)
 		{
-			if(speed < MAX_SPEED)
-				this.speed*=1.035;
-			if(firstRotationValue < 0.2)
-				this.firstRotationValue*=1.0004;
+			
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.firstRotationValue,false);
 		}
 		//second curve
-		else if(Math.abs(Robot.ahrs.getYaw()) > 17)
+		else if(Math.abs(Robot.ahrs.getYaw()) > 40)
 		{
-			if(speed < MAX_SPEED)
-				this.speed/=1.035;
+			SmartDashboard.putNumber("Speed on Curve", speed);
+			if(speed > 0.2)
+				this.speed/=1.0035;
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
 		}
 		//slow down towards switch
 		else {
 			isCoasting = true;
-			this.speed/=1.128;
+			this.speed/=1.5;
 			Robot.driveTrain.drive.tankDrive(this.speed, this.speed);
 		}
 	}
@@ -127,7 +126,5 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 		Robot.ahrs.reset();
 		Robot.encLeft.reset();
 		super.end();
-		new AutoOutGo().start();
-		new Center_SwitchIsLeft_SecondCube().start();
 	}
 }
