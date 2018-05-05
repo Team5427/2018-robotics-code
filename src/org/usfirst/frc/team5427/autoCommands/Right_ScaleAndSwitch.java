@@ -38,6 +38,7 @@ public class Right_ScaleAndSwitch extends AutoPath {
 	 */
 	private Right_ScaleAndSwitch_DriveForward secondDistance;
 	
+	private Right_ScaleAndSwitch_CurveToScale scaleCurve;
 	/**
 	 * The fifth distance of the path. It moves backwards for .5 seconds.
 	 */
@@ -118,8 +119,7 @@ public class Right_ScaleAndSwitch extends AutoPath {
 	public Right_ScaleAndSwitch() {
 		fidget = new Fidget();
 		firstDistance = new Right_ScaleAndSwitch_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		firstAngle = new Right_ScaleAndSwitch_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		secondDistance = new Right_ScaleAndSwitch_DriveForward();
+		scaleCurve = new Right_ScaleAndSwitch_CurveToScale();
 		moveBack = new Right_ScaleAndSwitch_DriveBackward();
 		secondAngle = new Right_ScaleAndSwitch_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		thirdDistance = new Right_ScaleAndSwitch_ThirdDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
@@ -150,7 +150,7 @@ public class Right_ScaleAndSwitch extends AutoPath {
 	public void execute() {
 		currentTime = System.nanoTime() / 1000000000.;
 
-		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == shootScale && null == secondAngle && null == thirdDistance && null == intake && null == moveElevatorSwitch) {
+		if (null == fidget && null == firstDistance && null == scaleCurve && null == shootScale && null == secondAngle && null == thirdDistance && null == intake && null == moveElevatorSwitch) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			fourthDistance.cancel();
@@ -158,7 +158,7 @@ public class Right_ScaleAndSwitch extends AutoPath {
 			shootSwitch.start();
 		}
 
-		else if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == shootScale && null == secondAngle && null == thirdDistance && null == intake && null != moveElevatorSwitch && moveElevatorSwitch.isFinished()) {
+		else if (null == fidget && null == firstDistance && null == scaleCurve && null == shootScale && null == secondAngle && null == thirdDistance && null == intake && null != moveElevatorSwitch && moveElevatorSwitch.isFinished()) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			moveElevatorSwitch.cancel();
@@ -166,7 +166,7 @@ public class Right_ScaleAndSwitch extends AutoPath {
 			fourthDistance.start();
 		}
 
-		else if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == shootScale && null == secondAngle && null != thirdDistance && thirdDistance.isFinished() && null != intake) {
+		else if (null == fidget && null == firstDistance && null == scaleCurve && null == shootScale && null == secondAngle && null != thirdDistance && thirdDistance.isFinished() && null != intake) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			thirdDistance.cancel();
@@ -176,7 +176,7 @@ public class Right_ScaleAndSwitch extends AutoPath {
 			moveElevatorSwitch.start();
 		}
 
-		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == shootScale && null == secondAngle && null != elevatorReset && elevatorReset.isFinished()) {
+		if (null == fidget && null == firstDistance && null == scaleCurve && null == secondAngle && null != elevatorReset && elevatorReset.isFinished()) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			elevatorReset.cancel();
@@ -185,7 +185,7 @@ public class Right_ScaleAndSwitch extends AutoPath {
 			intake.start();
 		}
 
-		else if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == shootScale && null == moveBack && null != secondAngle && secondAngle.isFinished()) {
+		else if (null == fidget && null == firstDistance && null == scaleCurve && null == shootScale && null == moveBack && null != secondAngle && secondAngle.isFinished()) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			secondAngle.cancel();
@@ -194,7 +194,7 @@ public class Right_ScaleAndSwitch extends AutoPath {
 			new TiltIntake_TimeOut().start();
 		}
 
-		else if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null == shootScale && null != moveBack && moveBack.isFinished()) {
+		else if (null == fidget && null == firstDistance && null == scaleCurve && null == shootScale && null != moveBack && moveBack.isFinished()) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			moveBack.cancel();
@@ -202,7 +202,7 @@ public class Right_ScaleAndSwitch extends AutoPath {
 			secondAngle.start();
 		}
 
-		else if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null != shootScale && shootScale.isFinished()) {
+		else if (null == fidget && null == firstDistance && null == scaleCurve && null != shootScale && shootScale.isFinished()) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			shootScale.cancel();
@@ -212,33 +212,20 @@ public class Right_ScaleAndSwitch extends AutoPath {
 			moveBack.start();
 		}
 
-		else if (null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && moveElevatorScale.maxHeightReachedTime()) {
+		else if (null == fidget && null == firstDistance && null != scaleCurve && scaleCurve.isFinished() && moveElevatorScale.maxHeightReachedTime()) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			secondDistance.cancel();
-			secondDistance = null;
+			scaleCurve.cancel();
+			scaleCurve = null;
 			shootScale.start();
 		}
 
-		else if (null == fidget && null == firstDistance && firstAngle == null && moveElevatorScale.maxHeightReachedTime() && (!secondDistance.isRunning())) {
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			secondDistance.start();
-		}
-
-		else if (null == fidget && null == firstDistance && firstAngle != null && firstAngle.isFinished()) {
-			firstAngle.cancel();
-			firstAngle = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-		}
-
-		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(scaleCurve.isRunning())) {
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			firstAngle.start();
+			scaleCurve.start();
 		}
 
 		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
