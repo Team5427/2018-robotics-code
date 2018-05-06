@@ -322,6 +322,7 @@ public class Robot extends IterativeRobot {
 			}
 			else if (switch_or_scale == 2) {
 				if (scaleSide == 'R')
+//					autoPath = new Right_ScaleAndSwitch();
 					autoPath = new Right_ScaleIsRight();
 				else if (scaleSide == 'L')
 					autoPath = new Right_ScaleIsLeft();

@@ -97,6 +97,7 @@ public class Right_SwitchIsRight_FirstDistance extends PIDCommand {
 		
 		this.setInterruptible(true);
 		this.getPIDController().setSetpoint(0);
+		this.getPIDController().setAbsoluteTolerance(2);
 		setSetpoint(0);
 
 		this.power = .01;

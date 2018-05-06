@@ -18,8 +18,8 @@ public class Left_ScaleIsLeft_CurveToScale extends Command {
 	public Left_ScaleIsLeft_CurveToScale() {
 		
 		speed = Config.PID_STRAIGHT_POWER_LONG;
-		rotationValue = .4;
-		angle = 20;
+		rotationValue = .3;
+		angle = 14;
 		System.out.println("CURVING");
 		
 	}
