@@ -137,5 +137,6 @@ public class Right_ScaleIsRight extends AutoPath {
 		curve.cancel();
 		new DriveBackward(1).start();
 		super.end();
+		new RightScale_PickupCube().start();
 	}
 }
