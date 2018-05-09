@@ -21,48 +21,64 @@ public class RightScale_PickupCube extends AutoPath{
 	RightScale_DriveForward moveToCube;
 	
 	/**
+	 * Drives backward away from the scale.
+	 */
+	RightScale_DriveBackward backOff;
+	
+	/**
 	 * Activated while moving forward in order to intake the cube.
 	 */
 	IntakeActivateIn intakeCube;
 	
 	public RightScale_PickupCube() {
-		resetElevator = new MoveElevatorAuto(3);
+		backOff = new RightScale_DriveBackward();
+//		resetElevator = new MoveElevatorAuto(3);
 		turnToCube = new RightScale_TurnToCube(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		moveToCube = new RightScale_DriveForward();
-		intakeCube = new IntakeActivateIn();
+//		intakeCube = new IntakeActivateIn();
+		resetElevator = null;
+		intakeCube = null;
 	}
 	
 	@Override
 	public void initialize() {
-		resetElevator.start();
-		turnToCube.start();
+//		resetElevator.start();
+		backOff.start();
 	}
 	
 	@Override
 	public void execute() {
-		if (null != turnToCube && turnToCube.isFinished() && null != resetElevator && resetElevator.isFinished()) {
+		if (null == backOff && null != turnToCube && turnToCube.isFinished() && !moveToCube.isRunning() && null == resetElevator) {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			turnToCube.cancel();
 			turnToCube = null;
-			resetElevator.cancel();
-			resetElevator = null;
+//			resetElevator.cancel();
+//			resetElevator = null;
 			moveToCube.start();
-			intakeCube.start();
+//			intakeCube.start();
 		}
+		
+		else if(null != backOff && backOff.isFinished() && !turnToCube.isRunning()) {
+			Robot.ahrs.reset();
+			backOff.cancel();
+			backOff = null;
+			turnToCube.start();
+		}
+		
 	}
 	
 	@Override
 	public boolean isFinished() {
-		return (null != moveToCube && moveToCube.isFinished());
+		return (null == turnToCube && null != moveToCube && moveToCube.isFinished());
 	}
 	
 	@Override
 	public void end() {
 		moveToCube.cancel();
 		moveToCube = null;
-		intakeCube.cancel();
-		intakeCube = null;
+//		intakeCube.cancel();
+//		intakeCube = null;
 		Robot.ahrs.reset();
 		Robot.encLeft.reset();
 		Robot.driveTrain.drive.stopMotor();

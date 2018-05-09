@@ -84,7 +84,7 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 		
 		
 		// switch first curve to forward distance.
-		if(!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 78)
+		if(!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 74)
 		{
 //			new Center_SwitchIsLeft_MoveElevatorAuto().start();
 			hasReachedMiddle = true;

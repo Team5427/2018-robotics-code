@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * This command turns the robot 90 degrees counterclockwise.
+ * This command turns the robot 80 degrees counterclockwise.
  * 
  * @author Andrew Li
  */
@@ -49,7 +49,7 @@ public class RightScale_TurnToCube extends PIDCommand {
 		super(Config.PID_TURN_P, Config.PID_TURN_I, Config.PID_TURN_D, Config.PID_UPDATE_PERIOD);
 		this.scgRight = scgRight;
 		this.scgLeft = scgLeft;
-		setPoint = -87.5;
+		setPoint = -75;
 
 		super.setInputRange(-180, 180);
 		super.setSetpoint(setPoint);

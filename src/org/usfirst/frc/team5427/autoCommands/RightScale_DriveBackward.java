@@ -16,11 +16,11 @@ import org.usfirst.frc.team5427.robot.Robot;
  * 
  * @author Andrew Li
  */
-public class RightScale_DriveForward extends Command {
+public class RightScale_DriveBackward extends Command {
 	/**
 	 * The time that the robot will drive forwards for.
 	 */
-	private double time = 1.1;
+	private double time = 0.5;
 
 	/**
 	 * Receives the time the robot should drive forwards for and sets the timeout
@@ -29,7 +29,7 @@ public class RightScale_DriveForward extends Command {
 	 * @param time
 	 *            the time the robot should drive forwards for.
 	 */
-	public RightScale_DriveForward() {
+	public RightScale_DriveBackward() {
 		requires(Robot.driveTrain);
 		setTimeout(time);
 	}
@@ -46,8 +46,8 @@ public class RightScale_DriveForward extends Command {
 	 */
 	@Override
 	protected void execute() {
-		Robot.driveTrain.drive_Left.set(.3);
-		Robot.driveTrain.drive_Right.set(-.3);
+		Robot.driveTrain.drive_Left.set(-.3);
+		Robot.driveTrain.drive_Right.set(.3);
 	}
 
 	/**
