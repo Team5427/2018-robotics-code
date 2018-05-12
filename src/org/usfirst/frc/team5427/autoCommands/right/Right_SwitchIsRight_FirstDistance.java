@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * This command moves the robot forwards 154 inches.
- * Used in the Left_SwitchIsLeft command.
+ * This command moves the robot forwards 250 inches.
+ * Used in the Right_ScaleIsRight command.
  * 
  * @author Akshat Jain
  */
@@ -88,19 +88,19 @@ public class Right_SwitchIsRight_FirstDistance extends PIDCommand {
 
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgNot = scgConstant;
-		maximumSpeed = Config.PID_STRAIGHT_POWER_SHORT;
-		desiredDistance = 150;
+		maximumSpeed = Config.PID_STRAIGHT_POWER_LONG;
+		desiredDistance = 100;
 		
-		p = 0.0105;
+		p = 0.011;
 		i = 0;
-		d = 0.008;
+		d = 0.018;
 		
 		this.setInterruptible(true);
 		this.getPIDController().setSetpoint(0);
-		this.getPIDController().setAbsoluteTolerance(2);
 		setSetpoint(0);
+		
+		
 
-		this.power = .01;
 		hasStarted = false;
 	}
 
@@ -159,11 +159,11 @@ public class Right_SwitchIsRight_FirstDistance extends PIDCommand {
 		SmartDashboard.putNumber("p", power);
 
 		if (this.power < this.maximumSpeed && null == pidDistance) {
-			this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
+			this.power += (Config.PID_STRAIGHT_LINEAR_INCREMENT-.001);
 		}
 		else if (null == pidDistance) {
-			pidDistance = new PIDDistance(this.scgNot, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);
-			pidDistance.start();
+//			pidDistance = new PIDDistance(this.scgNot, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);
+//			pidDistance.start();
 		}
 		if (power >= this.maximumSpeed / 4)
 			hasStarted = true;
@@ -178,8 +178,12 @@ public class Right_SwitchIsRight_FirstDistance extends PIDCommand {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (pidDistance != null && pidDistance.isFinished() && Math.abs(Robot.ahrs.getYaw()) < 3) {
-			pidDistance.end();
+//		if (pidDistance != null && pidDistance.isFinished() && Math.abs(Robot.ahrs.getYaw()) < 3) {
+//			pidDistance.end();
+//			end();
+//			return true;
+//		}
+		if(Math.abs(Robot.encLeft.getDistance()) >= this.desiredDistance) {
 			end();
 			return true;
 		}
@@ -210,6 +214,7 @@ public class Right_SwitchIsRight_FirstDistance extends PIDCommand {
 	 */
 	@Override
 	public void end() {
+		System.out.println("ENDING FIRST DISTANCE");
 		free();
 		super.end();
 	}
