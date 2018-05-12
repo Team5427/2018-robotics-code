@@ -40,7 +40,9 @@ public class Right_SwitchIsRight_MoveElevatorAuto extends Command {
 	 */
 	@Override
 	protected void execute() {
-		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
+		Robot.motorPWM_Elevator_Right.set(Config.ELEVATOR_MOTOR_SPEED_UP);
+		Robot.motorPWM_Elevator_Left.set(-Config.ELEVATOR_MOTOR_SPEED_UP);
+
 	}
 
 	/**
@@ -65,8 +67,9 @@ public class Right_SwitchIsRight_MoveElevatorAuto extends Command {
 	 */
 	@Override
 	protected void end() {
-		Robot.motorPWM_Elevator.set(0);
-	}
+		Robot.motorPWM_Elevator_Right.set(0);
+		Robot.motorPWM_Elevator_Left.set(0);	
+		}
 
 	/**
 	 * Called once when the command is interrupted. Calls the end method in order to
@@ -74,7 +77,8 @@ public class Right_SwitchIsRight_MoveElevatorAuto extends Command {
 	 */
 	@Override
 	protected void interrupted() {
-		Robot.motorPWM_Elevator.set(0);
+		Robot.motorPWM_Elevator_Right.set(0);
+		Robot.motorPWM_Elevator_Left.set(0);
 		end();
 	}
 }

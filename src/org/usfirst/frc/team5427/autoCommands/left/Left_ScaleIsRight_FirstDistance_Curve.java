@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * This command moves the robot forwards 224 inches.
- * Used in the Left_ScaleIsRight command.
+ * This command moves the robot forwards 250 inches.
+ * Used in the Right_ScaleIsRight command.
  * 
- * @author Andrew Li
+ * @author Akshat Jain
  */
-public class Left_ScaleIsRight_SecondDistance extends PIDCommand {
+public class Left_ScaleIsRight_FirstDistance_Curve extends PIDCommand {
 
 	/**
 	 * PIDCommand created to control distance after we have reached the maximum
@@ -83,23 +83,24 @@ public class Left_ScaleIsRight_SecondDistance extends PIDCommand {
 	 *            the side of the robot that we will control with the PIDDistance
 	 *            command.
 	 */
-	public Left_ScaleIsRight_SecondDistance(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant) {
+	public Left_ScaleIsRight_FirstDistance_Curve(SpeedControllerGroup scgPIDControlled, SpeedControllerGroup scgConstant) {
 		super(Config.PID_STRAIGHT_P, Config.PID_STRAIGHT_I, Config.PID_STRAIGHT_D, Config.PID_UPDATE_PERIOD);
 
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgNot = scgConstant;
-		maximumSpeed = 1;
-		desiredDistance = 220;
+		maximumSpeed = Config.PID_STRAIGHT_POWER_LONG;
+		desiredDistance = 130;
 		
-		p = 0.0111;
+		p = 0.011;
 		i = 0;
 		d = 0.018;
 		
 		this.setInterruptible(true);
 		this.getPIDController().setSetpoint(0);
 		setSetpoint(0);
+		
+		
 
-		this.power = .25;
 		hasStarted = false;
 	}
 
@@ -114,7 +115,7 @@ public class Left_ScaleIsRight_SecondDistance extends PIDCommand {
 		this.pidDistance = null;
 		Robot.encLeft.reset();
 		Robot.ahrs.reset();
-		power = .2;
+		power = .01;
 		hasStarted = false;
 	}
 
@@ -158,11 +159,11 @@ public class Left_ScaleIsRight_SecondDistance extends PIDCommand {
 		SmartDashboard.putNumber("p", power);
 
 		if (this.power < this.maximumSpeed && null == pidDistance) {
-			this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;
+			this.power += (Config.PID_STRAIGHT_LINEAR_INCREMENT-.001);
 		}
 		else if (null == pidDistance) {
-			pidDistance = new PIDDistance(this.scgNot, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);
-			pidDistance.start();
+//			pidDistance = new PIDDistance(this.scgNot, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);
+//			pidDistance.start();
 		}
 		if (power >= this.maximumSpeed / 4)
 			hasStarted = true;
@@ -177,8 +178,12 @@ public class Left_ScaleIsRight_SecondDistance extends PIDCommand {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (pidDistance != null && pidDistance.isFinished() && Math.abs(Robot.ahrs.getYaw()) < 3) {
-			pidDistance.end();
+//		if (pidDistance != null && pidDistance.isFinished() && Math.abs(Robot.ahrs.getYaw()) < 3) {
+//			pidDistance.end();
+//			end();
+//			return true;
+//		}
+		if(Math.abs(Robot.encLeft.getDistance()) >= this.desiredDistance) {
 			end();
 			return true;
 		}
@@ -209,6 +214,7 @@ public class Left_ScaleIsRight_SecondDistance extends PIDCommand {
 	 */
 	@Override
 	public void end() {
+		System.out.println("ENDING FIRST DISTANCE");
 		free();
 		super.end();
 	}

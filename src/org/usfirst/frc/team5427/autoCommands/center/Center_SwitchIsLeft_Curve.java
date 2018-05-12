@@ -54,8 +54,8 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 	public Center_SwitchIsLeft_Curve()
 	{
 		speed = 0.1;
-		firstRotationValue = -0.30;
-		secondRotationValue = 0.45;
+		firstRotationValue = -0.65;
+		secondRotationValue = 0.78;
 		hasReachedMiddle = false;
 		isCoasting = false;
 	}

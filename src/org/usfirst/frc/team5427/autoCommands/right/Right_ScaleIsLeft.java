@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5427.autoCommands.right;
 
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
-import org.usfirst.frc.team5427.autoCommands.left.LeftScale_PickupCube;
+//import org.usfirst.frc.team5427.autoCommands.left.LeftScale_PickupCube;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.robot.commands.DriveBackward;
@@ -29,11 +29,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 */
 	private Right_ScaleIsLeft_FirstDistance_Curve firstDistance;
 	
-	/**
-	 * The first distance of the path. It travels 224 inches forward at .7 power.
-	 */
 	private Right_ScaleIsLeft_Curve curve;
-
 	private Right_ScaleIsLeft_MoveElevatorAuto moveElevator;
 
 	/**
@@ -110,7 +106,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 //		moveElevator.cancel();
 		new AutoOutGo().start();
 		curve.cancel();
-		new LeftScale_PickupCube().start();
+//		new LeftScale_PickupCube().start();
 	}
 
 }

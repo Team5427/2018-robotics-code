@@ -1,6 +1,8 @@
 package org.usfirst.frc.team5427.autoCommands.left;
 
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
+//import org.usfirst.frc.team5427.autoCommands.left.LeftScale_PickupCube;
+import org.usfirst.frc.team5427.autoCommands.right.Right_ScaleIsLeft_Curve;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.robot.commands.DriveBackward;
@@ -15,10 +17,10 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * This is our autonomous path that starts in the left position, moves towards
- * the scale, and turns 90 degrees.
+ * This is our autonomous path that starts in the right position and moves and
+ * turns 90 degrees towards the left side of the scale.
  * 
- * @author Blake Romero, Andrew Li
+ * @author Akshat Jain
  */
 @SameLine
 public class Left_ScaleIsRight extends AutoPath {
@@ -26,19 +28,9 @@ public class Left_ScaleIsRight extends AutoPath {
 	/**
 	 * The first distance of the path. It travels 224 inches forward at .7 power.
 	 */
-	private Left_ScaleIsRight_FirstDistance firstDistance;
-
-	/**
-	 * The first turn of the path. It turns 85 degrees clockwise.
-	 */
-	private Left_ScaleIsRight_FirstAngle firstAngle;
+	private Left_ScaleIsRight_FirstDistance_Curve firstDistance;
 	
-	private Left_ScaleIsRight_SecondDistance secondDistance;
-	
-	private Left_ScaleIsRight_SecondAngle secondAngle;
-	
-	private Left_ScaleIsRight_ThirdDistanceEncoder thirdDistance;
-	
+	private Left_ScaleIsRight_Curve curve;
 	private Left_ScaleIsRight_MoveElevatorAuto moveElevator;
 
 	/**
@@ -50,37 +42,17 @@ public class Left_ScaleIsRight extends AutoPath {
 	/**
 	 * The time, in seconds, that we manually end our autonomous path.
 	 */
-	public static final double timeOut = 15;
+	public static final double elevatorTimeout = 6;
 
-	/********** PID VALUES FOR 224 INCHES **********/
-	/**
-	 * P value for 224 inches.
-	 */
-	public static final double p1 = 0.0111;
 
 	/**
-	 * I value for 224 inches.
-	 */
-	public static final double i1 = 0.0;
-
-	/**
-	 * D value for 224 inches.
-	 */
-	public static final double d1 = 0.018;
-
-	/*********************************************/
-
-	/**
-	 * Creates all of the paths involved in Left_ScaleIsRight.
+	 * Creates all of the paths involved in Right_ScaleIsLeft.
 	 */
 	public Left_ScaleIsRight() {
 		fidget = new Fidget();
-		firstDistance = new Left_ScaleIsRight_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		firstAngle = new Left_ScaleIsRight_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		secondDistance = new Left_ScaleIsRight_SecondDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		secondAngle = new Left_ScaleIsRight_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		thirdDistance = new Left_ScaleIsRight_ThirdDistanceEncoder(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		firstDistance = new Left_ScaleIsRight_FirstDistance_Curve(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		moveElevator = new Left_ScaleIsRight_MoveElevatorAuto();
+		curve = new Left_ScaleIsRight_Curve();
 	}
 
 	/**
@@ -88,10 +60,9 @@ public class Left_ScaleIsRight extends AutoPath {
 	 * and sets the timeout of the path.
 	 */
 	public void initialize() {
-		fidget = null;
-		
+		Robot.encLeft.reset();
 		firstDistance.start();
-		setTimeout(timeOut);
+		setTimeout(elevatorTimeout);
 	}
 
 	/**
@@ -101,49 +72,19 @@ public class Left_ScaleIsRight extends AutoPath {
 	public void execute() {
 		SmartDashboard.putNumber("Motor Value", Robot.driveTrain.drive_Right.get());
 		
-		if (moveElevator != null)
-			moveElevator.isFinished();
-
-		if (null == fidget && null == firstDistance && null == firstAngle && null == secondDistance && null != secondAngle && secondAngle.isFinished() && !(thirdDistance.isRunning())) {
-			secondAngle.cancel();
-			secondAngle = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			thirdDistance.start();
-			
-		}
-
-		else if ((null == fidget && null == firstDistance && null == firstAngle && null != secondDistance && secondDistance.isFinished() && !secondAngle.isRunning())) {
-			secondDistance.cancel();
-			secondDistance = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			moveElevator.start();
-			secondAngle.start();
-			new TiltIntake_TimeOut().start();
-		}
-
-		else if (null == fidget && null == firstDistance && null != firstAngle && firstAngle.isFinished() && !secondDistance.isRunning()) {
-			firstAngle.cancel();
-			firstAngle = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			secondDistance.start();
-		}
-		
-		else if (null == fidget && null != firstDistance && firstDistance.isFinished() && !(firstAngle.isRunning())) {
+//		if(this.isTimedOut() && !moveElevator.isRunning()) {
+//			moveElevator.start();
+//		}
+//		if(moveElevator.maxHeightReachedTime() && Robot.tiltUpNext) {
+//			new TiltIntake_TimeOut().start();
+//		}
+		if ( null != firstDistance && firstDistance.isFinished()) {
+			System.out.print("Curve starting");
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			firstAngle.start();
-		}
-		else if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
-			fidget.cancel();
-			fidget = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			firstDistance.start();
+			curve.start(); 
 		}
 	}
 
@@ -154,21 +95,19 @@ public class Left_ScaleIsRight extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (secondAngle == null && thirdDistance.isFinished())
-			return true;
-		return isTimedOut();
+		return curve.isFinished();
 	}
 
 	/**
-	 * Run once when isFinished() returns true. Utilizes the end() of AutoPath to
-	 * shoot out the box.
+	 * Run once the isFinished() returns true.
 	 */
 	@Override
 	protected void end() {
-		moveElevator.cancel();
+		Robot.tiltUpNext = false;
+//		moveElevator.cancel();
 		new AutoOutGo().start();
-		new DriveBackward(2).start();
-		super.end();
+		curve.cancel();
+//		new LeftScale_PickupCube().start();
 	}
 
 }

@@ -45,7 +45,8 @@ public class ManualMoveElevatorUp extends Command {
 	 */
 	@Override
 	protected void execute() {
-		Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
+		Robot.motorPWM_Elevator_Right.set(Config.ELEVATOR_MOTOR_SPEED_UP);
+		Robot.motorPWM_Elevator_Left.set(-Config.ELEVATOR_MOTOR_SPEED_UP);
 	}
 
 	/**
@@ -66,7 +67,8 @@ public class ManualMoveElevatorUp extends Command {
 	 */
 	@Override
 	protected void end() {
-		Robot.motorPWM_Elevator.set(0);
+		Robot.motorPWM_Elevator_Right.set(0);
+		Robot.motorPWM_Elevator_Left.set(0);
 	}
 
 	/**

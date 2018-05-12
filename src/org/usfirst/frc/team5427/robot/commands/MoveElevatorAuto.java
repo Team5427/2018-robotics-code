@@ -71,18 +71,22 @@ public class MoveElevatorAuto extends Command {
 	protected void execute() {
 		if (1 == height || 2 == height) {
 			if (!Robot.elevatorLimitSwitchUp.get()) {
-				Robot.motorPWM_Elevator.set(0);
+				Robot.motorPWM_Elevator_Right.set(0);
+				Robot.motorPWM_Elevator_Left.set(0);
 			}
 			else {
-				Robot.motorPWM_Elevator.set(Config.ELEVATOR_MOTOR_SPEED_UP);
+				Robot.motorPWM_Elevator_Right.set(Config.ELEVATOR_MOTOR_SPEED_UP);
+				Robot.motorPWM_Elevator_Left.set(-Config.ELEVATOR_MOTOR_SPEED_UP);
 			}
 		}
 		else if (3 == height || 4 == height) {
 			if (!Robot.elevatorLimitSwitchDown.get()) {
-				Robot.motorPWM_Elevator.set(0);
+				Robot.motorPWM_Elevator_Right.set(0);
+				Robot.motorPWM_Elevator_Left.set(0);
 			}
 			else {
-				Robot.motorPWM_Elevator.set(-Config.ELEVATOR_MOTOR_SPEED_DOWN);
+				Robot.motorPWM_Elevator_Right.set(Config.ELEVATOR_MOTOR_SPEED_DOWN);
+				Robot.motorPWM_Elevator_Left.set(-Config.ELEVATOR_MOTOR_SPEED_DOWN);
 			}
 		}
 	}
@@ -128,7 +132,8 @@ public class MoveElevatorAuto extends Command {
 	 */
 	@Override
 	protected void end() {
-		Robot.motorPWM_Elevator.set(0);
+		Robot.motorPWM_Elevator_Right.set(0);
+		Robot.motorPWM_Elevator_Left.set(0);
 	}
 
 	/**
@@ -137,7 +142,8 @@ public class MoveElevatorAuto extends Command {
 	 */
 	@Override
 	protected void interrupted() {
-		Robot.motorPWM_Elevator.set(0);
+		Robot.motorPWM_Elevator_Right.set(0);
+		Robot.motorPWM_Elevator_Left.set(0);
 		end();
 	}
 }

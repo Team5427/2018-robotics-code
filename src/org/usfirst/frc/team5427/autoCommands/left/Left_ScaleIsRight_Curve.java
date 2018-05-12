@@ -1,4 +1,4 @@
-package org.usfirst.frc.team5427.autoCommands.right;
+package org.usfirst.frc.team5427.autoCommands.left;
 
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Akshat Jain, Varsha Kumar, Blake Romero
  */
 @SameLine
-public class Right_ScaleIsLeft_Curve extends AutoPath{
+public class Left_ScaleIsRight_Curve extends AutoPath{
 	/**
 	* The desired speed for the robot to travel at along the x axis.
 	* Range from -1.0 to 1.0
@@ -55,11 +55,11 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 	/**
 	* TODO Add speed and rotationValue to config and change to real values.
 	*/
-	public Right_ScaleIsLeft_Curve()
+	public Left_ScaleIsRight_Curve()
 	{
 		speed = Config.PID_STRAIGHT_POWER_LONG;
-		firstRotationValue = -0.30;
-		secondRotationValue = 0.65;
+		firstRotationValue = 0.30;
+		secondRotationValue = -0.65;
 		hasReachedMiddle = false;
 		secondCurve = false;
 	}
