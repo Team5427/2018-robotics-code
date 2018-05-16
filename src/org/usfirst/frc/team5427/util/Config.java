@@ -130,7 +130,7 @@ public class Config {
 	/**
 	 * The timeout used in moving the elevator to the switch position.
 	 */
-	public static final double ELEVATOR_TIMEOUT_SWITCH = 2;
+	public static final double ELEVATOR_TIMEOUT_SWITCH = 1.1;
 
 	/**
 	 * The timeout used in moving the elevator to the scale position.
@@ -145,7 +145,7 @@ public class Config {
 	/**
 	 * The timeout used in moving the elevator back to default from the switch.
 	 */
-	public static final double ELEVATOR_TIMEOUT_SWITCH_DOWN = 1.8;
+	public static final double ELEVATOR_TIMEOUT_SWITCH_DOWN = 50;
 	/*************************************************/
 
 	/******************** MOTOR SPEEDS *******************/

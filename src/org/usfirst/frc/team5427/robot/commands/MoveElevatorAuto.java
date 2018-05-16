@@ -26,7 +26,7 @@ public class MoveElevatorAuto extends Command {
 	 * the switch. 2: Top position for placement on the scale. 3: Bottom position
 	 * for resetting the elevator.
 	 */
-	public static int height;
+	public int height;
 
 	/**
 	 * Stores whether the elevator has reached its desired position.
@@ -51,6 +51,7 @@ public class MoveElevatorAuto extends Command {
 			this.setTimeout(Config.ELEVATOR_TIMEOUT_SCALE_DOWN);
 		else if (4 == height)
 			this.setTimeout(Config.ELEVATOR_TIMEOUT_SWITCH_DOWN);
+		System.out.println(this.height+" is height");
 	}
 
 	/**
@@ -69,6 +70,7 @@ public class MoveElevatorAuto extends Command {
 	 */
 	@Override
 	protected void execute() {
+		
 		if (1 == height || 2 == height) {
 			if (!Robot.elevatorLimitSwitchUp.get()) {
 				Robot.motorPWM_Elevator_Right.set(0);
@@ -85,6 +87,7 @@ public class MoveElevatorAuto extends Command {
 				Robot.motorPWM_Elevator_Left.set(0);
 			}
 			else {
+				
 				Robot.motorPWM_Elevator_Right.set(Config.ELEVATOR_MOTOR_SPEED_DOWN);
 				Robot.motorPWM_Elevator_Left.set(-Config.ELEVATOR_MOTOR_SPEED_DOWN);
 			}

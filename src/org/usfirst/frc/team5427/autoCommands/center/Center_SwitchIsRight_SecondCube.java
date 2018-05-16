@@ -84,6 +84,7 @@ public class Center_SwitchIsRight_SecondCube extends AutoPath {
 			angleToSwitch = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
+			
 			moveForwardToSwitch.start();
 			
 		}
@@ -92,29 +93,34 @@ public class Center_SwitchIsRight_SecondCube extends AutoPath {
 			backOffFromCube = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
+			
 			angleToSwitch.start();
-			elevatorUp.start();
+			
 		}
 		else if(null == backOffFromSwitch && null == angleToCube && null!= moveForwardToCube && moveForwardToCube.isFinished()) {
 			moveForwardToCube.cancel();
 			moveForwardToCube = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
+			
 			backOffFromCube.start();
 			intakeCube.cancel();
+			elevatorUp.start();
 		}
 		else if(null == backOffFromSwitch && null != angleToCube && angleToCube.isFinished()){
 			angleToCube.cancel();
 			angleToCube = null;
-			intakeCube.start();
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
+			
 			moveForwardToCube.start();
+			intakeCube.start();
 		}
 		else if(null != backOffFromSwitch && backOffFromSwitch.isFinished()) {
 			backOffFromSwitch.cancel();
 			backOffFromSwitch = null;
 			Robot.ahrs.reset();
+			
 			Robot.encLeft.reset();
 			angleToCube.start();
 		}

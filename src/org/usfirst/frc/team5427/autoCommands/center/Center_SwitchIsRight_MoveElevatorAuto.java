@@ -49,7 +49,7 @@ public class Center_SwitchIsRight_MoveElevatorAuto extends Command {
 	@Override
 	protected void execute() {
 			if (!Robot.elevatorLimitSwitchUp.get()) {
-				Robot.motorPWM_Elevator_Right.set(0);
+				Robot.motorPWM_Elevator_Right.set(0);	
 				Robot.motorPWM_Elevator_Left.set(0);
 			}
 			else {

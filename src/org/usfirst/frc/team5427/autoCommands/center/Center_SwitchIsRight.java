@@ -2,6 +2,7 @@ package org.usfirst.frc.team5427.autoCommands.center;
 
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
@@ -114,6 +115,7 @@ public class Center_SwitchIsRight extends AutoPath {
 	@Override
 	protected void end() {
 		super.end();
+		new AutoOutGo().start();
 		new Center_SwitchIsRight_SecondCube().start();
 	}
 }
