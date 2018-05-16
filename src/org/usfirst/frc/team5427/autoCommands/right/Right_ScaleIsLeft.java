@@ -71,14 +71,14 @@ public class Right_ScaleIsLeft extends AutoPath {
 	public void execute() {
 		SmartDashboard.putNumber("Motor Value", Robot.driveTrain.drive_Right.get());
 		
-//		if(this.isTimedOut() && !moveElevator.isRunning()) {
-//			moveElevator.start();
-//		}
-//		if(moveElevator.maxHeightReachedTime() && Robot.tiltUpNext) {
-//			new TiltIntake_TimeOut().start();
-//		}
+		if(this.isTimedOut() && !moveElevator.isRunning()) {
+			moveElevator.start();
+		}
+		if(moveElevator.maxHeightReachedTime() && Robot.tiltUpNext) {
+			new TiltIntake_TimeOut().start();
+		}
+		
 		if ( null != firstDistance && firstDistance.isFinished()) {
-			System.out.print("Curve starting");
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
@@ -103,7 +103,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 	@Override
 	protected void end() {
 		Robot.tiltUpNext = false;
-//		moveElevator.cancel();
+		moveElevator.cancel();
 		new AutoOutGo().start();
 		curve.cancel();
 //		new LeftScale_PickupCube().start();

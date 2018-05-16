@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5427.autoCommands;
 
+import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.util.SameLine;
 import edu.wpi.first.wpilibj.command.Command;

@@ -333,12 +333,15 @@ public class Robot extends IterativeRobot {
 			if (switch_or_scale == 1) {
 				if (switchSide == 'R')
 					autoPath = new Right_SwitchIsRight();
-				else if (switchSide == 'L')
-					autoPath = new Right_SwitchIsLeft();
+				else if (switchSide == 'L') {
+					if (scaleSide == 'R')
+						autoPath = new Right_ScaleIsRight();
+					else if (scaleSide == 'L')
+						autoPath = new Right_ScaleIsLeft();
+				}
 			}
 			else if (switch_or_scale == 2) {
 				if (scaleSide == 'R')
-//					autoPath = new Right_ScaleAndSwitch();
 					autoPath = new Right_ScaleIsRight();
 				else if (scaleSide == 'L')
 					autoPath = new Right_ScaleIsLeft();
@@ -352,8 +355,12 @@ public class Robot extends IterativeRobot {
 		}
 		else if (field_position == 3) {
 			if (switch_or_scale == 1) {
-				if (switchSide == 'R')
-					autoPath = new Left_SwitchIsRight();
+				if (switchSide == 'R') {
+					if (scaleSide == 'R')
+						autoPath = new Left_ScaleIsRight();
+					else if (scaleSide == 'L')
+						autoPath = new Left_ScaleIsLeft();
+				}
 				else if (switchSide == 'L')
 					autoPath = new Left_SwitchIsLeft();
 			}
