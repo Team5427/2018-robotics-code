@@ -84,6 +84,8 @@ public class Left_ScaleIsRight extends AutoPath {
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
+			
+			moveElevator.start();
 			curve.start(); 
 		}
 	}
@@ -104,7 +106,7 @@ public class Left_ScaleIsRight extends AutoPath {
 	@Override
 	protected void end() {
 		Robot.tiltUpNext = false;
-//		moveElevator.cancel();
+		moveElevator.cancel();
 		new AutoOutGo().start();
 		curve.cancel();
 //		new LeftScale_PickupCube().start();

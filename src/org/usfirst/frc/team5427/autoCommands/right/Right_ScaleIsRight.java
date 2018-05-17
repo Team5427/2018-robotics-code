@@ -83,7 +83,7 @@ public class Right_ScaleIsRight extends AutoPath {
 	 */
 	public void initialize() {
 		startTime = System.nanoTime() / 1000000000.;
-		firstDistance.start();
+		fidget.start();
 		setTimeout(timeOut);
 	}
 
@@ -105,12 +105,19 @@ public class Right_ScaleIsRight extends AutoPath {
 		if (currentTime - startTime > 2.5 && !moveElevator.isRunning())
 			moveElevator.start();
 		
-		if(null!=firstDistance && firstDistance.isFinished() && !(curve.isRunning())) {
+		if(null==fidget&&null!=firstDistance && firstDistance.isFinished() && !(curve.isRunning())) {
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			curve.start();
+		}
+		if(null!=fidget && fidget.isFinished()&&!(firstDistance.isRunning())) {
+			fidget.cancel();
+			fidget=null;
+			Robot.ahrs.reset();
+			Robot.encLeft.reset();
+			firstDistance.start();
 		}
 	}
 
@@ -137,6 +144,7 @@ public class Right_ScaleIsRight extends AutoPath {
 		new AutoOutGo().start();
 		curve.cancel();
 		super.end();
+		new DriveBackward(1).start();
 //		new RightScale_PickupCube().start();
 	}
 }

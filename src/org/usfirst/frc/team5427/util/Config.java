@@ -130,7 +130,7 @@ public class Config {
 	/**
 	 * The timeout used in moving the elevator to the switch position.
 	 */
-	public static final double ELEVATOR_TIMEOUT_SWITCH = 1.1;
+	public static final double ELEVATOR_TIMEOUT_SWITCH = 1;
 
 	/**
 	 * The timeout used in moving the elevator to the scale position.
