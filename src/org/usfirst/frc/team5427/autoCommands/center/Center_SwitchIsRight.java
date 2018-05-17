@@ -116,6 +116,6 @@ public class Center_SwitchIsRight extends AutoPath {
 	protected void end() {
 		super.end();
 		new AutoOutGo().start();
-		new Center_SwitchIsRight_SecondCube().start();
+//		new Center_SwitchIsRight_SecondCube().start();
 	}
 }

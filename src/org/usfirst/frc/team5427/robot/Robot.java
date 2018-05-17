@@ -450,6 +450,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Yaw", ahrs.getYaw());
 		// This needs to be here for limit switches to work!
 		elevatorLimitSwitchDown.get();
 		elevatorLimitSwitchUp.get();

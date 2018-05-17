@@ -10,18 +10,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * This is the class to navigate to the left switch from the center position utilizing arcs.
  * 
- * @author Akshat Jain, Varsha Kumar, Blake Romero
+ * @author Varsha Kumar, Blake Romero, Akshat Jain
  */
 @SameLine
 public class Center_SwitchIsLeft_Curve extends AutoPath{
 	/**
 	* The desired speed for the robot to travel at along the x axis.
-	* Range from -1.0 to 1.0
+	* Range from -1.0 to 1.0.
 	*/
 	public double speed;
 	
 	/**
-	* The max speed for the robot t travel at along the x axis.
+	* The max speed for the robot to travel at along the x axis.
 	* Range from -1.0 to 1.0.
 	*/
 	public static final double MAX_SPEED = .5;
@@ -44,89 +44,65 @@ public class Center_SwitchIsLeft_Curve extends AutoPath{
 	public boolean hasReachedMiddle;
 	
 	/**
-	* Stores if the robot is coasting.
-	*/
-	public boolean isCoasting;
-	
-	/**
 	* TODO Add speed and rotationValue to config and change to real values.
 	*/
 	public Center_SwitchIsLeft_Curve()
 	{
 		speed = 0.1;
-		firstRotationValue = -0.65;
-		secondRotationValue = 0.78;
+		firstRotationValue = -0.4;
+		secondRotationValue = 0.45;
 		hasReachedMiddle = false;
-		isCoasting = false;
 	}
-	
 	@Override
 	public void initialize()
 	{
+		System.out.println("center switch is left");
 		Robot.ahrs.reset();
 	}
 	
-	/**
-	 * Increments speed every iteration exponentially
-	 * by a factor of 1.035. Runs the first curve at the speed
-	 * and the rotation value 0.4 to the left. When 86 degrees 
-	 * is reached, switches to second curve and raises elevator.
-	 */
+	
 	@Override
 	public void execute()
 	{
 		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
 		SmartDashboard.putNumber("Speed", this.speed);
-		
-		
-		
-		// switch curves
+
 		if(!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 86)
 		{
-//			new Center_SwitchIsLeft_MoveElevatorAuto().start();
+			new Center_SwitchIsLeft_MoveElevatorAuto().start();
 			hasReachedMiddle = true;
 		}
-		//first curve
+		if(speed < MAX_SPEED)
+			this.speed*=1.035;
 		if(!hasReachedMiddle)
 		{
-			if(speed < MAX_SPEED)
-				this.speed*=1.035;
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.firstRotationValue,false);
 		}
-		//second curve
-		else if(Math.abs(Robot.ahrs.getYaw()) > 17)
+		else
 		{
-			if(speed < MAX_SPEED)
-				this.speed/=1.035;
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
-		}
-		//slow down towards switch
-		else {
-			isCoasting = true;
-			this.speed/=1.128;
-			Robot.driveTrain.drive.tankDrive(this.speed, this.speed);
 		}
 	}
 	/**
 	 * This is run periodically to check to see if the command is finished.
 	 * 
-	 * @return true if robot is done with second curve and speed is low
+	 * @return false by default but can be modified in each child path.
 	 */
 	@Override
 	public boolean isFinished() {
-		return (isCoasting && speed < 0.001);
+		return (hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) < 17);
 	}
 
 	/**
-	 * Stops drive train (coasts). Resets ahrs and encoder, starts second cube auto.
+	 * This is run once when the command is finished.
 	 */
 	@Override
 	protected void end() {
+		System.out.println("Ending Main Curve");
 		Robot.driveTrain.drive.stopMotor();
 		Robot.ahrs.reset();
 		Robot.encLeft.reset();
 		super.end();
-		new AutoOutGo().start();
-		new Center_SwitchIsLeft_SecondCube().start();
+//		new Center_SwitchIsLeft_SecondCube().start();
 	}
 }
