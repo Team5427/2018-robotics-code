@@ -70,7 +70,7 @@ public class Right_SwitchIsRight extends AutoPath {
 	 * Creates all of the paths involved in Left_ScaleIsLeft.
 	 */
 	public Right_SwitchIsRight() {
-//		fidget = new Fidget();
+		fidget = new Fidget();
 		firstDistance = new Right_SwitchIsRight_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		curve = new Right_SwitchIsRight_CurveToSwitch();
 		moveElevator = new MoveElevatorAuto(1);
@@ -111,6 +111,16 @@ public class Right_SwitchIsRight extends AutoPath {
 			
 			curve.start();
 		}
+		
+		if(null!=fidget && fidget.isFinished()) {
+			fidget.cancel();
+			fidget = null;
+			Robot.ahrs.reset();
+			Robot.encLeft.reset();
+			
+			firstDistance.start();
+			moveElevator.start();
+		}
 	}
 
 	/**
@@ -120,8 +130,6 @@ public class Right_SwitchIsRight extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-//		if (firstAngle == null && secondDistance.isFinished())
-//			return true;
 		if (curve.isFinished())
 			return true;
 		return isTimedOut() && this.moveElevator.maxHeightReached();
@@ -138,6 +146,5 @@ public class Right_SwitchIsRight extends AutoPath {
 		moveElevator.cancel();
 		new AutoOutGo().start();
 		curve.cancel();
-//		new DriveBackward(2.2).start();
 	}
 }
