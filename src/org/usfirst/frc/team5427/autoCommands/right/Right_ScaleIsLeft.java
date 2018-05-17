@@ -60,7 +60,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 */
 	public void initialize() {
 		Robot.encLeft.reset();
-		firstDistance.start();
+		fidget.start();
 		setTimeout(elevatorTimeout);
 	}
 
@@ -78,12 +78,19 @@ public class Right_ScaleIsLeft extends AutoPath {
 			new TiltIntake_TimeOut().start();
 		}
 		
-		if ( null != firstDistance && firstDistance.isFinished()) {
+		if (null == fidget && null != firstDistance && firstDistance.isFinished()) {
 			firstDistance.cancel();
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			curve.start(); 
+		}
+		if(null !=fidget && fidget.isFinished()) {
+			fidget.cancel();
+			fidget = null;
+			Robot.ahrs.reset();
+			Robot.encLeft.reset();
+			firstDistance.start(); 
 		}
 	}
 

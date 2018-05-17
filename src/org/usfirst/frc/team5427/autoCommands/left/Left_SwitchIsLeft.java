@@ -82,7 +82,7 @@ public class Left_SwitchIsLeft extends AutoPath {
 	 */
 	public void initialize() {
 		startTime = System.nanoTime() / 1000000000.;
-		firstDistance.start();
+		fidget.start();
 		setTimeout(timeOut);
 		moveElevator.start();
 	}
@@ -101,7 +101,10 @@ public class Left_SwitchIsLeft extends AutoPath {
 			new TiltIntake_TimeOut().start();
 		}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ed908d6b1a05706a40a226304065d4c24587df6f
 		
 		if(null!=firstDistance && firstDistance.isFinished() && !(curve.isRunning())) {
 			firstDistance.cancel();
@@ -109,6 +112,14 @@ public class Left_SwitchIsLeft extends AutoPath {
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			curve.start();
+		}
+		if(null!=fidget && fidget.isFinished()) {
+			fidget.cancel();
+			fidget = null;
+			Robot.ahrs.reset();
+			Robot.encLeft.reset();
+			firstDistance.start();
+			moveElevator.start();
 		}
 	}
 
@@ -119,8 +130,7 @@ public class Left_SwitchIsLeft extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-//		if (firstAngle == null && secondDistance.isFinished())
-//			return true;
+
 		if (curve.isFinished())
 			return true;
 		return isTimedOut() && this.moveElevator.maxHeightReached();
@@ -135,9 +145,7 @@ public class Left_SwitchIsLeft extends AutoPath {
 		Robot.tiltUpNext = false;
 		moveElevator.cancel();
 		new AutoOutGo().start();
-//		secondDistance.cancel();
 		curve.cancel();
-//		new DriveBackward(5).start();
 		super.end();
 	}
 }
