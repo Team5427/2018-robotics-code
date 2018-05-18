@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team5427.robot.commands;
+package org.usfirst.frc.team5427.autoCommands.center;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
@@ -16,7 +16,7 @@ import org.usfirst.frc.team5427.robot.Robot;
  * 
  * @author Blake Romero
  */
-public class Fidget extends Command {
+public class FidgetCL extends Command {
 
 	/**
 	 * Stores whether the forward portion of the fidget is completed.
@@ -27,7 +27,7 @@ public class Fidget extends Command {
 	 * Fidget requires the drive train subsystem. Sets the timeout of the command to
 	 * .1 seconds.
 	 */
-	public Fidget() {
+	public FidgetCL() {
 		requires(Robot.driveTrain);
 		this.forwardDone = false;
 		setTimeout(0.1);
@@ -79,6 +79,8 @@ public class Fidget extends Command {
 	public void end() {
 		Robot.driveTrain.drive_Left.set(0);
 		Robot.driveTrain.drive_Right.set(0);
+		super.end();
+		new Center_SwitchIsLeft_Curve().start();
 	}
 
 	/**

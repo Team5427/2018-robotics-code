@@ -101,11 +101,6 @@ public class Left_SwitchIsLeft extends AutoPath {
 			new TiltIntake_TimeOut().start();
 		}
 
-<<<<<<< HEAD
-
-=======
->>>>>>> ed908d6b1a05706a40a226304065d4c24587df6f
-		
 		if(null!=firstDistance && firstDistance.isFinished() && !(curve.isRunning())) {
 			firstDistance.cancel();
 			firstDistance = null;

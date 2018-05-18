@@ -98,12 +98,15 @@ public class Right_ScaleIsRight extends AutoPath {
 		if (moveElevator != null)
 			moveElevator.isFinished();
 
-		if (moveElevator.maxHeightReachedTime() && Robot.tiltUpNext) {
-			new TiltIntake_TimeOut().start();
-		}
+		
 
 		if (currentTime - startTime > 2.5 && !moveElevator.isRunning())
+		{
 			moveElevator.start();
+			if(Robot.tiltUpNext)
+				new TiltIntake_TimeOut().start();
+
+		}
 		
 		if(null==fidget&&null!=firstDistance && firstDistance.isFinished() && !(curve.isRunning())) {
 			firstDistance.cancel();

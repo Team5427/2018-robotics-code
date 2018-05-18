@@ -39,6 +39,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 	private Fidget fidget;
 
 	/**
+	 * 
 	 * The time, in seconds, that we manually end our autonomous path.
 	 */
 	public static final double elevatorTimeout = 6;
@@ -48,7 +49,9 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 * Creates all of the paths involved in Right_ScaleIsLeft.
 	 */
 	public Right_ScaleIsLeft() {
-		fidget = new Fidget();
+		requires(Robot.driveTrain);
+//		fidget = new Fidget();
+		fidget=null;
 		firstDistance = new Right_ScaleIsLeft_FirstDistance_Curve(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		moveElevator = new Right_ScaleIsLeft_MoveElevatorAuto();
 		curve = new Right_ScaleIsLeft_Curve();
@@ -60,7 +63,8 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 */
 	public void initialize() {
 		Robot.encLeft.reset();
-		fidget.start();
+		firstDistance.start(); 
+//		fidget.start();
 		setTimeout(elevatorTimeout);
 	}
 
@@ -85,13 +89,13 @@ public class Right_ScaleIsLeft extends AutoPath {
 			Robot.encLeft.reset();
 			curve.start(); 
 		}
-		if(null !=fidget && fidget.isFinished()) {
-			fidget.cancel();
-			fidget = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			firstDistance.start(); 
-		}
+//		if(null !=fidget && fidget.isFinished()) {
+//			fidget.cancel();
+//			fidget = null;
+//			Robot.ahrs.reset();
+//			Robot.encLeft.reset();
+//			firstDistance.start(); 
+//		}
 	}
 
 	/**

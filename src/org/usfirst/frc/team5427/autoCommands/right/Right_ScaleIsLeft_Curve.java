@@ -58,8 +58,8 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 	public Right_ScaleIsLeft_Curve()
 	{
 		speed = Config.PID_STRAIGHT_POWER_LONG;
-		firstRotationValue = -0.30;
-		secondRotationValue = 0.65;
+		firstRotationValue = -0.35;
+		secondRotationValue = 0.8;
 		hasReachedMiddle = false;
 		secondCurve = false;
 	}
@@ -108,7 +108,7 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 		else
 		{
 			SmartDashboard.putNumber("Speed on Curve", speed);
-			this.speed/=1.015;
+			this.speed/=1.008;
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
 		}
 	}

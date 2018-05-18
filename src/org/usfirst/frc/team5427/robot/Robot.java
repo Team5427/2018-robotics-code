@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import org.usfirst.frc.team5427.autoCommands.*;
 import org.usfirst.frc.team5427.autoCommands.center.Center_SwitchIsLeft_Curve;
 import org.usfirst.frc.team5427.autoCommands.center.Center_SwitchIsRight;
+import org.usfirst.frc.team5427.autoCommands.center.FidgetCL;
 import org.usfirst.frc.team5427.autoCommands.left.Left_ScaleIsLeft;
 import org.usfirst.frc.team5427.autoCommands.left.Left_ScaleIsRight;
 import org.usfirst.frc.team5427.autoCommands.left.Left_SwitchIsLeft;
@@ -351,7 +352,10 @@ public class Robot extends IterativeRobot {
 			if (switchSide == 'R')
 				autoPath = new Center_SwitchIsRight();
 			else if (switchSide == 'L')
-				autoPath = new Center_SwitchIsLeft_Curve();
+			{
+				new FidgetCL().start();
+//				autoPath = null;
+			}
 		}
 		else if (field_position == 3) {
 			if (switch_or_scale == 1) {
@@ -371,7 +375,7 @@ public class Robot extends IterativeRobot {
 					autoPath = new Left_ScaleIsLeft();
 			}
 		}
-
+//		autoPath = new Center_SwitchIsLeft_Curve();
 		if (autoPath != null)
 			autoPath.start();
 	}
@@ -410,8 +414,8 @@ public class Robot extends IterativeRobot {
 			else if (field_position == 2) {
 				if (switchSide == 'R')
 					autoPath = new Center_SwitchIsRight();
-				else if (switchSide == 'L')
-					autoPath = new Center_SwitchIsLeft_Curve();
+				else if (switchSide == 'L');
+//					autoPath = new Center_SwitchIsLeft_Curve();
 			}
 			else if (field_position == 3) {
 				if (switch_or_scale == 1) {
