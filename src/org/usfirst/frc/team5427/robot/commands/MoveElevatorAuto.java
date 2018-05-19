@@ -7,11 +7,10 @@
 
 package org.usfirst.frc.team5427.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This command will be called in autonomous to set the elevator to the height

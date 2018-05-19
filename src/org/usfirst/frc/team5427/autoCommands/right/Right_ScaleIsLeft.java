@@ -4,6 +4,7 @@ import org.usfirst.frc.team5427.autoCommands.AutoPath;
 //import org.usfirst.frc.team5427.autoCommands.left.LeftScale_PickupCube;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
+import org.usfirst.frc.team5427.robot.commands.DriveBackward;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
 import org.usfirst.frc.team5427.robot.commands.TiltIntake_TimeOut;
 import org.usfirst.frc.team5427.util.SameLine;
@@ -73,7 +74,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 		if(this.isTimedOut() && !moveElevator.isRunning()) {
 			moveElevator.start();
 		}
-		if(moveElevator.maxHeightReachedTime() && Robot.tiltUpNext) {
+		if(this.isTimedOut() && Robot.tiltUpNext) {
 			new TiltIntake_TimeOut().start();
 		}
 		
@@ -108,10 +109,10 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 */
 	@Override
 	protected void end() {
-		Robot.tiltUpNext = false;
 		moveElevator.cancel();
 		new AutoOutGo().start();
 		curve.cancel();
+		new DriveBackward(1).start();
 //		new LeftScale_PickupCube().start();
 	}
 

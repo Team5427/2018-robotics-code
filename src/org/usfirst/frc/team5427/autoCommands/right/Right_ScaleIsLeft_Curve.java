@@ -105,7 +105,7 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 		else
 		{
 //			SmartDashboard.putNumber("Speed on Curve", speed);
-			this.speed/=1.01;
+			this.speed/=1.0115;
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
 		}
 	}

@@ -157,7 +157,7 @@ public class Config {
 	/**
 	 * The motor speed that correlates to shooting out a box.
 	 */
-	public static final double INTAKE_MOTOR_SPEED_OUT = -1.0;
+	public static final double INTAKE_MOTOR_SPEED_OUT = -0.75;
 
 	/**
 	 * The motor speed that correlates to shooting a box out slowly.

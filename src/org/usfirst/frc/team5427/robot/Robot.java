@@ -9,6 +9,8 @@ package org.usfirst.frc.team5427.robot;
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.autoCommands.Delayed_Baseline;
 import org.usfirst.frc.team5427.autoCommands.center.Center_SwitchIsRight;
+import org.usfirst.frc.team5427.autoCommands.center.Delayed_CSL;
+import org.usfirst.frc.team5427.autoCommands.center.Delayed_CSR;
 import org.usfirst.frc.team5427.autoCommands.center.FidgetCL;
 import org.usfirst.frc.team5427.autoCommands.left.FidgetRSL;
 import org.usfirst.frc.team5427.autoCommands.left.Left_ScaleIsLeft;
@@ -36,6 +38,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Robot is used as the core of the robot's code, and it contains all of the
@@ -340,9 +343,9 @@ public class Robot extends IterativeRobot {
 		}
 		else if (field_position == 2) {
 			if (switchSide == 'R')
-				autoPath = new Center_SwitchIsRight();
+				autoPath = new Delayed_CSR(4);
 			else if (switchSide == 'L')
-				autoPath = new FidgetCL();
+				autoPath = new Delayed_CSL(4);
 		}
 		else if (field_position == 3) {
 			if (switch_or_scale == 1) {
@@ -359,6 +362,7 @@ public class Robot extends IterativeRobot {
 			}
 		}
 		if (autoPath != null)
+//			autoPath = new Delayed_Baseline(2);//TODO see if we ca remove this
 			autoPath.start();
 	}
 
@@ -401,9 +405,9 @@ public class Robot extends IterativeRobot {
 			}
 			else if (field_position == 2) {
 				if (switchSide == 'R')
-					autoPath = new Center_SwitchIsRight();
+					autoPath = new Delayed_CSR(4);
 				else if (switchSide == 'L')
-					autoPath = new FidgetCL();
+					autoPath = new Delayed_CSL(4);
 			}
 			else if (field_position == 3) {
 				if (switch_or_scale == 1) {
@@ -420,6 +424,7 @@ public class Robot extends IterativeRobot {
 				}
 			}
 			if (autoPath != null && !autoPath.isRunning())
+//				autoPath = new Delayed_Baseline(2); //TODO remove this
 				autoPath.start();
 		}
 	}
@@ -443,12 +448,12 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 //		SmartDashboard.putNumber("Yaw", ahrs.getYaw());
+//		
 //		System.out.println(ahrs.getYaw());
 //		System.out.println("Left Intake Motor: "+this.motorPWM_Intake_Left.get());
 //		System.out.println("Right Intake Motor: "+this.motorPWM_Intake_Right.get());
-		// This needs to be here for limit switches to work! <-- TODO Check if this is true
-		elevatorLimitSwitchDown.get();
-		elevatorLimitSwitchUp.get();
+		
+		//THIS DEFINITELY NEEDS TO STAY!!!
 		mou.isFinished();
 		mod.isFinished();
 	}

@@ -4,6 +4,7 @@ import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateIn;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
+import org.usfirst.frc.team5427.robot.commands.TiltIntake_TimeOut;
 
 public class RightScale_PickupCube extends AutoPath{
 	/**
@@ -44,6 +45,7 @@ public class RightScale_PickupCube extends AutoPath{
 	@Override
 	public void initialize() {
 		resetElevator.start();
+		new TiltIntake_TimeOut().start();
 		backOff.start();
 	}
 	
