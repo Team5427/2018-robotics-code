@@ -63,7 +63,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 		requires(Robot.driveTrain);
 		speed = 0.1;
 		firstRotationValue = -0.65;
-		secondRotationValue = 0.85;
+		secondRotationValue = 0.86;
 		hasReachedMiddle = false;
 		isCoasting = false;
 //		fidget=null;
@@ -124,7 +124,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 				// slow down towards switch
 				else {
 					isCoasting = true;
-					this.speed /= 1.128;
+					this.speed /= 1.115;
 					Robot.driveTrain.drive.tankDrive(this.speed, this.speed);
 				}
 			}

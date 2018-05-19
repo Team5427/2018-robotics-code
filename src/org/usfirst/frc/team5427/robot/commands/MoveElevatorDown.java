@@ -55,12 +55,7 @@ public class MoveElevatorDown extends Command {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (!Robot.elevatorLimitSwitchDown.get()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_ELEVATOR_DOWN) || !Robot.elevatorLimitSwitchDown.get());
 	}
 
 	/**

@@ -130,16 +130,15 @@ public class OI {
 		intakeTilterUp = new JoystickButton(joy1, Config.BUTTON_INTAKE_TILTER_UP);
 		intakeTilterDown = new JoystickButton(joy1, Config.BUTTON_INTAKE_TILTER_DOWN);
 
-		motorIntakeIn.whileHeld(new IntakeActivateIn());
-		motorIntakeOut.whileHeld(new IntakeActivateOut());
-		elevatorUp.whileHeld(Robot.mou);
-		elevatorDown.whileHeld(Robot.mod);
-		elevatorUp.toggleWhenPressed(Robot.mou);
-		elevatorDown.toggleWhenPressed(Robot.mod);
+		motorIntakeIn.whenPressed(new IntakeActivateIn());
+		motorIntakeOut.whenPressed(new IntakeActivateOut());
+		elevatorUp.whenPressed(Robot.mou);
+		elevatorDown.whenPressed(Robot.mod);
+//		elevatorUp.toggleWhenPressed(Robot.mou);
+//		elevatorDown.toggleWhenPressed(Robot.mod);
 		intakeTilterToggle.whenPressed(new TiltIntake_TimeOut());
 		intakeTilterUp.whenPressed(new TiltIntakeUp());
 		intakeTilterDown.whenPressed(new TiltIntakeDown());
-		climberArmDown.whileHeld(new ManualMoveElevatorDown());
 
 		autoPositionChooser.addDefault("CHOOSE ONE", Config.AUTO_NONE);
 		autoPositionChooser.addObject("Right", Config.RIGHT);

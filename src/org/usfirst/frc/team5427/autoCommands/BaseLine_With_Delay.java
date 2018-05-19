@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
  * @author Blake Romero
  */
 @SameLine
+@Deprecated
 public class BaseLine_With_Delay extends AutoPath {
 
 	/**

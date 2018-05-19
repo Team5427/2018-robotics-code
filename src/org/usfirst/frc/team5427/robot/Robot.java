@@ -32,6 +32,7 @@ import org.usfirst.frc.team5427.autoCommands.*;
 import org.usfirst.frc.team5427.autoCommands.center.Center_SwitchIsLeft_Curve;
 import org.usfirst.frc.team5427.autoCommands.center.Center_SwitchIsRight;
 import org.usfirst.frc.team5427.autoCommands.center.FidgetCL;
+import org.usfirst.frc.team5427.autoCommands.left.FidgetRSL;
 import org.usfirst.frc.team5427.autoCommands.left.Left_ScaleIsLeft;
 import org.usfirst.frc.team5427.autoCommands.left.Left_ScaleIsRight;
 import org.usfirst.frc.team5427.autoCommands.left.Left_SwitchIsLeft;
@@ -226,12 +227,17 @@ public class Robot extends IterativeRobot {
 	/**
 	 * The server used to send camera data from the RoboRio to the driver station.
 	 */
-	public static CameraServer camServer;
+//	public static CameraServer camServer;
 
 	/**
 	 * The USB Camera attached to the robot for visibility.
 	 */
-	public static UsbCamera usbCam;
+//	public static UsbCamera usbCam;
+	
+	/**
+	 * The Axis Camera attached to the robot for visibility.
+	 */
+//	public static AxisCamera ipCam;
 
 	/**
 	 * Used to determine if we need to tilt the intake up next or not.
@@ -247,12 +253,15 @@ public class Robot extends IterativeRobot {
 		elevatorLimitSwitchUp = new DigitalInput(Config.ELEVATOR_LIMIT_SWITCH_UP);
 		elevatorLimitSwitchUp.setSubsystem("ELSU");
 		elevatorLimitSwitchDown = new DigitalInput(Config.ELEVATOR_LIMIT_SWITCH_DOWN);
+		
 		motor_pwm_frontLeft = new PWMVictorSPX(Config.FRONT_LEFT_MOTOR);
 		motor_pwm_rearLeft = new PWMVictorSPX(Config.REAR_LEFT_MOTOR);
 		speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
+		
 		motor_pwm_frontRight = new PWMVictorSPX(Config.FRONT_RIGHT_MOTOR);
 		motor_pwm_rearRight = new PWMVictorSPX(Config.REAR_RIGHT_MOTOR);
 		speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
+		
 		drive = new DifferentialDrive(speedcontrollergroup_left, speedcontrollergroup_right);
 		drive.setSafetyEnabled(false);
 		driveTrain = new DriveTrain(speedcontrollergroup_left, speedcontrollergroup_right, drive);
@@ -274,9 +283,10 @@ public class Robot extends IterativeRobot {
 		encLeft.setDistancePerPulse((6 * Math.PI / 360));
 
 //		camServer = CameraServer.getInstance();
-//		usbCam = new UsbCamera("USB Camera", 0);
-//		usbCam.setFPS(15);
-//		camServer.addCamera(usbCam);
+//		ipCam = new AxisCamera("IP Camera", "10.54.27.11");
+////		usbCam = new UsbCamera("USB Camera", 0);
+////		usbCam.setFPS(15);
+//		camServer.addCamera(ipCam);
 //		camServer.startAutomaticCapture(usbCam);
 		oi = new OI();
 	}
@@ -334,37 +344,32 @@ public class Robot extends IterativeRobot {
 			if (switch_or_scale == 1) {
 				if (switchSide == 'R')
 					autoPath = new Right_SwitchIsRight();
-				else if (switchSide == 'L') {
-					if (scaleSide == 'R')
-						autoPath = new Right_ScaleIsRight();
-					else if (scaleSide == 'L')
-						autoPath = new Right_ScaleIsLeft();
-				}
+				else if (switchSide == 'L')
+					autoPath = new Delayed_Baseline(2);
 			}
 			else if (switch_or_scale == 2) {
 				if (scaleSide == 'R')
 					autoPath = new Right_ScaleIsRight();
-				else if (scaleSide == 'L')
-					autoPath = new Right_ScaleIsLeft();
+				else if (scaleSide == 'L') {
+//					autoPath = new Right_ScaleIsLeft();
+					autoPath = new FidgetRSL();
+//					if(switchSide == 'R')
+//						autoPath = new Right_SwitchIsRight();
+//					else
+//						autoPath = new Delayed_Baseline(2);
+				}
 			}
 		}
 		else if (field_position == 2) {
 			if (switchSide == 'R')
 				autoPath = new Center_SwitchIsRight();
 			else if (switchSide == 'L')
-			{
-				new FidgetCL().start();
-//				autoPath = null;
-			}
+				autoPath = new FidgetCL();
 		}
 		else if (field_position == 3) {
 			if (switch_or_scale == 1) {
-				if (switchSide == 'R') {
-					if (scaleSide == 'R')
-						autoPath = new Left_ScaleIsRight();
-					else if (scaleSide == 'L')
-						autoPath = new Left_ScaleIsLeft();
-				}
+				if (switchSide == 'R')
+					autoPath = new Delayed_Baseline(2);
 				else if (switchSide == 'L')
 					autoPath = new Left_SwitchIsLeft();
 			}
@@ -375,7 +380,6 @@ public class Robot extends IterativeRobot {
 					autoPath = new Left_ScaleIsLeft();
 			}
 		}
-//		autoPath = new Center_SwitchIsLeft_Curve();
 		if (autoPath != null)
 			autoPath.start();
 	}
@@ -402,25 +406,31 @@ public class Robot extends IterativeRobot {
 					if (switchSide == 'R')
 						autoPath = new Right_SwitchIsRight();
 					else if (switchSide == 'L')
-						autoPath = new Right_SwitchIsLeft();
+						autoPath = new Delayed_Baseline(2);
 				}
 				else if (switch_or_scale == 2) {
 					if (scaleSide == 'R')
 						autoPath = new Right_ScaleIsRight();
-					else if (scaleSide == 'L')
-						autoPath = new Right_ScaleIsLeft();
+					else if (scaleSide == 'L') {
+//						autoPath = new Right_ScaleIsLeft();
+						autoPath = new FidgetRSL();
+//						if(switchSide == 'R')
+//							autoPath = new Right_SwitchIsRight();
+//						else
+//							autoPath = new Delayed_Baseline(2);
+					}
 				}
 			}
 			else if (field_position == 2) {
 				if (switchSide == 'R')
 					autoPath = new Center_SwitchIsRight();
-				else if (switchSide == 'L');
-//					autoPath = new Center_SwitchIsLeft_Curve();
+				else if (switchSide == 'L')
+					autoPath = new FidgetCL();
 			}
 			else if (field_position == 3) {
 				if (switch_or_scale == 1) {
 					if (switchSide == 'R')
-						autoPath = new Left_SwitchIsRight();
+						autoPath = new Delayed_Baseline(2);
 					else if (switchSide == 'L')
 						autoPath = new Left_SwitchIsLeft();
 				}
@@ -454,8 +464,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Yaw", ahrs.getYaw());
-		System.out.println(ahrs.getYaw());
+//		SmartDashboard.putNumber("Yaw", ahrs.getYaw());
+//		System.out.println(ahrs.getYaw());
+//		System.out.println("Left Intake Motor: "+this.motorPWM_Intake_Left.get());
+//		System.out.println("Right Intake Motor: "+this.motorPWM_Intake_Right.get());
 		// This needs to be here for limit switches to work!
 		elevatorLimitSwitchDown.get();
 		elevatorLimitSwitchUp.get();

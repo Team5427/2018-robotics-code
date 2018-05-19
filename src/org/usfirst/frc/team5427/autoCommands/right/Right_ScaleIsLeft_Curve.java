@@ -25,7 +25,7 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 	* The max speed for the robot t travel at along the x axis.
 	* Range from -1.0 to 1.0.
 	*/
-	public static final double MAX_SPEED = .5;
+	public static final double MAX_SPEED = .4;
 	
 	/**
 	* The value to input into the DifferentialDrive method arcadeDrive in order to determine how much the robot should curve during the first segment of its path.
@@ -108,7 +108,7 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 		else
 		{
 			SmartDashboard.putNumber("Speed on Curve", speed);
-			this.speed/=1.008;
+			this.speed/=1.01;
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
 		}
 	}

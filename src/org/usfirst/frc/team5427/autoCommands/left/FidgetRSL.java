@@ -5,11 +5,12 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team5427.autoCommands.center;
+package org.usfirst.frc.team5427.autoCommands.left;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
+import org.usfirst.frc.team5427.autoCommands.right.Right_ScaleIsLeft;
 import org.usfirst.frc.team5427.robot.Robot;
 
 /**
@@ -18,7 +19,7 @@ import org.usfirst.frc.team5427.robot.Robot;
  * 
  * @author Blake Romero
  */
-public class FidgetCL extends AutoPath {
+public class FidgetRSL extends AutoPath {
 
 	/**
 	 * Stores whether the forward portion of the fidget is completed.
@@ -29,7 +30,7 @@ public class FidgetCL extends AutoPath {
 	 * Fidget requires the drive train subsystem. Sets the timeout of the command to
 	 * .1 seconds.
 	 */
-	public FidgetCL() {
+	public FidgetRSL() {
 		requires(Robot.driveTrain);
 		this.forwardDone = false;
 		setTimeout(0.1);
@@ -82,7 +83,7 @@ public class FidgetCL extends AutoPath {
 		Robot.driveTrain.drive_Left.set(0);
 		Robot.driveTrain.drive_Right.set(0);
 		super.end();
-		new Center_SwitchIsLeft_Curve().start();
+		new Right_ScaleIsLeft().start();
 	}
 
 	/**

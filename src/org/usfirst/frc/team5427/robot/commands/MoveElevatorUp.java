@@ -41,8 +41,6 @@ public class MoveElevatorUp extends Command {
 	@Override
 	protected void initialize() {
 		this.setInterruptible(true);
-		Robot.motorPWM_Elevator_Right.set(Config.ELEVATOR_MOTOR_SPEED_UP);
-		Robot.motorPWM_Elevator_Left.set(-Config.ELEVATOR_MOTOR_SPEED_UP);
 	}
 
 	/**
@@ -51,7 +49,10 @@ public class MoveElevatorUp extends Command {
 	 * @see edu.wpi.first.wpilibj.command.Command#execute()
 	 */
 	@Override
-	protected void execute() {}
+	protected void execute() {
+		Robot.motorPWM_Elevator_Right.set(Config.ELEVATOR_MOTOR_SPEED_UP);
+		Robot.motorPWM_Elevator_Left.set(-Config.ELEVATOR_MOTOR_SPEED_UP);
+	}
 
 	/**
 	 * If upper limit switch is true, the robot is at its full height. Method
@@ -61,13 +62,13 @@ public class MoveElevatorUp extends Command {
 	 */
 	@Override
 	public boolean isFinished() {
-
-		if (!Robot.elevatorLimitSwitchUp.get()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_ELEVATOR_UP) || !Robot.elevatorLimitSwitchUp.get());
+//		if (!Robot.elevatorLimitSwitchUp.get()) {
+//			return true;
+//		}
+//		else {
+//			return false;
+//		}
 	}
 
 	/**
