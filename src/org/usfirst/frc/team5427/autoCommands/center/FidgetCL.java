@@ -7,8 +7,6 @@
 
 package org.usfirst.frc.team5427.autoCommands.center;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
 
@@ -64,7 +62,6 @@ public class FidgetCL extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-		System.out.println("yeet on them");
 		if (this.isTimedOut() && !forwardDone) {
 			forwardDone = true;
 			setTimeout(0.6);

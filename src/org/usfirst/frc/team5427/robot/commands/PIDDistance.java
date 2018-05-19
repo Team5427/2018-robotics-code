@@ -3,10 +3,10 @@ package org.usfirst.frc.team5427.robot.commands;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
+
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.PIDCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is adapted from the WPILib PIDCommand Class. This class is made to
@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 @SameLine
 public class PIDDistance extends PIDCommand {
 	/**
-	 * The SpeedControllers that contain the motors that are controlled by the
+//	 * The SpeedControllers that contain the motors that are controlled by the
 	 * PIDController within this command.
 	 */
 	private SpeedControllerGroup scgPIDControlled;
@@ -116,7 +116,7 @@ public class PIDDistance extends PIDCommand {
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-		SmartDashboard.putNumber("PID Output Coasting", output);
+//		SmartDashboard.putNumber("PID Output Coasting", output);
 		this.scgPIDControlled.pidWrite(output);
 	}
 

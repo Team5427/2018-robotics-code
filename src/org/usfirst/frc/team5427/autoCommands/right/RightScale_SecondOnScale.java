@@ -45,7 +45,7 @@ public class RightScale_SecondOnScale extends AutoPath {
 //			elevatorToScale = null;
 			driveToScale.start();
 		}
-	}
+	} 
 	
 	@Override
 	public boolean isFinished() {

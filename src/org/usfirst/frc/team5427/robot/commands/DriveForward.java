@@ -7,8 +7,9 @@
 
 package org.usfirst.frc.team5427.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This command is used to move the robot forward for a specified amount of
@@ -17,11 +18,6 @@ import org.usfirst.frc.team5427.robot.Robot;
  * @author Andrew Li
  */
 public class DriveForward extends Command {
-	/**
-	 * The time that the robot will drive forwards for.
-	 */
-	private double time;
-
 	/**
 	 * Receives the time the robot should drive forwards for and sets the timeout
 	 * to that. Requires the drive train subsystem.

@@ -3,19 +3,9 @@ package org.usfirst.frc.team5427.autoCommands.left;
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
-import org.usfirst.frc.team5427.robot.commands.DriveBackward;
-import org.usfirst.frc.team5427.robot.commands.DriveForward;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
-import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
-import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
-import org.usfirst.frc.team5427.robot.commands.PIDTurn;
 import org.usfirst.frc.team5427.robot.commands.TiltIntake_TimeOut;
-import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This is our autonomous path that starts in the Left position and places one
@@ -80,6 +70,7 @@ public class Left_SwitchIsLeft extends AutoPath {
 	 * Run once when the command is started. Captures the start time of the path,
 	 * starts the first portion of the path and sets the timeout of the path.
 	 */
+	@Override
 	public void initialize() {
 		startTime = System.nanoTime() / 1000000000.;
 		fidget.start();
@@ -91,6 +82,7 @@ public class Left_SwitchIsLeft extends AutoPath {
 	 * Runs periodically while the command is not finished. Used also to switch
 	 * between commands at different points in our path.
 	 */
+	@Override
 	public void execute() {
 		currentTime = System.nanoTime() / 1000000000.;
 

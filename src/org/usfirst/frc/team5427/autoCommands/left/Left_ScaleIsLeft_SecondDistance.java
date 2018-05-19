@@ -7,8 +7,9 @@
 
 package org.usfirst.frc.team5427.autoCommands.left;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This command moves our robot forwards for 0.7 seconds.

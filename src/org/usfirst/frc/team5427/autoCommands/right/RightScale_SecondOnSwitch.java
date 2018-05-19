@@ -49,7 +49,7 @@ public class RightScale_SecondOnSwitch extends AutoPath{
 			driveToSwitch.start();
 		}
 	}
-	
+	 
 	@Override
 	public boolean isFinished() {
 		return (null != driveToSwitch && driveToSwitch.isFinished());

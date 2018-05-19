@@ -20,14 +20,16 @@ public class Left_SwitchIsLeft_CurveToSwitch extends Command {
 		speed = Config.PID_STRAIGHT_POWER_LONG;
 		rotationValue = .8;
 		angle = 90;
-		System.out.println("CURVING");
+//		System.out.println("CURVING");
 		
 	}
 	
+	@Override
 	public void initialize() {
 		Robot.ahrs.reset();
 	}
 	
+	@Override
 	public void execute() {
 		if(speed > MIN_SPEED)
 			this.speed/=1.15;
@@ -39,6 +41,7 @@ public class Left_SwitchIsLeft_CurveToSwitch extends Command {
 		return Math.abs(Robot.ahrs.getYaw()) > angle ;
 	}
 	
+	@Override
 	public void end() {
 		Robot.driveTrain.drive.stopMotor();
 	}

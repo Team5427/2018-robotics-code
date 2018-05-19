@@ -6,58 +6,36 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc.team5427.robot;
 
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.cscore.AxisCamera;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoMode;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Timer;
-import org.usfirst.frc.team5427.robot.OI;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import org.usfirst.frc.team5427.autoCommands.*;
-import org.usfirst.frc.team5427.autoCommands.center.Center_SwitchIsLeft_Curve;
+import org.usfirst.frc.team5427.autoCommands.AutoPath;
+import org.usfirst.frc.team5427.autoCommands.Delayed_Baseline;
 import org.usfirst.frc.team5427.autoCommands.center.Center_SwitchIsRight;
 import org.usfirst.frc.team5427.autoCommands.center.FidgetCL;
 import org.usfirst.frc.team5427.autoCommands.left.FidgetRSL;
 import org.usfirst.frc.team5427.autoCommands.left.Left_ScaleIsLeft;
 import org.usfirst.frc.team5427.autoCommands.left.Left_ScaleIsRight;
 import org.usfirst.frc.team5427.autoCommands.left.Left_SwitchIsLeft;
-import org.usfirst.frc.team5427.autoCommands.left.Left_SwitchIsRight;
-import org.usfirst.frc.team5427.autoCommands.right.Right_ScaleIsLeft;
 import org.usfirst.frc.team5427.autoCommands.right.Right_ScaleIsRight;
-import org.usfirst.frc.team5427.autoCommands.right.Right_SwitchIsLeft;
 import org.usfirst.frc.team5427.autoCommands.right.Right_SwitchIsRight;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team5427.robot.commands.Fidget;
-import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorDown;
-import org.usfirst.frc.team5427.robot.commands.MoveElevatorFull;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorUp;
-import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
-import org.usfirst.frc.team5427.robot.commands.PIDTurn;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
-import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team5427.util.Config;
-import org.usfirst.frc.team5427.util.Log;
-//import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
+
 import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
  * Robot is used as the core of the robot's code, and it contains all of the
@@ -301,8 +279,8 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().removeAll();
 		encLeft.reset();
 		ahrs.reset();
-		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
-		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
+//		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
+//		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 	}
 
 	/**
@@ -312,8 +290,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledPeriodic() {
-		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
-		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
+//		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
+//		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 	}
 
 	/**
@@ -336,10 +314,10 @@ public class Robot extends IterativeRobot {
 		scaleSide = gameData.charAt(1);
 		field_position = oi.autoPositionChooser.getSelected();
 		switch_or_scale = oi.autoCubeChooser.getSelected();
-		SmartDashboard.putString("SwitchSide", switchSide + "");
-		SmartDashboard.putString("ScaleSide", scaleSide + "");
-		SmartDashboard.putString("FieldPosition", field_position + "");
-		SmartDashboard.putString("CubePlacement", switch_or_scale + "");
+//		SmartDashboard.putString("SwitchSide", switchSide + "");
+//		SmartDashboard.putString("ScaleSide", scaleSide + "");
+//		SmartDashboard.putString("FieldPosition", field_position + "");
+//		SmartDashboard.putString("CubePlacement", switch_or_scale + "");
 		if (field_position == 1) {
 			if (switch_or_scale == 1) {
 				if (switchSide == 'R')
@@ -397,10 +375,10 @@ public class Robot extends IterativeRobot {
 			scaleSide = gameData.charAt(1);
 			field_position = oi.autoPositionChooser.getSelected();
 			switch_or_scale = oi.autoCubeChooser.getSelected();
-			SmartDashboard.putString("SwitchSide", switchSide + "");
-			SmartDashboard.putString("ScaleSide", scaleSide + "");
-			SmartDashboard.putString("FieldPosition", field_position + "");
-			SmartDashboard.putString("CubePlacement", switch_or_scale + "");
+//			SmartDashboard.putString("SwitchSide", switchSide + "");
+//			SmartDashboard.putString("ScaleSide", scaleSide + "");
+//			SmartDashboard.putString("FieldPosition", field_position + "");
+//			SmartDashboard.putString("CubePlacement", switch_or_scale + "");
 			if (field_position == 1) {
 				if (switch_or_scale == 1) {
 					if (switchSide == 'R')
@@ -468,7 +446,7 @@ public class Robot extends IterativeRobot {
 //		System.out.println(ahrs.getYaw());
 //		System.out.println("Left Intake Motor: "+this.motorPWM_Intake_Left.get());
 //		System.out.println("Right Intake Motor: "+this.motorPWM_Intake_Right.get());
-		// This needs to be here for limit switches to work!
+		// This needs to be here for limit switches to work! <-- TODO Check if this is true
 		elevatorLimitSwitchDown.get();
 		elevatorLimitSwitchUp.get();
 		mou.isFinished();

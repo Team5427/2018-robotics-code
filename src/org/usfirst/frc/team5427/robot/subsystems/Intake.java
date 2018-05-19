@@ -8,8 +8,8 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
 import org.usfirst.frc.team5427.util.SameLine;
+
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -107,6 +107,7 @@ public class Intake extends Subsystem {
 	/**
 	 * Unused method but required by extending SubSystem class
 	 */
+	@Override
 	public void initDefaultCommand() {
 	}
 

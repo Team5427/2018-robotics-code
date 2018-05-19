@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5427.autoCommands.center;
 
 import org.usfirst.frc.team5427.robot.Robot;
-import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -26,6 +25,7 @@ public class Center_SwitchIsLeft_Coast extends Command {
 	 * Resets ahrs
 	 * @see edu.wpi.first.wpilibj.command.Command#initialize()
 	 */
+	@Override
 	public void initialize() {
 		Robot.ahrs.reset();
 	}
@@ -35,6 +35,7 @@ public class Center_SwitchIsLeft_Coast extends Command {
 	 * Drives robot on a curve at respective speed and rotation value.
 	 * @see edu.wpi.first.wpilibj.command.Command#execute()
 	 */
+	@Override
 	public void execute() {
 		this.speed/=1.128;
 		Robot.driveTrain.drive.tankDrive(this.speed, this.speed);
@@ -51,6 +52,7 @@ public class Center_SwitchIsLeft_Coast extends Command {
 	/*
 	 * Stops motor.
 	 */
+	@Override
 	public void end() {
 		Robot.driveTrain.drive.stopMotor();
 	}

@@ -67,7 +67,7 @@ public class RightScale_PickupCube extends AutoPath{
 			turnToCube.start();
 		}
 		
-	}
+	} 
 	
 	@Override
 	public boolean isFinished() {

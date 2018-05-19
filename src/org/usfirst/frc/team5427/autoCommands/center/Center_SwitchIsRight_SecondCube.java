@@ -4,12 +4,8 @@ import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.AutoInGo;
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
-import org.usfirst.frc.team5427.robot.commands.DriveBackward;
-import org.usfirst.frc.team5427.robot.commands.DriveForward;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.util.SameLine;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Picks up the second cube and places it for Center_SwitchIsLeft.
