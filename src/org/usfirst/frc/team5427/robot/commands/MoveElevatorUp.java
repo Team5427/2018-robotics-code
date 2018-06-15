@@ -61,7 +61,7 @@ public class MoveElevatorUp extends Command {
 	 */
 	@Override
 	public boolean isFinished() {
-		return (Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_ELEVATOR_UP) || !Robot.elevatorLimitSwitchUp.get());
+		return (!Robot.oi.getJoy().getRawButton(Config.BUTTON_ELEVATOR_UP) || !Robot.elevatorLimitSwitchUp.get());
 //		if (!Robot.elevatorLimitSwitchUp.get()) {
 //			return true;
 //		}

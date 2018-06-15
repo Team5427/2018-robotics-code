@@ -54,7 +54,7 @@ public class IntakeActivateIn extends Command {
 	 */
 	@Override
 	protected boolean isFinished() {
-		return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_IN);
+		return !Robot.oi.getJoy().getRawButton(Config.BUTTON_MOTOR_INTAKE_IN);
 	}
 
 	/**

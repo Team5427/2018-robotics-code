@@ -54,7 +54,7 @@ public class IntakeActivateOut extends Command {
 	 */
 	@Override
 	protected boolean isFinished() {
-		if (Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_OUT))
+		if (!Robot.oi.getJoy().getRawButton(Config.BUTTON_MOTOR_INTAKE_OUT))
 			return true;
 		return false;
 	}
