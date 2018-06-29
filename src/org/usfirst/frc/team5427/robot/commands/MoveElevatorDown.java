@@ -56,6 +56,8 @@ public class MoveElevatorDown extends Command {
 	 */
 	@Override
 	public boolean isFinished() {
+		Robot.elevatorLimitSwitchDown.get(); //This is so that the info about the limit switch updates frequently
+		
 		return (!Robot.oi.getJoy().getRawButton(Config.BUTTON_ELEVATOR_DOWN) || !Robot.elevatorLimitSwitchDown.get());
 	}
 

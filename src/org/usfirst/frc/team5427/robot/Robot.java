@@ -28,6 +28,8 @@ import org.usfirst.frc.team5427.util.SameLine;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.cscore.AxisCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
@@ -208,7 +210,7 @@ public class Robot extends IterativeRobot {
 	/**
 	 * The server used to send camera data from the RoboRio to the driver station.
 	 */
-//	public static CameraServer camServer;
+	public static CameraServer camServer;
 
 	/**
 	 * The USB Camera attached to the robot for visibility.
@@ -218,7 +220,7 @@ public class Robot extends IterativeRobot {
 	/**
 	 * The Axis Camera attached to the robot for visibility.
 	 */
-//	public static AxisCamera ipCam;
+	public static AxisCamera ipCam;
 
 	/**
 	 * Used to determine if we need to tilt the intake up next or not.
@@ -263,11 +265,12 @@ public class Robot extends IterativeRobot {
 		encLeft = new Encoder(Config.ENCODER_LEFT_CHANNEL_A, Config.ENCODER_LEFT_CHANNEL_B, false, Encoder.EncodingType.k4X);
 		encLeft.setDistancePerPulse((6 * Math.PI / 360));
 
-//		camServer = CameraServer.getInstance();
-//		ipCam = new AxisCamera("IP Camera", "10.54.27.11");
+		camServer = CameraServer.getInstance();
+		ipCam = new AxisCamera("IP Camera", "10.54.27.62");
 ////		usbCam = new UsbCamera("USB Camera", 0);
 ////		usbCam.setFPS(15);
-//		camServer.addCamera(ipCam);
+		camServer.addCamera(ipCam);
+		camServer.startAutomaticCapture(ipCam);
 //		camServer.startAutomaticCapture(usbCam);
 		oi = new OI();
 	}
