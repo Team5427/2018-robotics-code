@@ -3,11 +3,8 @@ package org.usfirst.frc.team5427.autoCommands.center;
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
-import org.usfirst.frc.team5427.robot.commands.Fidget;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.util.SameLine;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This is the class to navigate to the left switch from the center position
@@ -63,7 +60,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 		requires(Robot.driveTrain);
 		speed = 0.1;
 		firstRotationValue = -0.65;
-		secondRotationValue = 0.85;
+		secondRotationValue = 0.86;
 		hasReachedMiddle = false;
 		isCoasting = false;
 //		fidget=null;
@@ -86,7 +83,6 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 	public void execute() {
 //		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
 //		SmartDashboard.putNumber("Speed", this.speed);
-		System.out.println("Motor speed value: "+Robot.motor_pwm_frontLeft.get());
 ////		if (fidget == null || fidget.isFinished()) {
 ////			if(fidget!=null) {
 ////				fidget.cancel();
@@ -101,7 +97,6 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 		
 		
 		{
-			System.out.print("not Fidgeting");
 			// switch curves
 			if (!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 86) {
 				new MoveElevatorAuto(1).start();
@@ -112,11 +107,10 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 				if (speed < MAX_SPEED)
 					this.speed *= 1.035;
 				Robot.driveTrain.drive.curvatureDrive(this.speed, this.firstRotationValue, false);
-				System.out.println("Motor speed value: "+Robot.motor_pwm_frontLeft.get());
 			}
 			// second curve
 			else {
-				if (Math.abs(Robot.ahrs.getYaw()) > 17) {
+				if (Math.abs(Robot.ahrs.getYaw()) > 8) {
 					if (speed > 0.1)
 						this.speed /= 1.01;
 					Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue, false);
@@ -124,13 +118,12 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 				// slow down towards switch
 				else {
 					isCoasting = true;
-					this.speed /= 1.128;
+					this.speed /= 1.07;
 					Robot.driveTrain.drive.tankDrive(this.speed, this.speed);
 				}
 			}
 		} 
 
-//		System.out.println("Motor speed value: "+Robot.motor_pwm_frontLeft.get());
 	}
 
 	/**
@@ -149,7 +142,6 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 	 */
 	@Override
 	protected void end() {
-		System.out.println("Ending path");
 		Robot.driveTrain.drive.stopMotor();
 		Robot.ahrs.reset();
 		Robot.encLeft.reset();
@@ -160,6 +152,5 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 	
 	@Override
 	protected void interrupted() {
-		System.out.println("Motor speed value: "+Robot.motor_pwm_frontLeft.get());
 	}
 }

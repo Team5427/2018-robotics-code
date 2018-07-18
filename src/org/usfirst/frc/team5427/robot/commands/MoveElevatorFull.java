@@ -7,10 +7,10 @@
 
 package org.usfirst.frc.team5427.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This command will be called in autonomous to set the elevator to the height
@@ -22,12 +22,12 @@ public class MoveElevatorFull extends Command {
 	public static boolean up = true;
 
 	public MoveElevatorFull(boolean up) {
-		this.up = up;
+		MoveElevatorFull.up = up;
 	}
 
 	@Override
 	protected void initialize() {
-		if (this.up) {
+		if (MoveElevatorFull.up) {
 			up = false;
 		}
 		else {
@@ -37,7 +37,7 @@ public class MoveElevatorFull extends Command {
 
 	@Override
 	protected void execute() {
-		if (this.up) {
+		if (MoveElevatorFull.up) {
 			Robot.motorPWM_Elevator_Right.set(Config.ELEVATOR_MOTOR_SPEED_UP);
 			Robot.motorPWM_Elevator_Left.set(-Config.ELEVATOR_MOTOR_SPEED_UP);
 		}
@@ -53,7 +53,7 @@ public class MoveElevatorFull extends Command {
 
 	@Override
 	public boolean isFinished() {
-		if (this.up) {
+		if (MoveElevatorFull.up) {
 			if (!Robot.elevatorLimitSwitchUp.get()) {
 				Robot.motorPWM_Elevator_Right.set(0);
 				Robot.motorPWM_Elevator_Left.set(0);

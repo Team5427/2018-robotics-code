@@ -1,13 +1,11 @@
 package org.usfirst.frc.team5427.autoCommands.left;
 
-import edu.wpi.first.wpilibj.command.PIDCommand;
-
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.PIDDistance;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.command.PIDCommand;
 
 /**
  * This command moves the robot forwards 250 inches.
@@ -57,22 +55,6 @@ public class Left_ScaleIsRight_FirstDistance_Curve extends PIDCommand {
 	private double power;
 
 	/**
-	 * The P value for the PIDController in PIDDistance.
-	 */
-	private double p;
-
-	/**
-	 * The I value for the PIDController in PIDDistance.
-	 */
-	private double i;
-
-	/**
-	 * The D value for the PIDController in PIDDistance.
-	 */
-	private double d;
-	
-
-	/**
 	 * Creates the PIDController for this command using config PID values and sets
 	 * the parameters of its control.
 	 * 
@@ -89,18 +71,13 @@ public class Left_ScaleIsRight_FirstDistance_Curve extends PIDCommand {
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgNot = scgConstant;
 		maximumSpeed = Config.PID_STRAIGHT_POWER_LONG;
-		desiredDistance = 130;
-		
-		p = 0.011;
-		i = 0;
-		d = 0.018;
+		desiredDistance = 150;//130
 		
 		this.setInterruptible(true);
 		this.getPIDController().setSetpoint(0);
 		setSetpoint(0);
 		
 		
-
 		hasStarted = false;
 	}
 
@@ -141,10 +118,10 @@ public class Left_ScaleIsRight_FirstDistance_Curve extends PIDCommand {
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-		SmartDashboard.putNumber("Velocity", Robot.encLeft.getRate());
-		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
-		SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
-		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
+		//SmartDashboard.putNumber("Velocity", Robot.encLeft.getRate());
+		//SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
+		//SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
+		//SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
 
 		scgPIDControlled.pidWrite(output);
 		if (Robot.encLeft.getDistance() >= this.desiredDistance) {
@@ -154,9 +131,9 @@ public class Left_ScaleIsRight_FirstDistance_Curve extends PIDCommand {
 		else if (null == pidDistance)
 			scgNot.set(power);
 
-		SmartDashboard.putNumber("g", scgNot.get());
-		SmartDashboard.putNumber("o", output);
-		SmartDashboard.putNumber("p", power);
+		//SmartDashboard.putNumber("g", scgNot.get());
+		//SmartDashboard.putNumber("o", output);
+		//SmartDashboard.putNumber("p", power);
 
 		if (this.power < this.maximumSpeed && null == pidDistance) {
 			this.power += (Config.PID_STRAIGHT_LINEAR_INCREMENT-.001);
@@ -214,7 +191,7 @@ public class Left_ScaleIsRight_FirstDistance_Curve extends PIDCommand {
 	 */
 	@Override
 	public void end() {
-		System.out.println("ENDING FIRST DISTANCE");
+//		System.out.println("ENDING FIRST DISTANCE");
 		free();
 		super.end();
 	}

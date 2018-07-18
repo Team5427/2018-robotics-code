@@ -3,10 +3,10 @@ package org.usfirst.frc.team5427.autoCommands.center;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
+
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.PIDCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This command turns the robot 47 degrees clockwise.
@@ -68,6 +68,7 @@ public class Center_SwitchIsLeft_FirstAngle extends PIDCommand {
 	/**
 	 * Resets the ahrs and enables the PID loop
 	 */
+	@Override
 	public void initialize() {
 		Robot.ahrs.reset();
 		super.getPIDController().enable();
@@ -76,6 +77,7 @@ public class Center_SwitchIsLeft_FirstAngle extends PIDCommand {
 	/**
 	 * Sets the left and right motors to 0 and ends the PID loop
 	 */
+	@Override
 	public void end() {
 		super.free();
 		scgRight.set(0);
@@ -86,6 +88,7 @@ public class Center_SwitchIsLeft_FirstAngle extends PIDCommand {
 	/**
 	 * Ends the command when this command is interrupted
 	 */
+	@Override
 	public void interrupted() {
 		end();
 	}
@@ -140,16 +143,16 @@ public class Center_SwitchIsLeft_FirstAngle extends PIDCommand {
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-		SmartDashboard.putNumber("Yaw", getCurrentAngle());
-		SmartDashboard.putNumber("Raw Yaw", getCurrentAngle());
-		SmartDashboard.putNumber("PID Output", output);
+		//SmartDashboard.putNumber("Yaw", getCurrentAngle());
+		//SmartDashboard.putNumber("Raw Yaw", getCurrentAngle());
+		//SmartDashboard.putNumber("PID Output", output);
 
 		scgRight.pidWrite(output);
 		scgLeft.pidWrite(output);
 
-		SmartDashboard.putNumber("Front Left", Robot.motor_pwm_frontLeft.get());
-		SmartDashboard.putNumber("Rear Left", Robot.motor_pwm_rearLeft.get());
-		SmartDashboard.putNumber("Front Right", Robot.motor_pwm_frontRight.get());
-		SmartDashboard.putNumber("Rear Right", Robot.motor_pwm_rearRight.get());
+		//SmartDashboard.putNumber("Front Left", Robot.motor_pwm_frontLeft.get());
+		//SmartDashboard.putNumber("Rear Left", Robot.motor_pwm_rearLeft.get());
+		//SmartDashboard.putNumber("Front Right", Robot.motor_pwm_frontRight.get());
+		//SmartDashboard.putNumber("Rear Right", Robot.motor_pwm_rearRight.get());
 	}
 }

@@ -1,13 +1,11 @@
 package org.usfirst.frc.team5427.autoCommands.right;
 
-import edu.wpi.first.wpilibj.command.PIDCommand;
-
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.PIDDistance;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.command.PIDCommand;
 
 /**
  * This command moves the robot forwards 176 inches.
@@ -140,10 +138,10 @@ public class Right_SwitchIsLeft_SecondDistance extends PIDCommand {
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-		SmartDashboard.putNumber("Velocity", Robot.encLeft.getRate());
-		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
-		SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
-		SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
+		//SmartDashboard.putNumber("Velocity", Robot.encLeft.getRate());
+		//SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
+		//SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
+		//SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
 
 		scgPIDControlled.pidWrite(output);
 		if (Robot.encLeft.getDistance() >= this.desiredDistance) {
@@ -153,9 +151,9 @@ public class Right_SwitchIsLeft_SecondDistance extends PIDCommand {
 		else if (null == pidDistance)
 			scgNot.set(power);
 
-		SmartDashboard.putNumber("g", scgNot.get());
-		SmartDashboard.putNumber("o", output);
-		SmartDashboard.putNumber("p", power);
+		//SmartDashboard.putNumber("g", scgNot.get());
+		//SmartDashboard.putNumber("o", output);
+		//SmartDashboard.putNumber("p", power);
 
 		if (this.power < this.maximumSpeed && null == pidDistance) {
 			this.power += Config.PID_STRAIGHT_LINEAR_INCREMENT;

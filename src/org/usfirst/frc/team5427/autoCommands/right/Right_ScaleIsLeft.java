@@ -6,14 +6,8 @@ import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.robot.commands.DriveBackward;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
-import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
-import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
-import org.usfirst.frc.team5427.robot.commands.PIDTurn;
 import org.usfirst.frc.team5427.robot.commands.TiltIntake_TimeOut;
-import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This is our autonomous path that starts in the right position and moves and
@@ -61,6 +55,7 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 * Run once when the command is started. Starts the first portion of the path
 	 * and sets the timeout of the path.
 	 */
+	@Override
 	public void initialize() {
 		Robot.encLeft.reset();
 		firstDistance.start(); 
@@ -72,13 +67,14 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 * Runs periodically while the command is not finished. Used also to switch
 	 * between commands at different points in our path.
 	 */
+	@Override
 	public void execute() {
-		SmartDashboard.putNumber("Motor Value", Robot.driveTrain.drive_Right.get());
+//		SmartDashboard.putNumber("Motor Value", Robot.driveTrain.drive_Right.get());
 		
 		if(this.isTimedOut() && !moveElevator.isRunning()) {
 			moveElevator.start();
 		}
-		if(moveElevator.maxHeightReachedTime() && Robot.tiltUpNext) {
+		if(this.isTimedOut() && Robot.tiltUpNext) {
 			new TiltIntake_TimeOut().start();
 		}
 		
@@ -113,10 +109,10 @@ public class Right_ScaleIsLeft extends AutoPath {
 	 */
 	@Override
 	protected void end() {
-		Robot.tiltUpNext = false;
 		moveElevator.cancel();
 		new AutoOutGo().start();
 		curve.cancel();
+		new DriveBackward(1).start();
 //		new LeftScale_PickupCube().start();
 	}
 

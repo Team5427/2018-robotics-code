@@ -7,10 +7,11 @@
 
 package org.usfirst.frc.team5427.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This is our command that shoots a cube out of the robot automatically.
@@ -40,7 +41,7 @@ public class AutoOutGo extends Command {
 	 */
 	@Override
 	protected void execute() {
-		Robot.intakeSubsystem.setSpeed(-.5);
+		Robot.intakeSubsystem.setSpeed(-.3);
 	}
 
 	/**

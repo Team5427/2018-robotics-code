@@ -7,8 +7,9 @@
 
 package org.usfirst.frc.team5427.autoCommands.right;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This command is used to move the robot forward for a specified amount of

@@ -7,7 +7,7 @@
 
 package org.usfirst.frc.team5427.autoCommands.center;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
 
 /**
@@ -16,7 +16,7 @@ import org.usfirst.frc.team5427.robot.Robot;
  * 
  * @author Blake Romero
  */
-public class FidgetCL extends Command {
+public class FidgetCL extends AutoPath {
 
 	/**
 	 * Stores whether the forward portion of the fidget is completed.
@@ -62,7 +62,6 @@ public class FidgetCL extends Command {
 	 */
 	@Override
 	public boolean isFinished() {
-		System.out.println("yeet on them");
 		if (this.isTimedOut() && !forwardDone) {
 			forwardDone = true;
 			setTimeout(0.6);

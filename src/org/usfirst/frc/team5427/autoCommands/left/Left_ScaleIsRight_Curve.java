@@ -2,13 +2,14 @@ package org.usfirst.frc.team5427.autoCommands.left;
 
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
+<<<<<<< HEAD
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.robot.commands.DriveBackward;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
+=======
+>>>>>>> e3766ce5eb7c17580a6faa2b66a9935b95114a2f
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This is the class to navigate to the left switch from the center position utilizing arcs.
@@ -81,8 +82,8 @@ public class Left_ScaleIsRight_Curve extends AutoPath{
 	@Override
 	public void execute()
 	{
-		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
-		SmartDashboard.putNumber("Speed", this.speed);
+//		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
+//		SmartDashboard.putNumber("Speed", this.speed);
 		
 		
 		
@@ -109,7 +110,7 @@ public class Left_ScaleIsRight_Curve extends AutoPath{
 		//second curve
 		else
 		{
-			SmartDashboard.putNumber("Speed on Curve", speed);
+//			SmartDashboard.putNumber("Speed on Curve", speed);
 			this.speed/=1.015;
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
 		}

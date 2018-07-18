@@ -7,9 +7,10 @@
 
 package org.usfirst.frc.team5427.autoCommands.right;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This command will move the elevator up for the switch.

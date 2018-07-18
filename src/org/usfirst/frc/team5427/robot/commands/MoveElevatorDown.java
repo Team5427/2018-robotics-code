@@ -7,10 +7,11 @@
 
 package org.usfirst.frc.team5427.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This command moves the elevator downwards along its path and stops whenever the lower limit switch is activated.
@@ -55,12 +56,9 @@ public class MoveElevatorDown extends Command {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (!Robot.elevatorLimitSwitchDown.get()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		Robot.elevatorLimitSwitchDown.get(); //This is so that the info about the limit switch updates frequently
+		
+		return (!Robot.oi.getJoy().getRawButton(Config.BUTTON_ELEVATOR_DOWN) || !Robot.elevatorLimitSwitchDown.get());
 	}
 
 	/**

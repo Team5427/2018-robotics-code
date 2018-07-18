@@ -45,6 +45,7 @@ public class Right_ScaleIsRight_CurveToScale extends Command {
 	 * Resets ahrs
 	 * @see edu.wpi.first.wpilibj.command.Command#initialize()
 	 */
+	@Override
 	public void initialize() {
 		Robot.ahrs.reset();
 	}
@@ -54,6 +55,7 @@ public class Right_ScaleIsRight_CurveToScale extends Command {
 	 * Drives robot on a curve at respective speed and rotation value.
 	 * @see edu.wpi.first.wpilibj.command.Command#execute()
 	 */
+	@Override
 	public void execute() {
 		if(speed > MIN_SPEED)
 			this.speed/=1.03;
@@ -72,6 +74,7 @@ public class Right_ScaleIsRight_CurveToScale extends Command {
 	/*
 	 * Stops motor.
 	 */
+	@Override
 	public void end() {
 		Robot.driveTrain.drive.stopMotor();
 	}

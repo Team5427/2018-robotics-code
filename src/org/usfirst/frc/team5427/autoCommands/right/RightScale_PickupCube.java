@@ -4,6 +4,7 @@ import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateIn;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
+import org.usfirst.frc.team5427.robot.commands.TiltIntake_TimeOut;
 
 public class RightScale_PickupCube extends AutoPath{
 	/**
@@ -33,17 +34,18 @@ public class RightScale_PickupCube extends AutoPath{
 	
 	public RightScale_PickupCube() {
 		backOff = new RightScale_DriveBackward();
-//		resetElevator = new MoveElevatorAuto(3);
+		resetElevator = new MoveElevatorAuto(3);
 		turnToCube = new RightScale_TurnToCube(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		moveToCube = new RightScale_DriveToCube();
-//		intakeCube = new IntakeActivateIn();
+		intakeCube = new IntakeActivateIn();
 		resetElevator = null;
 		intakeCube = null;
 	}
 	
 	@Override
 	public void initialize() {
-//		resetElevator.start();
+		resetElevator.start();
+		new TiltIntake_TimeOut().start();
 		backOff.start();
 	}
 	
@@ -54,10 +56,10 @@ public class RightScale_PickupCube extends AutoPath{
 			Robot.encLeft.reset();
 			turnToCube.cancel();
 			turnToCube = null;
-//			resetElevator.cancel();
-//			resetElevator = null;
+			resetElevator.cancel();
+			resetElevator = null;
 			moveToCube.start();
-//			intakeCube.start();
+			intakeCube.start();
 		}
 		
 		else if(null != backOff && backOff.isFinished() && !turnToCube.isRunning()) {
@@ -67,7 +69,7 @@ public class RightScale_PickupCube extends AutoPath{
 			turnToCube.start();
 		}
 		
-	}
+	} 
 	
 	@Override
 	public boolean isFinished() {
@@ -78,12 +80,12 @@ public class RightScale_PickupCube extends AutoPath{
 	public void end() {
 		moveToCube.cancel();
 		moveToCube = null;
-//		intakeCube.cancel();
-//		intakeCube = null;
+		intakeCube.cancel();
+		intakeCube = null;
 		Robot.ahrs.reset();
 		Robot.encLeft.reset();
 		Robot.driveTrain.drive.stopMotor();
-		new RightScale_SecondOnScale().start();
+//		new RightScale_SecondOnScale().start();
 //		new RightScale_SecondOnSwitch().start();
 	}
 }

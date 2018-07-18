@@ -7,10 +7,11 @@
 
 package org.usfirst.frc.team5427.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This command sets the speed of the intake motors to the config value for
@@ -53,7 +54,7 @@ public class IntakeActivateOut extends Command {
 	 */
 	@Override
 	protected boolean isFinished() {
-		if (Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_MOTOR_INTAKE_OUT))
+		if (!Robot.oi.getJoy().getRawButton(Config.BUTTON_MOTOR_INTAKE_OUT))
 			return true;
 		return false;
 	}

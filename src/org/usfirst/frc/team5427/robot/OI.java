@@ -8,20 +8,17 @@ package org.usfirst.frc.team5427.robot;
 
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateIn;
 import org.usfirst.frc.team5427.robot.commands.IntakeActivateOut;
-import org.usfirst.frc.team5427.robot.commands.IntakeActivateOutSlow;
-import org.usfirst.frc.team5427.robot.commands.ManualMoveElevatorDown;
-import org.usfirst.frc.team5427.robot.commands.MoveElevatorFull;
 import org.usfirst.frc.team5427.robot.commands.TiltIntakeDown;
 import org.usfirst.frc.team5427.robot.commands.TiltIntakeUp;
 import org.usfirst.frc.team5427.robot.commands.TiltIntake_TimeOut;
-import org.usfirst.frc.team5427.robot.commands.TiltIntake_TimeOut;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -130,16 +127,15 @@ public class OI {
 		intakeTilterUp = new JoystickButton(joy1, Config.BUTTON_INTAKE_TILTER_UP);
 		intakeTilterDown = new JoystickButton(joy1, Config.BUTTON_INTAKE_TILTER_DOWN);
 
-		motorIntakeIn.whileHeld(new IntakeActivateIn());
-		motorIntakeOut.whileHeld(new IntakeActivateOut());
-		elevatorUp.whileHeld(Robot.mou);
-		elevatorDown.whileHeld(Robot.mod);
-		elevatorUp.toggleWhenPressed(Robot.mou);
-		elevatorDown.toggleWhenPressed(Robot.mod);
+		motorIntakeIn.whenPressed(new IntakeActivateIn());
+		motorIntakeOut.whenPressed(new IntakeActivateOut());
+		elevatorUp.whenPressed(Robot.mou);
+		elevatorDown.whenPressed(Robot.mod);
+//		elevatorUp.toggleWhenPressed(Robot.mou);
+//		elevatorDown.toggleWhenPressed(Robot.mod);
 		intakeTilterToggle.whenPressed(new TiltIntake_TimeOut());
 		intakeTilterUp.whenPressed(new TiltIntakeUp());
 		intakeTilterDown.whenPressed(new TiltIntakeDown());
-		climberArmDown.whileHeld(new ManualMoveElevatorDown());
 
 		autoPositionChooser.addDefault("CHOOSE ONE", Config.AUTO_NONE);
 		autoPositionChooser.addObject("Right", Config.RIGHT);

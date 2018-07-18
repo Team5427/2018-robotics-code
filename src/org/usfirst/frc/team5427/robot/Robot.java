@@ -6,57 +6,41 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc.team5427.robot;
 
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.cscore.AxisCamera;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoMode;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Timer;
-import org.usfirst.frc.team5427.robot.OI;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import org.usfirst.frc.team5427.autoCommands.*;
-import org.usfirst.frc.team5427.autoCommands.center.Center_SwitchIsLeft_Curve;
+import org.usfirst.frc.team5427.autoCommands.AutoPath;
+import org.usfirst.frc.team5427.autoCommands.Delayed_Baseline;
 import org.usfirst.frc.team5427.autoCommands.center.Center_SwitchIsRight;
+import org.usfirst.frc.team5427.autoCommands.center.Delayed_CSL;
+import org.usfirst.frc.team5427.autoCommands.center.Delayed_CSR;
 import org.usfirst.frc.team5427.autoCommands.center.FidgetCL;
+import org.usfirst.frc.team5427.autoCommands.left.FidgetRSL;
 import org.usfirst.frc.team5427.autoCommands.left.Left_ScaleIsLeft;
 import org.usfirst.frc.team5427.autoCommands.left.Left_ScaleIsRight;
 import org.usfirst.frc.team5427.autoCommands.left.Left_SwitchIsLeft;
-import org.usfirst.frc.team5427.autoCommands.left.Left_SwitchIsRight;
-import org.usfirst.frc.team5427.autoCommands.right.Right_ScaleIsLeft;
 import org.usfirst.frc.team5427.autoCommands.right.Right_ScaleIsRight;
-import org.usfirst.frc.team5427.autoCommands.right.Right_SwitchIsLeft;
 import org.usfirst.frc.team5427.autoCommands.right.Right_SwitchIsRight;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team5427.robot.commands.Fidget;
-import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorDown;
-import org.usfirst.frc.team5427.robot.commands.MoveElevatorFull;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorUp;
-import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
-import org.usfirst.frc.team5427.robot.commands.PIDTurn;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
-import org.usfirst.frc.team5427.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team5427.util.Config;
-import org.usfirst.frc.team5427.util.Log;
-//import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
+
 import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.cscore.AxisCamera;
+import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Robot is used as the core of the robot's code, and it contains all of the
@@ -231,7 +215,12 @@ public class Robot extends IterativeRobot {
 	/**
 	 * The USB Camera attached to the robot for visibility.
 	 */
-	public static UsbCamera usbCam;
+//	public static UsbCamera usbCam;
+	
+	/**
+	 * The Axis Camera attached to the robot for visibility.
+	 */
+	public static AxisCamera ipCam;
 
 	/**
 	 * Used to determine if we need to tilt the intake up next or not.
@@ -247,12 +236,15 @@ public class Robot extends IterativeRobot {
 		elevatorLimitSwitchUp = new DigitalInput(Config.ELEVATOR_LIMIT_SWITCH_UP);
 		elevatorLimitSwitchUp.setSubsystem("ELSU");
 		elevatorLimitSwitchDown = new DigitalInput(Config.ELEVATOR_LIMIT_SWITCH_DOWN);
+		
 		motor_pwm_frontLeft = new PWMVictorSPX(Config.FRONT_LEFT_MOTOR);
 		motor_pwm_rearLeft = new PWMVictorSPX(Config.REAR_LEFT_MOTOR);
 		speedcontrollergroup_left = new SpeedControllerGroup(motor_pwm_frontLeft, motor_pwm_rearLeft);
+		
 		motor_pwm_frontRight = new PWMVictorSPX(Config.FRONT_RIGHT_MOTOR);
 		motor_pwm_rearRight = new PWMVictorSPX(Config.REAR_RIGHT_MOTOR);
 		speedcontrollergroup_right = new SpeedControllerGroup(motor_pwm_frontRight, motor_pwm_rearRight);
+		
 		drive = new DifferentialDrive(speedcontrollergroup_left, speedcontrollergroup_right);
 		drive.setSafetyEnabled(false);
 		driveTrain = new DriveTrain(speedcontrollergroup_left, speedcontrollergroup_right, drive);
@@ -273,10 +265,13 @@ public class Robot extends IterativeRobot {
 		encLeft = new Encoder(Config.ENCODER_LEFT_CHANNEL_A, Config.ENCODER_LEFT_CHANNEL_B, false, Encoder.EncodingType.k4X);
 		encLeft.setDistancePerPulse((6 * Math.PI / 360));
 
-//		camServer = CameraServer.getInstance();
-//		usbCam = new UsbCamera("USB Camera", 0);
-//		usbCam.setFPS(15);
-//		camServer.addCamera(usbCam);
+		camServer = CameraServer.getInstance();
+//		ipCam = new AxisCamera("IP Camera", "10.54.27.62");
+		ipCam = new AxisCamera("IP Camera", "10.54.27.212");
+////		usbCam = new UsbCamera("USB Camera", 0);
+////		usbCam.setFPS(15);
+		camServer.addCamera(ipCam);
+		camServer.startAutomaticCapture(ipCam);
 //		camServer.startAutomaticCapture(usbCam);
 		oi = new OI();
 	}
@@ -291,8 +286,8 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().removeAll();
 		encLeft.reset();
 		ahrs.reset();
-		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
-		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
+//		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
+//		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 	}
 
 	/**
@@ -302,8 +297,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledPeriodic() {
-		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
-		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
+//		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
+//		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 	}
 
 	/**
@@ -326,45 +321,42 @@ public class Robot extends IterativeRobot {
 		scaleSide = gameData.charAt(1);
 		field_position = oi.autoPositionChooser.getSelected();
 		switch_or_scale = oi.autoCubeChooser.getSelected();
-		SmartDashboard.putString("SwitchSide", switchSide + "");
-		SmartDashboard.putString("ScaleSide", scaleSide + "");
-		SmartDashboard.putString("FieldPosition", field_position + "");
-		SmartDashboard.putString("CubePlacement", switch_or_scale + "");
+//		SmartDashboard.putString("SwitchSide", switchSide + "");
+//		SmartDashboard.putString("ScaleSide", scaleSide + "");
+//		SmartDashboard.putString("FieldPosition", field_position + "");
+//		SmartDashboard.putString("CubePlacement", switch_or_scale + "");
 		if (field_position == 1) {
 			if (switch_or_scale == 1) {
 				if (switchSide == 'R')
 					autoPath = new Right_SwitchIsRight();
-				else if (switchSide == 'L') {
-					if (scaleSide == 'R')
-						autoPath = new Right_ScaleIsRight();
-					else if (scaleSide == 'L')
-						autoPath = new Right_ScaleIsLeft();
-				}
+				else if (switchSide == 'L')
+					autoPath = new Delayed_Baseline(2);
 			}
 			else if (switch_or_scale == 2) {
 				if (scaleSide == 'R')
 					autoPath = new Right_ScaleIsRight();
-				else if (scaleSide == 'L')
-					autoPath = new Right_ScaleIsLeft();
+				else if (scaleSide == 'L') {
+//					autoPath = new Right_ScaleIsLeft();
+//					autoPath = new FidgetRSL();
+					autoPath = new Delayed_Baseline(2);
+//					if(switchSide == 'R')
+//						autoPath = new Right_SwitchIsRight();
+//					else
+//						autoPath = new Delayed_Baseline(2);
+				}
 			}
 		}
 		else if (field_position == 2) {
 			if (switchSide == 'R')
 				autoPath = new Center_SwitchIsRight();
+				
 			else if (switchSide == 'L')
-			{
-				new FidgetCL().start();
-//				autoPath = null;
-			}
+				autoPath = new FidgetCL();
 		}
 		else if (field_position == 3) {
 			if (switch_or_scale == 1) {
-				if (switchSide == 'R') {
-					if (scaleSide == 'R')
-						autoPath = new Left_ScaleIsRight();
-					else if (scaleSide == 'L')
-						autoPath = new Left_ScaleIsLeft();
-				}
+				if (switchSide == 'R')
+					autoPath = new Delayed_Baseline(2);
 				else if (switchSide == 'L')
 					autoPath = new Left_SwitchIsLeft();
 			}
@@ -375,8 +367,8 @@ public class Robot extends IterativeRobot {
 					autoPath = new Left_ScaleIsLeft();
 			}
 		}
-//		autoPath = new Center_SwitchIsLeft_Curve();
 		if (autoPath != null)
+//			autoPath = new Delayed_Baseline(2);//TODO see if we ca remove this
 			autoPath.start();
 	}
 
@@ -393,34 +385,42 @@ public class Robot extends IterativeRobot {
 			scaleSide = gameData.charAt(1);
 			field_position = oi.autoPositionChooser.getSelected();
 			switch_or_scale = oi.autoCubeChooser.getSelected();
-			SmartDashboard.putString("SwitchSide", switchSide + "");
-			SmartDashboard.putString("ScaleSide", scaleSide + "");
-			SmartDashboard.putString("FieldPosition", field_position + "");
-			SmartDashboard.putString("CubePlacement", switch_or_scale + "");
+//			SmartDashboard.putString("SwitchSide", switchSide + "");
+//			SmartDashboard.putString("ScaleSide", scaleSide + "");
+//			SmartDashboard.putString("FieldPosition", field_position + "");
+//			SmartDashboard.putString("CubePlacement", switch_or_scale + "");
 			if (field_position == 1) {
 				if (switch_or_scale == 1) {
 					if (switchSide == 'R')
 						autoPath = new Right_SwitchIsRight();
 					else if (switchSide == 'L')
-						autoPath = new Right_SwitchIsLeft();
+						autoPath = new Delayed_Baseline(2);
 				}
 				else if (switch_or_scale == 2) {
 					if (scaleSide == 'R')
 						autoPath = new Right_ScaleIsRight();
-					else if (scaleSide == 'L')
-						autoPath = new Right_ScaleIsLeft();
+					else if (scaleSide == 'L') {
+//						autoPath = new Right_ScaleIsLeft();
+//						autoPath = new FidgetRSL();
+						autoPath = new Delayed_Baseline(2);
+//						if(switchSide == 'R')
+//							autoPath = new Right_SwitchIsRight();
+//						else
+//							autoPath = new Delayed_Baseline(2);
+					}
 				}
 			}
 			else if (field_position == 2) {
 				if (switchSide == 'R')
 					autoPath = new Center_SwitchIsRight();
-				else if (switchSide == 'L');
-//					autoPath = new Center_SwitchIsLeft_Curve();
+					
+				else if (switchSide == 'L')
+					autoPath = new FidgetCL();
 			}
 			else if (field_position == 3) {
 				if (switch_or_scale == 1) {
 					if (switchSide == 'R')
-						autoPath = new Left_SwitchIsRight();
+						autoPath = new Delayed_Baseline(2);
 					else if (switchSide == 'L')
 						autoPath = new Left_SwitchIsLeft();
 				}
@@ -432,6 +432,7 @@ public class Robot extends IterativeRobot {
 				}
 			}
 			if (autoPath != null && !autoPath.isRunning())
+//				autoPath = new Delayed_Baseline(2); //TODO remove this
 				autoPath.start();
 		}
 	}
@@ -454,11 +455,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Yaw", ahrs.getYaw());
-		System.out.println(ahrs.getYaw());
-		// This needs to be here for limit switches to work!
-		elevatorLimitSwitchDown.get();
-		elevatorLimitSwitchUp.get();
+//		SmartDashboard.putNumber("Yaw", ahrs.getYaw());
+//		
+//		System.out.println(ahrs.getYaw());
+//		System.out.println("Left Intake Motor: "+this.motorPWM_Intake_Left.get());
+//		System.out.println("Right Intake Motor: "+this.motorPWM_Intake_Right.get());
+		
+		//THIS DEFINITELY NEEDS TO STAY!!!
 		mou.isFinished();
 		mod.isFinished();
 	}

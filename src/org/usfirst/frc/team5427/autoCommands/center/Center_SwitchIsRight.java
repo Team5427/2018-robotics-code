@@ -4,12 +4,7 @@ import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
-import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
-import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
-import org.usfirst.frc.team5427.robot.commands.PIDTurn;
-import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 /**
  * This is our autonomous path that starts in the center position and places one
@@ -69,6 +64,7 @@ public class Center_SwitchIsRight extends AutoPath {
 	 * starts the first portion of it, and states that the elevator has not finished
 	 * moving to its position.
 	 */
+	@Override
 	public void initialize() {
 		startTime = System.nanoTime() / 1000000000.;
 		fidget.start();
@@ -78,6 +74,7 @@ public class Center_SwitchIsRight extends AutoPath {
 	 * Runs periodically while the command is not finished. Used also to switch
 	 * between commands at different points in our path.
 	 */
+	@Override
 	public void execute() {
 		currentTime = System.nanoTime() / 1000000000.;
 

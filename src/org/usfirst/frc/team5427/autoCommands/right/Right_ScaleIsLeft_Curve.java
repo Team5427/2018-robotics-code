@@ -2,13 +2,14 @@ package org.usfirst.frc.team5427.autoCommands.right;
 
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
+<<<<<<< HEAD
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.robot.commands.DriveBackward;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
+=======
+>>>>>>> e3766ce5eb7c17580a6faa2b66a9935b95114a2f
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This is the class to navigate to the left switch from the center position utilizing arcs.
@@ -27,7 +28,7 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 	* The max speed for the robot t travel at along the x axis.
 	* Range from -1.0 to 1.0.
 	*/
-	public static final double MAX_SPEED = .5;
+	public static final double MAX_SPEED = .4;
 	
 	/**
 	* The value to input into the DifferentialDrive method arcadeDrive in order to determine how much the robot should curve during the first segment of its path.
@@ -81,8 +82,8 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 	@Override
 	public void execute()
 	{
-		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
-		SmartDashboard.putNumber("Speed", this.speed);
+//		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
+//		SmartDashboard.putNumber("Speed", this.speed);
 		
 		
 		
@@ -111,8 +112,8 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 		//second curve
 		else
 		{
-			SmartDashboard.putNumber("Speed on Curve", speed);
-			this.speed/=1.008;
+//			SmartDashboard.putNumber("Speed on Curve", speed);
+			this.speed/=1.0115;
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
 		}
 	}

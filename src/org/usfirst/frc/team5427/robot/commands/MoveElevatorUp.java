@@ -7,13 +7,12 @@
 
 package org.usfirst.frc.team5427.robot.commands;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 //import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This command moves the elevator upwards along its path and stops whenever the upper limit switch is activated.
@@ -41,8 +40,6 @@ public class MoveElevatorUp extends Command {
 	@Override
 	protected void initialize() {
 		this.setInterruptible(true);
-		Robot.motorPWM_Elevator_Right.set(Config.ELEVATOR_MOTOR_SPEED_UP);
-		Robot.motorPWM_Elevator_Left.set(-Config.ELEVATOR_MOTOR_SPEED_UP);
 	}
 
 	/**
@@ -51,7 +48,10 @@ public class MoveElevatorUp extends Command {
 	 * @see edu.wpi.first.wpilibj.command.Command#execute()
 	 */
 	@Override
-	protected void execute() {}
+	protected void execute() {
+		Robot.motorPWM_Elevator_Right.set(Config.ELEVATOR_MOTOR_SPEED_UP);
+		Robot.motorPWM_Elevator_Left.set(-Config.ELEVATOR_MOTOR_SPEED_UP);
+	}
 
 	/**
 	 * If upper limit switch is true, the robot is at its full height. Method
@@ -61,13 +61,14 @@ public class MoveElevatorUp extends Command {
 	 */
 	@Override
 	public boolean isFinished() {
-
-		if (!Robot.elevatorLimitSwitchUp.get()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		Robot.elevatorLimitSwitchUp.get();//This is so that the info about the limit switch updates frequently
+		return (!Robot.oi.getJoy().getRawButton(Config.BUTTON_ELEVATOR_UP) || !Robot.elevatorLimitSwitchUp.get());
+//		if (!Robot.elevatorLimitSwitchUp.get()) {
+//			return true;
+//		}
+//		else {
+//			return false;
+//		}
 	}
 
 	/**

@@ -4,18 +4,9 @@ import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.robot.commands.DriveBackward;
-import org.usfirst.frc.team5427.robot.commands.DriveForward;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
-import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
-import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
-import org.usfirst.frc.team5427.robot.commands.PIDTurn;
 import org.usfirst.frc.team5427.robot.commands.TiltIntake_TimeOut;
-import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This is our autonomous path that starts in the right position and places one
@@ -81,6 +72,7 @@ public class Right_ScaleIsRight extends AutoPath {
 	 * Run once when the command is started. Captures the start time of the path,
 	 * starts the first portion of the path and sets the timeout of the path.
 	 */
+	@Override
 	public void initialize() {
 		startTime = System.nanoTime() / 1000000000.;
 		fidget.start();
@@ -92,6 +84,7 @@ public class Right_ScaleIsRight extends AutoPath {
 	 * between commands at different points in our path. Curves when first distance is finished,
 	 * moves elevator 2.5 seconds into auto and tilts when elevator is at max height.
 	 */
+	@Override
 	public void execute() {
 		currentTime = System.nanoTime() / 1000000000.;
 

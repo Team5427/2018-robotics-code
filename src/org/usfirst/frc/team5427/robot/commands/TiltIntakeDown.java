@@ -7,11 +7,12 @@
 
 package org.usfirst.frc.team5427.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 //import org.usfirst.frc.team5427.util.Log;
 import org.usfirst.frc.team5427.util.SameLine;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Manually tilts the intake arms downward.
@@ -36,7 +37,7 @@ public class TiltIntakeDown extends Command {
 	 */
 	@Override
 	protected boolean isFinished() {
-		return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_INTAKE_TILTER_DOWN);
+		return !Robot.oi.getJoy().getRawButton(Config.BUTTON_INTAKE_TILTER_DOWN);
 	}
 
 	/**

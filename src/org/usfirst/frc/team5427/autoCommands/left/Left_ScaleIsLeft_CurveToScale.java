@@ -20,13 +20,19 @@ public class Left_ScaleIsLeft_CurveToScale extends Command {
 		speed = Config.PID_STRAIGHT_POWER_LONG;
 		rotationValue = .3;
 		angle = 14;
+<<<<<<< HEAD
+=======
+//		System.out.println("CURVING");
+>>>>>>> e3766ce5eb7c17580a6faa2b66a9935b95114a2f
 		
 	}
 	
+	@Override
 	public void initialize() {
 		Robot.ahrs.reset();
 	}
 	
+	@Override
 	public void execute() {
 		if(speed > MIN_SPEED)
 			this.speed/=1.07;
@@ -38,6 +44,7 @@ public class Left_ScaleIsLeft_CurveToScale extends Command {
 		return Math.abs(Robot.ahrs.getYaw()) > angle ;
 	}
 	
+	@Override
 	public void end() {
 		Robot.driveTrain.drive.stopMotor();
 	}

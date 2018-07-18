@@ -3,12 +3,7 @@ package org.usfirst.frc.team5427.autoCommands.right;
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
-import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
-import org.usfirst.frc.team5427.robot.commands.PIDStraightMovement;
-import org.usfirst.frc.team5427.robot.commands.PIDTurn;
-import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 /**
  * This is our autonomous path that starts in the right position and places one
@@ -84,6 +79,7 @@ public class Right_SwitchIsLeft extends AutoPath {
 	 * Run once when the command is started. Starts the first portion of the path
 	 * and sets the timeout of it.
 	 */
+	@Override
 	public void initialize() {
 		fidget.start();
 		setTimeout(timeOut);
@@ -93,6 +89,7 @@ public class Right_SwitchIsLeft extends AutoPath {
 	 * Runs periodically while the command is not finished. Used also to switch
 	 * between commands at different points in our path.
 	 */
+	@Override
 	public void execute() {
 
 		if (moveElevator != null)

@@ -1,6 +1,5 @@
 package org.usfirst.frc.team5427.util;
 
-import org.usfirst.frc.team5427.robot.Robot;
 import edu.wpi.first.wpilibj.MotorSafety;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.SpeedController;
