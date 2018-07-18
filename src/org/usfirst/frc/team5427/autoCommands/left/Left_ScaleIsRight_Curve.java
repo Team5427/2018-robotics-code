@@ -3,6 +3,8 @@ package org.usfirst.frc.team5427.autoCommands.left;
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
+import org.usfirst.frc.team5427.robot.commands.DriveBackward;
+import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 import edu.wpi.first.wpilibj.command.Command;
@@ -87,7 +89,7 @@ public class Left_ScaleIsRight_Curve extends AutoPath{
 		// switch first curve to forward distance.
 		if(!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 74)
 		{
-//			new Center_SwitchIsLeft_MoveElevatorAuto().start();
+			new MoveElevatorAuto(2);
 			hasReachedMiddle = true;
 			setTimeout(3.8);
 		}
@@ -119,7 +121,7 @@ public class Left_ScaleIsRight_Curve extends AutoPath{
 	 */
 	@Override
 	public boolean isFinished() {
-		return (speed < 0.1);
+		return (secondCurve && speed < 0.1);
 	}
 
 	/**
@@ -128,6 +130,8 @@ public class Left_ScaleIsRight_Curve extends AutoPath{
 	@Override
 	protected void end() {
 		Robot.driveTrain.drive.stopMotor();
+		new AutoOutGo();
+		new DriveBackward(1);
 		Robot.ahrs.reset();
 		Robot.encLeft.reset();
 		super.end();
