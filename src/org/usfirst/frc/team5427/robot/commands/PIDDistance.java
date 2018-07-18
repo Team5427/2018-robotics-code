@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 @SameLine
 public class PIDDistance extends PIDCommand {
 	/**
-//	 * The SpeedControllers that contain the motors that are controlled by the
+	 * The SpeedControllers that contain the motors that are controlled by the
 	 * PIDController within this command.
 	 */
 	private SpeedControllerGroup scgPIDControlled;
@@ -116,7 +116,6 @@ public class PIDDistance extends PIDCommand {
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-//		SmartDashboard.putNumber("PID Output Coasting", output);
 		this.scgPIDControlled.pidWrite(output);
 	}
 
@@ -129,8 +128,6 @@ public class PIDDistance extends PIDCommand {
 	 */
 	@Override
 	public boolean isFinished() {
-		// TODO NOT untested !
-
 		double distFromSetpoint = Math.abs(desiredDistance - (Math.abs(Robot.encLeft.getDistance())));
 		boolean inRange = distFromSetpoint < Config.PID_DISTANCE_TOLERANCE;
 

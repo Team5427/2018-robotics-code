@@ -82,15 +82,13 @@ public class Left_ScaleIsRight_Curve extends AutoPath{
 	@Override
 	public void execute()
 	{
-//		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
-//		SmartDashboard.putNumber("Speed", this.speed);
-		
-		
-		
 		// switch first curve to forward distance.
 		if(!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 74)
 		{
+<<<<<<< HEAD
 			new MoveElevatorAuto(2);
+=======
+>>>>>>> b89c7cf2296a955d609e9c3831f3e487e16c7d06
 			hasReachedMiddle = true;
 			setTimeout(3.8);
 		}
@@ -110,7 +108,6 @@ public class Left_ScaleIsRight_Curve extends AutoPath{
 		//second curve
 		else
 		{
-//			SmartDashboard.putNumber("Speed on Curve", speed);
 			this.speed/=1.015;
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
 		}

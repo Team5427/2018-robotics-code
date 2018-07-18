@@ -23,12 +23,6 @@ public class Left_ScaleIsLeft extends AutoPath {
 	private Left_ScaleIsLeft_FirstDistance firstDistance;
 
 	/**
-	 * The second distance of the path. It travels forward for .7 seconds.
-	 */
-
-//	private Left_ScaleIsLeft_DriveForward secondDistance;
-
-	/**
 	 * The command used to move the elevator up to the top of its path.
 	 */
 	private Left_ScaleIsLeft_MoveElevatorAuto moveElevator;
@@ -113,8 +107,6 @@ public class Left_ScaleIsLeft extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-//		if (firstAngle == null && secondDistance.isFinished())
-//			return true;
 		if (curve.isFinished())
 			return true;
 		return isTimedOut() && this.moveElevator.maxHeightReached();

@@ -211,11 +211,6 @@ public class Robot extends IterativeRobot {
 	 * The server used to send camera data from the RoboRio to the driver station.
 	 */
 	public static CameraServer camServer;
-
-	/**
-	 * The USB Camera attached to the robot for visibility.
-	 */
-//	public static UsbCamera usbCam;
 	
 	/**
 	 * The Axis Camera attached to the robot for visibility.
@@ -266,13 +261,16 @@ public class Robot extends IterativeRobot {
 		encLeft.setDistancePerPulse((6 * Math.PI / 360));
 
 		camServer = CameraServer.getInstance();
+<<<<<<< HEAD
 //		ipCam = new AxisCamera("IP Camera", "10.54.27.62");
 		ipCam = new AxisCamera("IP Camera", "10.54.27.212");
 ////		usbCam = new UsbCamera("USB Camera", 0);
 ////		usbCam.setFPS(15);
+=======
+		ipCam = new AxisCamera("IP Camera", "10.54.27.62");
+>>>>>>> b89c7cf2296a955d609e9c3831f3e487e16c7d06
 		camServer.addCamera(ipCam);
 		camServer.startAutomaticCapture(ipCam);
-//		camServer.startAutomaticCapture(usbCam);
 		oi = new OI();
 	}
 
@@ -286,8 +284,6 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().removeAll();
 		encLeft.reset();
 		ahrs.reset();
-//		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
-//		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 	}
 
 	/**
@@ -297,8 +293,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledPeriodic() {
-//		SmartDashboard.putNumber("encLeftVal", encLeft.getDistance());
-//		SmartDashboard.putNumber("encLeft", encLeft.getDistance());
 	}
 
 	/**
@@ -321,10 +315,6 @@ public class Robot extends IterativeRobot {
 		scaleSide = gameData.charAt(1);
 		field_position = oi.autoPositionChooser.getSelected();
 		switch_or_scale = oi.autoCubeChooser.getSelected();
-//		SmartDashboard.putString("SwitchSide", switchSide + "");
-//		SmartDashboard.putString("ScaleSide", scaleSide + "");
-//		SmartDashboard.putString("FieldPosition", field_position + "");
-//		SmartDashboard.putString("CubePlacement", switch_or_scale + "");
 		if (field_position == 1) {
 			if (switch_or_scale == 1) {
 				if (switchSide == 'R')
@@ -385,10 +375,6 @@ public class Robot extends IterativeRobot {
 			scaleSide = gameData.charAt(1);
 			field_position = oi.autoPositionChooser.getSelected();
 			switch_or_scale = oi.autoCubeChooser.getSelected();
-//			SmartDashboard.putString("SwitchSide", switchSide + "");
-//			SmartDashboard.putString("ScaleSide", scaleSide + "");
-//			SmartDashboard.putString("FieldPosition", field_position + "");
-//			SmartDashboard.putString("CubePlacement", switch_or_scale + "");
 			if (field_position == 1) {
 				if (switch_or_scale == 1) {
 					if (switchSide == 'R')
@@ -455,11 +441,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-//		SmartDashboard.putNumber("Yaw", ahrs.getYaw());
-//		
-//		System.out.println(ahrs.getYaw());
-//		System.out.println("Left Intake Motor: "+this.motorPWM_Intake_Left.get());
-//		System.out.println("Right Intake Motor: "+this.motorPWM_Intake_Right.get());
 		
 		//THIS DEFINITELY NEEDS TO STAY!!!
 		mou.isFinished();

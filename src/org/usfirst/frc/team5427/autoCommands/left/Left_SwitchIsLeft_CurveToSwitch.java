@@ -20,7 +20,6 @@ public class Left_SwitchIsLeft_CurveToSwitch extends Command {
 		speed = Config.PID_STRAIGHT_POWER_LONG;
 		rotationValue = .8;
 		angle = 90;
-//		System.out.println("CURVING");
 		
 	}
 	

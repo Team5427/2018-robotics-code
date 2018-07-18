@@ -19,8 +19,6 @@ import edu.wpi.first.wpilibj.command.Command;
  * @author Akshat Jain
  */
 public class Center_SwitchIsRight_MoveElevatorAuto extends Command {
-
-
 	/**
 	 * Sets the timeout for the command based off of the desired position of the
 	 * elevator and how long it takes to get there.

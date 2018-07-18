@@ -63,8 +63,6 @@ public class Left_ScaleIsRight extends AutoPath {
 	 */
 	@Override
 	public void execute() {
-//		SmartDashboard.putNumber("Motor Value", Robot.driveTrain.drive_Right.get());
-		
 		if(this.isTimedOut() && !moveElevator.isRunning()) {
 			moveElevator.start();
 		}
