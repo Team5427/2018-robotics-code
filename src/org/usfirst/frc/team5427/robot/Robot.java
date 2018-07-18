@@ -261,14 +261,7 @@ public class Robot extends IterativeRobot {
 		encLeft.setDistancePerPulse((6 * Math.PI / 360));
 
 		camServer = CameraServer.getInstance();
-<<<<<<< HEAD
-//		ipCam = new AxisCamera("IP Camera", "10.54.27.62");
-		ipCam = new AxisCamera("IP Camera", "10.54.27.212");
-////		usbCam = new UsbCamera("USB Camera", 0);
-////		usbCam.setFPS(15);
-=======
 		ipCam = new AxisCamera("IP Camera", "10.54.27.62");
->>>>>>> b89c7cf2296a955d609e9c3831f3e487e16c7d06
 		camServer.addCamera(ipCam);
 		camServer.startAutomaticCapture(ipCam);
 		oi = new OI();
