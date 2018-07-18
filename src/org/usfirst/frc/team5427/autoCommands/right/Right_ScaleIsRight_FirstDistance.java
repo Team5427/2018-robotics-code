@@ -64,7 +64,7 @@ public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgNot = scgConstant;
 		maximumSpeed = Config.PID_STRAIGHT_POWER_LONG;
-		desiredDistance = 200;
+		desiredDistance = 212;
 		
 		this.setInterruptible(true);
 		this.getPIDController().setSetpoint(0);
@@ -149,11 +149,11 @@ public class Right_ScaleIsRight_FirstDistance extends PIDCommand {
 			end();
 			return true;
 		}
-		else if ((Robot.encLeft.getStopped()) && hasStarted) {
-	
-			end();
-			return true;
-		}
+//		else if ((Robot.encLeft.getStopped()) && hasStarted) {
+//	
+//			end();
+//			return true;
+//		}
 		return false;
 	}
 

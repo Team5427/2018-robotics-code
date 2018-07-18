@@ -37,7 +37,7 @@ public class TiltIntakeDown extends Command {
 	 */
 	@Override
 	protected boolean isFinished() {
-		return Robot.oi.getJoy().getRawButtonReleased(Config.BUTTON_INTAKE_TILTER_DOWN);
+		return !Robot.oi.getJoy().getRawButton(Config.BUTTON_INTAKE_TILTER_DOWN);
 	}
 
 	/**

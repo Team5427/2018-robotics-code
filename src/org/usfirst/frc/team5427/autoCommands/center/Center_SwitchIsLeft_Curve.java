@@ -110,7 +110,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 			}
 			// second curve
 			else {
-				if (Math.abs(Robot.ahrs.getYaw()) > 17) {
+				if (Math.abs(Robot.ahrs.getYaw()) > 8) {
 					if (speed > 0.1)
 						this.speed /= 1.01;
 					Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue, false);
@@ -118,7 +118,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 				// slow down towards switch
 				else {
 					isCoasting = true;
-					this.speed /= 1.115;
+					this.speed /= 1.07;
 					Robot.driveTrain.drive.tankDrive(this.speed, this.speed);
 				}
 			}

@@ -165,12 +165,12 @@ public class Right_ScaleIsLeft_FirstDistance_Curve extends PIDCommand {
 			end();
 			return true;
 		}
-		else if ((Robot.encLeft.getStopped()) && hasStarted) {
-			if (null != pidDistance)
-				pidDistance.end();
-			end();
-			return true;
-		}
+//		else if ((Robot.encLeft.getStopped()) && hasStarted) {
+//			if (null != pidDistance)
+//				pidDistance.end();
+//			end();
+//			return true;
+//		}
 		return false;
 	}
 

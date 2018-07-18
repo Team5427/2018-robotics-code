@@ -41,7 +41,7 @@ public class AutoOutGo extends Command {
 	 */
 	@Override
 	protected void execute() {
-		Robot.intakeSubsystem.setSpeed(-.5);
+		Robot.intakeSubsystem.setSpeed(-.3);
 	}
 
 	/**

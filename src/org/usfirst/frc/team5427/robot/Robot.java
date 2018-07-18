@@ -266,7 +266,8 @@ public class Robot extends IterativeRobot {
 		encLeft.setDistancePerPulse((6 * Math.PI / 360));
 
 		camServer = CameraServer.getInstance();
-		ipCam = new AxisCamera("IP Camera", "10.54.27.62");
+//		ipCam = new AxisCamera("IP Camera", "10.54.27.62");
+		ipCam = new AxisCamera("IP Camera", "10.54.27.212");
 ////		usbCam = new UsbCamera("USB Camera", 0);
 ////		usbCam.setFPS(15);
 		camServer.addCamera(ipCam);
@@ -336,7 +337,8 @@ public class Robot extends IterativeRobot {
 					autoPath = new Right_ScaleIsRight();
 				else if (scaleSide == 'L') {
 //					autoPath = new Right_ScaleIsLeft();
-					autoPath = new FidgetRSL();
+//					autoPath = new FidgetRSL();
+					autoPath = new Delayed_Baseline(2);
 //					if(switchSide == 'R')
 //						autoPath = new Right_SwitchIsRight();
 //					else
@@ -346,9 +348,10 @@ public class Robot extends IterativeRobot {
 		}
 		else if (field_position == 2) {
 			if (switchSide == 'R')
-				autoPath = new Delayed_CSR(4);
+				autoPath = new Center_SwitchIsRight();
+				
 			else if (switchSide == 'L')
-				autoPath = new Delayed_CSL(4);
+				autoPath = new FidgetCL();
 		}
 		else if (field_position == 3) {
 			if (switch_or_scale == 1) {
@@ -398,7 +401,8 @@ public class Robot extends IterativeRobot {
 						autoPath = new Right_ScaleIsRight();
 					else if (scaleSide == 'L') {
 //						autoPath = new Right_ScaleIsLeft();
-						autoPath = new FidgetRSL();
+//						autoPath = new FidgetRSL();
+						autoPath = new Delayed_Baseline(2);
 //						if(switchSide == 'R')
 //							autoPath = new Right_SwitchIsRight();
 //						else
@@ -408,9 +412,10 @@ public class Robot extends IterativeRobot {
 			}
 			else if (field_position == 2) {
 				if (switchSide == 'R')
-					autoPath = new Delayed_CSR(4);
+					autoPath = new Center_SwitchIsRight();
+					
 				else if (switchSide == 'L')
-					autoPath = new Delayed_CSL(4);
+					autoPath = new FidgetCL();
 			}
 			else if (field_position == 3) {
 				if (switch_or_scale == 1) {
