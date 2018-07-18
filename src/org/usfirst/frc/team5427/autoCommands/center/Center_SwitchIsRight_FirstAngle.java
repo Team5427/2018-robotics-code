@@ -143,16 +143,7 @@ public class Center_SwitchIsRight_FirstAngle extends PIDCommand {
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-		//SmartDashboard.putNumber("Yaw", getCurrentAngle());
-		//SmartDashboard.putNumber("Raw Yaw", getCurrentAngle());
-		//SmartDashboard.putNumber("PID Output", output);
-
 		scgRight.pidWrite(output);
 		scgLeft.pidWrite(output);
-
-		//SmartDashboard.putNumber("Front Left", Robot.motor_pwm_frontLeft.get());
-		//SmartDashboard.putNumber("Rear Left", Robot.motor_pwm_rearLeft.get());
-		//SmartDashboard.putNumber("Front Right", Robot.motor_pwm_frontRight.get());
-		//SmartDashboard.putNumber("Rear Right", Robot.motor_pwm_rearRight.get());
 	}
 }

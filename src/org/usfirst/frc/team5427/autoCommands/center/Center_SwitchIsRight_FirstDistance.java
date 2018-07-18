@@ -138,11 +138,6 @@ public class Center_SwitchIsRight_FirstDistance extends PIDCommand {
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-		//SmartDashboard.putNumber("Velocity", Robot.encLeft.getRate());
-		//SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
-		//SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
-		//SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
-
 		scgPIDControlled.pidWrite(output);
 		if (Robot.encLeft.getDistance() >= this.desiredDistance) {
 			if (scgNot.get() == 0)
@@ -150,10 +145,6 @@ public class Center_SwitchIsRight_FirstDistance extends PIDCommand {
 		}
 		else if (null == pidDistance)
 			scgNot.set(power);
-
-		//SmartDashboard.putNumber("g", scgNot.get());
-		//SmartDashboard.putNumber("o", output);
-		//SmartDashboard.putNumber("p", power);
 
 		if (this.power < this.maximumSpeed && null == pidDistance) {
 			this.power += (Config.PID_STRAIGHT_LINEAR_INCREMENT-.001);

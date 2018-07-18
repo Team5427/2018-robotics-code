@@ -119,11 +119,6 @@ public class Left_SwitchIsLeft_FirstDistance extends PIDCommand {
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-		//SmartDashboard.putNumber("Velocity", Robot.encLeft.getRate());
-		//SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
-		//SmartDashboard.putNumber("encLeft", Math.abs(Robot.encLeft.getDistance()));
-		//SmartDashboard.putNumber("encLeftVal", Math.abs(Robot.encLeft.getDistance()));
-
 		scgPIDControlled.pidWrite(output);
 		if (Robot.encLeft.getDistance() >= this.desiredDistance) {
 			if (scgNot.get() == 0)
@@ -132,16 +127,8 @@ public class Left_SwitchIsLeft_FirstDistance extends PIDCommand {
 		else if (null == pidDistance)
 			scgNot.set(power);
 
-		//SmartDashboard.putNumber("g", scgNot.get());
-		//SmartDashboard.putNumber("o", output);
-		//SmartDashboard.putNumber("p", power);
-
 		if (this.power < this.maximumSpeed && null == pidDistance) {
 			this.power += (Config.PID_STRAIGHT_LINEAR_INCREMENT-.001);
-		}
-		else if (null == pidDistance) {
-//			pidDistance = new PIDDistance(this.scgNot, this.scgPIDControlled, this.maximumSpeed, this.desiredDistance, this.p, this.i, this.d);
-//			pidDistance.start();
 		}
 		if (power >= this.maximumSpeed / 4)
 			hasStarted = true;
@@ -156,11 +143,6 @@ public class Left_SwitchIsLeft_FirstDistance extends PIDCommand {
 	 */
 	@Override
 	public boolean isFinished() {
-//		if (pidDistance != null && pidDistance.isFinished() && Math.abs(Robot.ahrs.getYaw()) < 3) {
-//			pidDistance.end();
-//			end();
-//			return true;
-//		}
 		if(Math.abs(Robot.encLeft.getDistance()) >= this.desiredDistance) {
 			end();
 			return true;

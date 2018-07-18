@@ -73,9 +73,6 @@ public class Center_SwitchIsRight_Drive extends Command {
 	 */
 	@Override
 	protected void end() {
-//		Robot.driveTrain.drive_Left.set(0);
-//		Robot.driveTrain.drive_Right.set(0);
-//		System.out.println("Ending Drivebackward");
 		Robot.driveTrain.drive.stopMotor();
 	}
 

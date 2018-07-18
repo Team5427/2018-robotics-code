@@ -20,7 +20,6 @@ public class Left_ScaleIsLeft_CurveToScale extends Command {
 		speed = Config.PID_STRAIGHT_POWER_LONG;
 		rotationValue = .3;
 		angle = 14;
-//		System.out.println("CURVING");
 		
 	}
 	

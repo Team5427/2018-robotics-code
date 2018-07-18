@@ -19,38 +19,31 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 	 * -1.0 to 1.0
 	 */
 	public double speed;
-
 	/**
 	 * The max speed for the robot t travel at along the x axis. Range from -1.0 to
 	 * 1.0.
 	 */
 	public static final double MAX_SPEED = .45;
-
 	/**
 	 * The value to input into the DifferentialDrive method arcadeDrive in order to
 	 * determine how much the robot should curve during the first segment of its
 	 * path. Range from -1.0 to 1.0.
 	 */
 	public double firstRotationValue;
-
 	/**
 	 * The value to input into the DifferentialDrive method arcadeDrive in order to
 	 * determine how much the robot should curve during the second segment of its
 	 * path. Range from -1.0 to 1.0.
 	 */
 	public double secondRotationValue;
-
 	/**
 	 * Stores if the robot has reached the middle of its path.
 	 */
 	public boolean hasReachedMiddle;
-
 	/**
 	 * Stores if the robot is coasting.
 	 */
 	public boolean isCoasting;
-
-//	public Fidget fidget;
 	public boolean transition = false;
 
 	/**
@@ -63,14 +56,10 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 		secondRotationValue = 0.86;
 		hasReachedMiddle = false;
 		isCoasting = false;
-//		fidget=null;
-//		fidget = new Fidget();
-
 	}
 
 	@Override
 	public void initialize() {
-//		fidget.start();
 		Robot.ahrs.reset();
 	}
 
@@ -81,49 +70,31 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 	 */
 	@Override
 	public void execute() {
-//		SmartDashboard.putNumber("Yaw", Robot.ahrs.getYaw());
-//		SmartDashboard.putNumber("Speed", this.speed);
-////		if (fidget == null || fidget.isFinished()) {
-////			if(fidget!=null) {
-////				fidget.cancel();
-////				fidget = null;
-////			}
-//		if (null != fidget && fidget.isFinished() && !(firstDistance.isRunning())) {
-//			fidget.cancel();
-//			fidget = null;
-//			Robot.encLeft.reset();
-//			firstDistance.start();
-//		}
-		
-		
-		{
-			// switch curves
-			if (!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 86) {
-				new MoveElevatorAuto(1).start();
-				hasReachedMiddle = true;
+		// switch curves
+		if (!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 86) {
+			new MoveElevatorAuto(1).start();
+			hasReachedMiddle = true;
+		}
+		// first curve
+		if (!hasReachedMiddle) {
+			if (speed < MAX_SPEED)
+				this.speed *= 1.035;
+			Robot.driveTrain.drive.curvatureDrive(this.speed, this.firstRotationValue, false);
+		}
+		// second curve
+		else {
+			if (Math.abs(Robot.ahrs.getYaw()) > 17) {
+				if (speed > 0.1)
+					this.speed /= 1.01;
+				Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue, false);
 			}
-			// first curve
-			if (!hasReachedMiddle) {
-				if (speed < MAX_SPEED)
-					this.speed *= 1.035;
-				Robot.driveTrain.drive.curvatureDrive(this.speed, this.firstRotationValue, false);
-			}
-			// second curve
+			// slow down towards switch
 			else {
-				if (Math.abs(Robot.ahrs.getYaw()) > 17) {
-					if (speed > 0.1)
-						this.speed /= 1.01;
-					Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue, false);
-				}
-				// slow down towards switch
-				else {
-					isCoasting = true;
-					this.speed /= 1.115;
-					Robot.driveTrain.drive.tankDrive(this.speed, this.speed);
-				}
+				isCoasting = true;
+				this.speed /= 1.115;
+				Robot.driveTrain.drive.tankDrive(this.speed, this.speed);
 			}
-		} 
-
+		}
 	}
 
 	/**
@@ -133,7 +104,6 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-//		System.out.println("Motor speed value: "+Robot.motor_pwm_frontLeft.get());
 		return (isCoasting && speed < 0.01);
 	}
 
@@ -149,7 +119,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 		new AutoOutGo().start();
 		// new Center_SwitchIsLeft_SecondCube().start();
 	}
-	
+
 	@Override
 	protected void interrupted() {
 	}

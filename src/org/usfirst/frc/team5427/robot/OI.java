@@ -131,8 +131,6 @@ public class OI {
 		motorIntakeOut.whenPressed(new IntakeActivateOut());
 		elevatorUp.whenPressed(Robot.mou);
 		elevatorDown.whenPressed(Robot.mod);
-//		elevatorUp.toggleWhenPressed(Robot.mou);
-//		elevatorDown.toggleWhenPressed(Robot.mod);
 		intakeTilterToggle.whenPressed(new TiltIntake_TimeOut());
 		intakeTilterUp.whenPressed(new TiltIntakeUp());
 		intakeTilterDown.whenPressed(new TiltIntakeDown());
