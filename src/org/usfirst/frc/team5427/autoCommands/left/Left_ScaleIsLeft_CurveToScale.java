@@ -18,12 +18,8 @@ public class Left_ScaleIsLeft_CurveToScale extends Command {
 	public Left_ScaleIsLeft_CurveToScale() {
 		
 		speed = Config.PID_STRAIGHT_POWER_LONG;
-		rotationValue = .3;
-		angle = 14;
-<<<<<<< HEAD
-=======
-//		System.out.println("CURVING");
->>>>>>> e3766ce5eb7c17580a6faa2b66a9935b95114a2f
+		rotationValue = .5;
+		angle = 8;
 		
 	}
 	
@@ -35,7 +31,7 @@ public class Left_ScaleIsLeft_CurveToScale extends Command {
 	@Override
 	public void execute() {
 		if(speed > MIN_SPEED)
-			this.speed/=1.07;
+			this.speed/=1.1;
 		
 		Robot.driveTrain.drive.curvatureDrive(this.speed, this.rotationValue, false);
 	}

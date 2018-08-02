@@ -2,12 +2,10 @@ package org.usfirst.frc.team5427.autoCommands.left;
 
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
-<<<<<<< HEAD
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.robot.commands.DriveBackward;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
-=======
->>>>>>> e3766ce5eb7c17580a6faa2b66a9935b95114a2f
+
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 

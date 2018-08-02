@@ -54,7 +54,7 @@ public class Left_ScaleIsLeft extends AutoPath {
 	/**
 	 * The time, in seconds, that we manually end our autonomous path.
 	 */
-	public static final double timeOut = 15;
+	public static final double timeOut = 3;
 
 
 	/*********************************************/
@@ -87,16 +87,18 @@ public class Left_ScaleIsLeft extends AutoPath {
 	@Override
 	public void execute() {
 		currentTime = System.nanoTime() / 1000000000.;
-
-		
-		if(null == fidget && null!=firstDistance && firstDistance.isFinished() && !(curve.isRunning())) {
-			firstDistance.cancel();
-			firstDistance = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			curve.start();
-			moveElevator.start();
+		if(this.isTimedOut()) {
+//			moveElevator.start();
 		}
+		
+//		if(null == fidget && null!=firstDistance && firstDistance.isFinished() && !(curve.isRunning())) {
+//			firstDistance.cancel();
+//			firstDistance = null;
+//			Robot.ahrs.reset();
+//			Robot.encLeft.reset();
+//			curve.start();
+//			moveElevator.start();
+//		}
 		if(null!=fidget && fidget.isFinished()&&!(firstDistance.isRunning())) {
 			fidget.cancel();
 			fidget=null;
@@ -115,9 +117,11 @@ public class Left_ScaleIsLeft extends AutoPath {
 	public boolean isFinished() {
 //		if (firstAngle == null && secondDistance.isFinished())
 //			return true;
-		if (curve.isFinished())
+		if (firstDistance.isFinished() 
+//				&& this.moveElevator.maxHeightReached()
+				)
 			return true;
-		return isTimedOut() && this.moveElevator.maxHeightReached();
+		return false;
 	}
 
 	/**

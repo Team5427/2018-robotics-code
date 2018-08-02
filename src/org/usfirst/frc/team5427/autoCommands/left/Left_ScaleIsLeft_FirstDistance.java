@@ -71,7 +71,7 @@ public class Left_ScaleIsLeft_FirstDistance extends PIDCommand {
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgNot = scgConstant;
 		maximumSpeed = Config.PID_STRAIGHT_POWER_LONG;
-		desiredDistance = 180;//205
+		desiredDistance = 190;//205
 		
 		this.setInterruptible(true);
 		this.getPIDController().setSetpoint(0);

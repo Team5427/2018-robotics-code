@@ -36,8 +36,8 @@ public class Right_ScaleIsRight_CurveToScale extends Command {
 	public Right_ScaleIsRight_CurveToScale() {
 		
 		speed = Config.PID_STRAIGHT_POWER_LONG;
-		rotationValue = -.5;
-		angle = 50;
+		rotationValue = -.4;
+		angle = 43;
 		
 	}
 	

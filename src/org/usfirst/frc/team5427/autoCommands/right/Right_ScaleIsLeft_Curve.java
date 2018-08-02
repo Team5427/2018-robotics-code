@@ -2,12 +2,9 @@ package org.usfirst.frc.team5427.autoCommands.right;
 
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.robot.Robot;
-<<<<<<< HEAD
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.robot.commands.DriveBackward;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
-=======
->>>>>>> e3766ce5eb7c17580a6faa2b66a9935b95114a2f
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 
@@ -62,7 +59,7 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 	{
 		speed = Config.PID_STRAIGHT_POWER_LONG;
 		firstRotationValue = -0.35;
-		secondRotationValue = 0.8;
+		secondRotationValue = 0.9;
 		hasReachedMiddle = false;
 		secondCurve = false;
 	}
@@ -113,7 +110,7 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 		else
 		{
 //			SmartDashboard.putNumber("Speed on Curve", speed);
-			this.speed/=1.0115;
+			this.speed/=1.011;
 			Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue,false);
 		}
 	}

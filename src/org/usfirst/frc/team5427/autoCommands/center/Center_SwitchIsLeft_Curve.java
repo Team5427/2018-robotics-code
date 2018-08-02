@@ -111,16 +111,22 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 			// second curve
 			else {
 				if (Math.abs(Robot.ahrs.getYaw()) > 8) {
+//					System.out.println("Curving");
 					if (speed > 0.1)
-						this.speed /= 1.01;
+						this.speed /= 1.005;
 					Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue, false);
 				}
 				// slow down towards switch
 				else {
+//					System.out.println("Straight");
 					isCoasting = true;
-					this.speed /= 1.07;
-					Robot.driveTrain.drive.tankDrive(this.speed, this.speed);
+					this.speed /= 1.03;
+//					System.out.println("Speed is "+this.speed);
+//					Robot.driveTrain.drive.tankDrive(this.speed, this.speed);
+					Robot.driveTrain.drive_Left.set(this.speed);
+					Robot.driveTrain.drive_Right.set(-this.speed);
 				}
+//				System.out.println("Speed is "+this.speed);
 			}
 		} 
 
@@ -134,7 +140,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 	@Override
 	public boolean isFinished() {
 //		System.out.println("Motor speed value: "+Robot.motor_pwm_frontLeft.get());
-		return (isCoasting && speed < 0.01);
+		return (isCoasting && this.speed < 0.01);
 	}
 
 	/**
@@ -142,6 +148,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 	 */
 	@Override
 	protected void end() {
+		System.out.println("Ending");
 		Robot.driveTrain.drive.stopMotor();
 		Robot.ahrs.reset();
 		Robot.encLeft.reset();
