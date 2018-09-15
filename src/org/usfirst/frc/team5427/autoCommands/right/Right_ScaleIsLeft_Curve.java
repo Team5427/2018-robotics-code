@@ -121,7 +121,7 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 	 */
 	@Override
 	public boolean isFinished() {
-		return (secondCurve &&  speed < 0.1);
+		return (secondCurve &&  speed < 0.02);
 	}
 
 	/**
@@ -129,9 +129,9 @@ public class Right_ScaleIsLeft_Curve extends AutoPath{
 	 */
 	@Override
 	protected void end() {
-		Robot.driveTrain.drive.stopMotor();
-		new AutoOutGo();
-		new DriveBackward(1);
+//		Robot.driveTrain.drive.stopMotor();
+//		new AutoOutGo();
+//		new DriveBackward(1);
 		Robot.ahrs.reset();
 		Robot.encLeft.reset();
 		super.end();

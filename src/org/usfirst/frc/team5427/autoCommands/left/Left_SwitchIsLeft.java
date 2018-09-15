@@ -122,6 +122,7 @@ public class Left_SwitchIsLeft extends AutoPath {
 		if (curve.isFinished())
 			return true;
 		return isTimedOut() && this.moveElevator.maxHeightReachedTime();
+		
 	}
 
 	/**

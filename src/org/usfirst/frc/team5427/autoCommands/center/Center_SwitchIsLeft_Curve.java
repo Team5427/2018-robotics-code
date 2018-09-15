@@ -6,6 +6,8 @@ import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorAuto;
 import org.usfirst.frc.team5427.util.SameLine;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * This is the class to navigate to the left switch from the center position
  * utilizing arcs.
@@ -53,7 +55,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 		requires(Robot.driveTrain);
 		speed = 0.1;
 		firstRotationValue = -0.65;
-		secondRotationValue = 0.86;
+		secondRotationValue = 0.90; //0.86
 		hasReachedMiddle = false;
 		isCoasting = false;
 	}
@@ -83,15 +85,18 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 		}
 		// second curve
 		else {
+			SmartDashboard.putNumber("Angle", Robot.ahrs.getYaw());
+			SmartDashboard.putNumber("Speed", this.speed);
+
 			if (Math.abs(Robot.ahrs.getYaw()) > 8) {
-				if (speed > 0.1)
-					this.speed /= 1.01;
+				if (speed > 0.2) //0.1
+					this.speed /= 1.006; //1.01
 				Robot.driveTrain.drive.curvatureDrive(this.speed, this.secondRotationValue, false);
 			}
 			// slow down towards switch
 			else {
 				isCoasting = true;
-				this.speed /= 1.07;
+				this.speed /= 1.15; //1.07
 				Robot.driveTrain.drive.tankDrive(this.speed, this.speed);
 			}
 		}

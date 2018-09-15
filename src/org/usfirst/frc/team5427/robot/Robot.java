@@ -320,8 +320,8 @@ public class Robot extends IterativeRobot {
 					autoPath = new Right_ScaleIsRight();
 				else if (scaleSide == 'L') {
 //					autoPath = new Right_ScaleIsLeft();
-//					autoPath = new FidgetRSL();
-					autoPath = new Delayed_Baseline(2);
+					autoPath = new FidgetRSL();
+//					autoPath = new Delayed_Baseline(2);
 //					if(switchSide == 'R')
 //						autoPath = new Right_SwitchIsRight();
 //					else
@@ -380,8 +380,8 @@ public class Robot extends IterativeRobot {
 						autoPath = new Right_ScaleIsRight();
 					else if (scaleSide == 'L') {
 //						autoPath = new Right_ScaleIsLeft();
-//						autoPath = new FidgetRSL();
-						autoPath = new Delayed_Baseline(2);
+						autoPath = new FidgetRSL();
+//						autoPath = new Delayed_Baseline(2);
 //						if(switchSide == 'R')
 //							autoPath = new Right_SwitchIsRight();
 //						else
