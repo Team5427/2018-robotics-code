@@ -46,8 +46,8 @@ public class Left_ScaleIsLeft_MoveElevatorAuto extends Command {
 			Robot.motorPWM_Elevator_Left.set(0);
 		}
 		else {
-			Robot.motorPWM_Elevator_Right.set(Config.ELEVATOR_MOTOR_SPEED_UP);
-			Robot.motorPWM_Elevator_Left.set(-Config.ELEVATOR_MOTOR_SPEED_UP);
+			Robot.motorPWM_Elevator_Right.set(Config.ELEVATOR_MOTOR_SPEED_UP+0.1);
+			Robot.motorPWM_Elevator_Left.set(-Config.ELEVATOR_MOTOR_SPEED_UP-0.1);
 		}
 	}
 

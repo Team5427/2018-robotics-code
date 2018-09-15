@@ -28,7 +28,7 @@ public class Left_SwitchIsLeft extends AutoPath {
 	/**
 	 * The command used to move the elevator up to the top of its path.
 	 */
-	private Left_ScaleIsLeft_MoveElevatorAuto moveElevator;
+	private Left_SwitchIsLeft_MoveElevatorAuto moveElevator;
 	
 	private Left_SwitchIsLeft_CurveToSwitch curve;
 
@@ -63,6 +63,7 @@ public class Left_SwitchIsLeft extends AutoPath {
 		fidget = new Fidget();
 		firstDistance = new Left_SwitchIsLeft_FirstDistance(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		curve = new Left_SwitchIsLeft_CurveToSwitch();
+		moveElevator = new Left_SwitchIsLeft_MoveElevatorAuto();
 
 	}
 
@@ -120,7 +121,7 @@ public class Left_SwitchIsLeft extends AutoPath {
 
 		if (curve.isFinished())
 			return true;
-		return isTimedOut() && this.moveElevator.maxHeightReached();
+		return isTimedOut() && this.moveElevator.maxHeightReachedTime();
 	}
 
 	/**
