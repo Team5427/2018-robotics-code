@@ -435,6 +435,13 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		
+		//Anti-tilt code
+		SmartDashboard.putNumber("Pitch", ahrs.getPitch());
+		if(Math.abs(ahrs.getPitch()) >Math.abs(Config.OFF_BALANCE_THRESHOLD_DEGREES))
+		{
+			Robot.driveTrain.stop();
+		}
+		
 		//THIS DEFINITELY NEEDS TO STAY!!!
 		mou.isFinished();
 		mod.isFinished();
