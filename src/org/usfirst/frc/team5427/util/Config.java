@@ -451,5 +451,7 @@ public class Config {
 	 * The value used to determine when to use the driving increment.
 	 */
 	public static final double DRIVE_INCREMENT_WAIT_VALUE = .01;
+	
+	public static final double OFF_BALANCE_THRESHOLD_DEGREES = 5.0;
 	/******************************************************/
 }
