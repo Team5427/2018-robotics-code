@@ -75,8 +75,6 @@ public class Left_ScaleIsRight extends AutoPath {
 			firstDistance = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			
-			moveElevator.start();
 			curve.start(); 
 		}
 		if(null!=fidget && fidget.isFinished()) {

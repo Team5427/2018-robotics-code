@@ -25,7 +25,7 @@ public class Left_ScaleIsRight_Curve extends AutoPath{
 	* The max speed for the robot t travel at along the x axis.
 	* Range from -1.0 to 1.0.
 	*/
-	public static final double MAX_SPEED = .5;
+	public static final double MAX_SPEED = .4;
 	
 	/**
 	* The value to input into the DifferentialDrive method arcadeDrive in order to determine how much the robot should curve during the first segment of its path.
@@ -58,8 +58,8 @@ public class Left_ScaleIsRight_Curve extends AutoPath{
 	public Left_ScaleIsRight_Curve()
 	{
 		speed = Config.PID_STRAIGHT_POWER_LONG;
-		firstRotationValue = 0.30;
-		secondRotationValue = -0.65;
+		firstRotationValue = 0.8;
+		secondRotationValue = -0.8;
 		hasReachedMiddle = false;
 		secondCurve = false;
 	}
@@ -80,7 +80,7 @@ public class Left_ScaleIsRight_Curve extends AutoPath{
 	public void execute()
 	{
 		// switch first curve to forward distance.
-		if(!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 74)
+		if(!hasReachedMiddle && Math.abs(Robot.ahrs.getYaw()) > 62)
 		{
 			new MoveElevatorAuto(2);
 			hasReachedMiddle = true;
