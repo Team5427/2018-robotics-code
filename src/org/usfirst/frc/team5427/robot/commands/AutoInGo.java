@@ -24,9 +24,17 @@ public class AutoInGo extends Command {
 	/**
 	 * AutoOutGo requires the intake subsystem and its timeout is set via Config.
 	 */
+	
+	public double speed; 
 	public AutoInGo() {
 		requires(Robot.intakeSubsystem);
 		this.setTimeout(Config.AUTO_INTAKE_TIMEOUT);
+		this.speed = 0.5;
+	}
+	public AutoInGo(double speed) {
+		requires(Robot.intakeSubsystem);
+		this.setTimeout(Config.AUTO_INTAKE_TIMEOUT);
+		this.speed = speed;
 	}
 
 	/**
@@ -41,7 +49,7 @@ public class AutoInGo extends Command {
 	 */
 	@Override
 	protected void execute() {
-		Robot.intakeSubsystem.setSpeed(.5);
+		Robot.intakeSubsystem.setSpeed(this.speed);
 	}
 
 	/**

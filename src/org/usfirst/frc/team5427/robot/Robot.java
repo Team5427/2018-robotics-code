@@ -423,6 +423,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		if (autoPath != null) {
+			
 			autoPath.cancel();
 		}
 	}
@@ -436,8 +437,8 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		
 		//Anti-tilt code
-		SmartDashboard.putNumber("Pitch", ahrs.getPitch());
-		if(Math.abs(ahrs.getPitch()) >Math.abs(Config.OFF_BALANCE_THRESHOLD_DEGREES))
+		SmartDashboard.putNumber("Roll", ahrs.getRoll());
+		if(Math.abs(ahrs.getRoll()) >Math.abs(Config.OFF_BALANCE_THRESHOLD_DEGREES))
 		{
 			Robot.driveTrain.stop();
 		}

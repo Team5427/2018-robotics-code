@@ -130,7 +130,7 @@ public class Config {
 	/**
 	 * The timeout used in moving the elevator to the switch position.
 	 */
-	public static final double ELEVATOR_TIMEOUT_SWITCH = 1;
+	public static final double ELEVATOR_TIMEOUT_SWITCH = 1.1;
 
 	/**
 	 * The timeout used in moving the elevator to the scale position.
@@ -452,6 +452,6 @@ public class Config {
 	 */
 	public static final double DRIVE_INCREMENT_WAIT_VALUE = .01;
 	
-	public static final double OFF_BALANCE_THRESHOLD_DEGREES = 5.0;
+	public static final double OFF_BALANCE_THRESHOLD_DEGREES = 15.0;
 	/******************************************************/
 }

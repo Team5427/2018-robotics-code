@@ -122,7 +122,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 		Robot.encLeft.reset();
 		super.end();
 		new AutoOutGo().start();
-		// new Center_SwitchIsLeft_SecondCube().start();
+		new Center_SwitchIsLeft_SecondCube().start();
 	}
 
 	@Override
