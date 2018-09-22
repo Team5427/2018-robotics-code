@@ -17,7 +17,7 @@ public class Center_SwitchIsLeft_SecondCube extends AutoPath {
 	/**
 	 * Moves the robot backwards from the switch while moving the elevator down.
 	 */
-	public Center_SwitchIsLeft_Drive backOffFromSwitch;
+	//public Center_SwitchIsLeft_Drive backOffFromSwitch;
 	
 	/**
 	 * Moves the robot backwards from the cube.
@@ -27,7 +27,7 @@ public class Center_SwitchIsLeft_SecondCube extends AutoPath {
 	/**
 	 * Moves the robot forwards towards the switch while moving the elevator up.
 	 */
-	public Center_SwitchIsLeft_Drive moveForwardToSwitch;
+	//public Center_SwitchIsLeft_Drive moveForwardToSwitch;
 	
 	/**
 	 * Moves the robot forwards towards the cube.
@@ -49,82 +49,110 @@ public class Center_SwitchIsLeft_SecondCube extends AutoPath {
 	/**
 	 * Curves the robot towards the cube it intends to pick up.
 	 */
-	public Center_SwitchIsLeft_FirstAngle angleToCube;
+	//public Center_SwitchIsLeft_FirstAngle angleToCube;
 	/**
 	 * Curves the robot away from the cube it intends to pick up.
 	 */
-	public Center_SwitchIsLeft_SecondAngle angleToSwitch;
+	//public Center_SwitchIsLeft_SecondAngle angleToSwitch;
+	
+	/**
+	 * Curves the robot from the switch to point to the second cube
+	 */
+	public Center_SwitchIsLeft_CurveFromSwitch curveFromSwitch;
+	/**
+	 * Curves the robot from the second cube to the switch
+	 */
+	public Center_SwitchIsLeft_CurveToSwitch curveToSwitch;
+	
+	public Center_SwitchIsLeft_Drive waitAtCube;
 
 	public Center_SwitchIsLeft_SecondCube() {
-		backOffFromSwitch = new Center_SwitchIsLeft_Drive(1,0.33);
-		backOffFromCube = new Center_SwitchIsLeft_Drive(1.2,0.25);
-		elevatorDown = new MoveElevatorAuto(4);
-		angleToCube = new Center_SwitchIsLeft_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		intakeCube = new AutoInGo(0.8);
-		angleToSwitch = new Center_SwitchIsLeft_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		moveForwardToSwitch = new Center_SwitchIsLeft_Drive(1.25,-0.33);
-		moveForwardToCube = new Center_SwitchIsLeft_Drive(1.4,-0.25);
+		//backOffFromSwitch = new Center_SwitchIsLeft_Drive(1,0.33);
+		backOffFromCube = new Center_SwitchIsLeft_Drive(2.2,0.25);
+		waitAtCube = new Center_SwitchIsLeft_Drive(0.5,0);
+		elevatorDown = new MoveElevatorAuto(5);
+		//angleToCube = new Center_SwitchIsLeft_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		intakeCube = new AutoInGo(0.6);
+		//angleToSwitch = new Center_SwitchIsLeft_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+		//moveForwardToSwitch = new Center_SwitchIsLeft_Drive(1.5,-0.33);
+		moveForwardToCube = new Center_SwitchIsLeft_Drive(2.25,-0.25);
 		elevatorUp = new MoveElevatorAuto(1);
+		curveFromSwitch = new Center_SwitchIsLeft_CurveFromSwitch();
+		curveToSwitch = new Center_SwitchIsLeft_CurveToSwitch();
+
 	}
 
 	@Override
 	public void initialize() {
-		backOffFromSwitch.start();
-		elevatorDown.start();
+		curveFromSwitch.start();
+		
 	}
 
 	@Override
 	public void execute() {
-		if(null == backOffFromSwitch && null == angleToCube && null== moveForwardToCube && null == backOffFromCube && null != angleToSwitch && angleToSwitch.isFinished()) {
-			angleToSwitch.cancel();
-			angleToSwitch = null;
-			Robot.ahrs.reset();
-			Robot.encLeft.reset();
-			moveForwardToSwitch.start();
-			
-		}
-		else if(null == backOffFromSwitch && null == angleToCube && null== moveForwardToCube && null!= backOffFromCube && backOffFromCube.isFinished()) {
+//		if(null == curveFromSwitch && null== moveForwardToCube && null == backOffFromCube && null != angleToSwitch && angleToSwitch.isFinished()) {
+//			angleToSwitch.cancel();
+//			angleToSwitch = null;
+//			Robot.ahrs.reset();
+//			Robot.encLeft.reset();
+//			moveForwardToSwitch.start();
+//			
+//		}
+		 if(null == curveFromSwitch && null== moveForwardToCube && null!= backOffFromCube && backOffFromCube.isFinished()) {
 			backOffFromCube.cancel();
 			backOffFromCube = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			angleToSwitch.start();
-			elevatorUp.start();
+			curveToSwitch.start();
+			intakeCube.cancel();
+
+			
 		}
-		else if(null == backOffFromSwitch && null == angleToCube && null!= moveForwardToCube && moveForwardToCube.isFinished()) {
+		 else if(null == curveFromSwitch && null == moveForwardToCube && null != waitAtCube && waitAtCube.isFinished()) {
+				waitAtCube.cancel();
+				waitAtCube = null;
+				Robot.ahrs.reset();
+				Robot.encLeft.reset();
+				backOffFromCube.start();
+				elevatorUp.start();
+		}
+		else if(null == curveFromSwitch && null!= moveForwardToCube && moveForwardToCube.isFinished()) {
 			moveForwardToCube.cancel();
 			moveForwardToCube = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
-			backOffFromCube.start();
-			intakeCube.cancel();
+			waitAtCube.start();
+			elevatorDown.cancel();
 		}
-		else if(null == backOffFromSwitch && null != angleToCube && angleToCube.isFinished()){
-			angleToCube.cancel();
-			angleToCube = null;
+		else if(null != curveFromSwitch && curveFromSwitch.isFinished()){
+			curveFromSwitch.cancel();
+			curveFromSwitch = null;
 			intakeCube.start();
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			moveForwardToCube.start();
+			elevatorDown.start();
 		}
-		else if(null != backOffFromSwitch && backOffFromSwitch.isFinished()) {
+       /*else if(null != backOffFromSwitch && backOffFromSwitch.isFinished()) {
 			backOffFromSwitch.cancel();
 			backOffFromSwitch = null;
 			Robot.ahrs.reset();
 			Robot.encLeft.reset();
 			angleToCube.start();
 			elevatorDown.cancel();
-		}
+    	}*/
 		
 	}
 
 	@Override
 	public boolean isFinished() {
-		return (null != moveForwardToSwitch && moveForwardToSwitch.isRunning() && moveForwardToSwitch.isFinished());
+		return (null != curveToSwitch && curveToSwitch.isRunning() && curveToSwitch.isFinished());
 	}
 	
 	@Override
 	public void end() {
+		elevatorUp.cancel();
+		curveToSwitch.cancel();
 		new AutoOutGo().start();
 		super.end();
 	}

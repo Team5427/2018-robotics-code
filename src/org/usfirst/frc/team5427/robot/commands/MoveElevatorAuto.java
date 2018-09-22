@@ -50,6 +50,9 @@ public class MoveElevatorAuto extends Command {
 			this.setTimeout(Config.ELEVATOR_TIMEOUT_SCALE_DOWN);
 		else if (4 == height)
 			this.setTimeout(Config.ELEVATOR_TIMEOUT_SWITCH_DOWN);
+		else if(5 == height)
+			this.setTimeout(Config.ELEVATOR_TIMEOUT_SWITCH_SECONDCUBE_DOWN);
+		
 	}
 
 	/**
@@ -79,7 +82,7 @@ public class MoveElevatorAuto extends Command {
 				Robot.motorPWM_Elevator_Left.set(-Config.ELEVATOR_MOTOR_SPEED_UP);
 			}
 		}
-		else if (3 == height || 4 == height) {
+		else if (3 == height || 4 == height || 5 == height) {
 			if (!Robot.elevatorLimitSwitchDown.get()) {
 				Robot.motorPWM_Elevator_Right.set(0);
 				Robot.motorPWM_Elevator_Left.set(0);

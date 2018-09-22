@@ -146,6 +146,12 @@ public class Config {
 	 * The timeout used in moving the elevator back to default from the switch.
 	 */
 	public static final double ELEVATOR_TIMEOUT_SWITCH_DOWN = 50;
+	
+	/**
+	 * The timeout used in moving the elevator back to default from the switch.
+	 */
+	public static final double ELEVATOR_TIMEOUT_SWITCH_SECONDCUBE_DOWN = 0.6;
+	
 	/*************************************************/
 
 	/******************** MOTOR SPEEDS *******************/
