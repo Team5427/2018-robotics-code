@@ -55,7 +55,7 @@ public class Center_SwitchIsLeft_Curve extends AutoPath {
 		requires(Robot.driveTrain);
 		speed = 0.1;
 		firstRotationValue = -0.65;
-		secondRotationValue = 0.90; //0.86
+		secondRotationValue = 0.78; //0.86
 		hasReachedMiddle = false;
 		isCoasting = false;
 	}

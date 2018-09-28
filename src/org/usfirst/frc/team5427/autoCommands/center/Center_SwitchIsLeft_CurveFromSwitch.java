@@ -68,10 +68,11 @@ public class Center_SwitchIsLeft_CurveFromSwitch extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-		return (Math.abs(Robot.ahrs.getYaw()-45) < 3);
+		return (Math.abs(Robot.ahrs.getYaw()-45) < 1.5);
 	}
 
 	/**
+	 * 
 	 * Stops drive train (coasts). Resets ahrs and encoder, starts second cube auto.
 	 */
 	@Override
