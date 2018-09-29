@@ -69,13 +69,13 @@ public class Center_SwitchIsLeft_SecondCube extends AutoPath {
 	public Center_SwitchIsLeft_SecondCube() {
 		//backOffFromSwitch = new Center_SwitchIsLeft_Drive(1,0.33);
 		backOffFromCube = new Center_SwitchIsLeft_Drive(2.2,0.25);
-		waitAtCube = new Center_SwitchIsLeft_Drive(0.5,0);
+		waitAtCube = new Center_SwitchIsLeft_Drive(1.0,0);
 		elevatorDown = new MoveElevatorAuto(5);
 		//angleToCube = new Center_SwitchIsLeft_FirstAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
-		intakeCube = new AutoInGo(0.6);
+		intakeCube = new AutoInGo();
 		//angleToSwitch = new Center_SwitchIsLeft_SecondAngle(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 		//moveForwardToSwitch = new Center_SwitchIsLeft_Drive(1.5,-0.33);
-		moveForwardToCube = new Center_SwitchIsLeft_Drive(2.25,-0.25);
+		moveForwardToCube = new Center_SwitchIsLeft_Drive(2.75,-0.20);
 		elevatorUp = new MoveElevatorAuto(1);
 		curveFromSwitch = new Center_SwitchIsLeft_CurveFromSwitch();
 		curveToSwitch = new Center_SwitchIsLeft_CurveToSwitch();
