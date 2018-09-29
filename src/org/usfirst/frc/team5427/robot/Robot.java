@@ -438,10 +438,14 @@ public class Robot extends IterativeRobot {
 		
 		//Anti-tilt code
 		SmartDashboard.putNumber("Roll", ahrs.getRoll());
-		if(Math.abs(ahrs.getRoll()) >Math.abs(Config.OFF_BALANCE_THRESHOLD_DEGREES))
+		if(Math.abs(ahrs.getRoll()) > Math.abs(Config.FALLING_THRESHOLD_DEGREES))
 		{
-			Robot.driveTrain.stop();
+			Robot.driveTrain.drive.arcadeDrive(0.5*Math.sin(ahrs.getRoll()*Math.PI/180), 0);
 		}
+//		else if(Math.abs(ahrs.getRoll()) >Math.abs(Config.OFF_BALANCE_THRESHOLD_DEGREES))
+//		{
+//			Robot.driveTrain.stop();
+//		}
 		
 		//THIS DEFINITELY NEEDS TO STAY!!!
 		mou.isFinished();
