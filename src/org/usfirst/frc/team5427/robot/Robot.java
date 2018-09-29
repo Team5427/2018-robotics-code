@@ -8,6 +8,7 @@ package org.usfirst.frc.team5427.robot;
 
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
 import org.usfirst.frc.team5427.autoCommands.Delayed_Baseline;
+import org.usfirst.frc.team5427.autoCommands.TwoFeet;
 import org.usfirst.frc.team5427.autoCommands.center.Center_SwitchIsRight;
 import org.usfirst.frc.team5427.autoCommands.center.Delayed_CSL;
 import org.usfirst.frc.team5427.autoCommands.center.Delayed_CSR;
@@ -275,8 +276,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		Scheduler.getInstance().removeAll();
+		SmartDashboard.putNumber("Distance", Math.abs(Robot.encLeft.getDistance()));
+
 		encLeft.reset();
 		ahrs.reset();
+
 	}
 
 	/**
@@ -414,6 +418,8 @@ public class Robot extends IterativeRobot {
 //				autoPath = new Delayed_Baseline(2); //TODO remove this
 				autoPath.start();
 		}
+		SmartDashboard.putNumber("Distance", Math.abs(Robot.encLeft.getDistance()));
+
 	}
 
 	/**

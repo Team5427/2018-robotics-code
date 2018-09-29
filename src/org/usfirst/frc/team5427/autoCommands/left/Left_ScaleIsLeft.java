@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5427.autoCommands.left;
 
 import org.usfirst.frc.team5427.autoCommands.AutoPath;
+import org.usfirst.frc.team5427.autoCommands.TwoFeet;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.AutoOutGo;
 import org.usfirst.frc.team5427.robot.commands.Fidget;
@@ -63,6 +64,8 @@ public class Left_ScaleIsLeft extends AutoPath {
 		moveElevator = new Left_ScaleIsLeft_MoveElevatorAuto();
 	}
 
+	TwoFeet twoFeet = new TwoFeet(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+	
 	/**
 	 * Run once when the command is started. Captures the start time of the path,
 	 * starts the first portion of the path and sets the timeout of the path.
@@ -70,7 +73,8 @@ public class Left_ScaleIsLeft extends AutoPath {
 	@Override
 	public void initialize() {
 		startTime = System.nanoTime() / 1000000000.;
-		fidget.start();
+		twoFeet.start();
+//		fidget.start();
 		setTimeout(timeOut);
 	}
 
@@ -107,7 +111,8 @@ public class Left_ScaleIsLeft extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (curve.isFinished())
+//		if (curve.isFinished())
+		if(twoFeet.isFinished())
 			return true;
 		return isTimedOut() && this.moveElevator.maxHeightReached();
 	}
