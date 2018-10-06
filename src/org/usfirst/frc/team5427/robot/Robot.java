@@ -38,6 +38,7 @@ import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -53,6 +54,8 @@ public class Robot extends IterativeRobot {
 	 * command groups that are linked to them.
 	 */
 	public static OI oi;
+	
+	public static Ultrasonic ultra;
 
 	/**
 	 * DriveTrain contains the SpeedControllers that control the left and right
@@ -265,6 +268,9 @@ public class Robot extends IterativeRobot {
 		encLeft = new Encoder(Config.ENCODER_LEFT_CHANNEL_A, Config.ENCODER_LEFT_CHANNEL_B, false, Encoder.EncodingType.k4X);
 		encLeft.setDistancePerPulse((6 * Math.PI / 360));
 
+		ultra = new Ultrasonic(3,2);
+		ultra.setAutomaticMode(true);
+		
 		camServer = CameraServer.getInstance();
 //		ipCam = new AxisCamera("IP Camera", "10.54.27.62");
 		ipCam = new AxisCamera("IP Camera", "10.54.27.212");
@@ -446,6 +452,7 @@ public class Robot extends IterativeRobot {
 		if (autoPath != null) {
 			autoPath.cancel();
 		}
+		
 	}
 
 	/**
@@ -460,7 +467,8 @@ public class Robot extends IterativeRobot {
 //		System.out.println(ahrs.getYaw());
 //		System.out.println("Left Intake Motor: "+this.motorPWM_Intake_Left.get());
 //		System.out.println("Right Intake Motor: "+this.motorPWM_Intake_Right.get());
-		
+//		ultra.ping();
+		SmartDashboard.putNumber("Distance in Inches", ultra.getRangeInches());
 		//THIS DEFINITELY NEEDS TO STAY!!!
 		mou.isFinished();
 		mod.isFinished();
