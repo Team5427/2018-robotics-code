@@ -39,6 +39,7 @@ import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -223,6 +224,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public static boolean tiltUpNext = true;
 
+	public static Ultrasonic ultra;
+	
 	/**
 	 * Initializes all of the SpeedControllers, Subsystems, and other Objects within
 	 * the core of the code.
@@ -253,6 +256,10 @@ public class Robot extends IterativeRobot {
 		tiltUpNext = true;
 		motorPWM_ClimberArm = new PWMVictorSPX(Config.CLIMBER_ARM_MOTOR);
 		motorPWM_Climber = new PWMVictorSPX(Config.CLIMBER_MOTOR);
+		
+		ultra = new Ultrasonic(3,2);
+		ultra.setAutomaticMode(true);
+
 		try {
 			ahrs = new AHRS(SPI.Port.kMXP);
 		} catch (RuntimeException ex) {
@@ -452,7 +459,7 @@ public class Robot extends IterativeRobot {
 //		{
 //			Robot.driveTrain.stop();
 //		}
-		
+		SmartDashboard.putNumber("Distance", ultra.getRangeInches());
 		//THIS DEFINITELY NEEDS TO STAY!!!
 		mou.isFinished();
 		mod.isFinished();

@@ -64,7 +64,7 @@ public class Left_ScaleIsLeft extends AutoPath {
 		moveElevator = new Left_ScaleIsLeft_MoveElevatorAuto();
 	}
 
-	TwoFeet twoFeet = new TwoFeet(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
+	//TwoFeet twoFeet = new TwoFeet(Robot.driveTrain.drive_Right, Robot.driveTrain.drive_Left);
 	
 	/**
 	 * Run once when the command is started. Captures the start time of the path,
@@ -73,8 +73,8 @@ public class Left_ScaleIsLeft extends AutoPath {
 	@Override
 	public void initialize() {
 		startTime = System.nanoTime() / 1000000000.;
-		twoFeet.start();
-//		fidget.start();
+//		twoFeet.start();
+		fidget.start();
 		setTimeout(timeOut);
 	}
 
@@ -111,8 +111,8 @@ public class Left_ScaleIsLeft extends AutoPath {
 	 */
 	@Override
 	public boolean isFinished() {
-//		if (curve.isFinished())
-		if(twoFeet.isFinished())
+		if (curve.isFinished())
+		//if(twoFeet.isFinished())
 			return true;
 		return isTimedOut() && this.moveElevator.maxHeightReached();
 	}
