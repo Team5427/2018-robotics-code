@@ -72,7 +72,7 @@ public class TwoFeet extends PIDCommand {
 		this.scgPIDControlled = scgPIDControlled;
 		this.scgNot = scgConstant;
 		maximumSpeed = Config.PID_STRAIGHT_POWER_SHORT;
-		desiredDistance = 78;//205
+		desiredDistance = 10;//205
 		
 		this.setInterruptible(true);
 		this.getPIDController().setSetpoint(0);

@@ -84,8 +84,7 @@ public class Center_SwitchIsLeft_SecondCube extends AutoPath {
 
 	@Override
 	public void initialize() {
-		curveFromSwitch.start();
-		
+		curveFromSwitch.start();	
 	}
 
 	@Override

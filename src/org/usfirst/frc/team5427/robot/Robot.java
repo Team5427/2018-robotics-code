@@ -266,7 +266,7 @@ public class Robot extends IterativeRobot {
 			DriverStation.reportError("Error instantiating navX-MXP: " + ex.getMessage(), true);
 		}
 		encLeft = new Encoder(Config.ENCODER_LEFT_CHANNEL_A, Config.ENCODER_LEFT_CHANNEL_B, false, Encoder.EncodingType.k4X);
-		encLeft.setDistancePerPulse((6 * Math.PI / 360));
+		encLeft.setDistancePerPulse(Config.ENCODER_DISTANCE_OFFSET*(6.00 * Math.PI / 360));
 
 		camServer = CameraServer.getInstance();
 		ipCam = new AxisCamera("IP Camera", "10.54.27.62");
