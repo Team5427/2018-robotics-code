@@ -461,5 +461,7 @@ public class Config {
 	public static final double FALLING_THRESHOLD_DEGREES = 15.0;
 	
 	public static final double OFF_BALANCE_THRESHOLD_DEGREES = 8.0;
+	
+	public static final double ENCODER_DISTANCE_OFFSET = 0.9752;
 	/******************************************************/
 }
