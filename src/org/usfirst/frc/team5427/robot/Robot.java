@@ -22,8 +22,10 @@ import org.usfirst.frc.team5427.autoCommands.right.Right_SwitchIsRight;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorDown;
 import org.usfirst.frc.team5427.robot.commands.MoveElevatorUp;
+import org.usfirst.frc.team5427.robot.commands.PIDApproach;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
+import org.usfirst.frc.team5427.robot.subsystems.UltrasonicPID;
 import org.usfirst.frc.team5427.util.Config;
 import org.usfirst.frc.team5427.util.SameLine;
 
@@ -35,6 +37,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -75,7 +78,7 @@ public class Robot extends IterativeRobot {
 	/**
 	 * The SpeedControllerGroup that includes the left side of the drivetrain.
 	 */
-	SpeedControllerGroup speedcontrollergroup_left;
+	public SpeedControllerGroup speedcontrollergroup_left;
 
 	/**
 	 * The SpeedController that controls the front right motor of the drive train.
@@ -90,7 +93,7 @@ public class Robot extends IterativeRobot {
 	/**
 	 * The SpeedControllerGroup that includes the right side of the drive train.
 	 */
-	SpeedControllerGroup speedcontrollergroup_right;
+	public SpeedControllerGroup speedcontrollergroup_right;
 
 	/**
 	 * The command that controls the drive train and its movement.
@@ -224,7 +227,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public static boolean tiltUpNext = true;
 
-	public static Ultrasonic ultra;
+	public static UltrasonicPID ultra;
 	
 	/**
 	 * Initializes all of the SpeedControllers, Subsystems, and other Objects within
@@ -257,9 +260,9 @@ public class Robot extends IterativeRobot {
 		motorPWM_ClimberArm = new PWMVictorSPX(Config.CLIMBER_ARM_MOTOR);
 		motorPWM_Climber = new PWMVictorSPX(Config.CLIMBER_MOTOR);
 		
-		ultra = new Ultrasonic(3,2);
-		ultra.setAutomaticMode(true);
-
+		ultra = new UltrasonicPID(3,2);
+		
+		
 		try {
 			ahrs = new AHRS(SPI.Port.kMXP);
 		} catch (RuntimeException ex) {
@@ -268,10 +271,10 @@ public class Robot extends IterativeRobot {
 		encLeft = new Encoder(Config.ENCODER_LEFT_CHANNEL_A, Config.ENCODER_LEFT_CHANNEL_B, false, Encoder.EncodingType.k4X);
 		encLeft.setDistancePerPulse(Config.ENCODER_DISTANCE_OFFSET*(6.00 * Math.PI / 360));
 
-		camServer = CameraServer.getInstance();
-		ipCam = new AxisCamera("IP Camera", "10.54.27.62");
-		camServer.addCamera(ipCam);
-		camServer.startAutomaticCapture(ipCam);
+//		camServer = CameraServer.getInstance();
+//		ipCam = new AxisCamera("IP Camera", "10.54.27.62");
+//		camServer.addCamera(ipCam);
+//		camServer.startAutomaticCapture(ipCam);
 		oi = new OI();
 	}
 
@@ -308,12 +311,21 @@ public class Robot extends IterativeRobot {
 	 * Values: - field_position: - 1 = Right - 2 = Center - 3 = Left -
 	 * switch_or_scale - 1 = Switch - 2 = Scale
 	 */
+
+	PIDApproach approach;
 	@Override
 	public void autonomousInit() {
 		Scheduler.getInstance().run();
 		tiltUpNext = true;
 		encLeft.reset();
 		ahrs.reset();
+
+		approach = new PIDApproach();
+		approach.start();
+		return;
+		
+		/*
+		
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		switchSide = gameData.charAt(0);
 		scaleSide = gameData.charAt(1);
@@ -364,6 +376,8 @@ public class Robot extends IterativeRobot {
 		if (autoPath != null)
 //			autoPath = new Delayed_Baseline(2);//TODO see if we ca remove this
 			autoPath.start();
+			
+			*/
 	}
 
 	/**
@@ -373,6 +387,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		if(approach == null)
+		{
+			approach = new PIDApproach();
+			approach.start();
+		}
+		/*
 		if (null == autoPath) {
 			gameData = DriverStation.getInstance().getGameSpecificMessage();
 			switchSide = gameData.charAt(0);
@@ -426,7 +446,8 @@ public class Robot extends IterativeRobot {
 				autoPath.start();
 		}
 		SmartDashboard.putNumber("Distance", Math.abs(Robot.encLeft.getDistance()));
-
+		*/
+		SmartDashboard.putNumber("Ultrasonic:", ultra.ultra.getRangeInches());
 	}
 
 	/**
@@ -450,16 +471,16 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		
 		//Anti-tilt code
-		SmartDashboard.putNumber("Roll", ahrs.getRoll());
-		if(Math.abs(ahrs.getRoll()) > Math.abs(Config.FALLING_THRESHOLD_DEGREES))
-		{
-			Robot.driveTrain.drive.arcadeDrive(0.5*Math.sin(ahrs.getRoll()*Math.PI/180), 0);
-		}
+//		SmartDashboard.putNumber("Roll", ahrs.getRoll());
+//		if(Math.abs(ahrs.getRoll()) > Math.abs(Config.FALLING_THRESHOLD_DEGREES))
+//		{
+//			Robot.driveTrain.drive.arcadeDrive(0.5*Math.sin(ahrs.getRoll()*Math.PI/180), 0);
+//		}
 //		else if(Math.abs(ahrs.getRoll()) >Math.abs(Config.OFF_BALANCE_THRESHOLD_DEGREES))
 //		{
 //			Robot.driveTrain.stop();
 //		}
-		SmartDashboard.putNumber("Distance", ultra.getRangeInches());
+		
 		//THIS DEFINITELY NEEDS TO STAY!!!
 		mou.isFinished();
 		mod.isFinished();
