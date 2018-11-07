@@ -10,19 +10,15 @@ public class UltrasonicPID extends PIDSubsystem
 {
 	public Ultrasonic ultra;
 	
-	public SpeedControllerGroup scgLeft;
-	public SpeedControllerGroup scgRight;
-	
+	public SpeedControllerGroup scgControlled;
 	
 	public UltrasonicPID(int ping, int echo)
 	{
-		super(0.1, 0, 0.01);
+		super(0.1, 0, 0.01); //random PID values
 		ultra = new Ultrasonic(ping, echo);
 		ultra.setAutomaticMode(true);
 		
-		scgLeft = Robot.driveTrain.drive_Right;
-		scgRight = Robot.driveTrain.drive_Left;
-		
+		scgControlled = Robot.driveTrain.drive_Right;
 		
 		this.setOutputRange(-1, 1);
 	}
@@ -36,8 +32,7 @@ public class UltrasonicPID extends PIDSubsystem
 	@Override
 	protected void usePIDOutput(double output)
 	{
-		scgRight.pidWrite(-output);
-		scgLeft.pidWrite(output);
+		scgControlled.pidWrite(output);
 	}
 
 	@Override

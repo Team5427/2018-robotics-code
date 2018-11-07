@@ -7,27 +7,39 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class PIDApproach extends Command
 {
-	UltrasonicPID ultra;
+	UltrasonicPID ultraPID;
+	PIDStraightMovement straightPID;
 	
 	public PIDApproach()
 	{
-		ultra = Robot.ultra;
+		ultraPID = Robot.ultra;
 	}
 	
 	protected void initialize()
 	{
-		ultra.setSetpoint(12);
-		ultra.enable();
+		straightPID = new PIDStraightMovement(0.5);//TODO: maximum speed, add to config
+		ultraPID.setSetpoint(0);
 	}
 
 	@Override
+	protected void execute()
+	{
+		if(ultraPID.ultra.getRangeInches() < 24)
+		{
+			straightPID.setRamping(false);
+			ultraPID.enable();
+		}
+	}
+	
+	@Override
 	protected boolean isFinished()
 	{
-		return ultra.ultra.getRangeInches() == 12;
+		return ultraPID.ultra.getRangeInches() == 12;
 	}
 	
 	protected void end()
 	{
-		ultra.disable();
+		ultraPID.disable();
+		straightPID.end();
 	}
 }
