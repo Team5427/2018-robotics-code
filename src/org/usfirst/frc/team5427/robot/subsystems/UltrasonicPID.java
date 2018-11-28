@@ -4,6 +4,7 @@ import org.usfirst.frc.team5427.robot.Robot;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class UltrasonicPID extends PIDSubsystem
@@ -14,7 +15,7 @@ public class UltrasonicPID extends PIDSubsystem
 	
 	public UltrasonicPID(int ping, int echo)
 	{
-		super(0.1, 0, 0.01); //random PID values
+		super(0.06, 0, 0.01); //random PID values
 		ultra = new Ultrasonic(ping, echo);
 		ultra.setAutomaticMode(true);
 		
@@ -32,6 +33,7 @@ public class UltrasonicPID extends PIDSubsystem
 	@Override
 	protected void usePIDOutput(double output)
 	{
+		System.out.print(output);
 		scgControlled.pidWrite(output);
 	}
 
